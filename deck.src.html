@@ -76,9 +76,12 @@ h2 small{display:block;font-size:26px;font-weight:500;color:var(--mut);letter-sp
 .cc-h b{font-size:25px;font-weight:750;letter-spacing:-.01em;line-height:1.15}
 .cc-h em{margin-left:auto;font:600 15px var(--mono);color:var(--ac);font-style:normal;white-space:nowrap;align-self:flex-start;padding-top:4px}
 .cc p{margin-top:12px;font-size:19.5px;color:#aab2c5;line-height:1.45}
+.cc.lkc p{font-size:18.2px;line-height:1.38}
+.cc p a.lk{display:block;margin-top:6px;font-size:14px;color:var(--mut);font:600 15px var(--mono);text-decoration:none;border-bottom:1px solid rgba(148,163,184,.4)}
 .cc .lgs{display:flex;gap:6px}
 .buzz{display:flex;align-items:center;gap:12px;margin-top:18px;flex-wrap:nowrap;overflow:hidden;height:40px}
 .buzz>span{font:700 15px var(--mono);color:var(--pink);letter-spacing:.14em;margin-right:4px;white-space:nowrap}
+.buzz>i.wb{display:inline-flex;align-items:center;gap:7px;background:rgba(29,78,216,.16);border-color:rgba(96,165,250,.45);color:#bfdbfe}
 .buzz>i.ds{display:inline-flex;align-items:center;gap:7px;background:rgba(77,107,254,.14);border-color:rgba(107,132,255,.45);color:#c7d2fe}
 .lg.xs{width:20px;height:20px;border-radius:5px;background:none;border:none}.lg.xs svg{width:17px;height:17px}
 .cc.dsx{--ac:#6b84ff;background:linear-gradient(180deg,rgba(77,107,254,.13),rgba(77,107,254,.03));border-color:rgba(107,132,255,.32)}
@@ -397,6 +400,32 @@ html.static .js{opacity:1!important}
 .t2m span{font:800 104px/1 var(--sans);padding:14px 34px 22px;border-radius:30px;background:#f3ecdf;color:#15120c;box-shadow:0 0 80px rgba(224,179,84,.35)}
 .evo{display:flex;gap:14px;align-items:center;margin-top:50px;font-size:20px;font-weight:700}
 .evo span{padding:9px 16px;border-radius:999px;border:1px solid currentColor}.evo i{font-style:normal;color:var(--dim)}
+.fork{position:relative;width:1720px;height:560px;margin-top:16px}
+.fork>svg{position:absolute;inset:0;width:100%;height:100%}
+.stem{position:absolute;left:560px;top:8px;width:600px;text-align:center}
+.stem b{font-size:28px}.stem span{display:block;font-size:16px;color:var(--mut);margin-top:3px}
+.br{position:absolute;top:236px;width:620px;border-radius:20px;padding:16px 20px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));border:1px solid var(--line)}
+.br.pl{left:70px;border-color:rgba(56,189,248,.4);box-shadow:inset 0 0 0 1px rgba(56,189,248,.12)}
+.br.ol{left:1030px;border-color:rgba(244,114,182,.4);box-shadow:inset 0 0 0 1px rgba(244,114,182,.12)}
+.br .bh{display:flex;align-items:center;gap:12px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.br .bh b{font-size:27px}
+.br .bh>span:last-child{margin-left:auto;font:600 14px var(--mono);color:var(--mut)}
+.br.pl .bh b{color:#7dd3fc}.br.ol .bh b{color:#f9a8d4}
+.bw{display:flex;gap:12px;align-items:flex-start;margin-top:9px}
+.bw>i{flex:none;margin-top:2px}
+.bw2{display:block}
+.bw2 b{font-size:20px}
+.bw2 em{font-style:normal;font:600 13px var(--mono);color:var(--ac);margin-left:8px}
+.bw2 p{font-size:15px;color:#aab2c5;margin-top:3px;line-height:1.3}
+.br .bf{margin-top:11px;padding-top:9px;border-top:1px solid var(--line);font-size:17px;color:#e2e8f0}
+.taxo{margin-top:16px;border-radius:16px;overflow:hidden;border:1px solid var(--line)}
+.taxo div{display:grid;grid-template-columns:180px 1fr 1fr;background:rgba(255,255,255,.03);border-bottom:1px solid var(--line)}
+.taxo div:last-child{border:none}
+.taxo div.hd{background:rgba(255,255,255,.06)}
+.taxo div.hd span,.taxo div.hd b{font-size:15px;letter-spacing:.06em}
+.taxo div span{padding:8px 18px;font:700 14px var(--mono);color:var(--mut);background:rgba(255,255,255,.04)}
+.taxo div b{padding:8px 18px;font-size:16px;font-weight:700}
+.taxo div b.p{color:#7dd3fc}.taxo div b.o{color:#f9a8d4}
 </style>
 </head>
 <body>
@@ -528,7 +557,7 @@ html.static .js{opacity:1!important}
       <div class="cap">RAG · 检索增强生成</div>
     </div>
     <div class="cards">
-      <div class="cc a"><div class="cc-h"><span class="lg" data-l="cursor"></span><b>⌘K 内联编辑</b><em>2023</em></div><p>选中代码，一句话改写</p></div>
+      <div class="cc a lkc"><div class="cc-h"><span class="lg" data-l="cursor"></span><b>⌘K 内联编辑</b><em>2023</em></div><p>选中代码，一句话改写</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="cursor"></span><b>@codebase</b><em>2023</em></div><p>向量检索整个仓库再回答</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="githubcopilot"></span><b>Copilot Chat</b><em>2023.12 GA</em></div><p>IDE 侧栏对话成为标配</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="openai"></span><b>GPTs · 128K</b><em>2023.11</em></div><p>DevDay：定制 GPT、长上下文</p></div>
@@ -807,8 +836,8 @@ html.static .js{opacity:1!important}
       <div class="cc a"><div class="cc-h"><span class="lg m" style="--mc:#ca8a04">R</span><b>Ralph Wiggum Loop</b><em>01</em></div><p>每轮全新上下文，记忆存在 git</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg m" style="--mc:#9a3412">GT</span><b>Gas Town</b><em>01</em></div><p>tmux 编排 20–30 个 Claude Code</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg m" style="--mc:#dc2626">OC</span><b>Clawdbot → OpenClaw</b><em>01</em></div><p>自托管个人 Agent · Mac mini 梗</p></div>
-      <div class="cc a"><div class="cc-h"><span class="lg" data-l="claude"></span><b>Claude Cowork</b><em>01</em></div><p>给所有人的 Claude Code，10 天由 AI 自己写成</p></div>
-      <div class="cc dsx a"><div class="cc-h"><span class="lg" data-l="deepseek"></span><b>mHC · Engram</b><em>01</em></div><p>流形约束超连接 · 条件记忆「存算分离」</p></div>
+      <div class="cc a"><div class="cc-h"><span class="lg" data-l="claude"></span><b>Claude Cowork</b><em>01</em></div><p>给所有人的 Claude Code：说「要什么」，回来的是成品</p><a class="lk" href="https://www.anthropic.com/product/claude-cowork" target="_blank" rel="noopener noreferrer">产品页 ↗</a></div>
+      <div class="cc dsx a lkc"><div class="cc-h"><span class="lg" data-l="deepseek"></span><b>mHC · Engram</b><em>01</em></div><p>流形约束超连接 · 条件记忆「存算分离」</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="cursor"></span><b>Planner·Worker·Judge</b><em>01</em></div><p>数百 Agent 一周写出浏览器</p></div>
     </div>
   </div>
@@ -853,6 +882,41 @@ html.static .js{opacity:1!important}
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR 本月</b><div class="cs"><i>长时运行 Agent 研究预览（02.12）</i><i>2.5 插件市场（02.17）</i><i>异步子代理树</i><i>沙箱网络白名单</i></div></div>
 </section>
 
+<!-- ============ FORK · PERSONAL vs ORGANIZATIONAL ============ -->
+<section class="slide" id="s-fork" data-era="2026">
+  <div class="kicker a">2026 分叉 · AGENT 的两种归属</div>
+  <h2 class="a">同一个 Coding Agent，<span class="grad">长成了两种「同事」</span></h2>
+  <div class="fork a">
+    <svg viewBox="0 0 1720 560">
+      <path class="draw" pathLength="1" d="M860,74 V152 M860,152 C860,198 380,144 380,236 M860,152 C860,198 1340,144 1340,236" fill="none" stroke="#34d399" stroke-width="4" style="--d:.3s"/>
+      <defs><linearGradient id="gfp" x1="0" x2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#34d399"/></linearGradient>
+      <linearGradient id="gfo" x1="0" x2="1"><stop offset="0" stop-color="#f472b6"/><stop offset="1" stop-color="#fbbf24"/></linearGradient></defs>
+    </svg>
+    <div class="stem pop" style="--d:.2s"><b>2026 · Coding Agent</b><span>已经能自己干活 → 归属成了新问题</span></div>
+    <div class="br pl">
+      <div class="bh"><span class="lg" data-l="claude"></span><b>个人 Agent</b><span>属于「我」</span></div>
+      <div class="bw pop" style="--d:.9s"><i class="lg sm" data-l="claude"></i><span class="bw2"><b>Claude Cowork</b><em>01 发布 · 04.09 全量 GA · 09.16 融入每次对话</em><p>说「要什么」而不是「怎么做」，跨文件与工具执行，回来的是成品</p></span></div>
+      <div class="bw pop" style="--d:1.2s"><i class="lg sm m" style="--mc:#1d4ed8">W</i><span class="bw2"><b>WorkBuddy</b><em>03 发布 · 06 企业版 · 国内办公智能体第一</em><p>桌面 Agent 工作台：专家 + 技能 + 连接器，打通腾讯生态与微信远程</p></span></div>
+      <div class="bw pop" style="--d:1.5s"><i class="lg sm" data-l="x"></i><span class="bw2"><b>Grok Bot</b><em>08.11 · Bots 属于个人 Agent</em><p>常驻云端电脑、登录你的工具、只在决策点回来</p></span></div>
+      <div class="bf">记忆你的偏好 · 越来越像你的私人同事</div>
+    </div>
+    <div class="br ol">
+      <div class="bh"><span class="lg" data-l="slack"></span><b>组织 Agent</b><span>属于「团队」</span></div>
+      <div class="bw pop" style="--d:1.05s"><i class="lg sm" data-l="claude"></i><span class="bw2"><b>Claude Tag</b><em>08 · Slack beta · Team/Enterprise</em><p>@Claude 是频道里的一个成员：多人共享、越用越懂、可主动跟进</p></span></div>
+      <div class="bw pop" style="--d:1.35s"><i class="lg sm" data-l="slack"></i><span class="bw2"><b>Slack Code</b><em>08.20</em><p>项目频道即工作现场，PM 也能参与，上线动作需人批准</p></span></div>
+      <div class="bw pop" style="--d:1.65s"><i class="lg sm m" style="--mc:#e0b354">ht</i><span class="bw2"><b>HTalk @me</b><em>见附录 · 同样的三件套</em><p>多人共享同一会话 · ambient 主动 · 异步派发</p></span></div>
+      <div class="bf">沉淀共享上下文 · 权限与花费按组织管控</div>
+    </div>
+  </div>
+  <div class="taxo a">
+    <div class="hd"><span>维度</span><b class="p">个人 Agent</b><b class="o">组织 Agent</b></div>
+    <div><span>归属</span><b class="p">一个人</b><b class="o">一个团队 / 频道</b></div>
+    <div><span>记忆</span><b class="p">记住「我」的偏好与习惯</b><b class="o">记住频道里共享的上下文</b></div>
+    <div><span>触发</span><b class="p">你交代，它后台跑</b><b class="o">任何人 @ 一下就行</b></div>
+    <div><span>形态</span><b class="p">Cowork · WorkBuddy · Grok Bot</b><b class="o">Claude Tag · Slack Code · HTalk</b></div>
+  </div>
+</section>
+
 <!-- ============ MAR ============ -->
 <section class="slide" id="s-mar" data-era="2026">
   <div class="mhead a"><span class="mnum">03</span><div><div class="kicker">2026 · MAR</div><h2>Automations<small>不再需要人类按下回车</small></h2></div></div>
@@ -891,7 +955,7 @@ html.static .js{opacity:1!important}
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="github"></span><b>OpenClaw 星数登顶</b><em>03.03</em></div><p>60 天 25 万星，超越 React</p></div>
     </div>
   </div>
-  <div class="buzz a"><span>热议</span><i>亚马逊宕机 → AI 代码须资深审批</i><i>VS Code 改为周更</i><i>Google Stitch 设计转代码</i><i>Computer Use 上桌面</i></div>
+  <div class="buzz a"><span>热议</span><i class="wb">WorkBuddy 发布（03）· 从编程扩到办公</i><i>亚马逊宕机 → AI 代码须资深审批</i><i>VS Code 改为周更</i><i>Google Stitch 设计转代码</i><i>Computer Use 上桌面</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR 本月</b><div class="cs"><i>2.6 MCP Apps + 团队插件市场（03.03）</i><i>Automations（03.05）</i><i>Composer 2（03.19 · 基座争议）</i></div></div>
 </section>
 
@@ -911,11 +975,11 @@ html.static .js{opacity:1!important}
       <div class="cc a"><div class="cc-h"><span class="lg m" style="--mc:#0d9488">N</span><b>Best-of-N</b><em>04.02</em></div><p>同一需求，多模型隔离比稿</p></div>
       <div class="cc a"><div class="cc-h"><div class="lgs"><span class="lg sm" data-l="openai"></span><span class="lg sm" data-l="claude"></span></div><b>跨厂商审查</b><em>03.30</em></div><p>Codex 插件进 Claude Code：对抗式 review</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="anthropic"></span><b>Mythos · Glasswing</b><em>04.07</em></div><p>AI 挖出数千零日漏洞，限量开放</p></div>
-      <div class="cc a"><div class="cc-h"><span class="lg" data-l="claude"></span><b>Managed Agents · Routines</b><em>04.08/14</em></div><p>托管云 Agent；定时 / Webhook 触发</p></div>
+      <div class="cc a"><div class="cc-h"><span class="lg" data-l="claude"></span><b>Cowork GA · 企业版</b><em>04.09</em></div><p>全付费方案开放，用量大半来自非工程团队</p></div>
       <div class="cc dsx a"><div class="cc-h"><span class="lg" data-l="deepseek"></span><b>DeepSeek-V4</b><em>04.24</em></div><p>1.6T 开源 · 1M 上下文 · CSA/HCA · 国产芯片</p></div>
     </div>
   </div>
-  <div class="buzz a"><span>热议</span><i>Opus 4.7 · xhigh 档</i><i>Claude Design</i><i>Codex 后台 Computer Use</i><i>并行 Agent 一周末烧掉 $2000</i></div>
+  <div class="buzz a"><span>热议</span><i>Managed Agents · Routines（04.08/14）</i><i>Opus 4.7 · xhigh 档</i><i>Claude Design</i><i>Codex 后台 Computer Use</i><i>并行 Agent 一周末烧掉 $2000</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR 本月</b><div class="cs"><i>3.0 Glass（04.02）</i><i>Design Mode</i><i>3.1 Canvas（04.15）</i><i>Cursor SDK（04.29）</i><i>SpaceX 600 亿收购期权</i></div></div>
 </section>
 
@@ -998,7 +1062,7 @@ html.static .js{opacity:1!important}
       <div class="cc a"><div class="cc-h"><span class="lg m" style="--mc:#a16207">⚠</span><b>Config Smells</b><em>06</em></div><p>91% 仓库的 AGENTS.md 有坏味道</p></div>
     </div>
   </div>
-  <div class="buzz a"><span>热议</span><i>Copilot 按量计费</i><i>Zed 1.0</i><i>订阅只覆盖交互式使用</i><i>Windsurf 2.0 内嵌 Devin</i><i>小米 MiMo Code</i></div>
+  <div class="buzz a"><span>热议</span><i>WorkBuddy 企业版（06.05）</i><i>Copilot 按量计费</i><i>Zed 1.0</i><i>订阅只覆盖交互式使用</i><i>Windsurf 2.0 内嵌 Devin</i><i>小米 MiMo Code</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR 本月</b><div class="cs"><i>Auto-review 分类器子代理</i><i>SDK 自定义工具</i><i>Design Mode 语音</i><i>宣布并入 SpaceX</i></div></div>
 </section>
 
@@ -1073,13 +1137,13 @@ html.static .js{opacity:1!important}
     <div class="cards">
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="cursor"></span><b>Origin 代码托管</b><em>08.17</em></div><p>为 Agent 规模设计的 git forge</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="cursor"></span><b>Subscriptions</b><em>08.19</em></div><p>Agent 订阅 PR/Slack/cron，坚持到完成</p></div>
-      <div class="cc a"><div class="cc-h"><span class="lg" data-l="slack"></span><b>Slack Code</b><em>08.20</em></div><p>Agent 在项目频道写码，PM 也能参与</p></div>
-      <div class="cc dsx a"><div class="cc-h"><span class="lg" data-l="deepseek"></span><b>DeepSeek Harness</b><em>08.13</em></div><p>开源 Agent 运行时：一切皆插件</p></div>
+      <div class="cc a"><div class="cc-h"><span class="lg" data-l="claude"></span><b>Claude Tag</b><em>08</em></div><p>@Claude 是频道里的成员：多人共享 · 越用越懂 · 可主动</p><a class="lk" href="https://www.anthropic.com/news/introducing-claude-tag" target="_blank" rel="noopener noreferrer">公告 ↗</a></div>
+      <div class="cc dsx a lkc"><div class="cc-h"><span class="lg" data-l="deepseek"></span><b>DeepSeek Harness</b><em>08.13</em></div><p>开源 Agent 运行时：一切皆插件</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="claude"></span><b>Auto Mode 默认开</b><em>08.14</em></div><p>新会话默认不再逐条审批</p></div>
-      <div class="cc a"><div class="cc-h"><span class="lg" data-l="x"></span><b>Grok Bot</b><em>08.11</em></div><p>常驻云端电脑，登录并使用你的工具，把活干完</p><a href="https://x.ai/news/introducing-grok-bot" target="_blank" rel="noopener noreferrer" style="position:absolute;right:16px;bottom:10px;color:var(--mut);font-size:14px">公告 ↗</a></div>
+      <div class="cc a"><div class="cc-h"><span class="lg" data-l="x"></span><b>Grok Bot</b><em>08.11</em></div><p>常驻云端电脑，登录并使用你的工具，把活干完<br>属个人 Agent：记住你的偏好，只在决策点回来</p><a class="lk" href="https://x.ai/news/introducing-grok-bot" target="_blank" rel="noopener noreferrer">公告 ↗</a></div>
     </div>
   </div>
-  <div class="buzz a"><span>热议</span><i>Meta Muse Code</i><i class="ds"><span class="lg xs" data-l="deepseek"></span>DeepSeek V4-Pro GA · 峰谷定价</i><i>多 Bot 群聊协作 · 只看决策点</i><i>MCP 接入实验室硬件</i></div>
+  <div class="buzz a"><span>热议</span><i>Meta Muse Code</i><i class="ds"><span class="lg xs" data-l="deepseek"></span>DeepSeek V4-Pro GA · 峰谷定价</i><i>Slack Code（08.20）· 项目频道写码</i><i>Anthropic 内部 65% 产品代码由 Tag 生成</i><i>MCP 接入实验室硬件</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR 本月</b><div class="cs"><i>Grok Bot 早期公测（08.11）</i><i>正式并入 SpaceX（08.14）</i><i>Origin（08.17）</i><i>无仓库从零开始 + 一键发布（08.27）</i><i>OpenAI 通知 11.12 停供（08.28）</i></div></div>
 </section>
 
@@ -1112,7 +1176,7 @@ html.static .js{opacity:1!important}
       </svg>
     </div>
     <div class="cards">
-      <div class="cc a"><div class="cc-h"><span class="lg" data-l="openai"></span><b>Agents API</b><em>09.10</em></div><p>Codex harness 托管：会话、压缩、子代理</p></div>
+      <div class="cc a lkc"><div class="cc-h"><span class="lg" data-l="openai"></span><b>Agents API</b><em>09.10</em></div><p>Codex harness 托管：会话、压缩、子代理</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="cursor"></span><b>Coordinator Agent</b><em>09.14</em></div><p>Cursor Projects：协调者分派云端子代理</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="claude"></span><b>服务端权限裁决</b><em>09.10</em></div><p>Managed Agents 的 auto 权限评估</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="docker"></span><b>MicroVM 沙箱</b><em>09.24</em></div><p>「容器不够」：硬件级隔离 Agent</p></div>
@@ -1120,7 +1184,7 @@ html.static .js{opacity:1!important}
       <div class="cc a"><div class="cc-h"><span class="lg m" style="--mc:#475569">SB</span><b>SWE-Bench Pro Verified</b><em>09</em></div><p>封堵泄漏，旧榜单退役</p></div>
     </div>
   </div>
-  <div class="buzz a"><span>热议</span><i class="ds"><span class="lg xs" data-l="deepseek"></span>DeepSeek V4.1-Flash</i><i>Codex CLI 默认语音对话</i><i>Copilot「Code」标签 + Autopilot</i><i>Spec-Anchored &gt; Spec-as-Source</i><i>Claude Sonnet 5.5</i></div>
+  <div class="buzz a"><span>热议</span><i class="ds"><span class="lg xs" data-l="deepseek"></span>DeepSeek V4.1-Flash</i><i>Cowork 融入每次对话（09.16）</i><i>Codex CLI 默认语音对话</i><i>Copilot「Code」标签 + Autopilot</i><i>Spec-Anchored &gt; Spec-as-Source</i><i>Claude Sonnet 5.5</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR 本月</b><div class="cs"><i>Projects beta：协调者 Agent 管理并行子代理（09.14）</i><i>云端多仓库环境</i></div></div>
 </section>
 
@@ -1151,7 +1215,7 @@ html.static .js{opacity:1!important}
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="modelcontextprotocol"></span><b>MCP Gateway</b><em>10</em></div><p>Uber：800 服务器 · 5000 工具 · 一个网关</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="linuxfoundation"></span><b>Skills 进 AAIF</b><em>10.25</em></div><p>SKILL.md 与 MCP 同归中立治理</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="claude"></span><b>Proactive Agent</b><em>10.22</em></div><p>Claude Duet：主动观察、替你起草</p></div>
-      <div class="cc dsx a"><div class="cc-h"><span class="lg" data-l="deepseek"></span><b>Super-agent</b><em>10.31</em></div><p>接单 → 独立执行 → 回原帖回复<br>少占人类注意力 · 研究原型，非正式产品</p><a href="https://github.com/deepseek-ai/dsh-superagent-prototype" target="_blank" rel="noopener noreferrer" style="position:absolute;right:16px;bottom:10px;color:#a5b4fc;font-size:14px">官方仓库 ↗</a></div>
+      <div class="cc dsx a"><div class="cc-h"><span class="lg" data-l="deepseek"></span><b>Super-agent</b><em>10.31</em></div><p>接单 → 独立执行 → 回原帖回复<br>少占人类注意力 · 研究原型，非正式产品</p><a class="lk" href="https://github.com/deepseek-ai/dsh-superagent-prototype" target="_blank" rel="noopener noreferrer">官方仓库 ↗</a></div>
     </div>
   </div>
   <div class="buzz a"><span>热议</span><i>Copilot HydraFusion 多模型路由</i><i>Vibe Code Bench 92%</i><i>Haiku 5.5 · $0.10 子代理</i><i>Gemini 4 Argon</i><i>PAP · Agent 登录网站（10.07）</i></div>
@@ -1460,7 +1524,7 @@ const CONCEPTS={
  '2023':[['Tab 补全','s-prelude','灰色 ghost text，按 Tab 接受'],['英语即编程语言','s-prelude','Karpathy 2023.01'],['复制粘贴编程','s-prelude','ChatGPT 写，人类粘贴'],['⌘K 内联编辑','s-2023','选中代码一句话改写'],['@codebase · RAG','s-2023','向量检索整个仓库'],['Copilot++','s-2023','预测下一处编辑位置'],['Prompt Engineering','s-2023','雕琢提示词'],['AutoGPT','s-2023','早期自主 Agent 热潮'],['GPTs','s-2023','人人可造定制 GPT'],['Generative UI','s-2023','v0：一句话出界面'],['SWE-bench','s-swe','用真实 Issue 评测 AI'],['仓库级预训练','s-2023','DeepSeek-Coder 按仓库组织训练数据']],
  '2024':[['AI 软件工程师','s-2024a','Devin 首秀'],['ACI','s-2024a','为 Agent 设计的计算机接口'],['Issue→Plan→Code','s-2024a','Copilot Workspace'],['Artifacts','s-2024a','边聊边预览'],['Composer','s-2024a','多文件编辑'],['Apply 模型','s-2024a','快速落地 diff'],['Shadow Workspace','s-2024a','后台试改再给你看'],['MLA','s-2024a','DeepSeek 多头潜在注意力，省 KV 缓存'],['价格屠夫','s-2024a','DeepSeek-V2 掀起 API 价格战'],['MoE + FP8','s-2024b','DeepSeek-V3 低成本训练'],['MTP','s-2024b','一次预测多个 token'],['Repo Map','s-2024a','Aider 的仓库地图'],['推理模型','s-2024b','o1：测试时计算'],['Computer Use','s-2024b','模型操作鼠标键盘'],['Prompt-to-App','s-2024b','一句话出可上线应用'],['WebContainers','s-2024b','浏览器里跑 Node'],['Agentic IDE','s-2024b','Windsurf Cascade'],['Agent 模式','s-2024b','Cursor 0.43'],['Plan / Act','s-2024b','先计划再执行'],['.cursorrules','s-2024b','项目级 AI 规则'],['MCP','s-mcp','AI 的 USB-C']],
  '2025':[['Vibe Coding','s-vibe','忘掉代码的存在'],['GRPO','s-2025a','R1 的纯强化学习推理训练'],['DeepSeek 时刻','s-2025a','开源推理冲击算力叙事'],['蒸馏','s-2025a','把推理能力蒸馏进小模型'],['开源周','s-2025a','FlashMLA / DeepEP / 3FS'],['混合思考','s-2025b','一个模型兼具思考与非思考'],['DSA 稀疏注意力','s-2025b','长上下文降本'],['光学上下文压缩','s-ctx','DeepSeek-OCR：用图像存文本'],['自验证推理','s-2025c','Math-V2 自己检查证明'],['思考中调用工具','s-2025c','V3.2：推理链里用工具'],['Autonomy Slider','s-ladder','自治度滑杆'],['终端 Agent','s-2025a','Claude Code / Codex CLI'],['CLAUDE.md','s-2025a','项目记忆文件'],['后台 / 云 Agent','s-2025a','云端并行沙箱'],['Issue → PR','s-2025a','把 Issue 指派给 AI'],['A2A','s-2025a','Agent 间通信协议'],['AI Code Review','s-2025a','BugBot 审 PR'],['Memories','s-2025a','跨会话记忆'],['Context Engineering','s-ctx','为每一步装配信息'],['Context Rot','s-ctx','越长越笨'],['Compaction','s-ctx','自动压缩上下文'],['Spec-driven','s-2025b','需求→设计→任务'],['Subagents','s-2025b','独立上下文子代理'],['Hooks','s-2025b','生命周期钩子'],['AGENTS.md','s-2025b','通用 Agent 说明书'],['Agent Skills','s-2025b','SKILL.md 按需加载'],['Plugins','s-2025b','打包分发能力'],['Worktree 并行','s-2025b','多 Agent 互不干扰'],['自研编码模型','s-2025b','Cursor Composer'],['Agent Manager','s-2025c','Antigravity 管理视图'],['Vibe Hacking','s-2025c','用 Agent 发动攻击'],['AI Slop','s-2025c','低质 AI 产物泛滥'],['AAIF','s-2025c','Linux 基金会 Agent 联盟']],
- '2026':[['Ralph Loop','s-jan','bash 循环，每轮新上下文'],['mHC','s-jan','流形约束超连接，稳定深层训练'],['Engram','s-jan','条件记忆：存算分离'],['CSA / HCA','s-apr','V4 压缩稀疏注意力'],['Model + Harness = Agent','s-may','DeepSeek 的 Agent 公式'],['峰谷定价','s-aug','闲时 API 半价'],['Gas Town','s-jan','20–30 Agent 编排器'],['Personal Agent','s-jan','OpenClaw'],['Cowork','s-jan','给所有人的 Claude Code'],['MCP Apps','s-jan','工具渲染交互 UI'],['Planner-Worker-Judge','s-jan','层级多 Agent'],['Agentic Engineering','s-feb','编排而非编码'],['Agent Teams','s-feb','点对点协作的 Agent 团队'],['Adaptive Thinking','s-feb','自决思考深度'],['Long-running Agent','s-feb','先规划后长跑'],['Plugin Marketplace','s-feb','插件市场'],['Automations','s-mar','事件触发 Agent'],['Auto Mode','s-mar','分类器代替审批'],['ACP','s-mar','Agent Client Protocol'],['Dispatch / Channels','s-mar','手机远程派活'],['Agents Window','s-apr','Agent 控制台'],['Best-of-N','s-apr','多模型比稿'],['跨厂商审查','s-apr','Codex 审 Claude'],['Mythos 级安全','s-apr','AI 挖零日'],['Managed Agents','s-apr','托管云 Agent'],['Routines','s-apr','定时 / Webhook 任务'],['WebMCP','s-may','网页即工具'],['/goal','s-may','目标驱动长跑'],['Dynamic Workflows','s-may','编排即脚本'],['Dreaming','s-may','Agent 自我改进'],['Loop Engineering','s-jun','设计闭环'],['Agentjacking','s-jun','遥测注入劫持'],['Agent Identity','s-jun','Agent 自有账号'],['ARD','s-jun','Agent 资源发现'],['Config Smells','s-jun','配置文件坏味道'],['Model Router','s-jul','逐请求选模型'],['去模型化','s-jul','模型可插拔'],['Self-verification','s-jul','红绿回归自证'],['Human-on-the-loop','s-jul','人只设边界'],['Agent-native Forge','s-aug','Origin 代码托管'],['Subscriptions','s-aug','Agent 订阅事件'],['Chat-ops Coding','s-aug','Slack 频道写码'],['Harness','s-aug','模型无关运行时'],['Grok Bot','s-aug','xAI × Cursor：常驻云端电脑的 AI 同事'],['Show-a-Bot 学习流程','s-aug','跟做一遍流程，保存为可复用 routine'],['Managed Harness','s-sep','托管 Agent 底座'],['Coordinator Agent','s-sep','协调者分派'],['MicroVM Sandbox','s-sep','硬件级隔离'],['Reward Hacking','s-sep','Agent 钻评测空子'],['Spec-anchored','s-sep','规范锚定而非规范即源码'],['Voice-first','s-sep','语音对话编程'],['Agents as Code','s-oct','Agent 即代码仓'],['Super-agent','s-oct','DeepSeek 研究原型：单仓库接单、独立执行、回原讨论回复，少占人类注意力'],['Mods','s-oct','改写 Agent 内部'],['MCP Gateway','s-oct','企业级 MCP 网关'],['Proactive Agent','s-oct','主动型 Agent'],['PAP','s-oct','Agent 登录网站协议']]
+ '2026':[['Ralph Loop','s-jan','bash 循环，每轮新上下文'],['mHC','s-jan','流形约束超连接，稳定深层训练'],['Engram','s-jan','条件记忆：存算分离'],['CSA / HCA','s-apr','V4 压缩稀疏注意力'],['Model + Harness = Agent','s-may','DeepSeek 的 Agent 公式'],['峰谷定价','s-aug','闲时 API 半价'],['Gas Town','s-jan','20–30 Agent 编排器'],['Personal Agent','s-jan','OpenClaw'],['Cowork','s-jan','个人 Agent：说「要什么」，回来的是成品'],['Work Agent','s-fork','从写代码扩到交付办公成品'],['Personal Agent','s-fork','属于个人的 AI 同事，记住你的偏好'],['Organizational Agent','s-fork','属于团队/频道的 AI 成员，共享上下文'],['Claude Tag','s-aug','@Claude 作为频道成员：多人共享、可主动'],['Grok Bot','s-aug','xAI × Cursor：常驻云端电脑的 AI 同事'],['MCP Apps','s-jan','工具渲染交互 UI'],['Planner-Worker-Judge','s-jan','层级多 Agent'],['Agentic Engineering','s-feb','编排而非编码'],['Agent Teams','s-feb','点对点协作的 Agent 团队'],['Adaptive Thinking','s-feb','自决思考深度'],['Long-running Agent','s-feb','先规划后长跑'],['Plugin Marketplace','s-feb','插件市场'],['Automations','s-mar','事件触发 Agent'],['Auto Mode','s-mar','分类器代替审批'],['ACP','s-mar','Agent Client Protocol'],['Dispatch / Channels','s-mar','手机远程派活'],['Agents Window','s-apr','Agent 控制台'],['Best-of-N','s-apr','多模型比稿'],['跨厂商审查','s-apr','Codex 审 Claude'],['Mythos 级安全','s-apr','AI 挖零日'],['Managed Agents','s-apr','托管云 Agent'],['Routines','s-apr','定时 / Webhook 任务'],['WebMCP','s-may','网页即工具'],['/goal','s-may','目标驱动长跑'],['Dynamic Workflows','s-may','编排即脚本'],['Dreaming','s-may','Agent 自我改进'],['Loop Engineering','s-jun','设计闭环'],['Agentjacking','s-jun','遥测注入劫持'],['Agent Identity','s-jun','Agent 自有账号'],['ARD','s-jun','Agent 资源发现'],['Config Smells','s-jun','配置文件坏味道'],['Model Router','s-jul','逐请求选模型'],['去模型化','s-jul','模型可插拔'],['Self-verification','s-jul','红绿回归自证'],['Human-on-the-loop','s-jul','人只设边界'],['Agent-native Forge','s-aug','Origin 代码托管'],['Subscriptions','s-aug','Agent 订阅事件'],['Chat-ops Coding','s-aug','Slack 频道写码'],['Harness','s-aug','模型无关运行时'],['Show-a-Bot 学习流程','s-aug','跟做一遍流程，保存为可复用 routine'],['Managed Harness','s-sep','托管 Agent 底座'],['Coordinator Agent','s-sep','协调者分派'],['MicroVM Sandbox','s-sep','硬件级隔离'],['Reward Hacking','s-sep','Agent 钻评测空子'],['Spec-anchored','s-sep','规范锚定而非规范即源码'],['Voice-first','s-sep','语音对话编程'],['Agents as Code','s-oct','Agent 即代码仓'],['Super-agent','s-oct','DeepSeek 研究原型：单仓库接单、独立执行、回原讨论回复，少占人类注意力'],['Mods','s-oct','改写 Agent 内部'],['MCP Gateway','s-oct','企业级 MCP 网关'],['Proactive Agent','s-oct','主动型 Agent'],['PAP','s-oct','Agent 登录网站协议']]
 };
 (function(){const col={'2023':'#38bdf8','2024':'#a78bfa','2025':'#fb923c','2026':'#34d399'};let h='',c=0;
  Object.keys(CONCEPTS).forEach(y=>{h+='<div class="row"><div class="yl" style="color:'+col[y]+'">'+y+'</div><div class="chips">';CONCEPTS[y].forEach(x=>{c++;h+='<span class="chip" style="--cc:'+col[y]+'" data-go="'+x[1]+'" data-def="'+x[2]+'">'+x[0]+'</span>'});h+='</div></div>'});
