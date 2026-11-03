@@ -438,6 +438,19 @@ html.static .js{opacity:1!important}
 .yhook{margin-top:16px;padding:16px 20px;border-radius:16px;background:linear-gradient(90deg,rgba(224,179,84,.14),rgba(224,179,84,.03));border:1px solid rgba(224,179,84,.34);font-size:20px;line-height:1.5;color:#e8e2d6}
 .yhook b{color:#f0cf86}
 
+.tmap{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-top:24px;height:612px}
+.tmap .tmcol{border-radius:20px;padding:20px 18px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));border:1px solid var(--line);display:flex;flex-direction:column;overflow:hidden}
+.tmap .tmhead{font-size:22px;font-weight:800;line-height:1.2}
+.tmap .tmsub{font:600 12.5px var(--mono);color:var(--mut);margin-top:6px;letter-spacing:.05em}
+.tmap .tmlist{margin-top:12px;padding-top:11px;border-top:1px solid var(--line)}
+.tmap .tmitem{position:relative;padding-left:17px;margin-top:10px}
+.tmap .tmitem>u{position:absolute;left:0;top:7px;width:8px;height:8px;border-radius:50%;background:var(--mc);text-decoration:none}
+
+.tmap .tmitem b{font-size:16px;font-weight:700;line-height:1.35}
+.tmap .tmitem em{font-style:normal;font:500 11.5px var(--mono);color:var(--dim);margin-left:8px;line-height:1.35}
+.tmap .tmnote{margin-top:auto;padding-top:12px;font-size:14px;color:var(--mut);line-height:1.45}
+
+
 .htmini{display:flex;align-items:center;gap:14px}
 .htmini .sc3{padding:14px 22px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--line);font-size:19px;color:#cbd5e1}
 .t2m{margin-top:54px;font:400 120px/1 Georgia,"Times New Roman",serif;color:#f3ecdf;display:flex;align-items:center;gap:30px}
@@ -848,7 +861,7 @@ html.static .js{opacity:1!important}
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="cursor"></span><b>Cursor 2.0 · Composer</b><em>2025.10.29</em></div><p>自研编码模型 + 8 Agent 并行</p></div>
     </div>
   </div>
-  <div class="buzz a"><span>热议</span><i>GitHub Spec Kit</i><i>Sonnet 4.5 连跑 30h</i><i>Plugins 打包分发</i><i>GPT-5 · GPT-5-Codex</i><i class="ds"><span class="lg xs" data-l="deepseek"></span>DeepSeek V3.2-Exp · DSA 稀疏注意力（09）</i></div>
+  <div class="buzz a"><span>热议</span><i>GitHub Spec Kit</i><i>Sonnet 4.5 连跑 30h</i><i>Plugins 打包分发</i><i>GPT-5 · GPT-5-Codex</i><i>国内三强 · Trae 03 / Qoder 08 / CodeBuddy 09.09</i><i class="ds"><span class="lg xs" data-l="deepseek"></span>DeepSeek V3.2-Exp · DSA 稀疏注意力（09）</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR</b><div class="cs"><i>Cursor CLI（08）</i><i>1.7 Hooks（09）</i><i>2.0 自研 Composer · 多 Agent · 内置浏览器（10.29）</i></div></div>
 </section>
 
@@ -1353,6 +1366,40 @@ html.static .js{opacity:1!important}
 </section>
 
 <!-- ============ INDEX ============ -->
+<!-- ============ TOOL LANDSCAPE ============ -->
+<section class="slide" id="s-tools" data-era="all">
+  <div class="kicker a">谱系 · TOOL LANDSCAPE</div>
+  <h2 class="a">同一个概念，<span class="grad">长成了五种形态</span></h2>
+  <div class="tmap">
+    <div class="tmcol a">
+      <div class="tmhead">IDE · 整体重写</div><div class="tmsub">EDITOR FORK · AGENT FIRST</div>
+      <div class="tmlist"><div class="tmitem"><u style="--mc:#34d399"></u><b>Cursor</b><em>Anysphere · VS Code 分叉</em></div><div class="tmitem"><u style="--mc:#34d399"></u><b>Windsurf</b><em>Codeium</em></div><div class="tmitem"><u style="--mc:#34d399"></u><b>Trae</b><em>字节 · 03 国内版 / 06 开放</em></div><div class="tmitem"><u style="--mc:#34d399"></u><b>Qoder</b><em>阿里 · 08 · Quest 模式</em></div><div class="tmitem"><u style="--mc:#34d399"></u><b>CodeBuddy</b><em>腾讯 · 09.09 公测</em></div><div class="tmitem"><u style="--mc:#34d399"></u><b>Antigravity</b><em>Google · 2025.11.18</em></div><div class="tmitem"><u style="--mc:#34d399"></u><b>Kiro</b><em>AWS · 07 · 规范驱动</em></div></div>
+      <div class="tmnote">编辑器整个重写，Agent 是主角，不再是插件</div>
+    </div>
+    <div class="tmcol a">
+      <div class="tmhead">终端 / CLI</div><div class="tmsub">TERMINAL AGENT</div>
+      <div class="tmlist"><div class="tmitem"><u style="--mc:#a78bfa"></u><b>Claude Code</b><em>Anthropic · 02.24</em></div><div class="tmitem"><u style="--mc:#a78bfa"></u><b>Codex CLI</b><em>OpenAI · 04 / 05</em></div><div class="tmitem"><u style="--mc:#a78bfa"></u><b>Gemini CLI</b><em>Google · 06</em></div><div class="tmitem"><u style="--mc:#a78bfa"></u><b>Crush</b><em>Charm · TUI</em></div><div class="tmitem"><u style="--mc:#a78bfa"></u><b>Amp</b><em>Sourcegraph</em></div><div class="tmitem"><u style="--mc:#a78bfa"></u><b>OpenCode</b><em>开源</em></div><div class="tmitem"><u style="--mc:#a78bfa"></u><b>Continue</b><em>开源</em></div><div class="tmitem"><u style="--mc:#a78bfa"></u><b>Aider</b><em>开源</em></div><div class="tmitem"><u style="--mc:#a78bfa"></u><b>Qwen Code</b><em>阿里</em></div><div class="tmitem"><u style="--mc:#a78bfa"></u><b>CodeBuddy Code</b><em>腾讯 · CLI</em></div></div>
+      <div class="tmnote">不在 IDE 里，在 shell 里；可脚本化、可后台跑</div>
+    </div>
+    <div class="tmcol a">
+      <div class="tmhead">插件 · 长在编辑器上</div><div class="tmsub">PLUGIN</div>
+      <div class="tmlist"><div class="tmitem"><u style="--mc:#38bdf8"></u><b>Augment</b><em>Context Engine 实时索引</em></div><div class="tmitem"><u style="--mc:#38bdf8"></u><b>Kilo Code</b><em>开源 · 编排 / 架构 / 编码 / 调试</em></div><div class="tmitem"><u style="--mc:#38bdf8"></u><b>Cline</b><em>开源</em></div><div class="tmitem"><u style="--mc:#38bdf8"></u><b>GitHub Copilot</b><em>补全起家，转 Agent</em></div></div>
+      <div class="tmnote">不改你的编辑器，能力长在上面</div>
+    </div>
+    <div class="tmcol a">
+      <div class="tmhead">云 / 组织</div><div class="tmsub">CLOUD & ORG</div>
+      <div class="tmlist"><div class="tmitem"><u style="--mc:#fb923c"></u><b>Devin</b><em>Cognition</em></div><div class="tmitem"><u style="--mc:#fb923c"></u><b>Droid</b><em>Factory · 重构 / 事故 / 迁移</em></div><div class="tmitem"><u style="--mc:#fb923c"></u><b>Jules</b><em>Google</em></div><div class="tmitem"><u style="--mc:#fb923c"></u><b>Codex 云</b><em>OpenAI · 并行沙箱</em></div><div class="tmitem"><u style="--mc:#fb923c"></u><b>Cursor 后台</b><em>云端跑完再回来</em></div></div>
+      <div class="tmnote">跑在你看不见的地方，回来交结果</div>
+    </div>
+    <div class="tmcol a">
+      <div class="tmhead">对话 → 能跑的东西</div><div class="tmsub">PROMPT TO APP</div>
+      <div class="tmlist"><div class="tmitem"><u style="--mc:#f472b6"></u><b>v0</b><em>Vercel</em></div><div class="tmitem"><u style="--mc:#f472b6"></u><b>Bolt</b><em>StackBlitz</em></div><div class="tmitem"><u style="--mc:#f472b6"></u><b>Lovable</b><em></em></div><div class="tmitem"><u style="--mc:#f472b6"></u><b>Replit</b><em></em></div></div>
+      <div class="tmnote">不给你代码，直接给能跑的应用</div>
+    </div>
+  </div>
+  <div class="cstrip a" style="bottom:52px;height:96px;align-items:center"><span class="lg sm" data-l="xiaomi"></span><b>国内 2025</b><div class="cs" style="font-size:16px;flex:1;min-width:0;flex-wrap:wrap;row-gap:8px;align-content:center"><i>字节 Trae：03 国内版 / 06 开放，3 个月月活百万</i><i>阿里 Qoder：08 上线，Quest 委托，30% 代码 AI 生成</i><i>腾讯 CodeBuddy：09.09 公测，90% 工程师在用，新增代码过半 AI 生成</i></div></div>
+</section>
+
 <section class="slide" id="s-index" data-era="all">
   <div class="kicker a">概念索引 · 悬停看释义 · 点击跳转</div>
   <h2 class="a" style="font-size:54px">三年 <span class="grad" id="idxcount">100+</span> 个新概念</h2>
