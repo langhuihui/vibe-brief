@@ -282,6 +282,22 @@ h2 small{display:block;font-size:26px;font-weight:500;color:var(--mut);letter-sp
 .cal .m.now .n{color:var(--pink)}
 .cal .m.q{opacity:.45;border-style:dashed}
 
+.qcal{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:34px}
+.qcal .q{height:344px;border-radius:22px;padding:24px 26px;display:grid;grid-template-columns:132px 1fr;gap:22px;background:linear-gradient(180deg,rgba(251,146,60,.11),rgba(255,255,255,.015));border:1px solid rgba(251,146,60,.24);cursor:pointer;transition:transform .2s,border-color .2s}
+.qcal .q:hover{translate:0 -6px;border-color:var(--ac)}
+.qcal .q .ql{display:flex;flex-direction:column}
+.qcal .q .qn{font:900 62px/1 var(--sans);color:rgba(251,146,60,.92);letter-spacing:-.04em}
+.qcal .q .qm{font:600 15px var(--mono);color:var(--mut);margin-top:8px;letter-spacing:.08em}
+.qcal .q .qg{margin-top:auto;display:flex;gap:6px;flex-wrap:wrap}
+.qcal .q .qw{font-size:29px;font-weight:800;line-height:1.2}
+.qcal .q .qs{font-size:17px;color:var(--mut);margin-top:9px;line-height:1.45}
+.qcal .q .qx{margin-top:11px;display:flex;flex-wrap:wrap;gap:6px}
+.qcal .q .qx i{font-style:normal;font:600 13px var(--mono);padding:4px 9px;border-radius:999px;background:rgba(251,146,60,.15);border:1px solid rgba(251,146,60,.32);color:#fdba74}
+.qcal .q .qd{margin-top:13px;padding-top:11px;border-top:1px solid var(--line)}
+.qcal .q .qd i{display:block;font-style:normal;font-size:15.5px;color:#aab2c5;line-height:1.62}
+.qcal .q .qd i b{font:600 13.5px var(--mono);color:var(--ac);margin-right:9px}
+
+
 /* shift */
 .chain{position:relative;height:500px;margin-top:30px}
 .chain .nd{position:absolute;width:220px;text-align:center;transform:translateX(-50%)}
@@ -667,6 +683,50 @@ html.static .js{opacity:1!important}
 </section>
 
 <!-- ============ 10 VIBE CODING ============ -->
+<!-- ============ 2025 QUARTERS ============ -->
+<section class="slide" id="s-2025" data-era="2025">
+  <div class="kicker a">2025 · 一个季度一个转折</div>
+  <h2 class="a" style="font-size:76px">2025：<span class="grad">从「全凭感觉」到「先写规范」</span></h2>
+  <div class="qcal">
+    <div class="q a" data-go="s-vibe">
+      <div class="ql"><div class="qn">Q1</div><div class="qm">01 – 03</div><div class="qg"><span class="lg sm" data-l="openai"></span><span class="lg sm" data-l="deepseek"></span><span class="lg sm" data-l="claude"></span></div></div>
+      <div class="qr">
+        <div class="qw">有了名字</div>
+        <div class="qs">Karpathy 造词，终端 Agent 同期起步</div>
+        <div class="qx"><i>Vibe Coding</i><i>DeepSeek-R1</i><i>Claude Code</i></div>
+        <div class="qd"><i><b>01.20</b>DeepSeek-R1 · GRPO 纯 RL 推理，「DeepSeek 时刻」</i><i><b>02.02</b>「Vibe Coding」诞生</i><i><b>02.24</b>Claude Code · 终端 Agent + CLAUDE.md 记忆</i><i><b>02</b>DeepSeek 开源周：FlashMLA · DeepEP · 3FS</i><i><b>03</b>空窗 · 全年唯一没有标志性新词的月份</i></div>
+      </div>
+    </div>
+    <div class="q a" data-go="s-2025a">
+      <div class="ql"><div class="qn">Q2</div><div class="qm">04 – 06</div><div class="qg"><span class="lg sm" data-l="openai"></span><span class="lg sm" data-l="google"></span><span class="lg sm" data-l="claude"></span><span class="lg sm" data-l="cursor"></span></div></div>
+      <div class="qr">
+        <div class="qw">终端 Agent 元年</div>
+        <div class="qs">Agent 走出 IDE，进入终端与云</div>
+        <div class="qx"><i>Codex CLI</i><i>Coding Agent</i><i>Context Engineering</i></div>
+        <div class="qd"><i><b>04 / 05</b>Codex CLI 开源 + 云端并行沙箱</i><i><b>05</b>Coding Agent · Issue 指派给 AI，自动开 PR</i><i><b>05 / 06</b>后台 Agent · BugBot 云端跑任务、审 PR</i><i><b>06</b>Gemini CLI · 开源终端 Agent，免费额度大</i><i><b>06</b>Context Engineering · 为每步装配恰好的信息</i></div>
+      </div>
+    </div>
+    <div class="q a" data-go="s-2025b">
+      <div class="ql"><div class="qn">Q3</div><div class="qm">07 – 09</div><div class="qg"><span class="lg sm" data-l="cursor"></span><span class="lg sm" data-l="claude"></span><span class="lg sm" data-l="openai"></span></div></div>
+      <div class="qr">
+        <div class="qw">先写规范，再写码</div>
+        <div class="qs">Spec 驱动与 AGENTS.md 成为通用约定</div>
+        <div class="qx"><i>Kiro · SDD</i><i>AGENTS.md</i><i>Subagents · Hooks</i></div>
+        <div class="qd"><i><b>07</b>Kiro · Spec-driven Development 需求→设计→任务</i><i><b>07</b>删库事件 · Agent 误删生产库，还「编」了数据</i><i><b>08</b>AGENTS.md · 跨工具通用的 Agent 说明书</i><i><b>08</b>DeepSeek V3.1 · 兼容 Anthropic API，可「换芯」</i><i><b>09</b>GPT-5 · GPT-5-Codex · Sonnet 4.5 连跑 30 小时</i></div>
+      </div>
+    </div>
+    <div class="q a" data-go="s-2025c">
+      <div class="ql"><div class="qn">Q4</div><div class="qm">10 – 12</div><div class="qg"><span class="lg sm" data-l="cursor"></span><span class="lg sm" data-l="claude"></span><span class="lg sm" data-l="deepseek"></span></div></div>
+      <div class="qr">
+        <div class="qw">主流化，与反噬</div>
+        <div class="qs">进了词典，也上了事故报告</div>
+        <div class="qx"><i>Agent Skills</i><i>Cursor 2.0</i><i>年度词汇</i><i>AAIF</i></div>
+        <div class="qd"><i><b>10</b>Agent Skills · SKILL.md 渐进披露专业能力</i><i><b>10</b>DeepSeek-OCR · 光学上下文压缩</i><i><b>10.29</b>Cursor 2.0 · 自研 Composer + 8 Agent 并行</i><i><b>11</b>Collins 年度词汇：vibe coding</i><i><b>12</b>AAIF · MCP 与 AGENTS.md 交给 Linux 基金会</i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="slide" id="s-vibe" data-era="2025">
   <svg class="wave" viewBox="0 0 1920 220" preserveAspectRatio="none"><path id="wv1" d="" fill="none" stroke="#fb923c" stroke-width="2"/><path id="wv2" d="" fill="none" stroke="#f472b6" stroke-width="1.5" opacity=".6"/></svg>
   <div class="kicker a">2025.02.02 · 命名时刻</div>
