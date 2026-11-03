@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
 <title>Vibe Coding 简史 · 2023.11 — 2026.11</title>
 <style>
 :root{
@@ -93,11 +94,18 @@ h2 small{display:block;font-size:26px;font-weight:500;color:var(--mut);letter-sp
 .cstrip .cs i{font-style:normal;font-size:18px;color:#dbe4f0;white-space:nowrap;padding:6px 13px;border-radius:10px;background:rgba(255,255,255,.05)}
 
 /* HUD */
-#hud{position:absolute;left:0;right:0;bottom:0;height:40px;display:flex;align-items:center;justify-content:space-between;padding:0 100px 14px;font:500 15px var(--mono);color:var(--dim);z-index:10;pointer-events:none}
+#hud{position:absolute;left:0;right:0;bottom:0;height:48px;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:0 100px 14px;font:500 15px var(--mono);color:var(--dim);z-index:10;pointer-events:none}
 #prog{position:absolute;left:0;top:0;height:4px;background:linear-gradient(90deg,var(--c23),var(--c24),var(--c25),var(--c26));transition:width .5s ease;z-index:10}
 #hud .k{color:var(--mut)}
-#nav-l,#nav-r{position:absolute;top:0;bottom:0;width:70px;z-index:5;cursor:pointer}
-#nav-l{left:0}#nav-r{right:0}
+#hud-title{flex:1;text-align:center;color:var(--mut);font-weight:600;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:720px}
+#chapters{position:absolute;left:50%;top:34px;transform:translateX(-50%);display:flex;gap:8px;z-index:31;pointer-events:auto}
+#chapters button{font:600 13px var(--mono);letter-spacing:.06em;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:rgba(10,14,22,.55);color:var(--dim);cursor:pointer;backdrop-filter:blur(6px);transition:color .2s,border-color .2s,background .2s}
+#chapters button:hover{color:#fff;border-color:rgba(255,255,255,.28)}
+#chapters button.on{color:#0b0f16;background:var(--ch,#22d3ee);border-color:transparent}
+#nav-l,#nav-r{position:absolute;top:50%;margin-top:-28px;width:56px;height:56px;border-radius:50%;z-index:15;cursor:pointer;border:1px solid var(--line);background:rgba(10,14,22,.35);color:var(--mut);display:flex;align-items:center;justify-content:center;font-size:28px;line-height:1;opacity:0;transition:opacity .25s,color .2s,border-color .2s,background .2s;backdrop-filter:blur(6px);pointer-events:auto}
+#nav-l{left:18px}#nav-r{right:18px}
+#stage:hover #nav-l,#stage:hover #nav-r,#nav-l:focus-visible,#nav-r:focus-visible{opacity:.85}
+#nav-l:hover,#nav-r:hover{opacity:1;color:#fff;border-color:var(--ac,#22d3ee);background:rgba(34,211,238,.16)}
 
 /* Scrubbable progress: native range supports mouse, touch and keyboard. */
 #seek{position:absolute;top:0;left:0;width:100%;height:28px;margin:0;z-index:30;cursor:ew-resize;appearance:none;-webkit-appearance:none;background:transparent;touch-action:none}
@@ -164,10 +172,21 @@ h2 small{display:block;font-size:26px;font-weight:500;color:var(--mut);letter-sp
 .code .ln{display:flex;white-space:pre}
 .code .ln .n{width:70px;text-align:right;padding-right:22px;color:#3b4456;flex:none}
 .kw{color:#c084fc}.fn{color:#60a5fa}.st{color:#86efac}.cm{color:#64748b}.nu{color:#fbbf24}
-.ghost .ln{animation:ghost 7s ease infinite}
-@keyframes ghost{0%,18%{opacity:0;color:#475569;filter:none}26%,62%{opacity:.6;color:#64748b}70%,100%{opacity:1;color:#e2e8f0}}
-.tabkey{position:absolute;right:36px;bottom:30px;font:700 22px var(--mono);padding:12px 20px;border-radius:12px;border:2px solid #475569;color:#94a3b8;animation:tabk 7s ease infinite}
-@keyframes tabk{0%,60%{transform:none;border-color:#475569;color:#94a3b8;box-shadow:none}64%{transform:translateY(4px);border-color:var(--ac);color:#fff;box-shadow:0 0 30px var(--ac)}72%,100%{transform:none;border-color:#475569;color:#94a3b8}}
+.ghost-wrap{align-items:flex-start}
+.ghost-line{color:#475569;opacity:0;white-space:pre;line-height:1.75;flex:1}
+.ghost-line.show{opacity:.7;color:#64748b}
+.ghost-line.done{opacity:1;color:#7ee0b8;text-shadow:0 0 14px rgba(126,224,184,.35)}
+.tabkey{position:absolute;right:36px;bottom:30px;font:700 22px var(--mono);padding:12px 20px;border-radius:12px;border:2px solid #475569;color:#94a3b8;transition:transform .2s,border-color .2s,color .2s,box-shadow .2s}
+.tabkey.flash{transform:translateY(4px);border-color:var(--ac);color:#fff;box-shadow:0 0 30px var(--ac);animation:keyflash .45s ease 3}
+@keyframes keyflash{50%{background:rgba(34,211,238,.28)}}
+.acc-chip{position:absolute;right:36px;bottom:92px;font:600 16px var(--mono);color:var(--c26);opacity:0;transform:translateY(8px);pointer-events:none}
+.acc-chip.show{animation:chipup 1.6s ease forwards}
+@keyframes chipup{0%{opacity:0;transform:translateY(8px)}18%{opacity:1;transform:translateY(0)}80%{opacity:1}100%{opacity:0;transform:translateY(-10px)}}
+.foot-note{position:absolute;left:100px;right:100px;bottom:108px;font:500 16px var(--mono);color:var(--dim);display:flex;align-items:center;gap:10px;border-top:1px dashed rgba(255,255,255,.12);padding-top:12px;z-index:3;pointer-events:none}
+.foot-note::before{content:"//";color:var(--ac)}
+.slide.has-buzz .foot-note{bottom:168px}
+.slide.has-cstrip .foot-note{bottom:140px}
+.slide.has-buzz.has-cstrip .foot-note{bottom:200px}
 
 /* spine */
 #spine{position:relative;width:1720px;height:640px;margin-top:20px}
@@ -330,6 +349,14 @@ html.static *,html.static *::before,html.static *::after{animation-duration:0s!i
 html.static .a,html.static .pop,html.static .stop,html.static #spine .ms{opacity:1!important}
 html.static .ladder .fillbar{width:100%!important}html.static .ladder .knob{left:100%!important}
 html.static .term .l{opacity:1!important}
+html.static .ghost-line{opacity:1!important;color:#7ee0b8!important}
+html.static .acc-chip{opacity:0!important}
+@media (prefers-reduced-motion:reduce){
+  html:not(.force-motion) *,html:not(.force-motion) *::before,html:not(.force-motion) *::after{animation-duration:0s!important;animation-delay:0s!important;transition:none!important}
+  html:not(.force-motion) .a,html:not(.force-motion) .pop,html:not(.force-motion) .stop,html:not(.force-motion) #spine .ms{opacity:1!important}
+  html:not(.force-motion) .ladder .fillbar{width:100%!important}html:not(.force-motion) .ladder .knob{left:100%!important}
+  html:not(.force-motion) .ghost-line{opacity:1!important;color:#7ee0b8!important}
+}
 @media print{html,body{overflow:visible}}
 .slide[data-era="ht"]{--ac:#e0b354}
 .slide[data-era="ht"] .grad{background:linear-gradient(92deg,#f0cf86,#f3ecdf 60%,#e0b354);-webkit-background-clip:text;background-clip:text}
@@ -493,7 +520,7 @@ html.static .js{opacity:1!important}
 <input id="seek" type="range" min="0" max="0" value="0" step="1" aria-label="拖动跳转幻灯片" title="点击或拖动跳页；方向键微调" />
 
 <!-- ============ 01 COVER ============ -->
-<section class="slide cover active" id="s-cover" data-era="all">
+<section class="slide cover active" id="s-cover" data-title="封面" data-era="all">
   <div class="cover-l">
     <div class="kicker a">2023.11 — 2026.11 · 以 Cursor 为脉络</div>
     <h1 class="a">Vibe Coding<br><span class="grad">简史</span></h1>
@@ -526,7 +553,7 @@ html.static .js{opacity:1!important}
 </section>
 
 <!-- ============ 02 AUTONOMY SLIDER ============ -->
-<section class="slide" id="s-ladder" data-era="all">
+<section class="slide" id="s-ladder" data-title="自治滑杆" data-era="all">
   <div class="kicker a">全景 · THE AUTONOMY SLIDER</div>
   <h2 class="a">三年只发生了一件事：<span class="grad">把自治滑杆一路推到右边</span></h2>
   <div class="ladder a">
@@ -545,7 +572,7 @@ html.static .js{opacity:1!important}
 </section>
 
 <!-- ============ 03 PRELUDE ============ -->
-<section class="slide" id="s-prelude" data-era="2023">
+<section class="slide" id="s-prelude" data-title="前传 · Tab" data-era="2023">
   <div class="kicker a">前传 · 2021 — 2023</div>
   <h2 class="a">Tab 键时代<small>AI 先学会了「猜你下一行」</small></h2>
   <div class="split">
@@ -561,30 +588,26 @@ html.static .js{opacity:1!important}
         <div class="code">
           <div class="ln"><span class="n">1</span><span class="cm">// 判断素数</span></div>
           <div class="ln"><span class="n">2</span><span><span class="kw">function</span> <span class="fn">isPrime</span>(n) {</span></div>
-          <div class="ghost">
-            <div class="ln"><span class="n">3</span>  if (n &lt; 2) return false;</div>
-            <div class="ln"><span class="n">4</span>  for (let i = 2; i * i &lt;= n; i++)</div>
-            <div class="ln"><span class="n">5</span>    if (n % i === 0) return false;</div>
-            <div class="ln"><span class="n">6</span>  return true;</div>
-          </div>
+          <div class="ln ghost-wrap"><span class="n">3</span><span class="ghost-line" id="ghostText" data-text="  if (n &lt; 2) return false;&#10;  for (let i = 2; i * i &lt;= n; i++)&#10;    if (n % i === 0) return false;&#10;  return true;"> </span></div>
           <div class="ln"><span class="n">7</span>}</div>
         </div>
       </div>
-      <div class="tabkey">Tab ⇥</div>
+      <div class="acc-chip" id="accChip">+1 accepted</div>
+      <div class="tabkey" id="tabKey">Tab ⇥</div>
     </div>
   </div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR</b><div class="cs"><i>2022 Anysphere 成立（MIT 四人）</i><i>2023.03 发布</i><i>VS Code 分叉</i><i>⌘K · Chat · Copilot++</i></div></div>
 </section>
 
 <!-- ============ 04 CURSOR SPINE ============ -->
-<section class="slide" id="s-spine" data-era="all">
+<section class="slide" id="s-spine" data-title="Cursor 时间线" data-era="all">
   <div class="kicker a">主线 · CURSOR TIMELINE</div>
   <h2 class="a">一个编辑器的进化：<span class="grad">编辑器 → Agent → 平台</span></h2>
   <div id="spine" class="a"></div>
 </section>
 
 <!-- ============ 05 2023 ============ -->
-<section class="slide" id="s-2023" data-era="2023">
+<section class="slide has-buzz has-cstrip" id="s-2023" data-title="2023 · 对话" data-era="2023">
   <div class="mhead a"><span class="mnum">23</span><div><div class="kicker">2023 · Q4 起点</div><h2>对话即编程<small>把整个代码库塞进对话框</small></h2></div></div>
   <div class="mgrid">
     <div class="hero a">
@@ -625,10 +648,12 @@ html.static .js{opacity:1!important}
   </div>
   <div class="buzz a"><span>热议</span><i>Prompt Engineering 当红</i><i>AutoGPT 自主 Agent 热潮</i><i>「复制粘贴工程师」</i><i>SWE-bench 基准（10）</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR</b><div class="cs"><i>Copilot++ 预测下一处编辑</i><i>⌘K</i><i>Chat with codebase</i><i>@Docs</i></div></div>
+
+  <div class="foot-note a">自动补全不是终点 —— 对话才是把整仓塞进提示的入口</div>
 </section>
 
 <!-- ============ 06 2024 H1 ============ -->
-<section class="slide" id="s-2024a" data-era="2024">
+<section class="slide has-buzz has-cstrip" id="s-2024a" data-title="2024 · H1" data-era="2024">
   <div class="mhead a"><span class="mnum">24</span><div><div class="kicker">2024 · H1</div><h2>从补全到「AI 工程师」<small>一次改多个文件</small></h2></div></div>
   <div class="mgrid">
     <div class="hero a">
@@ -652,10 +677,12 @@ html.static .js{opacity:1!important}
   </div>
   <div class="buzz a"><span>热议</span><i>Apply 模型：快速落地 diff</i><i class="ds"><span class="lg xs" data-l="deepseek"></span>DeepSeek-Coder-V2 开源追平闭源（06）</i><i>Aider · Repo Map</i><i>Cognition 估值 20 亿美元</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR</b><div class="cs"><i>Composer 多文件编辑</i><i>Shadow Workspace 后台试改</i><i>2024.08 A 轮 · 估值 4 亿美元</i></div></div>
+
+  <div class="foot-note a">一次改多个文件，人类的工作从敲键盘变成了审 diff</div>
 </section>
 
 <!-- ============ 07 SWE-BENCH ============ -->
-<section class="slide" id="s-swe" data-era="all">
+<section class="slide" id="s-swe" data-title="SWE-bench" data-era="all">
   <div class="kicker a">能力曲线 · SWE-BENCH</div>
   <h2 class="a">修复真实 GitHub Issue：<span class="grad">2% → 94%</span></h2>
   <div class="bars a" id="bars"></div>
@@ -664,7 +691,7 @@ html.static .js{opacity:1!important}
 </section>
 
 <!-- ============ 08 2024 H2 ============ -->
-<section class="slide" id="s-2024b" data-era="2024">
+<section class="slide has-buzz has-cstrip" id="s-2024b" data-title="2024 · H2" data-era="2024">
   <div class="mhead a"><span class="mnum">24</span><div><div class="kicker">2024 · H2</div><h2>Prompt-to-App 与 Agentic IDE<small>一句话出一个能上线的应用</small></h2></div></div>
   <div class="mgrid">
     <div class="hero a">
@@ -700,10 +727,12 @@ html.static .js{opacity:1!important}
   </div>
   <div class="buzz a"><span>热议</span><i>Replit Agent</i><i>Copilot 支持 Claude / Gemini</i><i>Qwen2.5-Coder 开源</i><i>Cline · Plan/Act</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR</b><div class="cs"><i>Agent 模式（0.43 · 2024.11）</i><i>收购 Supermaven → Cursor Tab</i><i>2024.12 估值 26 亿美元</i></div></div>
+
+  <div class="foot-note a">编辑器被重写：Agent 成了主角，不再是插件</div>
 </section>
 
 <!-- ============ 09 MCP ============ -->
-<section class="slide" id="s-mcp" data-era="2024">
+<section class="slide" id="s-mcp" data-title="MCP" data-era="2024">
   <div class="kicker a">2024.11.25 · MODEL CONTEXT PROTOCOL</div>
   <h2 class="a">MCP：<span class="grad">AI 世界的 USB-C</span></h2>
   <div class="mcpwrap">
@@ -724,7 +753,7 @@ html.static .js{opacity:1!important}
 
 <!-- ============ 10 VIBE CODING ============ -->
 <!-- ============ 2025 QUARTERS ============ -->
-<section class="slide" id="s-2025" data-era="2025">
+<section class="slide" id="s-2025" data-title="2025 · 开年" data-era="2025">
   <div class="kicker a">2025 · 一个季度一个转折</div>
   <h2 class="a" style="font-size:76px">2025：<span class="grad">从「全凭感觉」到「先写规范」</span></h2>
   <div class="qcal">
@@ -765,9 +794,11 @@ html.static .js{opacity:1!important}
       </div>
     </div>
   </div>
+
+  <div class="foot-note a">终端 Agent 让「派任务」变成默认姿势</div>
 </section>
 
-<section class="slide" id="s-vibe" data-era="2025">
+<section class="slide" id="s-vibe" data-title="Vibe Coding" data-era="2025">
   <svg class="wave" viewBox="0 0 1920 220" preserveAspectRatio="none"><path id="wv1" d="" fill="none" stroke="#fb923c" stroke-width="2"/><path id="wv2" d="" fill="none" stroke="#f472b6" stroke-width="1.5" opacity=".6"/></svg>
   <div class="kicker a">2025.02.02 · 命名时刻</div>
   <h2 class="a" style="font-size:96px">「Vibe Coding」<span class="grad">诞生</span></h2>
@@ -787,7 +818,7 @@ html.static .js{opacity:1!important}
 </section>
 
 <!-- ============ 11 2025 H1 ============ -->
-<section class="slide" id="s-2025a" data-era="2025">
+<section class="slide has-buzz has-cstrip" id="s-2025a" data-title="2025 · H1" data-era="2025">
   <div class="mhead a"><span class="mnum">25</span><div><div class="kicker">2025 · H1</div><h2>终端 Agent 元年<small>Agent 走出 IDE，进入终端和云</small></h2></div></div>
   <div class="mgrid">
     <div class="hero a">
@@ -817,10 +848,12 @@ html.static .js{opacity:1!important}
   </div>
   <div class="buzz a"><span>热议</span><i class="ds"><span class="lg xs" data-l="deepseek"></span>DeepSeek 开源周：FlashMLA · DeepEP · 3FS（02）</i><i>Jules · A2A</i><i>Windsurf 收购战：OpenAI → Google → Cognition</i><i>Claude 4</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR</b><div class="cs"><i>0.45 MCP + Rules（01）</i><i>Background Agent（05）</i><i>1.0 · BugBot · Memories（06）</i><i>计价风波（06）</i></div></div>
+
+  <div class="foot-note a">后台跑完再回来 —— 人开始只设边界</div>
 </section>
 
 <!-- ============ 12 CONTEXT ENGINEERING ============ -->
-<section class="slide" id="s-ctx" data-era="2025">
+<section class="slide" id="s-ctx" data-title="Context Engineering" data-era="2025">
   <div class="kicker a">2025.06 · 新词</div>
   <h2 class="a" style="font-size:84px">Context Engineering<br><span class="grad">Prompt 只是上下文的一小块</span></h2>
   <div class="ctxbar a" id="ctxbar"></div>
@@ -835,7 +868,7 @@ html.static .js{opacity:1!important}
 </section>
 
 <!-- ============ 13 2025 H2 ============ -->
-<section class="slide" id="s-2025b" data-era="2025">
+<section class="slide has-buzz has-cstrip" id="s-2025b" data-title="2025 · H2" data-era="2025">
   <div class="mhead a"><span class="mnum">25</span><div><div class="kicker">2025 · H2</div><h2>规范、技能与可组合<small>先写 Spec，再让 Agent 写码</small></h2></div></div>
   <div class="mgrid">
     <div class="hero a">
@@ -864,10 +897,12 @@ html.static .js{opacity:1!important}
   </div>
   <div class="buzz a"><span>热议</span><i>GitHub Spec Kit</i><i>Sonnet 4.5 连跑 30h</i><i>Plugins 打包分发</i><i>GPT-5 · GPT-5-Codex</i><i>国内三强 · Trae 03 / Qoder 08 / CodeBuddy 09.09</i><i class="ds"><span class="lg xs" data-l="deepseek"></span>DeepSeek V3.2-Exp · DSA 稀疏注意力（09）</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR</b><div class="cs"><i>Cursor CLI（08）</i><i>1.7 Hooks（09）</i><i>2.0 自研 Composer · 多 Agent · 内置浏览器（10.29）</i></div></div>
+
+  <div class="foot-note a">规范、子代理、Hooks：编排层正式长出来</div>
 </section>
 
 <!-- ============ 14 2025 Q4 ============ -->
-<section class="slide" id="s-2025c" data-era="2025">
+<section class="slide has-buzz has-cstrip" id="s-2025c" data-title="2025 · Q4" data-era="2025">
   <div class="mhead a"><span class="mnum">25</span><div><div class="kicker">2025 · Q4</div><h2>主流化，与反噬<small>进了词典，也上了事故报告</small></h2></div></div>
   <div class="mgrid">
     <div class="hero a" style="display:flex;flex-direction:column;justify-content:center;padding:40px 46px">
@@ -891,10 +926,12 @@ html.static .js{opacity:1!important}
   </div>
   <div class="buzz a"><span>热议</span><i>「LGTM 反射」</i><i>技术债以光速生成</i><i>Vibe Coding 清理师</i><i>Gemini 3</i><i class="ds"><span class="lg xs" data-l="deepseek"></span>DeepSeek Math-V2 自验证推理（11）</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR</b><div class="cs"><i>2.1 Plan 模式 · AI 代码审查（11）</i><i>2.2 Debug 模式（12）</i><i>估值 293 亿美元</i><i>收购 Graphite（12）</i></div></div>
+
+  <div class="foot-note a">能力上去了，质量与安全债也一起上来了</div>
 </section>
 
 <!-- ============ 15 2026 CALENDAR ============ -->
-<section class="slide" id="s-2026" data-era="2026">
+<section class="slide" id="s-2026" data-title="2026 · 开场" data-era="2026">
   <div class="kicker a">2026 · 每月一个主词 · 同期还有</div>
   <h2 class="a" style="font-size:84px">2026：<span class="grad">从「写代码」到「造闭环」</span></h2>
   <div class="cal">
@@ -906,7 +943,7 @@ html.static .js{opacity:1!important}
     <div class="m a" data-go="s-jun"><div class="n">06</div><div class="w">Loop Engineering</div><div class="s">设计闭环</div><div class="x"><i>Agent Identity</i><i>ARD</i></div><div class="lgs"><span class="lg sm" data-l="claude"></span></div></div>
     <div class="m a" data-go="s-jul"><div class="n">07</div><div class="w">Model Router</div><div class="s">模型可插拔</div><div class="x"><i>Human-on-the-loop</i><i>自证正确</i></div><div class="lgs"><span class="lg sm" data-l="cursor"></span></div></div>
     <div class="m a" data-go="s-aug"><div class="n">08</div><div class="w">Agent-native Forge</div><div class="s">代码也搬家 · Harness</div><div class="x"><i>Claude Tag</i><i>Grok Bot</i></div><div class="lgs"><span class="lg sm" data-l="cursor"></span><span class="lg sm" data-l="deepseek"></span></div></div>
-    <div class="m a" data-go="s-sep"><div class="n">09</div><div class="w">Managed Harness</div><div class="s">托管 Agent 底座</div><div class="x"><i>Spec-Anchored</i><i>MicroVM</i></div><div class="lgs"><span class="lg sm" data-l="openai"></span><span class="lg sm" data-l="docker"></span></div></div>
+    <div class="m a" data-go="s-sep"><div class="n">09</div><div class="w">Managed Harness</div><div class="s">托管 Agent 底座</div><div class="x"><i>Jev</i><i>MicroVM</i></div><div class="lgs"><span class="lg sm" data-l="openai"></span><span class="lg sm" data-l="docker"></span></div></div>
     <div class="m a" data-go="s-oct"><div class="n">10</div><div class="w">Agents as Code</div><div class="s">Agent 即工程</div><div class="x"><i>Super-agent</i><i>Proactive</i></div><div class="lgs"><span class="lg sm" data-l="cursor"></span></div></div>
     <div class="m now a"><div class="n">11</div><div class="w">刚开场</div><div class="s">截至 2026.11.03，本月还没有新词<br>已定：11.12 OpenAI 停供 Cursor</div></div>
     <div class="m q a"><div class="n">12</div><div class="w">?</div><div class="s">下一个词</div></div>
@@ -914,7 +951,7 @@ html.static .js{opacity:1!important}
 </section>
 
 <!-- ============ JAN ============ -->
-<section class="slide" id="s-jan" data-era="2026">
+<section class="slide has-buzz has-cstrip" id="s-jan" data-title="2026.01" data-era="2026">
   <div class="mhead a"><span class="mnum">01</span><div><div class="kicker">2026 · JAN</div><h2>Ralph Loop<small>一个 bash 死循环，让 Agent 通宵干活</small></h2></div></div>
   <div class="mgrid">
     <div class="hero a">
@@ -945,10 +982,12 @@ html.static .js{opacity:1!important}
   </div>
   <div class="buzz a"><span>热议</span><i>Vibe Shift：DHH、Torvalds 转向</i><i>Anthropic 封禁第三方订阅客户端</i><i>Replit 手机端 vibe coding</i><i>MCP Apps 交互 UI（01.26）</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR 本月</b><div class="cs"><i>2.4（01.22）子代理 Subagents</i><i>Skills</i><i>图像生成</i><i>Cursor Blame</i></div></div>
+
+  <div class="foot-note a">循环不是魔法，是把记忆外置到 git 与提示词</div>
 </section>
 
 <!-- ============ FEB ============ -->
-<section class="slide" id="s-feb" data-era="2026">
+<section class="slide has-buzz has-cstrip" id="s-feb" data-title="2026.02" data-era="2026">
   <div class="mhead a"><span class="mnum">02</span><div><div class="kicker">2026 · FEB</div><h2>Agentic Engineering<small>Vibe Coding 一周年，Karpathy 亲自改名</small></h2></div></div>
   <div class="mgrid">
     <div class="hero a">
@@ -982,11 +1021,13 @@ html.static .js{opacity:1!important}
   </div>
   <div class="buzz a"><span>热议</span><i>Cloudflare 一周用 AI 重写 Next.js</i><i>36% 公开 Skills 有安全缺陷</i><i>Xcode 原生 Agent</i><i>SpaceX 并购 xAI</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR 本月</b><div class="cs"><i>长时运行 Agent 研究预览（02.12）</i><i>2.5 插件市场（02.17）</i><i>异步子代理树</i><i>沙箱网络白名单</i></div></div>
+
+  <div class="foot-note a">Vibe 一周年：口号换成了工程学科的名字</div>
 </section>
 
 
 <!-- ============ MAR ============ -->
-<section class="slide" id="s-mar" data-era="2026">
+<section class="slide has-buzz has-cstrip" id="s-mar" data-title="2026.03" data-era="2026">
   <div class="mhead a"><span class="mnum">03</span><div><div class="kicker">2026 · MAR</div><h2>Automations<small>不再需要人类按下回车</small></h2></div></div>
   <div class="mgrid">
     <div class="hero a">
@@ -1025,10 +1066,12 @@ html.static .js{opacity:1!important}
   </div>
   <div class="buzz a"><span>热议</span><i class="wb">WorkBuddy 发布（03）· 从编程扩到办公</i><i>亚马逊宕机 → AI 代码须资深审批</i><i>VS Code 改为周更</i><i>Google Stitch 设计转代码</i><i>Computer Use 上桌面</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR 本月</b><div class="cs"><i>2.6 MCP Apps + 团队插件市场（03.03）</i><i>Automations（03.05）</i><i>Composer 2（03.19 · 基座争议）</i></div></div>
+
+  <div class="foot-note a">事件触发 + 自动批准：人从环内走到环上</div>
 </section>
 
 <!-- ============ APR ============ -->
-<section class="slide" id="s-apr" data-era="2026">
+<section class="slide has-buzz has-cstrip" id="s-apr" data-title="2026.04" data-era="2026">
   <div class="mhead a"><span class="mnum">04</span><div><div class="kicker">2026 · APR</div><h2>Agents Window<small>编辑器不再是中心，Agent 控制台才是</small></h2></div></div>
   <div class="mgrid">
     <div class="hero a">
@@ -1049,10 +1092,12 @@ html.static .js{opacity:1!important}
   </div>
   <div class="buzz a"><span>热议</span><i>Managed Agents · Routines（04.08/14）</i><i>Opus 4.7 · xhigh 档</i><i>Claude Design</i><i>Codex 后台 Computer Use</i><i>并行 Agent 一周末烧掉 $2000</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR 本月</b><div class="cs"><i>3.0 Glass（04.02）</i><i>Design Mode</i><i>3.1 Canvas（04.15）</i><i>Cursor SDK（04.29）</i><i>SpaceX 600 亿收购期权</i></div></div>
+
+  <div class="foot-note a">多模型比稿与托管 Agent：舰队编制成型</div>
 </section>
 
 <!-- ============ MAY ============ -->
-<section class="slide" id="s-may" data-era="2026">
+<section class="slide has-buzz has-cstrip" id="s-may" data-title="2026.05" data-era="2026">
   <div class="mhead a"><span class="mnum">05</span><div><div class="kicker">2026 · MAY</div><h2>Agent-first Web · /goal<small>网页把工具交给 Agent；Agent 只认目标</small></h2></div></div>
   <div class="mgrid">
     <div class="hero a">
@@ -1098,10 +1143,12 @@ html.static .js{opacity:1!important}
   </div>
   <div class="buzz a"><span>热议</span><i>xAI Grok Build 入局</i><i>Gemini Spark 24/7 个人 Agent</i><i>MCP 无状态大改版</i><i class="ds"><span class="lg xs" data-l="deepseek"></span>DeepSeek：Model + Harness = Agent</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR 本月</b><div class="cs"><i>3.3 按计划并行构建</i><i>云端开发环境</i><i>Composer 2.5（05.18）</i><i>在 Colossus 2 训练 10× 模型</i></div></div>
+
+  <div class="foot-note a">模型 + 底座 = Agent；目标驱动开始长跑</div>
 </section>
 
 <!-- ============ JUN ============ -->
-<section class="slide" id="s-jun" data-era="2026">
+<section class="slide has-buzz has-cstrip" id="s-jun" data-title="2026.06" data-era="2026">
   <div class="mhead a"><span class="mnum">06</span><div><div class="kicker">2026 · JUN</div><h2>Loop Engineering<small>不再雕琢 Prompt，而是设计闭环与停止条件</small></h2></div></div>
   <div class="mgrid">
     <div class="hero a">
@@ -1132,10 +1179,12 @@ html.static .js{opacity:1!important}
   </div>
   <div class="buzz a"><span>热议</span><i>WorkBuddy 企业版（06.05）</i><i>Copilot 按量计费</i><i>Zed 1.0</i><i>订阅只覆盖交互式使用</i><i>Windsurf 2.0 内嵌 Devin</i><i>小米 MiMo Code</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR 本月</b><div class="cs"><i>Auto-review 分类器子代理</i><i>SDK 自定义工具</i><i>Design Mode 语音</i><i>宣布并入 SpaceX</i></div></div>
+
+  <div class="foot-note a">闭环工程：设计的是回路，而不再是单次对话</div>
 </section>
 
 <!-- ============ JUL ============ -->
-<section class="slide" id="s-jul" data-era="2026">
+<section class="slide has-buzz has-cstrip" id="s-jul" data-title="2026.07" data-era="2026">
   <div class="mhead a"><span class="mnum">07</span><div><div class="kicker">2026 · JUL</div><h2>Model Router<small>模型从「卖点」变成「可插拔配件」</small></h2></div></div>
   <div class="mgrid">
     <div class="hero a">
@@ -1176,10 +1225,12 @@ html.static .js{opacity:1!important}
   </div>
   <div class="buzz a"><span>热议</span><i>工信部风险提示 Claude Code（07.08）</i><i>OSWorld 突破 90%</i><i>Gartner AI 代码智能体魔力象限</i><i class="ds"><span class="lg xs" data-l="deepseek"></span>DeepSeek-V4-Flash 正式版（07.31）</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR 本月</b><div class="cs"><i>Router（07.22）</i><i>Grok 4.5 联合模型</i><i>Cursor Start ₹649（07.28）</i><i>iPad 版（07.29）</i></div></div>
+
+  <div class="foot-note a">人只设边界；模型可插拔，验证靠红绿自证</div>
 </section>
 
 <!-- ============ AUG ============ -->
-<section class="slide" id="s-aug" data-era="2026">
+<section class="slide has-buzz has-cstrip" id="s-aug" data-title="2026.08" data-era="2026">
   <div class="mhead a"><span class="mnum">08</span><div><div class="kicker">2026 · AUG</div><h2>Agent-native Forge<small>代码仓库也搬进 Agent 的家</small></h2></div></div>
   <div class="mgrid">
     <div class="hero a" id="stackhero">
@@ -1213,10 +1264,12 @@ html.static .js{opacity:1!important}
   </div>
   <div class="buzz a"><span>热议</span><i>Meta Muse Code</i><i class="ds"><span class="lg xs" data-l="deepseek"></span>DeepSeek V4-Pro GA · 峰谷定价</i><i>Slack Code（08.20）· 项目频道写码</i><i>Anthropic 内部 65% 产品代码由 Tag 生成</i><i>MCP 接入实验室硬件</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR 本月</b><div class="cs"><i>Grok Bot 早期公测（08.11）</i><i>正式并入 SpaceX（08.14）</i><i>Origin（08.17）</i><i>无仓库从零开始 + 一键发布（08.27）</i><i>OpenAI 通知将于 11.12 停供（08.28）</i></div></div>
+
+  <div class="foot-note a">组织现场出现了：频道里的 Agent 成员</div>
 </section>
 
 <!-- ============ SEP ============ -->
-<section class="slide" id="s-sep" data-era="2026">
+<section class="slide has-buzz has-cstrip" id="s-sep" data-title="2026.09" data-era="2026">
   <div class="mhead a"><span class="mnum">09</span><div><div class="kicker">2026 · SEP</div><h2>Managed Harness<small>Agent 的底座被托管，沙箱升级为 microVM</small></h2></div></div>
   <div class="mgrid">
     <div class="hero a">
@@ -1249,15 +1302,17 @@ html.static .js{opacity:1!important}
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="claude"></span><b>服务端权限裁决</b><em>09.10</em></div><p>Managed Agents 的 auto 权限评估</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="docker"></span><b>MicroVM 沙箱</b><em>09.24</em></div><p>「容器不够」：硬件级隔离 Agent</p></div>
       <div class="cc a" style="--ac:var(--red)"><div class="cc-h"><span class="lg" data-l="deepseek"></span><b>Reward Hacking</b><em>09</em></div><p>DeepSeek DSec 论文：伪造 socket、偷看日志</p></div>
-      <div class="cc a"><div class="cc-h"><span class="lg m" style="--mc:#475569">SB</span><b>SWE-Bench Pro Verified</b><em>09</em></div><p>封堵泄漏，旧榜单退役</p></div>
+      <div class="cc a"><div class="cc-h"><span class="lg m" style="--mc:#22d3ee">J</span><b>Jev · System One</b><em>09.15</em></div><p>TypeSafe：不写代码，返回带概率的 choice / score / noul——LLM 写，Jev 做门禁</p></div>
     </div>
   </div>
-  <div class="buzz a"><span>热议</span><i class="ds"><span class="lg xs" data-l="deepseek"></span>DeepSeek V4.1-Flash</i><i>Cowork 融入每次对话（09.16）</i><i>Codex CLI 默认语音对话</i><i>Copilot「Code」标签 + Autopilot</i><i>Spec-Anchored &gt; Spec-as-Source</i><i>Claude Sonnet 5.5</i></div>
+  <div class="buzz a"><span>热议</span><i class="ds"><span class="lg xs" data-l="deepseek"></span>DeepSeek V4.1-Flash</i><i>TypeSafe Jev 发布（09.15）</i><i>Cowork 融入每次对话（09.16）</i><i>Codex CLI 默认语音对话</i><i>Copilot「Code」标签 + Autopilot</i><i>Spec-Anchored &gt; Spec-as-Source</i><i>Claude Sonnet 5.5</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR 本月</b><div class="cs"><i>Projects beta：协调者 Agent 管理并行子代理（09.14）</i><i>云端多仓库环境</i></div></div>
+
+  <div class="foot-note a">托管底座与协调者 —— 软件工厂的中控台</div>
 </section>
 
 <!-- ============ OCT ============ -->
-<section class="slide" id="s-oct" data-era="2026">
+<section class="slide has-buzz has-cstrip" id="s-oct" data-title="2026.10" data-era="2026">
   <div class="mhead a"><span class="mnum">10</span><div><div class="kicker">2026 · OCT</div><h2>Agents as Code<small>一个 Agent 就是一个可测试、可部署的工程</small></h2></div></div>
   <div class="mgrid">
     <div class="hero a">
@@ -1288,10 +1343,12 @@ html.static .js{opacity:1!important}
   </div>
   <div class="buzz a"><span>热议</span><i>Copilot HydraFusion 多模型路由</i><i>Vibe Code Bench 92%</i><i>Haiku 5.5 · $0.10 子代理</i><i>Gemini 4 Argon</i><i>PAP · Agent 登录网站（10.07）</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR 本月</b><div class="cs"><i>iOS 远程控制本地 Agent（10.06）</i><i>Origin 应用市场（10.13）</i><i>云 Agent Canvas（10.16）</i><i>Agent SDK GA（10.20）</i></div></div>
+
+  <div class="foot-note a">Agent 即代码仓：工程对象本身变成了 Agent</div>
 </section>
 
 <!-- ============ FORK · PERSONAL vs ORGANIZATIONAL ============ -->
-<section class="slide" id="s-fork" data-era="2026">
+<section class="slide" id="s-fork" data-title="个人 / 组织 Agent" data-era="2026">
   <div class="kicker a">2026 收束 · AGENT 的两种归属</div>
   <h2 class="a">同一个 Coding Agent，<span class="grad">长成了两种「同事」</span></h2>
   <div class="fork a">
@@ -1326,7 +1383,7 @@ html.static .js{opacity:1!important}
 </section>
 
 <!-- ============ SHIFT ============ -->
-<section class="slide" id="s-shift" data-era="all">
+<section class="slide" id="s-shift" data-title="关键词迁移" data-era="all">
   <div class="kicker a">关键词迁移 · 2023 → 2026</div>
   <h2 class="a">人类的工作对象，<span class="grad">一层层往上抽象</span></h2>
   <div class="chain a" id="chain">
@@ -1336,7 +1393,7 @@ html.static .js{opacity:1!important}
 </section>
 
 <!-- ============ VALUATION ============ -->
-<section class="slide" id="s-val" data-era="all">
+<section class="slide" id="s-val" data-title="Cursor 估值" data-era="all">
   <div class="kicker a">CURSOR · 三年身份变迁</div>
   <h2 class="a">从 VS Code 分叉，<span class="grad">到火箭公司的一部分</span></h2>
   <div style="display:grid;grid-template-columns:1160px 1fr;gap:40px;margin-top:30px">
@@ -1348,11 +1405,11 @@ html.static .js{opacity:1!important}
         <path d="M80,520 L262,356 L535,238 L762,143 L1080,80 L1080,580 L80,580Z" fill="url(#gva)" class="pop" style="--d:1.6s;transform-origin:center bottom"/>
         <path class="draw" pathLength="1" d="M80,520 L262,356 L535,238 L762,143 L1080,80" fill="none" stroke="url(#gv)" stroke-width="5" stroke-linejoin="round" style="--d:.4s"/>
         <g font-weight="800">
-          <g class="pop" style="--d:.5s"><circle cx="80" cy="520" r="9" fill="#a78bfa"/><text x="80" y="556" text-anchor="middle" font-size="22" fill="#fff">$0.4B</text><text x="80" y="580" text-anchor="middle" font-size="14" fill="#94a3b8" font-family="JetBrains Mono">2024.08</text></g>
-          <g class="pop" style="--d:.8s"><circle cx="262" cy="356" r="9" fill="#a78bfa"/><text x="262" y="320" text-anchor="middle" font-size="22" fill="#fff">$2.6B</text><text x="262" y="296" text-anchor="middle" font-size="14" fill="#94a3b8" font-family="JetBrains Mono">2024.12</text></g>
-          <g class="pop" style="--d:1.1s"><circle cx="535" cy="238" r="9" fill="#fb923c"/><text x="535" y="202" text-anchor="middle" font-size="22" fill="#fff">$9.9B</text><text x="535" y="178" text-anchor="middle" font-size="14" fill="#94a3b8" font-family="JetBrains Mono">2025.06</text></g>
-          <g class="pop" style="--d:1.4s"><circle cx="762" cy="143" r="9" fill="#fb923c"/><text x="762" y="107" text-anchor="middle" font-size="22" fill="#fff">$29.3B</text><text x="762" y="83" text-anchor="middle" font-size="14" fill="#94a3b8" font-family="JetBrains Mono">2025.11</text></g>
-          <g class="pop" style="--d:1.7s"><circle cx="1080" cy="80" r="13" fill="#34d399"/><text x="1070" y="196" text-anchor="end" font-size="30" fill="#34d399">$60B · SpaceX</text><text x="1070" y="222" text-anchor="end" font-size="14" fill="#94a3b8" font-family="JetBrains Mono">2026.06 签约 · 08.14 完成</text></g>
+          <g class="pop" style="--d:.5s"><circle cx="80" cy="520" r="9" fill="#a78bfa"/><text class="count" data-to="0.4" data-prefix="$" data-suffix="B" data-dec="1" x="80" y="556" text-anchor="middle" font-size="22" fill="#fff">$0B</text><text x="80" y="580" text-anchor="middle" font-size="14" fill="#94a3b8" font-family="JetBrains Mono">2024.08</text></g>
+          <g class="pop" style="--d:.8s"><circle cx="262" cy="356" r="9" fill="#a78bfa"/><text class="count" data-to="2.6" data-prefix="$" data-suffix="B" data-dec="1" x="262" y="320" text-anchor="middle" font-size="22" fill="#fff">$0B</text><text x="262" y="296" text-anchor="middle" font-size="14" fill="#94a3b8" font-family="JetBrains Mono">2024.12</text></g>
+          <g class="pop" style="--d:1.1s"><circle cx="535" cy="238" r="9" fill="#fb923c"/><text class="count" data-to="9.9" data-prefix="$" data-suffix="B" data-dec="1" x="535" y="202" text-anchor="middle" font-size="22" fill="#fff">$0B</text><text x="535" y="178" text-anchor="middle" font-size="14" fill="#94a3b8" font-family="JetBrains Mono">2025.06</text></g>
+          <g class="pop" style="--d:1.4s"><circle cx="762" cy="143" r="9" fill="#fb923c"/><text class="count" data-to="29.3" data-prefix="$" data-suffix="B" data-dec="1" x="762" y="107" text-anchor="middle" font-size="22" fill="#fff">$0B</text><text x="762" y="83" text-anchor="middle" font-size="14" fill="#94a3b8" font-family="JetBrains Mono">2025.11</text></g>
+          <g class="pop" style="--d:1.7s"><circle cx="1080" cy="80" r="13" fill="#34d399"/><text class="count" data-to="60" data-prefix="$" data-suffix="B · SpaceX" data-dec="0" x="1070" y="196" text-anchor="end" font-size="30" fill="#34d399">$0B · SpaceX</text><text x="1070" y="222" text-anchor="end" font-size="14" fill="#94a3b8" font-family="JetBrains Mono">2026.06 签约 · 08.14 完成</text></g>
         </g>
         <text x="80" y="620" font-size="14" fill="#5b6375" font-family="JetBrains Mono">股权估值（对数坐标）· 来源：融资与并购公开报道</text>
       </svg>
@@ -1368,7 +1425,7 @@ html.static .js{opacity:1!important}
 
 <!-- ============ INDEX ============ -->
 <!-- ============ TOOL LANDSCAPE ============ -->
-<section class="slide" id="s-tools" data-era="all">
+<section class="slide" id="s-tools" data-title="工具谱系" data-era="all">
   <div class="kicker a">谱系 · TOOL LANDSCAPE</div>
   <h2 class="a">同一个概念，<span class="grad">长成了六种形态</span></h2>
   <div class="tmap">
@@ -1407,21 +1464,21 @@ html.static .js{opacity:1!important}
 </section>
 
 
-<section class="slide" id="s-index" data-era="all">
+<section class="slide" id="s-index" data-title="概念索引" data-era="all">
   <div class="kicker a">概念索引 · 悬停看释义 · 点击跳转</div>
   <h2 class="a" style="font-size:54px">三年 <span class="grad" id="idxcount">100+</span> 个新概念</h2>
   <div id="idx" class="a"></div>
 </section>
 
 <!-- ============ END ============ -->
-<section class="slide" id="s-end" data-era="all" style="display:flex;flex-direction:column;justify-content:center">
+<section class="slide" id="s-end" data-title="结语" data-era="all" style="display:flex;flex-direction:column;justify-content:center">
   <div class="kicker a">下一个三年</div>
   <h1 class="a" style="font-size:112px;margin-top:30px">人类写的，<br>不再是代码，<span class="grad">而是闭环。</span></h1>
   <div class="prompt a" style="margin-top:60px"><span class="pr">›</span><span class="tw" data-text="/goal 让这一切继续下去" data-delay="1200"></span><span class="caret"></span></div>
 </section>
 
 <!-- ============ HTALK 1 · PAIN ============ -->
-<section class="slide" id="s-ht1" data-era="ht">
+<section class="slide" id="s-ht1" data-title="HTALK · 痛点" data-era="ht">
   <div class="kicker a">附 · 下一站 · HTALK</div>
   <h2 class="a">团队深度用 AI 之后，<span class="grad">人成了 AI 之间的传话筒</span></h2>
   <div class="htpain">
@@ -1460,7 +1517,7 @@ html.static .js{opacity:1!important}
 </section>
 
 <!-- ============ HTALK 2 · @me ============ -->
-<section class="slide" id="s-ht2" data-era="ht">
+<section class="slide" id="s-ht2" data-title="HTALK · 现场" data-era="ht">
   <div class="kicker a">HTALK · @ME</div>
   <h2 class="a">@me：<span class="grad">不被具体交互页面束缚</span>的分身<small>在任何场景直接 @me，让身边的 Agent 带着现场信息去工作</small></h2>
   <div class="htnet">
@@ -1490,7 +1547,7 @@ html.static .js{opacity:1!important}
 </section>
 
 <!-- ============ HTALK 3 · JOURNEY ============ -->
-<section class="slide" id="s-ht3" data-era="ht">
+<section class="slide" id="s-ht3" data-title="HTALK · 能力" data-era="ht">
   <div class="kicker a">HTALK · 一次 @ME 的旅程</div>
   <h2 class="a">从群里一句 @me，<span class="grad">到一页项目日记</span></h2>
   <div class="htj a">
@@ -1522,7 +1579,7 @@ html.static .js{opacity:1!important}
 </section>
 
 <!-- ============ HTALK 4 · PHONE NUMBER ============ -->
-<section class="slide" id="s-ht4" data-era="ht">
+<section class="slide" id="s-ht4" data-title="HTALK · 协作" data-era="ht">
   <div class="kicker a">HTALK · 组织的计算网络</div>
   <h2 class="a">让孤立的 Agent，<span class="grad">拥有「电话号码」</span></h2>
   <div class="htph">
@@ -1550,7 +1607,7 @@ html.static .js{opacity:1!important}
 </section>
 
 <!-- ============ HTALK 5 · TEAM ============ -->
-<section class="slide" id="s-ht5" data-era="ht">
+<section class="slide" id="s-ht5" data-title="HTALK · 闭环" data-era="ht">
   <div class="kicker a">HTALK · 自组织</div>
   <h2 class="a">Agent 按需，<span class="grad">自己组建团队</span></h2>
   <div class="htteam">
@@ -1580,7 +1637,7 @@ html.static .js{opacity:1!important}
 
 <!-- ============ HTALK 6 · TALK TO @ME ============ -->
 <!-- ============ HT · YOBIRU ============ -->
-<section class="slide" id="s-hty" data-era="ht">
+<section class="slide" id="s-hty" data-title="HTALK · 互聊" data-era="ht">
   <div class="kicker a">附 · 同路者 · YOBIRU</div>
   <h2 class="a">让 Agent 互相说话，<span class="grad">不止一种做法</span></h2>
   <div class="hty">
@@ -1622,7 +1679,7 @@ html.static .js{opacity:1!important}
   </div>
 </section>
 
-<section class="slide" id="s-ht6" data-era="ht" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding-bottom:60px">
+<section class="slide" id="s-ht6" data-title="HTALK · 下一站" data-era="ht" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding-bottom:60px">
   <div class="htmini a">
     <div class="sc3"><span>群聊 · 数据看板 · 业务页面</span></div>
     <svg viewBox="0 0 160 20" width="160"><path d="M0,10 H160" stroke="#e0b354" stroke-width="2" stroke-dasharray="3 7"/><circle r="5" fill="#e0b354"><animateMotion dur="1.5s" repeatCount="indefinite" path="M0,10 H160"/></circle></svg>
@@ -1637,8 +1694,9 @@ html.static .js{opacity:1!important}
   <div class="evo a"><span style="color:var(--c23)">2023 对话</span><i>→</i><span style="color:var(--c24)">2024 Agent</span><i>→</i><span style="color:var(--c25)">2025 终端 · 后台</span><i>→</i><span style="color:var(--c26)">2026 舰队 · 自治</span><i>→</i><span style="color:#e0b354">Next · Agent 计算网络</span></div>
 </section>
 
-<div id="nav-l"></div><div id="nav-r"></div>
-<div id="hud"><span><span class="k" id="hud-era">VIBE CODING · 简史</span></span><span>← → 翻页 · F 全屏 · <span class="k" id="hud-n">01 / 30</span></span></div>
+<button type="button" id="nav-l" aria-label="上一页">‹</button><button type="button" id="nav-r" aria-label="下一页">›</button>
+<nav id="chapters" aria-label="章节跳转"></nav>
+<div id="hud"><span><span class="k" id="hud-era">VIBE CODING · 简史</span></span><span id="hud-title">封面</span><span>← → 翻页 · F 全屏 · <span class="k" id="hud-n">01 / 30</span></span></div>
 </div>
 
 <!--LOGOS-->
@@ -1673,7 +1731,7 @@ function fillLogos(root){
 
 /* ---------- SWE bars ---------- */
 (function(){const d=[['2023.10','Claude 2',1.96,'claude','#38bdf8'],['2024.03','Devin',13.9,null,'#a78bfa'],['2024.10','Sonnet 3.5',49.0,'claude','#a78bfa'],['2025.01','R1',49.2,'deepseek','#6b84ff'],['2025.02','Sonnet 3.7',62.3,'claude','#fb923c'],['2025.05','Opus 4',72.5,'claude','#fb923c'],['2025.08','V3.1',66.0,'deepseek','#6b84ff'],['2025.08','GPT-5',74.9,'openai','#fb923c'],['2025.09','Sonnet 4.5',77.2,'claude','#fb923c'],['2025.11','Opus 4.5',80.9,'claude','#fb923c'],['2026.04','Opus 4.7',87.6,'claude','#34d399'],['2026.04','Mythos',93.9,'anthropic','#34d399']];
- let b='',l='';d.forEach((x,i)=>{b+='<div class="bar" style="--k:'+i+';--bc:'+x[4]+'"><div class="v" style="color:'+x[4]+'">'+x[2]+'%</div><div class="col" style="height:'+(x[2]*5.2)+'px"></div></div>';l+='<div><div class="d">'+x[0]+'</div><div class="n">'+(x[3]?'<span class="lg sm" data-l="'+x[3]+'"></span>':'<span class="lg sm m" style="--mc:#0ea5e9">D</span>')+x[1]+'</div></div>'});document.getElementById('bars').innerHTML=b;document.getElementById('barlab').innerHTML=l})();
+ let b='',l='';d.forEach((x,i)=>{b+='<div class="bar" style="--k:'+i+';--bc:'+x[4]+'"><div class="v count" data-to="'+x[2]+'" data-suffix="%" data-dec="'+(String(x[2]).includes('.')?1:0)+'" style="color:'+x[4]+'">0%</div><div class="col" style="height:'+(x[2]*5.2)+'px"></div></div>';l+='<div><div class="d">'+x[0]+'</div><div class="n">'+(x[3]?'<span class="lg sm" data-l="'+x[3]+'"></span>':'<span class="lg sm m" style="--mc:#0ea5e9">D</span>')+x[1]+'</div></div>'});document.getElementById('bars').innerHTML=b;document.getElementById('barlab').innerHTML=l})();
 
 /* ---------- MCP diagrams ---------- */
 (function(){const hosts=['cursor','claude','openai','googlegemini'],tools=['github','slack','figma','linear'];
@@ -1710,7 +1768,7 @@ const CONCEPTS={
  '2023':[['Tab 补全','s-prelude','灰色 ghost text，按 Tab 接受'],['英语即编程语言','s-prelude','Karpathy 2023.01'],['复制粘贴编程','s-prelude','ChatGPT 写，人类粘贴'],['⌘K 内联编辑','s-2023','选中代码一句话改写'],['@codebase · RAG','s-2023','向量检索整个仓库'],['Copilot++','s-2023','预测下一处编辑位置'],['Prompt Engineering','s-2023','雕琢提示词'],['AutoGPT','s-2023','早期自主 Agent 热潮'],['GPTs','s-2023','人人可造定制 GPT'],['Generative UI','s-2023','v0：一句话出界面'],['SWE-bench','s-swe','用真实 Issue 评测 AI'],['仓库级预训练','s-2023','DeepSeek-Coder 按仓库组织训练数据']],
  '2024':[['AI 软件工程师','s-2024a','Devin 首秀'],['ACI','s-2024a','为 Agent 设计的计算机接口'],['Issue→Plan→Code','s-2024a','Copilot Workspace'],['Artifacts','s-2024a','边聊边预览'],['Composer','s-2024a','多文件编辑'],['Apply 模型','s-2024a','快速落地 diff'],['Shadow Workspace','s-2024a','后台试改再给你看'],['MLA','s-2024a','DeepSeek 多头潜在注意力，省 KV 缓存'],['价格屠夫','s-2024a','DeepSeek-V2 掀起 API 价格战'],['MoE + FP8','s-2024b','DeepSeek-V3 低成本训练'],['MTP','s-2024b','一次预测多个 token'],['Repo Map','s-2024a','Aider 的仓库地图'],['推理模型','s-2024b','o1：测试时计算'],['Computer Use','s-2024b','模型操作鼠标键盘'],['Prompt-to-App','s-2024b','一句话出可上线应用'],['WebContainers','s-2024b','浏览器里跑 Node'],['Agentic IDE','s-2024b','Windsurf Cascade'],['Agent 模式','s-2024b','Cursor 0.43'],['Plan / Act','s-2024b','先计划再执行'],['.cursorrules','s-2024b','项目级 AI 规则'],['MCP','s-mcp','AI 的 USB-C']],
  '2025':[['Vibe Coding','s-vibe','忘掉代码的存在'],['GRPO','s-2025a','R1 的纯强化学习推理训练'],['DeepSeek 时刻','s-2025a','开源推理冲击算力叙事'],['蒸馏','s-2025a','把推理能力蒸馏进小模型'],['开源周','s-2025a','FlashMLA / DeepEP / 3FS'],['混合思考','s-2025b','一个模型兼具思考与非思考'],['DSA 稀疏注意力','s-2025b','长上下文降本'],['光学上下文压缩','s-ctx','DeepSeek-OCR：用图像存文本'],['自验证推理','s-2025c','Math-V2 自己检查证明'],['思考中调用工具','s-2025c','V3.2：推理链里用工具'],['Autonomy Slider','s-ladder','自治度滑杆'],['终端 Agent','s-2025a','Claude Code / Codex CLI'],['CLAUDE.md','s-2025a','项目记忆文件'],['后台 / 云 Agent','s-2025a','云端并行沙箱'],['Issue → PR','s-2025a','把 Issue 指派给 AI'],['A2A','s-2025a','Agent 间通信协议'],['AI Code Review','s-2025a','BugBot 审 PR'],['Memories','s-2025a','跨会话记忆'],['Context Engineering','s-ctx','为每一步装配信息'],['Context Rot','s-ctx','越长越笨'],['Compaction','s-ctx','自动压缩上下文'],['Spec-driven','s-2025b','需求→设计→任务'],['Subagents','s-2025b','独立上下文子代理'],['Hooks','s-2025b','生命周期钩子'],['AGENTS.md','s-2025b','通用 Agent 说明书'],['Agent Skills','s-2025b','SKILL.md 按需加载'],['Plugins','s-2025b','打包分发能力'],['Worktree 并行','s-2025b','多 Agent 互不干扰'],['自研编码模型','s-2025b','Cursor Composer'],['Agent Manager','s-2025c','Antigravity 管理视图'],['Vibe Hacking','s-2025c','用 Agent 发动攻击'],['AI Slop','s-2025c','低质 AI 产物泛滥'],['AAIF','s-2025c','Linux 基金会 Agent 联盟']],
- '2026':[['Ralph Loop','s-jan','bash 循环，每轮新上下文'],['mHC','s-jan','流形约束超连接，稳定深层训练'],['Engram','s-jan','条件记忆：存算分离'],['CSA / HCA','s-apr','V4 压缩稀疏注意力'],['Model + Harness = Agent','s-may','DeepSeek 的 Agent 公式'],['峰谷定价','s-aug','闲时 API 半价'],['Gas Town','s-jan','20–30 Agent 编排器'],['Personal Agent','s-jan','OpenClaw'],['Cowork','s-jan','个人 Agent：说「要什么」，回来的是成品'],['Work Agent','s-fork','从写代码扩到交付办公成品'],['Personal Agent','s-fork','属于个人的 AI 同事，记住你的偏好'],['Organizational Agent','s-fork','属于团队/频道的 AI 成员，共享上下文'],['Claude Tag','s-aug','@Claude 作为频道成员：多人共享、可主动'],['Grok Bot','s-aug','xAI × Cursor：常驻云端电脑的 AI 同事'],['MCP Apps','s-jan','工具渲染交互 UI'],['Planner-Worker-Judge','s-jan','层级多 Agent'],['Agentic Engineering','s-feb','编排而非编码'],['Agent Teams','s-feb','点对点协作的 Agent 团队'],['Adaptive Thinking','s-feb','自决思考深度'],['Long-running Agent','s-feb','先规划后长跑'],['Plugin Marketplace','s-feb','插件市场'],['Automations','s-mar','事件触发 Agent'],['Auto Mode','s-mar','分类器代替审批'],['ACP','s-mar','Agent Client Protocol'],['Dispatch / Channels','s-mar','手机远程派活'],['Agents Window','s-apr','Agent 控制台'],['Best-of-N','s-apr','多模型比稿'],['跨厂商审查','s-apr','Codex 审 Claude'],['Mythos 级安全','s-apr','AI 挖零日'],['Managed Agents','s-apr','托管云 Agent'],['Routines','s-apr','定时 / Webhook 任务'],['WebMCP','s-may','网页即工具'],['/goal','s-may','目标驱动长跑'],['Dynamic Workflows','s-may','编排即脚本'],['Dreaming','s-may','Agent 自我改进'],['Loop Engineering','s-jun','设计闭环'],['Agentjacking','s-jun','遥测注入劫持'],['Agent Identity','s-jun','Agent 自有账号'],['ARD','s-jun','Agent 资源发现'],['Config Smells','s-jun','配置文件坏味道'],['Model Router','s-jul','逐请求选模型'],['去模型化','s-jul','模型可插拔'],['Self-verification','s-jul','红绿回归自证'],['Human-on-the-loop','s-jul','人只设边界'],['Agent-native Forge','s-aug','Origin 代码托管'],['Subscriptions','s-aug','Agent 订阅事件'],['Chat-ops Coding','s-aug','Slack 频道写码'],['Harness','s-aug','模型无关运行时'],['DSH','s-aug','DeepSeek Harness：一切皆插件的 Agent 运行时，Agent = Model + Harness'],['Show-a-Bot 学习流程','s-aug','跟做一遍流程，保存为可复用 routine'],['Managed Harness','s-sep','托管 Agent 底座'],['Coordinator Agent','s-sep','协调者分派'],['MicroVM Sandbox','s-sep','硬件级隔离'],['Reward Hacking','s-sep','Agent 钻评测空子'],['Spec-anchored','s-sep','规范锚定而非规范即源码'],['Voice-first','s-sep','语音对话编程'],['Agents as Code','s-oct','Agent 即代码仓'],['Super-agent','s-oct','DeepSeek 研究原型：单仓库接单、独立执行、回原讨论回复，少占人类注意力'],['Agent 互聊','s-hty','Agent 之间直接发消息、数据与文件，回复自己回到提问者'],['Mods','s-oct','改写 Agent 内部'],['MCP Gateway','s-oct','企业级 MCP 网关'],['Proactive Agent','s-oct','主动型 Agent'],['PAP','s-oct','Agent 登录网站协议']]
+ '2026':[['Ralph Loop','s-jan','bash 循环，每轮新上下文'],['mHC','s-jan','流形约束超连接，稳定深层训练'],['Engram','s-jan','条件记忆：存算分离'],['CSA / HCA','s-apr','V4 压缩稀疏注意力'],['Model + Harness = Agent','s-may','DeepSeek 的 Agent 公式'],['峰谷定价','s-aug','闲时 API 半价'],['Gas Town','s-jan','20–30 Agent 编排器'],['Personal Agent','s-jan','OpenClaw'],['Cowork','s-jan','个人 Agent：说「要什么」，回来的是成品'],['Work Agent','s-fork','从写代码扩到交付办公成品'],['Personal Agent','s-fork','属于个人的 AI 同事，记住你的偏好'],['Organizational Agent','s-fork','属于团队/频道的 AI 成员，共享上下文'],['Claude Tag','s-aug','@Claude 作为频道成员：多人共享、可主动'],['Grok Bot','s-aug','xAI × Cursor：常驻云端电脑的 AI 同事'],['MCP Apps','s-jan','工具渲染交互 UI'],['Planner-Worker-Judge','s-jan','层级多 Agent'],['Agentic Engineering','s-feb','编排而非编码'],['Agent Teams','s-feb','点对点协作的 Agent 团队'],['Adaptive Thinking','s-feb','自决思考深度'],['Long-running Agent','s-feb','先规划后长跑'],['Plugin Marketplace','s-feb','插件市场'],['Automations','s-mar','事件触发 Agent'],['Auto Mode','s-mar','分类器代替审批'],['ACP','s-mar','Agent Client Protocol'],['Dispatch / Channels','s-mar','手机远程派活'],['Agents Window','s-apr','Agent 控制台'],['Best-of-N','s-apr','多模型比稿'],['跨厂商审查','s-apr','Codex 审 Claude'],['Mythos 级安全','s-apr','AI 挖零日'],['Managed Agents','s-apr','托管云 Agent'],['Routines','s-apr','定时 / Webhook 任务'],['WebMCP','s-may','网页即工具'],['/goal','s-may','目标驱动长跑'],['Dynamic Workflows','s-may','编排即脚本'],['Dreaming','s-may','Agent 自我改进'],['Loop Engineering','s-jun','设计闭环'],['Agentjacking','s-jun','遥测注入劫持'],['Agent Identity','s-jun','Agent 自有账号'],['ARD','s-jun','Agent 资源发现'],['Config Smells','s-jun','配置文件坏味道'],['Model Router','s-jul','逐请求选模型'],['去模型化','s-jul','模型可插拔'],['Self-verification','s-jul','红绿回归自证'],['Human-on-the-loop','s-jul','人只设边界'],['Agent-native Forge','s-aug','Origin 代码托管'],['Subscriptions','s-aug','Agent 订阅事件'],['Chat-ops Coding','s-aug','Slack 频道写码'],['Harness','s-aug','模型无关运行时'],['DSH','s-aug','DeepSeek Harness：一切皆插件的 Agent 运行时，Agent = Model + Harness'],['Show-a-Bot 学习流程','s-aug','跟做一遍流程，保存为可复用 routine'],['System One · Jev','s-sep','TypeSafe：结构化决策模型，不写文本只返回概率'],['Managed Harness','s-sep','托管 Agent 底座'],['Coordinator Agent','s-sep','协调者分派'],['MicroVM Sandbox','s-sep','硬件级隔离'],['Reward Hacking','s-sep','Agent 钻评测空子'],['Spec-anchored','s-sep','规范锚定而非规范即源码'],['Voice-first','s-sep','语音对话编程'],['Agents as Code','s-oct','Agent 即代码仓'],['Super-agent','s-oct','DeepSeek 研究原型：单仓库接单、独立执行、回原讨论回复，少占人类注意力'],['Agent 互聊','s-hty','Agent 之间直接发消息、数据与文件，回复自己回到提问者'],['Mods','s-oct','改写 Agent 内部'],['MCP Gateway','s-oct','企业级 MCP 网关'],['Proactive Agent','s-oct','主动型 Agent'],['PAP','s-oct','Agent 登录网站协议']]
 };
 (function(){const col={'2023':'#38bdf8','2024':'#a78bfa','2025':'#fb923c','2026':'#34d399'};let h='',c=0;
  Object.keys(CONCEPTS).forEach(y=>{h+='<div class="row"><div class="yl" style="color:'+col[y]+'">'+y+'</div><div class="chips">';CONCEPTS[y].forEach(x=>{c++;h+='<span class="chip" style="--cc:'+col[y]+'" data-go="'+x[1]+'" data-def="'+x[2]+'">'+x[0]+'</span>'});h+='</div></div>'});
@@ -1719,13 +1777,31 @@ const CONCEPTS={
 fillLogos(document);
 
 /* ---------- engine ---------- */
-if(/static/.test(location.search))document.documentElement.classList.add('static');
+const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const staticMode=/static/.test(location.search)||(reduceMotion&&!/motion/.test(location.search));
+if(staticMode)document.documentElement.classList.add('static');
+if(/motion/.test(location.search))document.documentElement.classList.add('force-motion');
 const stage=document.getElementById('stage'),slides=[...document.querySelectorAll('.slide')];
 slides.forEach(s=>{let i=0;s.querySelectorAll('.a').forEach(el=>{if(!el.style.getPropertyValue('--i'))el.style.setProperty('--i',i++)})});
 function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform='translate(-50%,-50%) scale('+s+')'}
 addEventListener('resize',fit);fit();
 const eraName={ht:'附 · HTALK · TALK TO @ME',all:'VIBE CODING · 简史','2023':'2023 · 对话','2024':'2024 · AGENT','2025':'2025 · 终端与后台','2026':'2026 · 舰队与自治'};
 const eraCol={ht:'#e0b354',all:'#22d3ee','2023':'#38bdf8','2024':'#a78bfa','2025':'#fb923c','2026':'#34d399'};
+const chapters=[
+  {id:'s-cover',label:'封面',era:'all'},
+  {id:'s-2023',label:'2023',era:'2023'},
+  {id:'s-2024a',label:'2024',era:'2024'},
+  {id:'s-2025',label:'2025',era:'2025'},
+  {id:'s-2026',label:'2026',era:'2026'},
+  {id:'s-ht1',label:'附',era:'ht'}
+];
+const chapBox=document.getElementById('chapters');
+chapters.forEach(c=>{
+  const b=document.createElement('button');
+  b.type='button';b.textContent=c.label;b.dataset.go=c.id;b.style.setProperty('--ch',eraCol[c.era]);
+  b.title='跳到 '+c.label;
+  chapBox.appendChild(b);
+});
 const seek=document.getElementById('seek');
 seek.max=String(slides.length-1);
 seek.addEventListener('input',()=>go(Number(seek.value)));
@@ -1733,12 +1809,62 @@ seek.addEventListener('keydown',e=>e.stopPropagation());
 seek.addEventListener('touchstart',e=>e.stopPropagation(),{passive:true});
 seek.addEventListener('touchend',e=>e.stopPropagation(),{passive:true});
 let cur=0,timers=[];
-function typeIn(s){timers.forEach(clearTimeout);timers=[];s.querySelectorAll('.tw').forEach(el=>{const t=el.dataset.text;el.textContent='';let i=0;const step=()=>{el.textContent=t.slice(0,++i);if(i<t.length)timers.push(setTimeout(step,70))};timers.push(setTimeout(step,+el.dataset.delay||400))})}
+function clearTimers(){timers.forEach(t=>{clearTimeout(t);clearInterval(t)});timers=[]}
+function typeIn(s){if(staticMode){s.querySelectorAll('.tw').forEach(el=>{el.textContent=el.dataset.text||''});return}
+  s.querySelectorAll('.tw').forEach(el=>{const t=el.dataset.text;el.textContent='';let i=0;const step=()=>{el.textContent=t.slice(0,++i);if(i<t.length)timers.push(setTimeout(step,70))};timers.push(setTimeout(step,+el.dataset.delay||400))})}
+function countTo(el){
+  const to=+el.dataset.to||0,dec=+(el.dataset.dec||0),prefix=el.dataset.prefix||'',suffix=el.dataset.suffix||'',dur=+(el.dataset.dur||1400);
+  if(staticMode){el.textContent=prefix+(dec?to.toFixed(dec):String(to))+suffix;return}
+  const t0=performance.now();
+  const tick=()=>{
+    const p=Math.min(1,(performance.now()-t0)/dur);
+    const v=to*(1-Math.pow(1-p,3));
+    el.textContent=prefix+(dec?v.toFixed(dec):String(Math.floor(v)))+suffix;
+    if(p<1)timers.push(setTimeout(tick,30));
+  };
+  el.textContent=prefix+(dec?'0.'+'0'.repeat(dec):'0')+suffix;
+  tick();
+}
+function ghostLoop(){
+  const el=document.getElementById('ghostText');if(!el)return;
+  const key=document.getElementById('tabKey'),chip=document.getElementById('accChip');
+  const text=el.dataset.text||'';
+  if(staticMode){el.textContent=text;el.classList.add('show','done');return}
+  let i=0;
+  el.textContent=' ';el.classList.remove('done','show');
+  if(key)key.classList.remove('flash');
+  if(chip)chip.classList.remove('show');
+  timers.push(setTimeout(()=>el.classList.add('show'),80));
+  const t=setInterval(()=>{
+    i++;el.textContent=text.slice(0,i);
+    if(i>=text.length){
+      clearInterval(t);
+      el.classList.add('done');
+      if(key)key.classList.add('flash');
+      timers.push(setTimeout(()=>{if(chip)chip.classList.add('show')},420));
+      timers.push(setTimeout(ghostLoop,2800));
+    }
+  },28);
+  timers.push(t);
+}
+function animate(s){
+  clearTimers();
+  typeIn(s);
+  s.querySelectorAll('.count').forEach(countTo);
+  if(s.id==='s-prelude')ghostLoop();
+}
+function syncChapters(n){
+  const sid=slides[n].id;
+  let active=-1;
+  chapters.forEach((c,i)=>{const idx=slides.findIndex(s=>s.id===c.id);if(idx>=0&&n>=idx)active=i});
+  [...chapBox.children].forEach((b,i)=>b.classList.toggle('on',i===active));
+}
 function go(n,force){n=Math.max(0,Math.min(slides.length-1,n));if(n===cur&&!force)return;slides[cur].classList.remove('active');cur=n;const s=slides[n];s.classList.remove('active');void s.offsetWidth;s.classList.add('active');
   const e=s.dataset.era||'all';document.getElementById('hud-era').textContent=eraName[e];document.getElementById('glow').style.background=eraCol[e];
+  document.getElementById('hud-title').textContent=s.dataset.title||'';
   document.getElementById('hud-n').textContent=String(n+1).padStart(2,'0')+' / '+slides.length;document.getElementById('prog').style.width=((n+1)/slides.length*100)+'%';
   seek.value=String(n);seek.setAttribute('aria-valuetext','第 '+(n+1)+' 页，共 '+slides.length+' 页');
-  typeIn(s);history.replaceState(null,'','#'+(n+1))}
+  syncChapters(n);animate(s);history.replaceState(null,'','#'+(n+1))}
 addEventListener('keydown',e=>{if(['ArrowRight','ArrowDown','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();go(cur+1)}else if(['ArrowLeft','ArrowUp','PageUp','Backspace'].includes(e.key)){e.preventDefault();go(cur-1)}else if(e.key==='Home')go(0);else if(e.key==='End')go(slides.length-1);else if(e.key==='f'||e.key==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}});
 document.getElementById('nav-r').onclick=()=>go(cur+1);document.getElementById('nav-l').onclick=()=>go(cur-1);
 let wl=0;addEventListener('wheel',e=>{const now=Date.now();if(now-wl<700||Math.abs(e.deltaY)<20)return;wl=now;go(cur+(e.deltaY>0?1:-1))},{passive:true});
