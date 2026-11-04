@@ -43,14 +43,14 @@ svg *{transform-box:fill-box;transform-origin:center}
 .life{position:absolute;width:2px;border-radius:2px;background:var(--lc);opacity:.75}
 .life.fut{background:repeating-linear-gradient(var(--lc) 0 6px,transparent 6px 12px)}
 .lfd{position:absolute;width:12px;height:12px;margin:-6px 0 0 -5px;border-radius:50%;background:var(--lc);box-shadow:0 0 12px var(--lc)}
-.lfl{position:absolute;writing-mode:vertical-rl;font:700 14px var(--sans);color:var(--lc);white-space:nowrap;letter-spacing:.06em}
+.lfl{position:absolute;writing-mode:vertical-rl;font:700 14px var(--sans);color:var(--lc);white-space:nowrap;letter-spacing:.06em;text-shadow:0 0 6px #07090d,0 0 3px #07090d}
 .lfl small{font:600 11px var(--mono);opacity:.75;margin-top:6px}
-.lfe{position:absolute;width:14px;height:2px;margin-left:-6px;background:var(--lc)}
-.lfn{position:absolute;writing-mode:vertical-rl;font:600 12px var(--mono);color:var(--mut);white-space:nowrap}
+.lfe{position:absolute;width:12px;height:2px;margin-left:-6px;background:var(--lc)}
+.lfn{position:absolute;writing-mode:vertical-rl;font:600 12px var(--mono);color:#cbd5e1;white-space:nowrap;text-shadow:0 0 6px #07090d,0 0 3px #07090d}
 .lft{position:absolute;font:800 11px var(--mono);color:#0b0f16;background:var(--lc);padding:1px 3px;border-radius:4px;transform:translate(-50%,-50%);white-space:nowrap}
 .lifehd{position:absolute;right:86px;font:800 14px var(--mono);letter-spacing:.12em;color:var(--mut);text-align:right;white-space:nowrap}
 .today{position:absolute;left:100px;width:1720px;height:0;border-top:2px dashed rgba(255,255,255,.35)}
-.today b{position:absolute;right:0;top:-34px;font:800 15px var(--mono);color:#fff}
+.today b{position:absolute;right:420px;top:-34px;font:800 15px var(--mono);color:#fff}
 #thread{position:absolute;left:358px;width:2px;background:linear-gradient(var(--c23),var(--c24) 30%,var(--c25) 55%,var(--c26) 80%,var(--call));opacity:.35}
 .td{position:absolute;left:359px;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#07090d;border:2px solid var(--c)}
 .blk{position:absolute;left:400px;width:1000px;--ac:var(--call)}
@@ -915,8 +915,8 @@ const stage=$('#stage'),space=$('#space');
 const LY=[...document.querySelectorAll('.layer')].map(el=>({el,s:+el.dataset.s}));
 const BL=[...document.querySelectorAll('#L2 .blk')].map(el=>({el,id:el.id,t:el.dataset.t||null,gap:+(el.dataset.gap||170),items:null,top:0,h:0,span:0}));
 let A=[],SMAX=1,K=1,curB=null;
-function P(t){if(typeof t==='string'&&t[0]==='@'){const b=BL.find(x=>x.id===t.slice(1));return b?b.top+200:0}
- const m=mf(t);if(!A.length)return 0;if(m<=A[0][0])return A[0][1]-(A[0][0]-m)*60;
+function P(t){if(typeof t==='string'&&t[0]==='@'){const b=BL.find(x=>x.id===t.slice(1));return b?b.top+200:0}return Pm(mf(t))}
+function Pm(m){if(!A.length)return 0;if(m<=A[0][0])return A[0][1]-(A[0][0]-m)*60;
  for(let i=1;i<A.length;i++)if(m<=A[i][0]){const a=A[i-1],b=A[i];return a[1]+(b[1]-a[1])*(m-a[0])/(b[0]-a[0])}
  const z=A[A.length-1];return z[1]+(m-z[0])*900}
 function Minv(S){if(!A.length||S<A[0][1])return null;for(let i=1;i<A.length;i++)if(S<=A[i][1]){const a=A[i-1],b=A[i];return a[0]+(b[0]-a[0])*(S-a[1])/(b[1]-a[1])}return A[A.length-1][0]}
@@ -948,14 +948,28 @@ function buildMid(){const s=.55;let h='';const Y=t=>P(t)*s;const y0=Y('2023.03')
  PHASES.forEach(p=>{const a=Y(p[1]),b=Y(p[2]);h+='<div class="phase" style="top:'+a+'px;height:'+(b-a)+'px;background:'+p[3]+'"></div><div class="phl" style="top:'+(a+20)+'px;color:'+p[3]+'">'+p[0]+'</div>'});
  CURSOR.forEach(c=>{const y=Y(c[0]),col=ERA[eraOf(mf(c[0]))];h+='<div class="cms'+(c[2]?' big':'')+'" style="top:'+y+'px;--mc:'+col+'"></div><div class="cml" style="top:'+y+'px;--mc:'+col+'"><em>'+c[0]+(c[3]?' · '+c[3]:'')+'</em>'+c[1]+'</div>'});
  h+='<div class="lifehd" style="top:'+(Y('2021.06')-90)+'px">生命线 · 线有多长，就活了多久 ↓</div>';
- LIVES.forEach((l,i)=>{const x=1832-i*24,a=Y(l[1]),end=l[2]||NOW,b=Y(end),fut=!!l[2]&&mf(l[2])>mf(NOW);
-  if(fut)h+='<div class="life" style="left:'+x+'px;top:'+a+'px;height:'+(yN-a)+'px;--lc:'+l[3]+'"></div><div class="life fut" style="left:'+x+'px;top:'+yN+'px;height:'+Math.max(30,b-yN)+'px;--lc:'+l[3]+'"></div>';
-  else h+='<div class="life" style="left:'+x+'px;top:'+a+'px;height:'+(b-a)+'px;--lc:'+l[3]+'"></div>';
-  h+='<div class="lfd" style="left:'+x+'px;top:'+a+'px;--lc:'+l[3]+'"></div><div class="lfl" style="left:'+(x+5)+'px;top:'+(a+12)+'px;--lc:'+l[3]+'">'+l[0]+'<small>'+l[1]+'</small></div>';
-  l[5].forEach(t=>{h+='<div class="lft" style="left:'+(x+1)+'px;top:'+Y(t[0])+'px;--lc:'+l[3]+'">'+t[1]+'</div>'});
-  if(l[2])h+='<div class="lfe" style="left:'+x+'px;top:'+(fut?yN+Math.max(30,b-yN):b)+'px;--lc:'+l[3]+'"></div><div class="lfn" style="left:'+(x+5)+'px;top:'+((fut?yN+Math.max(30,b-yN):b)+8)+'px">'+l[4]+'</div>'});
+ h+=lifelines(s,yN);
  h+='<div class="today" style="top:'+yN+'px"><b>今天 · 2026.11.04</b></div>';
  const L1=$('#L1');L1.innerHTML=h;fillLogos(L1)}
+/* lifelines as SVG paths: columns are dynamic — every line drifts right as time goes on,
+   spacing tightens with the number of living lines, and a line that ends hands its slot to the younger ones */
+function lifelines(s,yN){const R=1846,mN=mf(NOW),m0=mf('2021.06'),Ym=m=>Pm(m)*s;
+ const L=LIVES.map(l=>({l,b:mf(l[1]),e:l[2]?Math.min(mf(l[2]),mN):mN,end:l[2]?mf(l[2]):null}));
+ const w=(x,m)=>clamp((m-x.b)/1.2)*(x.end!==null&&x.end<=mN?1-clamp((m-x.e)/2.5):1);   /* fade in over ~1 month, hand slot back over ~2.5 */
+ const band=m=>330-200*clamp((m-mf('2023.06'))/(mN-mf('2023.06')));                   /* total width: 330px → 130px */
+ const X=(j,m)=>{let sum=0,tot=0;L.forEach((x,k)=>{const v=w(x,m);tot+=v;if(k<j)sum+=v});const gap=Math.min(26,band(m)/Math.max(1,tot-1));return R-gap*sum};
+ let g='',lab='';
+ L.forEach((x,j)=>{const c=x.l[3],pts=[];for(let m=x.b;m<x.e;m+=.25)pts.push([X(j,m),Ym(m)]);pts.push([X(j,x.e),Ym(x.e)]);
+  g+='<path d="M'+pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L')+'" stroke="'+c+'" stroke-width="2" stroke-opacity=".8" fill="none" stroke-linejoin="round"/>';
+  const bx=X(j,x.b+.01),by=Ym(x.b);g+='<circle cx="'+bx.toFixed(1)+'" cy="'+by.toFixed(1)+'" r="6" fill="'+c+'" style="filter:drop-shadow(0 0 6px '+c+')"/>';
+  lab+='<div class="lfl" style="left:'+(bx-19).toFixed(1)+'px;top:'+(by+12)+'px;--lc:'+c+'">'+x.l[0]+'<small>'+x.l[1]+'</small></div>';
+  x.l[5].forEach(t=>{const m=mf(t[0]);lab+='<div class="lft" style="left:'+X(j,m).toFixed(1)+'px;top:'+Ym(m).toFixed(1)+'px;--lc:'+c+'">'+t[1]+'</div>'});
+  if(x.end!==null){const ex=X(j,x.e),ey=Ym(x.e);
+   if(x.end>mN){g+='<path d="M'+ex.toFixed(1)+','+ey.toFixed(1)+' V'+(ey+70)+'" stroke="'+c+'" stroke-width="2" stroke-dasharray="6 6" fill="none"/>';
+    lab+='<div class="lfe" style="left:'+ex.toFixed(1)+'px;top:'+(ey+70)+'px;--lc:'+c+'"></div><div class="lfn" style="left:'+(ex-17).toFixed(1)+'px;top:'+(ey+80)+'px">'+x.l[4]+'</div>'}
+   else lab+='<div class="lfe" style="left:'+ex.toFixed(1)+'px;top:'+ey.toFixed(1)+'px;--lc:'+c+'"></div><div class="lfn" style="left:'+(ex-17).toFixed(1)+'px;top:'+(ey+8).toFixed(1)+'px">'+x.l[4]+'</div>'}});
+ const H=Math.ceil(yN+300);
+ return '<svg style="position:absolute;left:0;top:0;width:1920px;height:'+H+'px;overflow:visible" viewBox="0 0 1920 '+H+'">'+g+'</svg>'+lab}
 /* front: buzz (weeks) */
 function buildFront(){const s=1.5,L3=$('#L3');L3.innerHTML=BUZZ.map((b,i)=>{const y=P(b[1])*s,left=i%2===0;const x=left?(18+(i*37)%60):(1460+(i*53)%120);
  return '<div class="bz '+(b[2]||'')+'" style="top:'+y+'px;left:'+x+'px">'+b[0]+'</div>'}).join('');
