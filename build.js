@@ -6,7 +6,7 @@
    Usage: node build.js */
 const fs = require('fs'), path = require('path');
 const dir = __dirname, read = f => fs.readFileSync(path.join(dir, f), 'utf8');
-const src = read('deck.src.html'), logos = '<script>' + read('logos.js') + '\n</script>';
+const src = read('deck.src.html'), logos = '<script>' + read('logos.js') + '\n' + read('avatars.js') + '\n</script>';
 if (!src.includes('<!--LOGOS-->')) throw new Error('missing <!--LOGOS--> in deck.src.html');
 const deck = src.replace('<!--LOGOS-->', logos);
 fs.writeFileSync(path.join(dir, 'index.html'), deck);

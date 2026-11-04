@@ -64,9 +64,14 @@ h2 small{display:block;font-size:26px;font-weight:500;color:var(--mut);letter-sp
 .lg.tiny{width:24px;height:24px;border-radius:6px;background:rgba(255,255,255,.09)}
 .lg.tiny svg{width:15px;height:15px}
 .lg.tiny.m{font-size:11px}
-.lg.mini{width:16px;height:16px;border-radius:4px;background:rgba(255,255,255,.1);border:none}
-.lg.mini svg{width:11px;height:11px}
-.lg.mini.m{font-size:9px}
+.lg.hd{width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.1)}
+.lg.hd svg{width:32px;height:32px}
+.lg.hd.m{font-size:20px}
+.lg.mini{width:20px;height:20px;border-radius:5px;background:rgba(255,255,255,.12);border:none}
+.lg.mini svg{width:15px;height:15px}
+.lg.mini.m{font-size:10px}
+.avimg{overflow:hidden;background:#141a24}
+.avimg img{width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit}
 
 /* month / content layout */
 .mhead{display:flex;align-items:flex-end;gap:34px;height:150px}
@@ -542,9 +547,9 @@ html.static .js{opacity:1!important}
 .tmap .tmhead{font-size:22px;font-weight:800;line-height:1.2}
 .tmap .tmsub{font:600 12.5px var(--mono);color:var(--mut);margin-top:6px;letter-spacing:.05em}
 .tmap .tmlist{margin-top:12px;padding-top:11px;border-top:1px solid var(--line)}
-.tmap .tmitem{position:relative;padding-left:21px;margin-top:10px}
+.tmap .tmitem{position:relative;padding-left:26px;margin-top:10px}
 .tmap .tmitem>u{position:absolute;left:0;top:7px;width:8px;height:8px;border-radius:50%;background:var(--mc);text-decoration:none}
-.tmap .tmitem>.lg.mini{position:absolute;left:0;top:3px}
+.tmap .tmitem>.lg.mini{position:absolute;left:0;top:1px}
 
 .tmap .tmitem b{font-size:16px;font-weight:700;line-height:1.35}
 .tmap .tmitem em{font-style:normal;font:500 11.5px var(--mono);color:var(--dim);margin-left:8px;line-height:1.35}
@@ -651,7 +656,7 @@ html.static .js{opacity:1!important}
     <div>
       <div class="mile a"><span class="dt">2021.06</span><span class="lg lgx" data-l="githubcopilot"></span><div><b>GitHub Copilot</b><p>灰色 ghost text + Tab</p></div></div>
       <div class="mile a"><span class="dt">2022.11</span><span class="lg lgx" data-l="openai"></span><div><b>ChatGPT</b><p>复制 → 粘贴式编程</p></div></div>
-      <div class="mile a"><span class="dt">2023.01</span><span class="lg lgx m" style="--mc:#fb923c">AK</span><div><b>「最热门的编程语言是英语」</b><p>Karpathy</p></div></div>
+      <div class="mile a"><span class="dt">2023.01</span><span class="lg lgx" data-av="karpathy" style="border-radius:50%"></span><div><b>「最热门的编程语言是英语」</b><p>Karpathy</p></div></div>
       <div class="mile a"><span class="dt">2023.03</span><span class="lg lgx" data-l="cursor"></span><div><b>Cursor 发布 · GPT-4</b><p>AI-first 编辑器（VS Code 分叉）</p></div></div>
     </div>
     <div class="a" style="position:relative">
@@ -876,7 +881,7 @@ html.static .js{opacity:1!important}
   <h2 class="a" style="font-size:96px">「Vibe Coding」<span class="grad">诞生</span></h2>
   <div style="display:grid;grid-template-columns:860px 1fr;gap:60px;margin-top:40px">
     <div class="tweet a">
-      <div class="who"><div class="av">AK</div><div><b>Andrej Karpathy</b><span>@karpathy · 2025.02.02</span></div></div>
+      <div class="who"><div class="av" data-av="karpathy"></div><div><b>Andrej Karpathy</b><span>@karpathy · 2025.02.02</span></div></div>
       <div class="tx">There's a new kind of coding I call <mark>"vibe coding"</mark>, where you fully give in to the vibes, embrace exponentials, and <mark>forget that the code even exists.</mark></div>
       <div class="zh">完全顺从感觉，拥抱指数增长，忘掉代码的存在。</div>
       <div class="meta">Composer + Sonnet · 语音输入 · 「Accept All」从不读 diff</div>
@@ -1007,7 +1012,7 @@ html.static .js{opacity:1!important}
   <div class="kicker a">2026 · 每月一个主词 · 同期还有</div>
   <h2 class="a" style="font-size:84px">2026：<span class="grad">从「写代码」到「造闭环」</span></h2>
   <div class="cal">
-    <div class="m a" data-go="s-jan"><div class="n">01</div><div class="w">Ralph Loop</div><div class="s">让 Agent 通宵循环</div><div class="x"><i>Cowork</i><i>MCP Apps</i></div><div class="lgs"><span class="lg sm" data-l="claude"></span></div></div>
+    <div class="m a" data-go="s-jan"><div class="n">01</div><div class="w">Ralph Loop</div><div class="s">让 Agent 通宵循环</div><div class="x"><i>Cowork</i><i>MCP Apps</i></div><div class="lgs"><span class="lg sm" data-av="ghuntley" style="border-radius:50%"></span><span class="lg sm" data-l="claude"></span></div></div>
     <div class="m a" data-go="s-feb"><div class="n">02</div><div class="w">Agentic Engineering</div><div class="s">Agent 团队</div><div class="x"><i>Codex App</i><i>自适应思考</i></div><div class="lgs"><span class="lg sm" data-l="claude"></span><span class="lg sm" data-l="openai"></span></div></div>
     <div class="m a" data-go="s-mar"><div class="n">03</div><div class="w">Automations</div><div class="s">事件即 Prompt</div><div class="x"><i>ACP</i><i>WorkBuddy</i></div><div class="lgs"><span class="lg sm" data-l="cursor"></span></div></div>
     <div class="m a" data-go="s-apr"><div class="n">04</div><div class="w">Agents Window</div><div class="s">IDE 退居二线 · DeepSeek V4</div><div class="x"><i>Best-of-N</i><i>Mythos</i></div><div class="lgs"><span class="lg sm" data-l="cursor"></span><span class="lg sm" data-l="deepseek"></span></div></div>
@@ -1044,7 +1049,7 @@ html.static .js{opacity:1!important}
       </svg>
     </div>
     <div class="cards">
-      <div class="cc a"><div class="cc-h"><span class="lg m" style="--mc:#ca8a04">R</span><b>Ralph Wiggum Loop</b><em>01</em></div><p>每轮全新上下文，记忆存在 git</p></div>
+      <div class="cc a"><div class="cc-h"><span class="lg" data-av="ghuntley"></span><b>Ralph Wiggum Loop</b><em>01</em></div><p>提出者 Geoffrey Huntley；名字取自《辛普森一家》，每轮全新上下文，记忆存在 git</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg m" style="--mc:#9a3412">GT</span><b>Gas Town</b><em>01</em></div><p>tmux 编排 20–30 个 Claude Code</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg m" style="--mc:#dc2626">OC</span><b>Clawdbot → OpenClaw</b><em>01</em></div><p>自托管个人 Agent · Mac mini 梗</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="claude"></span><b>Claude Cowork</b><em>01</em></div><p>给所有人的 Claude Code：说「要什么」，回来的是成品</p><a class="lk" href="https://www.anthropic.com/product/claude-cowork" target="_blank" rel="noopener noreferrer">产品页 ↗</a></div>
@@ -1052,7 +1057,7 @@ html.static .js{opacity:1!important}
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="cursor"></span><b>Planner·Worker·Judge</b><em>01</em></div><p>数百 Agent 一周写出浏览器</p></div>
     </div>
   </div>
-  <div class="buzz a"><span>热议</span><i>Vibe Shift：DHH、Torvalds 转向</i><i>Anthropic 封禁第三方订阅客户端</i><i>Replit 手机端 vibe coding</i><i>MCP Apps 交互 UI（01.26）</i><i>ACP Registry · Zed × JetBrains</i></div>
+  <div class="buzz a"><span>热议</span><i class="jb"><span class="lg xs" data-av="dhh" style="border-radius:50%"></span><span class="lg xs" data-av="torvalds" style="border-radius:50%"></span>Vibe Shift：DHH、Torvalds 转向</i><i>Anthropic 封禁第三方订阅客户端</i><i>Replit 手机端 vibe coding</i><i>MCP Apps 交互 UI（01.26）</i><i>ACP Registry · Zed × JetBrains</i></div>
   <div class="cstrip a"><span class="lg sm" data-l="cursor"></span><b>CURSOR 本月</b><div class="cs"><i>2.4（01.22）子代理 Subagents</i><i>Skills</i><i>图像生成</i><i>Cursor Blame</i></div></div>
 
   <div class="foot-note a">循环不是魔法，是把记忆外置到 git 与提示词</div>
@@ -1425,11 +1430,13 @@ html.static .js{opacity:1!important}
   <h2 class="a">同一个 Coding Agent，<span class="grad">长成了两种「同事」</span></h2>
   <div class="fork a">
     <svg viewBox="0 0 1720 560">
-      <path class="draw" pathLength="1" d="M860,74 V152 M860,152 C860,198 380,144 380,236 M860,152 C860,198 1340,144 1340,236" fill="none" stroke="#34d399" stroke-width="4" style="--d:.3s"/>
+      <path class="draw" pathLength="1" d="M860,74 V152" fill="none" stroke="#94a3b8" stroke-width="4" style="--d:.2s"/>
+      <path class="draw" pathLength="1" d="M860,152 C860,198 380,144 380,236" fill="none" stroke="#38bdf8" stroke-width="4" style="--d:.35s"/>
+      <path class="draw" pathLength="1" d="M860,152 C860,198 1340,144 1340,236" fill="none" stroke="#f472b6" stroke-width="4" style="--d:.35s"/>
       <defs><linearGradient id="gfp" x1="0" x2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset="1" stop-color="#34d399"/></linearGradient>
       <linearGradient id="gfo" x1="0" x2="1"><stop offset="0" stop-color="#f472b6"/><stop offset="1" stop-color="#fbbf24"/></linearGradient></defs>
     </svg>
-    <div class="stem pop" style="--d:.2s"><b>2026 · Coding Agent</b><span>已经能自己干活 → 归属成了新问题</span></div>
+    <div class="stem pop" style="--d:.2s"><b>2026 · Coding Agent</b><span>已经能自己干活 → 分野在「谁拥有上下文」</span></div>
     <div class="br pl">
       <div class="bh"><span class="lg" data-l="claude"></span><b>个人 Agent</b><span>属于「我」</span></div>
       <div class="bw pop" style="--d:.9s"><i class="lg sm" data-l="claude"></i><span class="bw2"><b>Claude Cowork</b><em>01 发布 · 04.09 全量 GA · 09.16 融入每次对话</em><p>说「要什么」而不是「怎么做」，跨文件与工具执行，回来的是成品</p></span></div>

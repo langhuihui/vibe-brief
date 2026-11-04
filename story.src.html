@@ -74,9 +74,65 @@ svg *{transform-box:fill-box;transform-origin:center}
 .lg.tiny{width:24px;height:24px;border-radius:6px;background:rgba(255,255,255,.09)}
 .lg.tiny svg{width:15px;height:15px}
 .lg.tiny.m{font-size:11px}
-.lg.mini{width:18px;height:18px;border-radius:5px;background:rgba(255,255,255,.1);border:none}
-.lg.mini svg{width:12px;height:12px}
-.lg.mini.m{font-size:9px}
+/* headline marks match the 58px h2; tool-row marks got bigger and fuller */
+.lg.hd{width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.1)}
+.lg.hd svg{width:32px;height:32px}
+.lg.hd.m{font-size:20px}
+.lg.mini{width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,.12);border:none}
+.lg.mini svg{width:17px;height:17px}
+.lg.mini.m{font-size:11px}
+.avimg{overflow:hidden;background:#141a24}
+.avimg img{width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit}
+/* weight-space programming bench: scroll-driven bars/counter + only 5 pulsing cells,
+   so the animation never becomes a continuous 72-element compositor job */
+.wsp{margin-top:18px;padding:18px 20px;border:1px solid rgba(244,114,182,.24);border-radius:18px;background:rgba(8,6,12,.5)}
+.wsp-flow{display:grid;grid-template-columns:150px minmax(0,1fr) 150px;align-items:center;gap:16px}
+.wsp-mod{padding:10px 8px;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.045);text-align:center}
+.wsp-mod b{display:block;font-size:18px;font-weight:800}
+.wsp-mod span{display:block;margin-top:4px;font:600 12px var(--mono);color:var(--mut)}
+.wsp-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;padding:9px;border:1px solid rgba(255,255,255,.07);border-radius:12px;background:#05070b}
+.wsp-grid i{aspect-ratio:1;border-radius:2px;background:rgba(167,139,250,.16)}
+.wsp-grid i.hit{background:linear-gradient(135deg,#a78bfa,#f472b6);box-shadow:0 0 9px rgba(244,114,182,.55);animation:wspPulse 2.2s ease-in-out infinite}
+@keyframes wspPulse{0%,100%{opacity:.35;transform:scale(.82)}50%{opacity:1;transform:scale(1)}}
+.wsp-bars{display:grid;gap:11px;margin-top:18px}
+.wsp-bar{display:grid;grid-template-columns:70px minmax(0,1fr) 66px;align-items:center;gap:12px;font:600 14px var(--mono);color:#cbd5e1}
+.wsp-bar i{display:block;height:13px;border-radius:7px;background:rgba(148,163,184,.34);transform-origin:left center}
+.wsp-bar b{text-align:right;font:800 17px var(--mono);color:#e2e8f0}
+.wsp-note{margin-top:15px;font-size:15px;line-height:1.55;color:#cbd5e1}
+.wsp-note b{color:#f9a8d4}
+/* fork: a real Y-split with two colour identities, instead of a flat two-column grid */
+.fk{position:relative;margin-top:24px}
+.fkw{position:absolute;left:0;top:0;width:1360px;height:170px;overflow:visible;pointer-events:none}
+.fknode{position:relative;z-index:2;width:440px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:12px 18px;border-radius:16px;background:linear-gradient(135deg,rgba(255,255,255,.1),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.2);box-shadow:0 18px 50px rgba(0,0,0,.45)}
+.fknode b{font-size:21px}.fknode em{display:block;margin-top:3px;font:600 13px var(--mono);font-style:normal;color:var(--mut)}
+.fkcols{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:96px}
+.fkcol{position:relative;overflow:hidden;padding:22px 26px 20px;border-radius:20px;border:1px solid;background:linear-gradient(180deg,rgba(15,21,31,.94),rgba(10,14,21,.94))}
+.fkcol.p{border-color:rgba(56,189,248,.45);box-shadow:inset 0 0 0 1px rgba(56,189,248,.09),0 24px 60px rgba(0,0,0,.35)}
+.fkcol.o{border-color:rgba(244,114,182,.45);box-shadow:inset 0 0 0 1px rgba(244,114,182,.09),0 24px 60px rgba(0,0,0,.35)}
+.fkcol:before{content:attr(data-ghost);position:absolute;right:22px;top:-40px;font:900 155px/1 var(--sans);letter-spacing:-.08em;opacity:.06;pointer-events:none}
+.fkcol.p:before{color:#38bdf8}.fkcol.o:before{color:#f472b6}
+.fkhead{display:flex;align-items:center;gap:14px;padding-bottom:13px;border-bottom:1px solid rgba(255,255,255,.1)}
+.fkhead i{font:900 32px/1 var(--mono);font-style:normal;opacity:.7}
+.fkcol.p .fkhead i{color:#7dd3fc}.fkcol.o .fkhead i{color:#f9a8d4}
+.fkhead b{font-size:29px;font-weight:850}
+.fkhead em{display:block;margin-top:4px;font:600 12px var(--mono);letter-spacing:.1em;font-style:normal;color:var(--mut)}
+.fkcol.p .fkhead b{color:#7dd3fc}.fkcol.o .fkhead b{color:#f9a8d4}
+.fkth{margin:13px 0 2px;font-size:17px;color:#e2e8f0}
+.fki{display:flex;align-items:center;gap:13px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.fki:last-child{border-bottom:none}
+.fki b{font-size:17px}.fki em{margin-left:8px;font:600 12px var(--mono);font-style:normal;color:var(--mut)}
+.fki p{margin:2px 0 0;font-size:14px;color:#9aa5b8}
+.fkbar{margin-top:18px;overflow:hidden;border:1px solid var(--line);border-radius:14px}
+.fkrow{display:grid;grid-template-columns:120px 1fr 1fr;align-items:center;background:rgba(255,255,255,.025);border-bottom:1px solid rgba(255,255,255,.06);font-size:15px}
+.fkrow:last-child{border-bottom:none}
+.fkrow>span{padding:9px 14px;font:700 13px var(--mono);color:var(--mut);background:rgba(255,255,255,.035)}
+.fkrow>b{padding:9px 16px;font-weight:650}
+.fkrow>b.p{color:#7dd3fc;border-left:2px solid rgba(56,189,248,.5)}
+.fkrow>b.o{color:#f9a8d4;border-left:2px solid rgba(244,114,182,.5)}
+.fkrow.hd{background:rgba(255,255,255,.065)}
+.fkrow.hd>span,.fkrow.hd>b{font-size:14px;letter-spacing:.04em}
+.fkkick{margin-top:20px;text-align:center;font-size:22px;color:#cbd5e1}
+.fkkick b{font-weight:850;background:linear-gradient(92deg,#7dd3fc,#f9a8d4);-webkit-background-clip:text;background-clip:text;color:transparent}
 .chip{display:inline-flex;align-items:center;gap:8px;font:600 16px var(--mono);padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:#cbd5e1;white-space:nowrap}
 .chip em{font-style:normal;color:var(--ac)}
 .grid{display:grid;gap:16px;margin-top:22px}
@@ -244,10 +300,10 @@ svg *{transform-box:fill-box;transform-origin:center}
 .sweep b{position:absolute;top:-26px;left:50%;transform:translateX(-50%);font:800 14px var(--mono);color:#0b0f16;background:#fff;padding:2px 8px;border-radius:999px;white-space:nowrap}
 .tmc{position:absolute;top:0;width:270px;height:600px;border-radius:20px;padding:20px 18px;background:linear-gradient(180deg,color-mix(in srgb,var(--mc) 12%,#0b0f16),#0b0f16);border:1px solid color-mix(in srgb,var(--mc) 30%,transparent)}
 .tmc .h{font-size:22px;font-weight:850}.tmc .s{font:700 12px var(--mono);letter-spacing:.12em;color:var(--mc);margin-top:4px}
-.tmc .it{margin-top:9px;padding-left:26px;position:relative;min-height:20px}
+.tmc .it{margin-top:9px;padding-left:28px;position:relative;min-height:22px}
 .tmc .it::before{content:none}
 .tmc .it>.lg.mini{position:absolute;left:0;top:1px}
-.tmc .it b{display:block;font-size:18px}.tmc .it span{display:block;font-size:13px;color:var(--mut)}
+.tmc .it b{display:block;font-size:17px}.tmc .it span{display:block;font-size:13px;color:var(--mut)}
 .tmc .nt{position:absolute;left:18px;right:18px;bottom:16px;font-size:14px;color:var(--mut);line-height:1.4}
 #cloud{position:relative;width:1720px;height:740px;margin-top:10px}
 #cloud .w{position:absolute;white-space:nowrap;line-height:1;cursor:pointer;color:var(--cc);font-weight:var(--fw);letter-spacing:-.01em}
@@ -360,7 +416,7 @@ svg *{transform-box:fill-box;transform-origin:center}
 </div>
 
 <div class="blk" id="b-english" data-t="2023.01" data-era="2023" style="width:960px">
-  <div class="kk">2023.01 · Andrej Karpathy</div>
+  <div class="kk" style="display:flex;align-items:center;gap:12px"><span class="lg sm" data-av="karpathy" style="border-radius:50%"></span>2023.01 · Andrej Karpathy</div>
   <div style="font-size:64px;font-weight:850;line-height:1.2;margin-top:16px">「最热门的编程语言<br>是<span class="grad">英语</span>」</div>
   <p class="lead">注释，开始变成代码本身。</p>
 </div>
@@ -410,7 +466,7 @@ svg *{transform-box:fill-box;transform-origin:center}
 
 <div class="blk lbl" id="b-23late" data-t="2023.10.01" data-era="2023" data-gap="40"><div class="kk">2023 下半年 · 侧栏对话成了标配</div></div>
 <div class="blk cb" id="b-v0" data-t="2023.10.10" data-era="2023"><div class="card glass " data-k="0 .4" data-fx="up"><div class="h"><b>v0</b><em>2023.10</em></div><p>一句话生成界面</p></div></div>
-<div class="blk cb" id="b-swebench" data-t="2023.10.20" data-era="2023"><div class="card glass " data-k="0 .4" data-fx="up"><div class="h"><b>SWE-bench</b><em>2023.10</em></div><p>用真实 GitHub Issue 考 AI</p></div></div>
+<div class="blk cb" id="b-swebench" data-t="2023.10.20" data-era="2023"><div class="card glass " data-k="0 .4" data-fx="up"><div class="h"><span class="lg mini" data-l="ico-bench"></span><b>SWE-bench</b><em>2023.10</em></div><p>用真实 GitHub Issue 考 AI</p></div></div>
 <div class="blk cb" id="b-dscoder" data-t="2023.11.02" data-era="2023"><div class="card glass dsx" data-k="0 .4" data-fx="up"><div class="h"><span class="lg sm" data-l="deepseek"></span><b>DeepSeek-Coder</b><em>2023.11</em></div><p>开源代码模型 · 仓库级预训练</p></div></div>
 <div class="blk cb" id="b-gpts" data-t="2023.11.06" data-era="2023"><div class="card glass " data-k="0 .4" data-fx="up"><div class="h"><span class="lg sm" data-l="openai"></span><b>GPTs · 128K</b><em>2023.11</em></div><p>DevDay：定制 GPT、长上下文</p></div></div>
 <div class="blk cb" id="b-cpp" data-t="2023.12.05" data-era="2023"><div class="card glass " data-k="0 .4" data-fx="up"><div class="h"><span class="lg sm" data-l="cursor"></span><b>Copilot++</b><em>2023 末</em></div><p>Cursor 开始预测下一处编辑</p></div></div>
@@ -422,7 +478,7 @@ svg *{transform-box:fill-box;transform-origin:center}
   <h2>Devin：首个<span class="grad">「AI 软件工程师」</span></h2>
   <p class="lead">演示里它自己开终端、查文档、改代码 —— 从补全，走到「工程师」。</p>
 </div>
-<div class="blk cb" id="b-sweagent" data-t="2024.04.02" data-era="2024"><div class="card glass " data-k="0 .4" data-fx="up"><div class="h"><b>SWE-agent</b><em>2024.04</em></div><p>为 Agent 设计的计算机接口 ACI</p></div></div>
+<div class="blk cb" id="b-sweagent" data-t="2024.04.02" data-era="2024"><div class="card glass " data-k="0 .4" data-fx="up"><div class="h"><span class="lg mini" data-l="ico-agent"></span><b>SWE-agent</b><em>2024.04</em></div><p>为 Agent 设计的计算机接口 ACI</p></div></div>
 <div class="blk cb" id="b-workspace" data-t="2024.04.29" data-era="2024"><div class="card glass " data-k="0 .4" data-fx="up"><div class="h"><span class="lg sm" data-l="github"></span><b>Copilot Workspace</b><em>2024.04</em></div><p>Issue → 计划 → 代码</p></div></div>
 <div class="blk cb" id="b-dsv2" data-t="2024.05.06" data-era="2024"><div class="card glass dsx" data-k="0 .4" data-fx="up"><div class="h"><span class="lg sm" data-l="deepseek"></span><b>DeepSeek-V2 · MLA</b><em>2024.05</em></div><p>省显存，¥1/百万 token 掀价格战</p></div></div>
 
@@ -480,7 +536,7 @@ svg *{transform-box:fill-box;transform-origin:center}
 <div class="blk" id="b-vibe" data-t="2025.02.02" data-era="2025" data-span="820">
   <div class="kk">2025.02.02 · 命名时刻</div>
   <div class="tweet">
-    <div class="who"><span class="lg m" style="--mc:#0f172a;width:52px;height:52px;border-radius:50%;font-size:19px">AK</span><div><b>Andrej Karpathy</b><br><span>@karpathy · 2025.02.02</span></div></div>
+    <div class="who"><span class="lg" data-av="karpathy" style="width:52px;height:52px;border-radius:50%"></span><div><b>Andrej Karpathy</b><br><span>@karpathy · 2025.02.02</span></div></div>
     <div class="q" data-k=".1 .65" data-fx="type" data-text="There's a new kind of coding I call &quot;vibe coding&quot;, where you fully give in to the vibes, embrace exponentials, and forget that the code even exists."></div>
     <div class="zh">完全顺从感觉，拥抱指数增长，忘掉代码的存在。—— Composer + Sonnet，语音输入，「Accept All」从不读 diff</div>
   </div>
@@ -527,8 +583,8 @@ svg *{transform-box:fill-box;transform-origin:center}
   <div class="ctxbar" id="ctxbar"></div>
   <div class="ctxlab" id="ctxlab"></div>
   <div class="grid g2">
-    <div class="card glass" data-k=".6 .75"><div class="h"><b>Context Rot</b></div><p>上下文越长，模型越「笨」</p></div>
-    <div class="card glass" data-k=".64 .79"><div class="h"><b>Compaction</b></div><p>自动摘要旧对话，续命长任务</p></div>
+    <div class="card glass" data-k=".6 .75"><div class="h"><span class="lg mini" data-l="ico-ctx"></span><b>Context Rot</b></div><p>上下文越长，模型越「笨」</p></div>
+    <div class="card glass" data-k=".64 .79"><div class="h"><span class="lg mini" data-l="ico-pack"></span><b>Compaction</b></div><p>自动摘要旧对话，续命长任务</p></div>
   </div>
 </div>
 <div class="blk cb" id="b-geminicli" data-t="2025.06.25" data-era="2025"><div class="card glass " data-k="0 .4" data-fx="up"><div class="h"><span class="lg sm" data-l="googlegemini"></span><b>Gemini CLI</b><em>2025.06</em></div><p>开源终端 Agent，免费额度大</p></div></div>
@@ -543,12 +599,12 @@ svg *{transform-box:fill-box;transform-origin:center}
   <div class="kk" style="color:#fca5a5">2025.07.10 · 反噬的第一份证据</div>
   <div class="metr glass" style="margin-top:16px" data-k=".1 .35" data-fx="zoom"><b data-k=".15 .5" data-fx="num" data-n="19" data-pre="+" data-suf="%"></b><p>METR 随机对照：资深开发者用 AI 反而<b style="font-size:inherit;color:#fca5a5">慢了 19%</b>，<br>自己却以为快了 20%。</p></div>
 </div>
-<div class="blk cb" id="b-dropdb" data-t="2025.07.18" data-era="2025"><div class="card glass red" data-k="0 .4" data-fx="up"><div class="h"><b>删库事件</b><em>2025.07</em></div><p>Agent 误删生产库，还「编」了数据</p></div></div>
+<div class="blk cb" id="b-dropdb" data-t="2025.07.18" data-era="2025"><div class="card glass red" data-k="0 .4" data-fx="up"><div class="h"><span class="lg mini" data-l="ico-alert"></span><b>删库事件</b><em>2025.07</em></div><p>Agent 误删生产库，还「编」了数据</p></div></div>
 
 <div class="blk cb" id="b-agentsmd" data-t="2025.08.19" data-era="2025"><div class="card glass " data-k="0 .4" data-fx="up"><div class="h"><span class="lg sm" data-l="openai"></span><b>AGENTS.md</b><em>2025.08</em></div><p>跨工具通用的 Agent 说明书</p></div></div>
 <div class="blk cb" id="b-dsv31" data-t="2025.08.21" data-era="2025"><div class="card glass dsx" data-k="0 .4" data-fx="up"><div class="h"><span class="lg sm" data-l="deepseek"></span><b>DeepSeek V3.1</b><em>2025.08</em></div><p>兼容 Anthropic API，Claude Code 可「换芯」</p></div></div>
 <div class="blk cb" id="b-acp" data-t="2025.08.27" data-era="2025"><div class="card glass " data-k="0 .4" data-fx="up"><div class="h"><span class="lg sm" data-l="zedindustries"></span><b>ACP</b><em>2025.08.27</em></div><p>Zed：编辑器 ↔ Agent 的「LSP」</p></div></div>
-<div class="blk cb" id="b-vhack" data-t="2025.08.28" data-era="2025"><div class="card glass red" data-k="0 .4" data-fx="up"><div class="h"><b>Vibe Hacking</b><em>2025.08</em></div><p>用编码 Agent 发动网络攻击</p></div></div>
+<div class="blk cb" id="b-vhack" data-t="2025.08.28" data-era="2025"><div class="card glass red" data-k="0 .4" data-fx="up"><div class="h"><span class="lg mini" data-l="ico-shield"></span><b>Vibe Hacking</b><em>2025.08</em></div><p>用编码 Agent 发动网络攻击</p></div></div>
 
 <div class="blk cb" id="b-skills" data-t="2025.10.16" data-era="2025"><div class="card glass " data-k="0 .4" data-fx="up"><div class="h"><span class="lg sm" data-l="claude"></span><b>Agent Skills</b><em>2025.10.16</em></div><p>SKILL.md：渐进披露的专业能力</p></div></div>
 <div class="blk cb" id="b-ocr" data-t="2025.10.20" data-era="2025"><div class="card glass dsx" data-k="0 .4" data-fx="up"><div class="h"><span class="lg sm" data-l="deepseek"></span><b>光学上下文压缩</b><em>2025.10</em></div><p>DeepSeek-OCR：把长文本「拍成图」再读</p></div></div>
@@ -578,22 +634,42 @@ svg *{transform-box:fill-box;transform-origin:center}
 <!-- ======================= 2026 (months generated) ======================= -->
 <div id="months"></div>
 
-<div class="blk" id="b-fork" data-t="2026.11.01" data-era="2026" data-span="760">
+<div class="blk" id="b-fork" data-t="2026.11.01" data-era="2026" data-span="900" style="left:240px;width:1360px">
   <div class="kk">2026 收束 · Agent 的两种归属</div>
   <h3>同一个 Coding Agent，<span class="grad">长成了两种「同事」</span></h3>
-  <div class="grid g2 glass pad" style="gap:30px">
-    <div>
-      <div class="bh" data-k=".2 .3"><span class="lg" data-l="claude"></span>个人 Agent<span>属于「我」</span></div>
-      <div class="bw" data-k=".25 .35" data-fx="left"><span class="lg sm" data-l="claude"></span><div><b>Claude Cowork</b><em>01 · 04.09 GA</em><p>说「要什么」，回来的是成品</p></div></div>
-      <div class="bw" data-k=".3 .4" data-fx="left"><span class="lg sm m" style="--mc:#1d4ed8">W</span><div><b>WorkBuddy</b><em>03 · 06 企业版</em><p>专家 + 技能 + 连接器</p></div></div>
-      <div class="bw" data-k=".35 .45" data-fx="left"><span class="lg sm" data-l="x"></span><div><b>Grok Bot</b><em>08.11</em><p>常驻云端电脑，只在决策点回来</p></div></div>
+  <p class="lead">能力几乎一样，分野却在归属：一个人的偏好，还是一个团队的共享上下文。</p>
+  <div class="fk">
+    <svg class="fkw" viewBox="0 0 1360 170" width="1360" height="170">
+      <path data-k=".04 .26" data-fx="draw" pathLength="1" stroke-dasharray="1" d="M680,68 V90" fill="none" stroke="#94a3b8" stroke-width="3"/>
+      <path data-k=".14 .42" data-fx="draw" pathLength="1" stroke-dasharray="1" d="M680,90 C680,140 332,90 332,164" fill="none" stroke="#38bdf8" stroke-width="3"/>
+      <path data-k=".14 .42" data-fx="draw" pathLength="1" stroke-dasharray="1" d="M680,90 C680,140 1028,90 1028,164" fill="none" stroke="#f472b6" stroke-width="3"/>
+      <circle cx="332" cy="164" r="6" fill="#38bdf8"/><circle cx="1028" cy="164" r="6" fill="#f472b6"/>
+    </svg>
+    <div class="fknode" data-k=".02 .16" data-fx="pop"><span class="lg sm" data-l="claude"></span><div><b>2026 · Coding Agent</b><em>已经能自己干活 → 归属成了新问题</em></div></div>
+    <div class="fkcols">
+      <div class="fkcol p" data-ghost="I" data-k=".24 .46" data-fx="left">
+        <div class="fkhead"><i>01</i><div><b>个人 Agent</b><em>PERSONAL · 属于「我」</em></div></div>
+        <p class="fkth">记住你的偏好，越用越像你的私人同事</p>
+        <div class="fki"><span class="lg sm" data-l="claude"></span><div><b>Claude Cowork</b><em>01 · 04.09 GA</em><p>说「要什么」，回来的是成品</p></div></div>
+        <div class="fki"><span class="lg sm m" style="--mc:#1d4ed8">W</span><div><b>WorkBuddy</b><em>03 · 06 企业版</em><p>专家 + 技能 + 连接器</p></div></div>
+        <div class="fki"><span class="lg sm" data-l="x"></span><div><b>Grok Bot</b><em>08.11</em><p>常驻云端电脑，只在决策点回来</p></div></div>
+      </div>
+      <div class="fkcol o" data-ghost="WE" data-k=".32 .54" data-fx="right">
+        <div class="fkhead"><i>02</i><div><b>组织 Agent</b><em>ORGANIZATIONAL · 属于「团队」</em></div></div>
+        <p class="fkth">沉淀共享上下文，权限与花费按组织管控</p>
+        <div class="fki"><span class="lg sm" data-l="claude"></span><div><b>Claude Tag</b><em>08</em><p>@Claude 是频道成员，多人共享</p></div></div>
+        <div class="fki"><span class="lg sm" data-l="slack"></span><div><b>Slack Code</b><em>08.20</em><p>项目频道即工作现场</p></div></div>
+        <div class="fki"><span class="lg sm m" style="--mc:#e0b354">ht</span><div><b>HTalk @me</b><em>见附录</em><p>多人共享同一会话 · 异步派发</p></div></div>
+      </div>
     </div>
-    <div>
-      <div class="bh" data-k=".4 .5"><span class="lg" data-l="slack"></span>组织 Agent<span>属于「团队」</span></div>
-      <div class="bw" data-k=".45 .55" data-fx="right"><span class="lg sm" data-l="claude"></span><div><b>Claude Tag</b><em>08</em><p>@Claude 是频道成员，多人共享</p></div></div>
-      <div class="bw" data-k=".5 .6" data-fx="right"><span class="lg sm" data-l="slack"></span><div><b>Slack Code</b><em>08.20</em><p>项目频道即工作现场</p></div></div>
-      <div class="bw" data-k=".55 .65" data-fx="right"><span class="lg sm m" style="--mc:#e0b354">ht</span><div><b>HTalk @me</b><em>见附录</em><p>多人共享同一会话 · 异步派发</p></div></div>
+    <div class="fkbar" data-k=".5 .74" data-fx="fade">
+      <div class="fkrow hd"><span>维度</span><b class="p">个人 Agent</b><b class="o">组织 Agent</b></div>
+      <div class="fkrow"><span>归属</span><b class="p">一个人</b><b class="o">一个团队 / 频道</b></div>
+      <div class="fkrow"><span>记忆</span><b class="p">「我」的偏好与习惯</b><b class="o">频道里共享的上下文</b></div>
+      <div class="fkrow"><span>触发</span><b class="p">你交代，它后台跑</b><b class="o">任何人 @ 一下就行</b></div>
+      <div class="fkrow"><span>边界</span><b class="p">对你一个人负责</b><b class="o">权限与花费按组织管控</b></div>
     </div>
+    <div class="fkkick" data-k=".72 .94" data-fx="up">同一个模型，两处上下文 —— <b>分野不在模型，在「谁拥有记忆」</b></div>
   </div>
 </div>
 
@@ -670,8 +746,8 @@ svg *{transform-box:fill-box;transform-origin:center}
   <h2>团队深度用 AI 之后，<span class="grad">人成了 AI 之间的传话筒</span></h2>
   <div style="position:relative;height:520px;margin-top:30px">
     <div style="position:absolute;left:0;top:0;width:820px">
-      <div class="card" data-k=".1 .25" data-fx="left" style="border-color:rgba(224,179,84,.3)"><div class="h"><b>01 · AI 不在现场的割裂感</b></div><p>整理现场需求，再转述给另一个页面里的对话框 → 诉求：一个时刻站在身边、<b style="color:#f0cf86">见我所见</b>的分身</p></div>
-      <div class="card" data-k=".18 .33" data-fx="left" style="border-color:rgba(224,179,84,.3);margin-top:18px"><div class="h"><b>02 · 好用的个人 AI，只能自己用</b></div><p>别人来找我，我再把需求转述给 AI → 诉求：多人、多 AI 之间<b style="color:#f0cf86">信息与能力</b>的快速通道</p></div>
+      <div class="card" data-k=".1 .25" data-fx="left" style="border-color:rgba(224,179,84,.3)"><div class="h"><span class="lg mini" data-l="ico-team"></span><b>01 · AI 不在现场的割裂感</b></div><p>整理现场需求，再转述给另一个页面里的对话框 → 诉求：一个时刻站在身边、<b style="color:#f0cf86">见我所见</b>的分身</p></div>
+      <div class="card" data-k=".18 .33" data-fx="left" style="border-color:rgba(224,179,84,.3);margin-top:18px"><div class="h"><span class="lg mini" data-l="ico-team"></span><b>02 · 好用的个人 AI，只能自己用</b></div><p>别人来找我，我再把需求转述给 AI → 诉求：多人、多 AI 之间<b style="color:#f0cf86">信息与能力</b>的快速通道</p></div>
       <div style="font-size:24px;line-height:1.5;margin-top:40px" data-k=".7 .85">@me：连接 <b style="color:#f0cf86">现场</b> 与 <b style="color:#f0cf86">组织的计算网络</b>，<br><span class="mut">不被具体交互页面束缚的分身。</span></div>
     </div>
     <div style="position:absolute;left:900px;top:0;width:820px;height:500px">
@@ -838,7 +914,7 @@ const eraOf=m=>m<mf('2024.01')?'2023':m<mf('2025.01')?'2024':m<mf('2026.01')?'20
  document.getElementById('journey').innerHTML=h})();
 
 const MONTHS=[
- ['01','Ralph Loop','一个 bash 死循环，让 Agent 通宵干活','while :; do cat PROMPT.md | claude ; done',['01|Gas Town|tmux 编排 20–30 个 Claude Code','01|Planner·Worker·Judge|数百 Agent 一周写出浏览器','01|Claude Cowork|说「要什么」，回来的是成品','01|OpenClaw|自托管个人 Agent','01|Engram · mHC|条件记忆「存算分离」|ds','01.26|MCP Apps · ACP Registry|工具渲染 UI · Zed × JetBrains'],'2.4 子代理 · Skills · Cursor Blame',['claude','cursor']],
+ ['01','Ralph Loop','一个 bash 死循环，让 Agent 通宵干活','while :; do cat PROMPT.md | claude ; done',['01|Gas Town|tmux 编排 20–30 个 Claude Code','01|Planner·Worker·Judge|数百 Agent 一周写出浏览器','01|Claude Cowork|说「要什么」，回来的是成品','01|OpenClaw|自托管个人 Agent','01|Engram · mHC|条件记忆「存算分离」|ds','01.26|MCP Apps · ACP Registry|工具渲染 UI · Zed × JetBrains'],'2.4 子代理 · Skills · Cursor Blame',['@ghuntley','claude','cursor']],
  ['02','Agentic Engineering','Vibe Coding 一周年，Karpathy 亲自改名','',['02|99% 时间不写代码|编排并监督 Agent','02.05|Agent Teams · Opus 4.6|16 个 Agent 两周写出 C 编译器','02.05|GPT-5.3-Codex|首个参与构建自身的模型','02|Codex App|macOS 多 Agent 指挥中心','02.26|Claude Code 自动记忆|Agent 自己维护 MEMORY.md','02|36% 公开 Skills 有缺陷|技能也有供应链风险'],'长时运行 Agent · 2.5 插件市场（02.17）',['claude','openai']],
  ['03','Automations','不再需要人类按下回车','on: slack · github · alert → agent.run()',['03.05|Automations|事件触发 Agent','03.24|Auto Mode|分类器代替逐条批准','03.17|Dispatch · Channels|手机派活，Telegram 回话','03.04|Cursor 进 JetBrains|经 ACP 以 Agent 身份入驻','03|WorkBuddy 发布|从编程扩到办公','03|亚马逊宕机|AI 代码须资深审批'],'2.6 MCP Apps · Composer 2（03.19）',['cursor','claude']],
  ['04','Agents Window','编辑器不再是中心，Agent 控制台才是','',['04.02|Cursor 3「Glass」|Agents Window 取代 Composer','04.02|Best-of-N|多模型隔离比稿','04.07|Mythos · Glasswing|AI 挖出数千零日漏洞','04.24|DeepSeek-V4|1.6T 开源 · 1M 上下文|ds','04.09|Cowork GA|用量大半来自非工程团队','04.23|托管 Agent 记忆|记忆离线整理'],'3.0 Glass · 3.1 Canvas · SpaceX 600 亿期权',['cursor','deepseek']],
@@ -849,15 +925,52 @@ const MONTHS=[
  ['09','Managed Harness','Agent 的底座被托管，沙箱升级为 microVM','',['09.10|Agents API|托管会话、压缩与子代理','09.14|Coordinator Agent|协调者分派云端子代理','09.22|JetBrains Air|IDE 变成编排与验证的地方','09.24|MicroVM 沙箱|「容器不够」：硬件级隔离','09.15|Jev · System One|只回带概率的判断','09|Reward Hacking|DSec：伪造 socket 骗评测|ds'],'Projects beta：协调者管理并行子代理',['openai','jetbrains']],
  ['10','Agents as Code','一个 Agent 就是一个可测试、可部署的工程','agent-sdk eval ✓ 24/24 · agent-sdk deploy',['10.20|Cursor Agent SDK|Agent = 代码仓 · Glean 跟进','10.08|REA · 逆向一切|MCP 把 Agent 接上 Ghidra','10.02|Claude Code Mods|插件改写 Agent 内部','10.25|Skills 进 AAIF|与 MCP 同归中立治理','10.27|Codex 记忆 v2|可从 Claude Code 导入','10.31|Super-agent|跑在 DSH 上的研究原型|ds'],'Origin 应用市场 · Agent SDK GA（10.20）',['cursor','deepseek']]
 ];
+/* every dated event card gets a mark: real brand first, then a semantic rule,
+   then the month's lead vendors as a fallback — no bare text-only cards */
+const EV_RULES=[
+ [/workbuddy/i,'W:#2563eb'],[/亚马逊|amazon/i,'amazonaws'],
+ [/dispatch|channels|手机派活/i,'cursor'],[/auto mode|分类器代替/i,'claude'],
+ [/automations|事件触发/i,'cursor'],[/slack|频道/i,'slack'],
+ [/ghidra|逆向一切|REA/i,'github'],[/jetbrains|junie/i,'jetbrains'],
+ [/SpaceX|并购/i,'spacex'],[/MicroVM|沙箱/i,'docker'],
+ [/loop|循环|闭环/i,'cursor'],[/github|spec kit/i,'github']
+];
+function evMark(x,m,k){
+ const s=x.t+' '+x.desc;
+ const h=window.brandOf?brandOf(s):null;
+ if(h&&BRANDS[h][0])return '<span class="lg mini" data-l="'+BRANDS[h][0]+'" data-c="'+BRANDS[h][1]+'"></span>';
+ for(const r of EV_RULES){if(!r[0].test(s))continue;
+  return r[1][0]==='W'?'<span class="lg mini m" style="--mc:'+r[1].slice(2)+'">W</span>'
+                      :'<span class="lg mini" data-l="'+r[1]+'"></span>'}
+ const bs=m[6].filter(l=>l[0]!=='@'),l=bs[k%bs.length];
+ return '<span class="lg mini" data-l="'+l+'"></span>';
+}
 (function months(){const eraM='2026';let html='';
  MONTHS.forEach(m=>{
-  html+='<div class="blk" id="b-m'+m[0]+'" data-t="2026.'+m[0]+'" data-era="2026" data-gap="40" style="left:430px;width:960px"><div class="mo head" data-k="0 .3" data-fx="up"><div class="top"><div class="n">'+m[0]+'</div><div><div class="w">'+m[1]+'</div><div class="s">'+m[2]+'</div></div><div class="lgs">'+m[6].map(l=>'<span class="lg sm" data-l="'+l+'"></span>').join('')+'</div></div>'+(m[3]?'<pre data-k=".1 .5" data-fx="type" data-text="'+m[3].replace(/</g,'&lt;')+'"></pre>':'')+'<div class="cu"><b>CURSOR</b> · '+m[5]+'</div></div></div>';
+  html+='<div class="blk" id="b-m'+m[0]+'" data-t="2026.'+m[0]+'" data-era="2026" data-gap="40" style="left:430px;width:960px"><div class="mo head" data-k="0 .3" data-fx="up"><div class="top"><div class="n">'+m[0]+'</div><div><div class="w">'+m[1]+'</div><div class="s">'+m[2]+'</div></div><div class="lgs">'+m[6].map(l=>l[0]==='@'?'<span class="lg sm" data-av="'+l.slice(1)+'" style="border-radius:50%"></span>':'<span class="lg sm" data-l="'+l+'"></span>').join('')+'</div></div>'+(m[3]?'<pre data-k=".1 .5" data-fx="type" data-text="'+m[3].replace(/</g,'&lt;')+'"></pre>':'')+'<div class="cu"><b>CURSOR</b> · '+m[5]+'</div></div></div>';
   /* items: own date when given, otherwise spread through the month; kept strictly increasing */
   const it=m[4].map((x,k)=>{const[d,t,desc,f]=x.split('|');const dd=d.includes('.')?+d.split('.')[1]:null;return {d,t,desc,f,day:dd,k}});
   it.forEach(x=>{if(x.day===null)x.day=3+x.k*4});it.sort((a,b)=>a.day-b.day||a.k-b.k);let prev=1;it.forEach(x=>{x.day=Math.min(28,Math.max(x.day,prev+1));prev=x.day});
-  it.forEach((x,k)=>{html+='<div class="blk cb" id="b-m'+m[0]+'-'+k+'" data-t="2026.'+m[0]+'.'+x.day+'" data-era="2026"><div class="card glass '+(x.f==='ds'?'dsx':'')+'" data-k="0 .4" data-fx="up"><div class="h"><b>'+x.t+'</b><em>'+x.d+'</em></div><p>'+x.desc+'</p></div></div>'})});
+  it.forEach((x,k)=>{html+='<div class="blk cb" id="b-m'+m[0]+'-'+k+'" data-t="2026.'+m[0]+'.'+x.day+'" data-era="2026"><div class="card glass '+(x.f==='ds'?'dsx':'')+'" data-k="0 .4" data-fx="up"><div class="h">'+evMark(x,m,k)+'<b>'+x.t+'</b><em>'+x.d+'</em></div><p>'+x.desc+'</p></div></div>'})});
  document.getElementById('months').outerHTML=html;
- document.getElementById('b-m11').innerHTML='<div class="mo seed"><div class="top"><div class="n">11</div><div><div class="w">权重空间编程</div><div class="s">研究苗头 · 截至 11.04</div></div></div><div style="margin-top:14px;font-size:18px;line-height:1.7;color:#cbd5e1"><b>11.02 · Sparks of Weight-Space Programming</b>（MIT）：模型直接读写另一个模型的权重。<br>改 Qwen3.5-0.8B 的 0.016% 参数，MATH-500 7.9% → 48.1%；<span class="mut">能去障碍，不能凭空造能力。</span></div></div>'})();
+ /* weight-space programming: an animated experiment bench instead of a text block */
+(function(){let cells='';const hits=[8,19,31,44,58];
+ for(let i=0;i<72;i++){const hi=hits.indexOf(i);
+  cells+='<i'+(hi>=0?' class="hit" style="animation-delay:'+(hi*.24).toFixed(2)+'s"':'')+'></i>'}
+  document.getElementById('b-m11').innerHTML=
+   '<div class="mo seed"><div class="top"><div class="n">11</div><div><div class="w">权重空间编程</div><div class="s">研究苗头 · 截至 11.04</div></div></div>'+
+   '<div class="wsp">'+
+    '<div class="wsp-flow"><div class="wsp-mod" data-k=".05 .25" data-fx="left"><b>模型 A</b><span>读写权重</span></div>'+
+    '<div class="wsp-grid">'+cells+'</div>'+
+    '<div class="wsp-mod" data-k=".2 .4" data-fx="right"><b>模型 B</b><span>Qwen3.5-0.8B</span></div></div>'+
+    '<div class="wsp-bars">'+
+     '<div class="wsp-bar"><span>编辑前</span><i style="width:9%"></i><b>7.9%</b></div>'+
+     '<div class="wsp-bar"><span>编辑后</span><i data-k=".35 .8" data-fx="gx" style="width:55%;background:linear-gradient(90deg,#a78bfa,#f472b6)"></i><b data-k=".35 .8" data-fx="num" data-n="48.1" data-dec="1" data-suf="%">0.0%</b></div>'+
+    '</div>'+
+    '<div class="wsp-note">只改写 <b>0.016%</b> 参数 · MATH-500 7.9% → 48.1% · <span class="mut">能去障碍，不能凭空造能力</span></div>'+
+   '</div>'+
+   '<div style="margin-top:14px;font-size:17px;line-height:1.6;color:#cbd5e1"><b>11.02 · Sparks of Weight-Space Programming</b>（MIT）：模型直接读写另一个模型的权重。</div></div>'
+ })()})();
 
 
 
@@ -939,7 +1052,13 @@ function layout(){
   else{const top=Math.max(wideEnd,prevCard?Math.max(colEnd.L,colEnd.R)+120:-1e9,prevTop+120);b.top=top;wideEnd=top+b.h+b.gap;prevTop=top;prevCard=false;colEnd={L:-1e9,R:-1e9}}
   b.el.style.top=b.top+'px';b.span=+(b.el.dataset.span||Math.min(780,420+b.h*.4));
   const ax=b.el.querySelector('[data-axis]');if(ax){const a=ax.dataset.axis.split(' ');b.axis={m0:mf(a[0]),m1:mf(a[1]),y0:ax.offsetTop,H:+a[2]}}});
- A=[];BL.forEach(b=>{if(!b.t)return;const m=mf(b.t),p=b.top+(b.card?40:200);if(!A.length||m>A[A.length-1][0]+1e-6)A.push([m,p])});
+ /* The month->position map must be strictly increasing in BOTH axes. Cards use
+    a +40 offset and wide blocks +200, so two adjacent dated blocks could dip
+    ~40px; Pm() then ran backwards and folded every lifeline into a visible
+    hook at those two dates. Clamp the position, keep the original date. */
+ A=[];BL.forEach(b=>{if(!b.t)return;const m=mf(b.t),p=b.top+(b.card?40:200);
+  if(!A.length){A.push([m,p]);return}
+  if(m>A[A.length-1][0]+1e-6)A.push([m,Math.max(p,A[A.length-1][1]+1)])});
  const last=BL.reduce((a,b)=>b.top+b.h>a.top+a.h?b:a);
  /* end of scroll: last block fully on screen AND its choreography finished */
  SMAX=Math.max(last.top+last.h-400,last.top-440+last.span*.95);
@@ -987,11 +1106,40 @@ function lifelines(s,yN){const R=1846,mN=mf(NOW),Ym=m=>Pm(m)*s,SW=3;
  /* the older a stretch of line is, the fainter it gets: full at birth → 18% after ~16 months */
  const FADE=16,FMIN=.18,opAt=(j,m)=>1-(1-FMIN)*Eo(clamp((m-L[j].b)/FADE));
  let g='',lab='',defs='';
- L.forEach((x,j)=>{const c=x.l[3],pts=[];for(let m=x.b;m<x.e;m+=.2)pts.push([X(j,m),Ym(m)]);pts.push([X(j,x.e),Ym(x.e)]);
+ /* Monotone cubic Hermite in x(y) (Fritsch-Carlson). Both x and y only ever
+    increase, but y=Pm(m)*s is piecewise linear with abrupt slope changes; a
+    uniform Catmull-Rom overshot there and folded each line into a visible hook.
+    Limiting the tangents to 3·local slope keeps every segment monotone. */
+ const curve=ps=>{const n=ps.length;if(n<2)return'';
+  const h=[],d=[],m=new Array(n).fill(0);
+  for(let i=0;i<n-1;i++){h[i]=Math.max(1e-4,ps[i+1][1]-ps[i][1]);d[i]=Math.max(0,(ps[i+1][0]-ps[i][0])/h[i])}
+  for(let i=1;i<n-1;i++){
+   if(d[i-1]<=0||d[i]<=0){m[i]=0;continue}
+   const w1=2*h[i]+h[i-1],w2=h[i]+2*h[i-1];
+   m[i]=(w1+w2)/(w1/d[i-1]+w2/d[i])}
+  m[0]=d[0];m[n-1]=d[n-2];
+  for(let i=0;i<n-1;i++){
+   if(d[i]<=0){m[i]=m[i+1]=0;continue}
+   const a=m[i]/d[i],q=m[i+1]/d[i],r=a*a+q*q;
+   if(r>9){const t=3/Math.sqrt(r);m[i]=t*a*d[i];m[i+1]=t*q*d[i]}}
+  let s='M'+ps[0][0].toFixed(1)+','+ps[0][1].toFixed(1);
+  for(let i=0;i<n-1;i++){const H=h[i]/3;
+   s+=' C'+(ps[i][0]+H*m[i]).toFixed(1)+','+(ps[i][1]+H).toFixed(1)
+      +' '+(ps[i+1][0]-H*m[i+1]).toFixed(1)+','+(ps[i+1][1]-H).toFixed(1)
+      +' '+ps[i+1][0].toFixed(1)+','+ps[i+1][1].toFixed(1)}
+  return s};
+ /* vertical labels of lines born close together used to overlap */
+ const placed=[];
+ const labelX=(x,y)=>{let X0=x;for(let t=0;t<8;t++){
+   if(!placed.some(p=>Math.abs(p.x-X0)<26&&Math.abs(p.y-y)<180))break;X0-=28}
+  placed.push({x:X0,y});return X0};
+ L.forEach((x,j)=>{const c=x.l[3],pts=[];for(let m=x.b;m<x.e;m+=.35)pts.push([X(j,m),Ym(m)]);pts.push([X(j,x.e),Ym(x.e)]);
+  /* 3-tap smoothing on x; weighted averages preserve right-only motion */
+  if(pts.length>3)for(let i=1;i<pts.length-1;i++)pts[i][0]=(pts[i-1][0]+2*pts[i][0]+pts[i+1][0])/4;
   defs+='<linearGradient id="lf'+j+'" gradientUnits="userSpaceOnUse" x1="0" x2="0" y1="'+Ym(x.b).toFixed(1)+'" y2="'+Ym(x.b+FADE).toFixed(1)+'">'+[0,.25,.5,.75,1].map(f=>'<stop offset="'+f+'" stop-color="'+c+'" stop-opacity="'+opAt(j,x.b+f*FADE).toFixed(3)+'"/>').join('')+'</linearGradient>';
-  g+='<path d="M'+pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L')+'" stroke="url(#lf'+j+')" stroke-width="'+SW+'" fill="none" stroke-linejoin="round" stroke-linecap="butt"/>';
+  g+='<path d="'+curve(pts)+'" stroke="url(#lf'+j+')" stroke-width="'+SW+'" fill="none" stroke-linejoin="round" stroke-linecap="butt"/>';
   const bx=X(j,x.b),by=Ym(x.b);g+='<circle cx="'+bx.toFixed(1)+'" cy="'+by.toFixed(1)+'" r="6" fill="'+c+'" style="filter:drop-shadow(0 0 6px '+c+')"/>';
-  lab+='<div class="lfl" style="left:'+(bx-22).toFixed(1)+'px;top:'+(by+12)+'px;--lc:'+c+'">'+x.l[0]+'<small>'+x.l[1]+'</small></div>';
+  lab+='<div class="lfl" style="left:'+labelX(bx-22,by).toFixed(1)+'px;top:'+(by+12)+'px;--lc:'+c+'">'+x.l[0]+'<small>'+x.l[1]+'</small></div>';
   x.l[5].forEach(t=>{const m=mf(t[0]);lab+='<div class="lft" style="left:'+(X(j,m)-24).toFixed(1)+'px;top:'+Ym(m).toFixed(1)+'px;--lc:'+c+';opacity:'+Math.max(.55,opAt(j,m)).toFixed(2)+'">'+t[1]+'</div>'});
   if(x.end!==null){const ex=X(j,x.e),ey=Ym(x.e);
    const eo=Math.max(.6,opAt(j,x.e)).toFixed(2);
