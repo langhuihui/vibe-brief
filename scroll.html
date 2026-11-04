@@ -926,7 +926,9 @@ function fit(){K=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transfor
 function layout(){
  let y=-480;BL.forEach(b=>{b.el.style.top=y+'px';b.top=y;b.h=b.el.offsetHeight;b.span=+(b.el.dataset.span||Math.min(780,420+b.h*.4));y+=b.h+b.gap});
  A=[];BL.forEach(b=>{if(!b.t)return;const m=mf(b.t),p=b.top+200;if(!A.length||m>A[A.length-1][0]+1e-6)A.push([m,p])});
- const last=BL[BL.length-1];SMAX=last.top+last.h-700;
+ const last=BL[BL.length-1];
+ /* end of scroll: last block fully on screen AND its choreography finished */
+ SMAX=Math.max(last.top+last.h-400,last.top-440+last.span*.95);
  buildThread();buildFar();buildMid();buildFront();
  if(window.__cloudLayout)window.__cloudLayout();
  fit();space.style.height=(SMAX*K+innerHeight)+'px';
