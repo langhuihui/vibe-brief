@@ -85,11 +85,12 @@ svg *{transform-box:fill-box;transform-origin:center}
 .lg.mini.m{font-size:11px}
 .avimg{overflow:hidden;background:#141a24}
 .avimg img{width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit}
-/* large portrait marks: people are shown at face size, not as tiny dots */
+/* large portrait marks: people are shown at face size, not as tiny dots.
+   Bumped ~1.5-1.6x; small month / buzz dots stay as accents. */
 .lg.portrait,.lg.portrait-md,.lg.portrait-sm{border:2px solid rgba(255,255,255,.24);border-radius:50%;box-shadow:0 0 0 6px rgba(255,255,255,.05),0 0 46px rgba(56,189,248,.16),0 18px 50px rgba(0,0,0,.55)}
-.lg.portrait{width:176px;height:176px}
-.lg.portrait-md{width:136px;height:136px}
-.lg.portrait-sm{width:96px;height:96px}
+.lg.portrait{width:288px;height:288px}
+.lg.portrait-md{width:204px;height:204px}
+.lg.portrait-sm{width:144px;height:144px}
 .pcard{display:flex;align-items:center;gap:32px}
 .pcard .pmeta b{display:block;font-size:32px;font-weight:850}
 .pcard .pmeta span{display:block;margin-top:6px;font-size:17px;color:var(--mut)}
@@ -915,8 +916,11 @@ const eraOf=m=>m<mf('2024.01')?'2023':m<mf('2025.01')?'2024':m<mf('2026.01')?'20
  h+='<div class="glass pad" style="position:absolute;left:640px;width:760px;top:700px;font-size:20px" data-at="700" data-fx="up">单 · 自动生成 → <b style="color:#f0cf86">14:02 派发 · 14:09 定位 · 14:21 PR</b><br><span class="mut">所有动态汇聚成项目日记，沉淀团队判断力</span></div>';
  document.getElementById('journey').innerHTML=h})();
 
+/* tooltips for the real-person portrait marks in the month heads */
+const AV_TITLE={ghuntley:'Geoffrey Huntley · Ralph Wiggum Loop 提出者',
+                steipete:'Peter Steinberger · OpenClaw / Clawdbot 作者'};
 const MONTHS=[
- ['01','Ralph Loop','一个 bash 死循环，让 Agent 通宵干活','while :; do cat PROMPT.md | claude ; done',['01|Gas Town|tmux 编排 20–30 个 Claude Code','01|Planner·Worker·Judge|数百 Agent 一周写出浏览器','01|Claude Cowork|说「要什么」，回来的是成品','01|OpenClaw|自托管个人 Agent','01|Engram · mHC|条件记忆「存算分离」|ds','01.26|MCP Apps · ACP Registry|工具渲染 UI · Zed × JetBrains'],'2.4 子代理 · Skills · Cursor Blame',['@ghuntley','claude','cursor']],
+ ['01','Ralph Loop','一个 bash 死循环，让 Agent 通宵干活','while :; do cat PROMPT.md | claude ; done',['01|Gas Town|tmux 编排 20–30 个 Claude Code','01|Planner·Worker·Judge|数百 Agent 一周写出浏览器','01|Claude Cowork|说「要什么」，回来的是成品','01|OpenClaw|Peter Steinberger · 自托管个人 Agent','01|Engram · mHC|条件记忆「存算分离」|ds','01.26|MCP Apps · ACP Registry|工具渲染 UI · Zed × JetBrains'],'2.4 子代理 · Skills · Cursor Blame',['@ghuntley','@steipete','claude','cursor']],
  ['02','Agentic Engineering','Vibe Coding 一周年，Karpathy 亲自改名','',['02|99% 时间不写代码|编排并监督 Agent','02.05|Agent Teams · Opus 4.6|16 个 Agent 两周写出 C 编译器','02.05|GPT-5.3-Codex|首个参与构建自身的模型','02|Codex App|macOS 多 Agent 指挥中心','02.26|Claude Code 自动记忆|Agent 自己维护 MEMORY.md','02|36% 公开 Skills 有缺陷|技能也有供应链风险'],'长时运行 Agent · 2.5 插件市场（02.17）',['claude','openai']],
  ['03','Automations','不再需要人类按下回车','on: slack · github · alert → agent.run()',['03.05|Automations|事件触发 Agent','03.24|Auto Mode|分类器代替逐条批准','03.17|Dispatch · Channels|手机派活，Telegram 回话','03.04|Cursor 进 JetBrains|经 ACP 以 Agent 身份入驻','03|WorkBuddy 发布|从编程扩到办公','03|亚马逊宕机|AI 代码须资深审批'],'2.6 MCP Apps · Composer 2（03.19）',['cursor','claude']],
  ['04','Agents Window','编辑器不再是中心，Agent 控制台才是','',['04.02|Cursor 3「Glass」|Agents Window 取代 Composer','04.02|Best-of-N|多模型隔离比稿','04.07|Mythos · Glasswing|AI 挖出数千零日漏洞','04.24|DeepSeek-V4|1.6T 开源 · 1M 上下文|ds','04.09|Cowork GA|用量大半来自非工程团队','04.23|托管 Agent 记忆|记忆离线整理'],'3.0 Glass · 3.1 Canvas · SpaceX 600 亿期权',['cursor','deepseek']],
@@ -949,7 +953,7 @@ function evMark(x,m,k){
 }
 (function months(){const eraM='2026';let html='';
  MONTHS.forEach(m=>{
-  html+='<div class="blk" id="b-m'+m[0]+'" data-t="2026.'+m[0]+'" data-era="2026" data-gap="40" style="left:430px;width:960px"><div class="mo head" data-k="0 .3" data-fx="up"><div class="top"><div class="n">'+m[0]+'</div><div><div class="w">'+m[1]+'</div><div class="s">'+m[2]+'</div></div><div class="lgs">'+m[6].map(l=>l[0]==='@'?'<span class="lg portrait-sm" data-av="'+l.slice(1)+'" title="Geoffrey Huntley · Ralph Wiggum Loop 提出者" style="border-radius:50%"></span>':'<span class="lg sm" data-l="'+l+'"></span>').join('')+'</div></div>'+(m[3]?'<pre data-k=".1 .5" data-fx="type" data-text="'+m[3].replace(/</g,'&lt;')+'"></pre>':'')+'<div class="cu"><b>CURSOR</b> · '+m[5]+'</div></div></div>';
+  html+='<div class="blk" id="b-m'+m[0]+'" data-t="2026.'+m[0]+'" data-era="2026" data-gap="40" style="left:430px;width:960px"><div class="mo head" data-k="0 .3" data-fx="up"><div class="top"><div class="n">'+m[0]+'</div><div><div class="w">'+m[1]+'</div><div class="s">'+m[2]+'</div></div><div class="lgs">'+m[6].map(l=>l[0]==='@'?'<span class="lg portrait-sm" data-av="'+l.slice(1)+'" title="'+(AV_TITLE[l.slice(1)]||l.slice(1))+'" style="border-radius:50%"></span>':'<span class="lg sm" data-l="'+l+'"></span>').join('')+'</div></div>'+(m[3]?'<pre data-k=".1 .5" data-fx="type" data-text="'+m[3].replace(/</g,'&lt;')+'"></pre>':'')+'<div class="cu"><b>CURSOR</b> · '+m[5]+'</div></div></div>';
   /* items: own date when given, otherwise spread through the month; kept strictly increasing */
   const it=m[4].map((x,k)=>{const[d,t,desc,f]=x.split('|');const dd=d.includes('.')?+d.split('.')[1]:null;return {d,t,desc,f,day:dd,k}});
   it.forEach(x=>{if(x.day===null)x.day=3+x.k*4});it.sort((a,b)=>a.day-b.day||a.k-b.k);let prev=1;it.forEach(x=>{x.day=Math.min(28,Math.max(x.day,prev+1));prev=x.day});

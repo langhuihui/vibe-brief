@@ -73,12 +73,15 @@ h2 small{display:block;font-size:26px;font-weight:500;color:var(--mut);letter-sp
 .avimg{overflow:hidden;background:#141a24}
 .avimg img{width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit}
 /* large portrait marks: a person gets a face, not a 20px dot. One shared ring,
-   four sizes for the different slots. The 320px source stays sharp at 2x. */
+   four sizes for the different slots. Bumped ~1.5x again; the 320px source
+   still downsamples cleanly at these sizes. Small month / buzz dots stay put. */
 .lg.portrait,.lg.portrait-cc,.lg.portrait-ml,.tweet .av.portrait-hd{border:2px solid rgba(255,255,255,.24);border-radius:50%;box-shadow:0 0 0 6px rgba(255,255,255,.05),0 0 46px rgba(56,189,248,.16),0 18px 50px rgba(0,0,0,.55)}
-.lg.portrait{width:176px;height:176px}
-.lg.portrait-cc{width:72px;height:72px}
-.lg.lgx.portrait-ml{width:96px;height:96px;border-radius:50%}
-.tweet .av.portrait-hd{width:144px;height:144px}
+.lg.portrait{width:288px;height:288px}
+.lg.portrait-cc{width:108px;height:108px}
+.lg.lgx.portrait-ml{width:144px;height:144px;border-radius:50%}
+.tweet .av.portrait-hd{width:216px;height:216px}
+/* s-jan cards grow with the bigger Ralph portrait; keep the buzz strip below them */
+#s-jan .mgrid{height:655px}
 /* the Ralph card carries a big face, so give its copy a little room back */
 .cc.ph .cc-h{gap:14px}
 .cc.ph p{margin-top:8px;font-size:18px;line-height:1.4}
@@ -1061,7 +1064,7 @@ html.static .js{opacity:1!important}
     <div class="cards">
       <div class="cc a ph"><div class="cc-h"><span class="lg portrait-cc" data-av="ghuntley" style="border-radius:50%"></span><b>Ralph Wiggum Loop</b><em>01</em></div><p>提出者 <b style="color:#f9a8d4">Geoffrey Huntley</b>；名字取自《辛普森一家》，每轮全新上下文，记忆存在 git</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg m" style="--mc:#9a3412">GT</span><b>Gas Town</b><em>01</em></div><p>tmux 编排 20–30 个 Claude Code</p></div>
-      <div class="cc a"><div class="cc-h"><span class="lg m" style="--mc:#dc2626">OC</span><b>Clawdbot → OpenClaw</b><em>01</em></div><p>自托管个人 Agent · Mac mini 梗</p></div>
+      <div class="cc a ph"><div class="cc-h"><span class="lg portrait-cc" data-av="steipete" title="Peter Steinberger · OpenClaw / Clawdbot 作者" style="border-radius:50%"></span><b>Clawdbot → OpenClaw</b><em>01</em></div><p>作者 <b style="color:#f9a8d4">Peter Steinberger</b> · 自托管个人 Agent · Mac mini 梗</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="claude"></span><b>Claude Cowork</b><em>01</em></div><p>给所有人的 Claude Code：说「要什么」，回来的是成品</p><a class="lk" href="https://www.anthropic.com/product/claude-cowork" target="_blank" rel="noopener noreferrer">产品页 ↗</a></div>
       <div class="cc dsx a lkc"><div class="cc-h"><span class="lg" data-l="deepseek"></span><b>mHC · Engram</b><em>01</em></div><p>流形约束超连接 · 条件记忆「存算分离」</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="cursor"></span><b>Planner·Worker·Judge</b><em>01</em></div><p>数百 Agent 一周写出浏览器</p></div>
