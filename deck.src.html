@@ -72,6 +72,16 @@ h2 small{display:block;font-size:26px;font-weight:500;color:var(--mut);letter-sp
 .lg.mini.m{font-size:10px}
 .avimg{overflow:hidden;background:#141a24}
 .avimg img{width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit}
+/* large portrait marks: a person gets a face, not a 20px dot. One shared ring,
+   four sizes for the different slots. The 320px source stays sharp at 2x. */
+.lg.portrait,.lg.portrait-cc,.lg.portrait-ml,.tweet .av.portrait-hd{border:2px solid rgba(255,255,255,.24);border-radius:50%;box-shadow:0 0 0 6px rgba(255,255,255,.05),0 0 46px rgba(56,189,248,.16),0 18px 50px rgba(0,0,0,.55)}
+.lg.portrait{width:176px;height:176px}
+.lg.portrait-cc{width:72px;height:72px}
+.lg.lgx.portrait-ml{width:96px;height:96px;border-radius:50%}
+.tweet .av.portrait-hd{width:144px;height:144px}
+/* the Ralph card carries a big face, so give its copy a little room back */
+.cc.ph .cc-h{gap:14px}
+.cc.ph p{margin-top:8px;font-size:18px;line-height:1.4}
 
 /* month / content layout */
 .mhead{display:flex;align-items:flex-end;gap:34px;height:150px}
@@ -656,7 +666,7 @@ html.static .js{opacity:1!important}
     <div>
       <div class="mile a"><span class="dt">2021.06</span><span class="lg lgx" data-l="githubcopilot"></span><div><b>GitHub Copilot</b><p>灰色 ghost text + Tab</p></div></div>
       <div class="mile a"><span class="dt">2022.11</span><span class="lg lgx" data-l="openai"></span><div><b>ChatGPT</b><p>复制 → 粘贴式编程</p></div></div>
-      <div class="mile a"><span class="dt">2023.01</span><span class="lg lgx" data-av="karpathy" style="border-radius:50%"></span><div><b>「最热门的编程语言是英语」</b><p>Karpathy</p></div></div>
+      <div class="mile a"><span class="dt">2023.01</span><span class="lg lgx portrait-ml" data-av="karpathy" style="border-radius:50%"></span><div><b>「最热门的编程语言是英语」</b><p>Andrej Karpathy · 前 Tesla AI 负责人</p></div></div>
       <div class="mile a"><span class="dt">2023.03</span><span class="lg lgx" data-l="cursor"></span><div><b>Cursor 发布 · GPT-4</b><p>AI-first 编辑器（VS Code 分叉）</p></div></div>
     </div>
     <div class="a" style="position:relative">
@@ -881,7 +891,7 @@ html.static .js{opacity:1!important}
   <h2 class="a" style="font-size:96px">「Vibe Coding」<span class="grad">诞生</span></h2>
   <div style="display:grid;grid-template-columns:860px 1fr;gap:60px;margin-top:40px">
     <div class="tweet a">
-      <div class="who"><div class="av" data-av="karpathy"></div><div><b>Andrej Karpathy</b><span>@karpathy · 2025.02.02</span></div></div>
+      <div class="who"><div class="av portrait-hd" data-av="karpathy"></div><div><b>Andrej Karpathy</b><span>@karpathy · 2025.02.02 · 命名 Vibe Coding</span></div></div>
       <div class="tx">There's a new kind of coding I call <mark>"vibe coding"</mark>, where you fully give in to the vibes, embrace exponentials, and <mark>forget that the code even exists.</mark></div>
       <div class="zh">完全顺从感觉，拥抱指数增长，忘掉代码的存在。</div>
       <div class="meta">Composer + Sonnet · 语音输入 · 「Accept All」从不读 diff</div>
@@ -1049,7 +1059,7 @@ html.static .js{opacity:1!important}
       </svg>
     </div>
     <div class="cards">
-      <div class="cc a"><div class="cc-h"><span class="lg" data-av="ghuntley"></span><b>Ralph Wiggum Loop</b><em>01</em></div><p>提出者 Geoffrey Huntley；名字取自《辛普森一家》，每轮全新上下文，记忆存在 git</p></div>
+      <div class="cc a ph"><div class="cc-h"><span class="lg portrait-cc" data-av="ghuntley" style="border-radius:50%"></span><b>Ralph Wiggum Loop</b><em>01</em></div><p>提出者 <b style="color:#f9a8d4">Geoffrey Huntley</b>；名字取自《辛普森一家》，每轮全新上下文，记忆存在 git</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg m" style="--mc:#9a3412">GT</span><b>Gas Town</b><em>01</em></div><p>tmux 编排 20–30 个 Claude Code</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg m" style="--mc:#dc2626">OC</span><b>Clawdbot → OpenClaw</b><em>01</em></div><p>自托管个人 Agent · Mac mini 梗</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="claude"></span><b>Claude Cowork</b><em>01</em></div><p>给所有人的 Claude Code：说「要什么」，回来的是成品</p><a class="lk" href="https://www.anthropic.com/product/claude-cowork" target="_blank" rel="noopener noreferrer">产品页 ↗</a></div>

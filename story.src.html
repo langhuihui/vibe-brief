@@ -83,6 +83,14 @@ svg *{transform-box:fill-box;transform-origin:center}
 .lg.mini.m{font-size:11px}
 .avimg{overflow:hidden;background:#141a24}
 .avimg img{width:100%;height:100%;object-fit:cover;display:block;border-radius:inherit}
+/* large portrait marks: people are shown at face size, not as tiny dots */
+.lg.portrait,.lg.portrait-md,.lg.portrait-sm{border:2px solid rgba(255,255,255,.24);border-radius:50%;box-shadow:0 0 0 6px rgba(255,255,255,.05),0 0 46px rgba(56,189,248,.16),0 18px 50px rgba(0,0,0,.55)}
+.lg.portrait{width:176px;height:176px}
+.lg.portrait-md{width:136px;height:136px}
+.lg.portrait-sm{width:96px;height:96px}
+.pcard{display:flex;align-items:center;gap:32px}
+.pcard .pmeta b{display:block;font-size:32px;font-weight:850}
+.pcard .pmeta span{display:block;margin-top:6px;font-size:17px;color:var(--mut)}
 /* weight-space programming bench: scroll-driven bars/counter + only 5 pulsing cells,
    so the animation never becomes a continuous 72-element compositor job */
 .wsp{margin-top:18px;padding:18px 20px;border:1px solid rgba(244,114,182,.24);border-radius:18px;background:rgba(8,6,12,.5)}
@@ -251,7 +259,7 @@ svg *{transform-box:fill-box;transform-origin:center}
 .mo .n{font:900 100px/.9 var(--sans);color:rgba(52,211,153,.9);letter-spacing:-.05em}
 .mo .w{font-size:46px;font-weight:850;line-height:1.1}
 .mo .s{font-size:20px;color:var(--mut);margin-top:8px}
-.mo .lgs{margin-left:auto;display:flex;gap:6px}
+.mo .lgs{margin-left:auto;display:flex;gap:8px;align-items:center}
 .mo pre{margin-top:16px;font:600 17px var(--mono);color:#6ee7b7;background:#05070b;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 14px;white-space:pre;min-height:46px}
 .mo ul{list-style:none;margin-top:12px;display:grid;grid-template-columns:1fr 1fr;column-gap:30px}
 .mo li{display:flex;gap:10px;align-items:baseline;padding:8px 0;border-bottom:1px solid var(--line);min-width:0}
@@ -416,8 +424,11 @@ svg *{transform-box:fill-box;transform-origin:center}
 </div>
 
 <div class="blk" id="b-english" data-t="2023.01" data-era="2023" style="width:960px">
-  <div class="kk" style="display:flex;align-items:center;gap:12px"><span class="lg sm" data-av="karpathy" style="border-radius:50%"></span>2023.01 · Andrej Karpathy</div>
-  <div style="font-size:64px;font-weight:850;line-height:1.2;margin-top:16px">「最热门的编程语言<br>是<span class="grad">英语</span>」</div>
+  <div class="pcard">
+    <span class="lg portrait" data-av="karpathy" data-k="0 .35" data-fx="zoom" style="border-radius:50%"></span>
+    <div class="pmeta"><div class="kk">2023.01 · 一句话改写方向</div><b>Andrej Karpathy</b><span>前 Tesla AI 负责人 · OpenAI 创始成员</span></div>
+  </div>
+  <div style="font-size:64px;font-weight:850;line-height:1.2;margin-top:24px">「最热门的编程语言<br>是<span class="grad">英语</span>」</div>
   <p class="lead">注释，开始变成代码本身。</p>
 </div>
 
@@ -536,7 +547,7 @@ svg *{transform-box:fill-box;transform-origin:center}
 <div class="blk" id="b-vibe" data-t="2025.02.02" data-era="2025" data-span="820">
   <div class="kk">2025.02.02 · 命名时刻</div>
   <div class="tweet">
-    <div class="who"><span class="lg" data-av="karpathy" style="width:52px;height:52px;border-radius:50%"></span><div><b>Andrej Karpathy</b><br><span>@karpathy · 2025.02.02</span></div></div>
+    <div class="who" style="gap:22px"><span class="lg portrait-md" data-av="karpathy" style="border-radius:50%"></span><div><b style="font-size:28px">Andrej Karpathy</b><br><span>@karpathy · 2025.02.02 · 命名 Vibe Coding</span></div></div>
     <div class="q" data-k=".1 .65" data-fx="type" data-text="There's a new kind of coding I call &quot;vibe coding&quot;, where you fully give in to the vibes, embrace exponentials, and forget that the code even exists."></div>
     <div class="zh">完全顺从感觉，拥抱指数增长，忘掉代码的存在。—— Composer + Sonnet，语音输入，「Accept All」从不读 diff</div>
   </div>
@@ -947,7 +958,7 @@ function evMark(x,m,k){
 }
 (function months(){const eraM='2026';let html='';
  MONTHS.forEach(m=>{
-  html+='<div class="blk" id="b-m'+m[0]+'" data-t="2026.'+m[0]+'" data-era="2026" data-gap="40" style="left:430px;width:960px"><div class="mo head" data-k="0 .3" data-fx="up"><div class="top"><div class="n">'+m[0]+'</div><div><div class="w">'+m[1]+'</div><div class="s">'+m[2]+'</div></div><div class="lgs">'+m[6].map(l=>l[0]==='@'?'<span class="lg sm" data-av="'+l.slice(1)+'" style="border-radius:50%"></span>':'<span class="lg sm" data-l="'+l+'"></span>').join('')+'</div></div>'+(m[3]?'<pre data-k=".1 .5" data-fx="type" data-text="'+m[3].replace(/</g,'&lt;')+'"></pre>':'')+'<div class="cu"><b>CURSOR</b> · '+m[5]+'</div></div></div>';
+  html+='<div class="blk" id="b-m'+m[0]+'" data-t="2026.'+m[0]+'" data-era="2026" data-gap="40" style="left:430px;width:960px"><div class="mo head" data-k="0 .3" data-fx="up"><div class="top"><div class="n">'+m[0]+'</div><div><div class="w">'+m[1]+'</div><div class="s">'+m[2]+'</div></div><div class="lgs">'+m[6].map(l=>l[0]==='@'?'<span class="lg portrait-sm" data-av="'+l.slice(1)+'" title="Geoffrey Huntley · Ralph Wiggum Loop 提出者" style="border-radius:50%"></span>':'<span class="lg sm" data-l="'+l+'"></span>').join('')+'</div></div>'+(m[3]?'<pre data-k=".1 .5" data-fx="type" data-text="'+m[3].replace(/</g,'&lt;')+'"></pre>':'')+'<div class="cu"><b>CURSOR</b> · '+m[5]+'</div></div></div>';
   /* items: own date when given, otherwise spread through the month; kept strictly increasing */
   const it=m[4].map((x,k)=>{const[d,t,desc,f]=x.split('|');const dd=d.includes('.')?+d.split('.')[1]:null;return {d,t,desc,f,day:dd,k}});
   it.forEach(x=>{if(x.day===null)x.day=3+x.k*4});it.sort((a,b)=>a.day-b.day||a.k-b.k);let prev=1;it.forEach(x=>{x.day=Math.min(28,Math.max(x.day,prev+1));prev=x.day});
@@ -1188,7 +1199,17 @@ function update(force){ticking=false;const S=scrollY/K;if(S===lastS&&!force)retu
  for(const l of LY)l.el.style.transform='translate3d(0,'+(F-S*l.s).toFixed(2)+'px,0)';
  for(const b of BL){const y=b.top-S+F,vis=y<=1300&&y+b.h>=-300;
   /* off-screen blocks drop their backdrop-filter; only flip the class on change */
-  if(b.vis!==vis){b.vis=vis;b.el.classList.toggle('vis',vis)}
+  if(b.vis!==vis){
+   b.vis=vis;b.el.classList.toggle('vis',vis);
+   /* `fly` pulls an item up to 500px out of its block (the word cloud). A block
+      that leaves the window used to freeze that transform, so on the way back up
+      a hidden word could still be sitting inside the viewport although the same
+      scroll position on the way down had never touched the block. Reset fly
+      items on exit so "left the window" matches "never entered it". */
+   if(!vis&&b.items)for(const it of b.items){
+    if(it.fx.indexOf('fly')<0)continue;
+    it.last=null;it.el.style.opacity='';it.el.style.transform=''}
+  }
   if(!vis)continue;
   if(!b.items)parseItems(b);const p=seg(S,b.top-480,b.top-480+b.span);
   for(const it of b.items)apply(it,it.at!==null?clamp((S-b.top-it.at+330)/230):p);
