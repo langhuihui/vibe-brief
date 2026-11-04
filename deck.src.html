@@ -390,13 +390,18 @@ h2 small{display:block;font-size:26px;font-weight:500;color:var(--mut);letter-sp
 .rolebar span{border-right:1px solid rgba(255,255,255,.12)}.rolebar span:last-child{border:none}
 
 /* index */
-#idx{margin-top:36px;display:flex;flex-direction:column;gap:22px}
-#idx .row{display:flex;gap:18px;align-items:flex-start}
-#idx .yl{flex:none;width:90px;font:900 30px var(--mono);padding-top:4px}
-#idx .chips{display:flex;flex-wrap:wrap;gap:9px}
-#idx .chip{position:relative;font-size:18px;padding:7px 13px;border-radius:10px;cursor:pointer;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);transition:all .15s;white-space:nowrap}
-#idx .chip:hover{background:var(--cc);color:#0b0f16;border-color:var(--cc)}
-#idx .chip:hover::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%);white-space:nowrap;background:#f8fafc;color:#0b0f16;font-size:17px;font-weight:600;padding:9px 14px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.5);z-index:20;pointer-events:none}
+#idx{position:relative;width:1720px;height:770px;margin-top:14px}
+#idx .w{position:absolute;white-space:nowrap;line-height:1;cursor:pointer;color:var(--cc);font-weight:var(--fw);letter-spacing:-.01em;opacity:var(--op);transition:opacity .2s,transform .2s,text-shadow .2s}
+#idx .w:hover{opacity:1;transform:scale(1.08);text-shadow:0 0 18px var(--cc);z-index:30}
+#idx .w:hover::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%);white-space:nowrap;background:#f8fafc;color:#0b0f16;font:600 17px/1.3 var(--sans);letter-spacing:0;padding:9px 14px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.5);pointer-events:none;text-shadow:none}
+#idx .w.dn:hover::after{bottom:auto;top:calc(100% + 10px)}
+#idx .w.lt:hover::after{left:0;transform:none}#idx .w.rt:hover::after{left:auto;right:0;transform:none}
+#idx[data-y] .w{opacity:.1}#idx[data-y="2023"] .w.y2023,#idx[data-y="2024"] .w.y2024,#idx[data-y="2025"] .w.y2025,#idx[data-y="2026"] .w.y2026{opacity:1}
+.slide.active #idx .w{animation:wpop .55s cubic-bezier(.3,1.5,.5,1) backwards;animation-delay:calc(var(--k)*9ms + 250ms)}
+@keyframes wpop{from{opacity:0;transform:scale(.4)}to{opacity:var(--op);transform:none}}
+#idxleg{position:absolute;right:100px;top:120px;display:flex;gap:10px;align-items:center;font:600 14px var(--mono);color:var(--dim)}
+#idxleg b{font:800 18px var(--mono);padding:6px 12px;border-radius:999px;border:1px solid currentColor;cursor:pointer;opacity:.85;transition:all .15s}
+#idxleg b:hover,#idxleg b.on{opacity:1;background:currentColor}#idxleg b:hover span,#idxleg b.on span{color:#0b0f16}
 
 /* sources */
 .src{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:40px}
@@ -1600,8 +1605,9 @@ html.static .js{opacity:1!important}
 
 
 <section class="slide" id="s-index" data-title="概念索引" data-era="all">
-  <div class="kicker a">概念索引 · 悬停看释义 · 点击跳转</div>
+  <div class="kicker a">概念词云 · 字号 = 全片出现次数 · 悬停看释义 · 点击跳转</div>
   <h2 class="a" style="font-size:54px">三年 <span class="grad" id="idxcount">100+</span> 个新概念</h2>
+  <div id="idxleg" class="a">按年份<b style="color:#38bdf8" data-y="2023"><span>2023</span></b><b style="color:#a78bfa" data-y="2024"><span>2024</span></b><b style="color:#fb923c" data-y="2025"><span>2025</span></b><b style="color:#34d399" data-y="2026"><span>2026</span></b></div>
   <div id="idx" class="a"></div>
 </section>
 
@@ -1905,9 +1911,34 @@ const CONCEPTS={
  '2025':[['Vibe Coding','s-vibe','忘掉代码的存在'],['GRPO','s-2025a','R1 的纯强化学习推理训练'],['DeepSeek 时刻','s-2025a','开源推理冲击算力叙事'],['蒸馏','s-2025a','把推理能力蒸馏进小模型'],['开源周','s-2025a','FlashMLA / DeepEP / 3FS'],['混合思考','s-2025b','一个模型兼具思考与非思考'],['DSA 稀疏注意力','s-2025b','长上下文降本'],['光学上下文压缩','s-ctx','DeepSeek-OCR：用图像存文本'],['自验证推理','s-2025c','Math-V2 自己检查证明'],['思考中调用工具','s-2025c','V3.2：推理链里用工具'],['Autonomy Slider','s-ladder','自治度滑杆'],['终端 Agent','s-2025a','Claude Code / Codex CLI'],['CLAUDE.md','s-2025a','项目记忆文件'],['后台 / 云 Agent','s-2025a','云端并行沙箱'],['Issue → PR','s-2025a','把 Issue 指派给 AI'],['A2A','s-2025a','Agent 间通信协议'],['AI Code Review','s-2025a','BugBot 审 PR'],['Memories','s-2025a','跨会话记忆'],['Context Engineering','s-ctx','为每一步装配信息'],['Context Rot','s-ctx','越长越笨'],['Compaction','s-ctx','自动压缩上下文'],['Spec-driven','s-2025b','需求→设计→任务'],['Subagents','s-2025b','独立上下文子代理'],['Hooks','s-2025b','生命周期钩子'],['AGENTS.md','s-2025b','通用 Agent 说明书'],['Agent Skills','s-2025b','SKILL.md 按需加载'],['Plugins','s-2025b','打包分发能力'],['Worktree 并行','s-2025b','多 Agent 互不干扰'],['自研编码模型','s-2025b','Cursor Composer'],['Agent Manager','s-2025c','Antigravity 管理视图'],['Vibe Hacking','s-2025c','用 Agent 发动攻击'],['AI Slop','s-2025c','低质 AI 产物泛滥'],['AAIF','s-2025c','Linux 基金会 Agent 联盟'],['提示注入','s-cost','不可信内容里藏指令劫持 Agent：工具投毒、Agentjacking、记忆投毒的总根'],['Tool Poisoning','s-2025a','2025.04 Invariant Labs：MCP 工具描述里藏指令'],['Slopsquatting','s-2025a','抢注 AI 幻觉出的包名，约 20% 生成代码引用不存在的包'],['任务时长翻倍','s-swe','METR：Agent 能完成的任务长度约每 7 个月翻一倍'],['METR 随机对照','s-2025c','2025.07：资深开发者用 AI 反而慢 19%，自己却以为快了 20%'],['Agent HQ','s-2025c','2025.10.28 GitHub：一个控制台指挥多家编码 Agent'],['ACP','s-2025','Agent Client Protocol：编辑器↔Agent 的「LSP」，Zed 2025.08 发布；勿与已并入 A2A 的 IBM Agent Communication Protocol 混淆']],
  '2026':[['Ralph Loop','s-jan','bash 循环，每轮新上下文'],['mHC','s-jan','流形约束超连接，稳定深层训练'],['Engram','s-jan','条件记忆：存算分离'],['CSA / HCA','s-apr','V4 压缩稀疏注意力'],['Model + Harness = Agent','s-may','DeepSeek 的 Agent 公式'],['峰谷定价','s-aug','闲时 API 半价'],['Gas Town','s-jan','20–30 Agent 编排器'],['Personal Agent','s-jan','OpenClaw'],['Cowork','s-jan','个人 Agent：说「要什么」，回来的是成品'],['Work Agent','s-fork','从写代码扩到交付办公成品'],['Organizational Agent','s-fork','属于团队/频道的 AI 成员，共享上下文'],['Claude Tag','s-aug','@Claude 作为频道成员：多人共享、可主动'],['Grok Bot','s-aug','xAI × Cursor：常驻云端电脑的 AI 同事'],['MCP Apps','s-jan','工具渲染交互 UI'],['Planner-Worker-Judge','s-jan','层级多 Agent'],['Agentic Engineering','s-feb','编排而非编码'],['Agent Teams','s-feb','点对点协作的 Agent 团队'],['Adaptive Thinking','s-feb','自决思考深度'],['Long-running Agent','s-feb','先规划后长跑'],['Plugin Marketplace','s-feb','插件市场'],['Automations','s-mar','事件触发 Agent'],['Auto Mode','s-mar','分类器代替审批'],['ACP Registry','s-jan','Zed × JetBrains 的 Agent 目录，03 Cursor 也以 Agent 身份加入'],['Dispatch / Channels','s-mar','手机远程派活'],['Agents Window','s-apr','Agent 控制台'],['Best-of-N','s-apr','多模型比稿'],['跨厂商审查','s-apr','Codex 审 Claude'],['Mythos 级安全','s-apr','AI 挖零日'],['Managed Agents','s-apr','托管云 Agent'],['Routines','s-apr','定时 / Webhook 任务'],['WebMCP','s-may','网页即工具'],['/goal','s-may','目标驱动长跑'],['Dynamic Workflows','s-may','编排即脚本'],['Dreaming','s-may','Agent 自我改进'],['Loop Engineering','s-jun','设计闭环'],['Agentjacking','s-jun','遥测注入劫持'],['Agent Identity','s-jun','Agent 自有账号'],['ARD','s-jun','Agent 资源发现'],['Config Smells','s-jun','配置文件坏味道'],['Model Router','s-jul','逐请求选模型'],['去模型化','s-jul','模型可插拔'],['Self-verification','s-jul','红绿回归自证'],['Human-on-the-loop','s-jul','人只设边界'],['Agent-native Forge','s-aug','Origin 代码托管'],['Subscriptions','s-aug','Agent 订阅事件'],['Chat-ops Coding','s-aug','Slack 频道写码'],['Harness','s-aug','模型无关运行时'],['DSH','s-aug','DeepSeek Harness：一切皆插件的 Agent 运行时，Agent = Model + Harness'],['Show-a-Bot 学习流程','s-aug','跟做一遍流程，保存为可复用 routine'],['System One · Jev','s-sep','TypeSafe：结构化决策模型，不写文本只返回概率'],['Managed Harness','s-sep','托管 Agent 底座'],['Coordinator Agent','s-sep','协调者分派'],['MicroVM Sandbox','s-sep','硬件级隔离'],['Reward Hacking','s-sep','Agent 钻评测空子'],['Spec-anchored','s-sep','规范锚定而非规范即源码'],['Voice-first','s-sep','语音对话编程'],['Agents as Code','s-oct','Agent 即代码仓'],['Auto Memory','s-mem','Claude Code 2026.02：Agent 自己维护 MEMORY.md'],['记忆整理','s-mem','Codex Memories：会话空闲后离线提取、串行合并'],['记忆迁移','s-mem','Codex memory v2：可从 Claude Code 导入记忆'],['记忆投毒','s-mem','往 Agent 长期记忆注入恶意条目，跨会话生效'],['Super-agent','s-oct','DeepSeek 研究原型：单仓库接单、独立执行、回原讨论回复，少占人类注意力'],['Agent 互聊','s-hty','Agent 之间直接发消息、数据与文件，回复自己回到提问者'],['Mods','s-oct','改写 Agent 内部'],['MCP Gateway','s-oct','企业级 MCP 网关'],['Proactive Agent','s-oct','主动型 Agent'],['REA','s-oct','Reverse Engineer Anything：MCP 把 Agent 接上 Ghidra/IDA，二进制级看懂别人的功能'],['权重空间编程','s-2026','11.02 MIT：模型直接读写另一个模型的权重（研究苗头）'],['Junie','s-jun','JetBrains 自家编码 Agent：2025.04 公开，2026.06.17 正式版并基于 ACP 重建'],['JetBrains Air','s-sep','IDE 老厂的回答：IDE 变成编排与验证 Agent 的地方，经 ACP 接任何 Agent'],['PAP','s-oct','Agent 登录网站协议']]
 };
-(function(){const col={'2023':'#38bdf8','2024':'#a78bfa','2025':'#fb923c','2026':'#34d399'};let h='',c=0;
- Object.keys(CONCEPTS).forEach(y=>{h+='<div class="row"><div class="yl" style="color:'+col[y]+'">'+y+'</div><div class="chips">';CONCEPTS[y].forEach(x=>{c++;h+='<span class="chip" style="--cc:'+col[y]+'" data-go="'+x[1]+'" data-def="'+x[2]+'">'+x[0]+'</span>'});h+='</div></div>'});
- document.getElementById('idx').innerHTML=h;document.getElementById('idxcount').textContent=c;})();
+(function(){
+ const col={'2023':'#38bdf8','2024':'#a78bfa','2025':'#fb923c','2026':'#34d399'};
+ const box=document.getElementById('idx'),W=1720,H=770;
+ // weight = how often the concept is mentioned across the deck (index slide excluded)
+ const corpus=[...document.querySelectorAll('.slide:not(#s-index)')].map(x=>x.textContent).join('\n');
+ const cnt=t=>{if(!t||t.length<2)return 0;const e=t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');const lat=/^[\x20-\x7e]+$/.test(t);return (corpus.match(new RegExp(lat?'(?<![A-Za-z])'+e+'(?![A-Za-z])':e,lat?'gi':'g'))||[]).length};
+ const words=[];Object.keys(CONCEPTS).forEach(y=>CONCEPTS[y].forEach(x=>{let n=cnt(x[0]);if(!n)n=Math.max(0,...x[0].split(/ \/ | · /).filter(t=>/^[\x20-\x7e]{3,}$/.test(t)||t.length>=4).map(cnt));words.push({y,name:x[0],go:x[1],def:x[2],n:Math.max(1,n)})}));
+ document.getElementById('idxcount').textContent=words.length;
+ words.sort((a,b)=>b.n-a.n||a.name.length-b.name.length);
+ const mx=words[0].n;
+ words.forEach((w,i)=>{const r=Math.sqrt((w.n-1)/Math.max(1,mx-1));w.fs=Math.round(21+47*r);
+  const el=document.createElement('span');el.className='w y'+w.y;el.textContent=w.name;el.dataset.go=w.go;el.dataset.def=w.def+'（出现 '+w.n+' 次）';
+  el.style.cssText='font-size:'+w.fs+'px;--cc:'+col[w.y]+';--fw:'+(w.fs>38?850:w.fs>26?750:600)+';--op:'+(.55+.45*r).toFixed(2)+';--k:'+i;
+  box.appendChild(el);w.el=el});
+ function layout(){
+  const placed=[],cx=W/2,cy=H/2;
+  words.forEach((w,i)=>{const bw=w.el.offsetWidth,bh=w.el.offsetHeight,px=w.fs>30?10:6,py=w.fs>30?6:4;let ok=false;
+   for(let t=0,a0=i*2.39996;t<900&&!ok;t+=.07){const rr=2.6*t,x=cx+rr*Math.cos(t+a0)*2.55-bw/2,y=cy+rr*Math.sin(t+a0)-bh/2;
+    if(x<0||y<0||x+bw>W||y+bh>H)continue;
+    if(placed.every(p=>x+bw+px<=p.x||p.x+p.w+px<=x||y+bh+py<=p.y||p.y+p.h+py<=y)){placed.push({x,y,w:bw,h:bh});w.el.style.left=x.toFixed(1)+'px';w.el.style.top=y.toFixed(1)+'px';
+     w.el.classList.toggle('dn',y<70);w.el.classList.toggle('lt',x<200);w.el.classList.toggle('rt',x+bw>W-200);ok=true}}
+   w.el.style.display=ok?'':'none';if(!ok)console.warn('idx: no room for',w.name)});
+ }
+ layout();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layout);
+ const leg=document.getElementById('idxleg');let lock=null;
+ leg.querySelectorAll('b').forEach(b=>{b.onmouseenter=()=>{box.dataset.y=b.dataset.y};b.onmouseleave=()=>{if(lock)box.dataset.y=lock;else delete box.dataset.y};
+  b.onclick=()=>{lock=lock===b.dataset.y?null:b.dataset.y;leg.querySelectorAll('b').forEach(x=>x.classList.toggle('on',x.dataset.y===lock));if(lock)box.dataset.y=lock;else delete box.dataset.y}});
+})();
 
 fillLogos(document);
 
