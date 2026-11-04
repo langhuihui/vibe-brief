@@ -25,7 +25,8 @@ svg *{transform-box:fill-box;transform-origin:center}
 /* ---------- layers ---------- */
 .layer{position:absolute;left:0;top:0;width:1920px;height:0;will-change:transform}
 #L0{z-index:1}#L1{z-index:2}#L2{z-index:3}#L3{z-index:4;pointer-events:none}
-.blob{position:absolute;width:1500px;height:1500px;border-radius:50%;filter:blur(160px);opacity:.16;pointer-events:none}
+/* radial-gradient instead of filter:blur(160px) — same look, no per-frame blur pass */
+.blob{position:absolute;width:1100px;height:1100px;border-radius:50%;background:radial-gradient(circle,var(--bc,#38bdf8) 0%,transparent 72%) !important;opacity:.22;pointer-events:none}
 .yr{position:absolute;right:90px;text-align:right;pointer-events:none;white-space:nowrap}
 .yr b{display:block;font:900 400px/1 var(--sans);letter-spacing:-.06em;color:transparent;-webkit-text-stroke:2px var(--c);opacity:.12}
 .yr span{display:block;font:800 64px var(--sans);color:var(--c);opacity:.2;margin-top:-20px;margin-right:16px}
@@ -69,13 +70,23 @@ svg *{transform-box:fill-box;transform-origin:center}
 .lg.xl{width:110px;height:110px;border-radius:28px;background:linear-gradient(145deg,#1b2230,#0b0f16);box-shadow:0 0 70px rgba(34,211,238,.2),inset 0 0 0 1px rgba(255,255,255,.12)}.lg.xl svg{width:60px;height:60px}
 .lg.m{font:800 15px/1 var(--sans);color:#fff;background:var(--mc,#334155);letter-spacing:-.02em}
 .lg.sm.m{font-size:12px}
+/* compact marks: card titles and the tool landscape */
+.lg.tiny{width:24px;height:24px;border-radius:6px;background:rgba(255,255,255,.09)}
+.lg.tiny svg{width:15px;height:15px}
+.lg.tiny.m{font-size:11px}
+.lg.mini{width:18px;height:18px;border-radius:5px;background:rgba(255,255,255,.1);border:none}
+.lg.mini svg{width:12px;height:12px}
+.lg.mini.m{font-size:9px}
 .chip{display:inline-flex;align-items:center;gap:8px;font:600 16px var(--mono);padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:#cbd5e1;white-space:nowrap}
 .chip em{font-style:normal;color:var(--ac)}
 .grid{display:grid;gap:16px;margin-top:22px}
 .g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
 .card{border-radius:18px;padding:18px 22px;background:linear-gradient(180deg,rgba(18,24,34,.96),rgba(12,16,24,.96));border:1px solid var(--line)}
 /* frosted glass: the slower layers stay visible, blurred, behind every card */
-.glass,.card.glass,.mo,.tweet,.runlog,.metr{background:linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.02)) !important;-webkit-backdrop-filter:blur(16px) saturate(150%);backdrop-filter:blur(16px) saturate(150%);border:1px solid rgba(255,255,255,.13) !important;box-shadow:0 24px 60px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.09)}
+.glass,.card.glass,.mo,.tweet,.runlog,.metr{background:linear-gradient(135deg,rgba(255,255,255,.075),rgba(255,255,255,.02)) !important;-webkit-backdrop-filter:blur(12px) saturate(135%);backdrop-filter:blur(12px) saturate(135%);border:1px solid rgba(255,255,255,.13) !important;box-shadow:0 24px 60px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.09)}
+/* Only blocks near the viewport pay for backdrop sampling. Off-screen glass keeps
+   its tint and border but drops the blur, cutting per-frame paint work sharply. */
+.blk:not(.vis) .glass,.blk:not(.vis) .card.glass,.blk:not(.vis) .mo,.blk:not(.vis) .tweet,.blk:not(.vis) .runlog,.blk:not(.vis) .metr{-webkit-backdrop-filter:none;backdrop-filter:none}
 .card.glass.dsx{background:linear-gradient(135deg,rgba(107,132,255,.18),rgba(77,107,254,.05)) !important;border-color:rgba(143,162,255,.35) !important}
 .card.glass.red,.metr.glass{background:linear-gradient(135deg,rgba(248,113,113,.16),rgba(248,113,113,.04)) !important;border-color:rgba(252,165,165,.32) !important}
 .mo{background:linear-gradient(135deg,rgba(52,211,153,.13),rgba(52,211,153,.03)) !important;border-color:rgba(110,231,183,.28) !important}
@@ -233,8 +244,9 @@ svg *{transform-box:fill-box;transform-origin:center}
 .sweep b{position:absolute;top:-26px;left:50%;transform:translateX(-50%);font:800 14px var(--mono);color:#0b0f16;background:#fff;padding:2px 8px;border-radius:999px;white-space:nowrap}
 .tmc{position:absolute;top:0;width:270px;height:600px;border-radius:20px;padding:20px 18px;background:linear-gradient(180deg,color-mix(in srgb,var(--mc) 12%,#0b0f16),#0b0f16);border:1px solid color-mix(in srgb,var(--mc) 30%,transparent)}
 .tmc .h{font-size:22px;font-weight:850}.tmc .s{font:700 12px var(--mono);letter-spacing:.12em;color:var(--mc);margin-top:4px}
-.tmc .it{margin-top:10px;padding-left:16px;position:relative}
-.tmc .it::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:50%;background:var(--mc)}
+.tmc .it{margin-top:9px;padding-left:26px;position:relative;min-height:20px}
+.tmc .it::before{content:none}
+.tmc .it>.lg.mini{position:absolute;left:0;top:1px}
 .tmc .it b{display:block;font-size:18px}.tmc .it span{display:block;font-size:13px;color:var(--mut)}
 .tmc .nt{position:absolute;left:18px;right:18px;bottom:16px;font-size:14px;color:var(--mut);line-height:1.4}
 #cloud{position:relative;width:1720px;height:740px;margin-top:10px}
@@ -259,7 +271,7 @@ svg *{transform-box:fill-box;transform-origin:center}
 .flow{display:flex;align-items:center;gap:16px;padding:14px 18px;border-radius:14px;background:#0e141e;border:1px solid var(--line);margin-bottom:12px;font-size:18px}
 .flow b{width:190px;flex:none;font:700 16px var(--mono);color:#9bd7c4}
 .flow code{margin-left:auto;font:600 14px var(--mono);color:var(--mut)}
-.bz{position:absolute;font:700 24px var(--sans);color:#e2e8f0;white-space:nowrap;padding:10px 18px;border-radius:999px;background:rgba(244,114,182,.10);border:1px solid rgba(244,114,182,.35);opacity:.62;filter:blur(.4px)}
+.bz{position:absolute;font:700 24px var(--sans);color:#e2e8f0;white-space:nowrap;padding:10px 18px;border-radius:999px;background:rgba(244,114,182,.10);border:1px solid rgba(244,114,182,.35);opacity:.62}
 .bz::before{content:"热议 ";font:700 13px var(--mono);color:var(--pink);letter-spacing:.14em;vertical-align:3px}
 .bz.ds{background:rgba(77,107,254,.12);border-color:rgba(107,132,255,.45);color:#c7d2fe}
 #nowline{position:absolute;left:0;right:0;top:560px;height:0;border-top:1px solid rgba(255,255,255,.07);z-index:5;pointer-events:none;transition:opacity .4s}
@@ -942,7 +954,7 @@ function buildThread(){const th=$('#thread');const first=BL.find(b=>b.t),nb=BL.f
  BL.forEach(b=>{if(!b.t)return;const c=b.t?ERA[eraOf(mf(b.t))]:ERA[b.el.dataset.era]||ERA.all;const d=document.createElement('div');d.className='td';d.style.cssText='top:'+(b.top+14)+'px;--c:'+c;$('#L2').appendChild(d)})}
 /* far: eras, roles, colour fields */
 function buildFar(){const s=.28;let h='';
- YEARS.forEach((y,i)=>{const p=P(y[1]);h+='<div class="blob" style="left:'+(i%2?1000:-200)+'px;top:'+(p*s-750)+'px;background:'+y[2]+'"></div><div class="yr" style="top:'+(p*s-260)+'px;--c:'+y[2]+'"><b>'+y[0]+'</b>'+(y[3]?'<span>'+y[3]+'</span>':'')+'</div>'});
+ YEARS.forEach((y,i)=>{const p=P(y[1]);h+='<div class="blob" style="left:'+(i%2?1200:0)+'px;top:'+(p*s-550)+'px;--bc:'+y[2]+'"></div><div class="yr" style="top:'+(p*s-260)+'px;--c:'+y[2]+'"><b>'+y[0]+'</b>'+(y[3]?'<span>'+y[3]+'</span>':'')+'</div>'});
  ROLES.forEach((r,i)=>{const p=P(r[0]);h+='<div class="role" data-r="'+i+'" style="top:'+(p*s-60)+'px"><small>人类在</small>'+r[1]+'</div>'});
  $('#L0').innerHTML=h}
 /* mid: Cursor thread (left) + lifelines (right, newest further left) */
@@ -1021,12 +1033,20 @@ const HOOK={};
 let ticking=false,lastS=-1e9;
 const CH=[['前传','b-copilot','2023'],['2023','b-cmdk','2023'],['2024','b-devin','2024'],['2025','b-r1','2025'],['2026','b-m01','2026'],['今天','b-now','all'],['回望','b-shift','all'],['附','b-ht1','ht']];
 const rail=document.createElement('nav');rail.id='rail';rail.innerHTML='<div class="rt"></div><div class="rf"></div><div class="rl"></div><div class="rh"><i></i></div>';document.body.appendChild(rail);
+/* cached DOM handles + last-written values: skip redundant style/text writes each frame */
+const UI={pill:$('#nowpill'),pillB:$('#nowpill b'),pillS:$('#nowpill span'),line:$('#nowline'),legend:$('#legend'),trt:$('#trt'),rf:rail.querySelector('.rf'),rh:rail.querySelector('.rh'),head:document.documentElement};
+let RAILBTNS=[],CHB=[],lastEra='',lastVis=null,lastLabel='',lastRole='',lastLegend=null,lastCh=null,lastPr='';
 function update(force){ticking=false;const S=scrollY/K;if(S===lastS&&!force)return;lastS=S;
  for(const l of LY)l.el.style.transform='translate3d(0,'+(F-S*l.s).toFixed(2)+'px,0)';
- for(const b of BL){const y=b.top-S+F;if(y>1300||y+b.h<-300)continue;if(!b.items)parseItems(b);const p=seg(S,b.top-480,b.top-480+b.span);
+ for(const b of BL){const y=b.top-S+F,vis=y<=1300&&y+b.h>=-300;
+  /* off-screen blocks drop their backdrop-filter; only flip the class on change */
+  if(b.vis!==vis){b.vis=vis;b.el.classList.toggle('vis',vis)}
+  if(!vis)continue;
+  if(!b.items)parseItems(b);const p=seg(S,b.top-480,b.top-480+b.span);
   for(const it of b.items)apply(it,it.at!==null?clamp((S-b.top-it.at+330)/230):p);
   /* revealed down to 200px below the now line */
-  for(const c of b.clips)c.el.style.clipPath='inset(0 0 '+Math.max(0,c.h-(S-b.top-c.y0+200)).toFixed(1)+'px 0)';
+  for(const c of b.clips){const v=Math.max(0,c.h-(S-b.top-c.y0+200)).toFixed(1);
+   if(v!==c.last){c.last=v;c.el.style.clipPath='inset(0 0 '+v+'px 0)'}}
   /* cards sit at slightly different depths; offset is zero on the now line, so dates stay in sync */
   if(b.z)b.el.style.transform='translate3d(0,'+((b.top-S)*b.z).toFixed(1)+'px,0)';
   if(HOOK[b.id])HOOK[b.id](p)}
@@ -1035,11 +1055,16 @@ function update(force){ticking=false;const S=scrollY/K;if(S===lastS&&!force)retu
  else if(m!==null){const cb=[...BL].reverse().find(b=>b.top-S+F<700);era=cb?cb.el.dataset.era:'all';label=era==='ht'?'附':'回望';
   const ab=BL.find(b=>b.axis&&S>=b.top+b.axis.y0&&S<=b.top+b.axis.y0+b.axis.H);if(ab){const a=ab.axis;label='回望 · '+mlabel(a.m0+(S-ab.top-a.y0)/a.H*(a.m1-a.m0))}}
  if(ri!==window.__ri){window.__ri=ri;document.querySelectorAll('#L0 .role').forEach(e=>e.classList.toggle('on',+e.dataset.r===ri))}
- const col=ERA[era]||ERA.all;document.documentElement.style.setProperty('--era',col);
- const vis=m===null?0:1;$('#nowpill').style.opacity=vis;$('#nowline').style.opacity=vis;$('#nowpill b').textContent=label;$('#nowpill span').textContent=role?'人类在 '+role:'';
- $('#legend').style.opacity=S<300?0:.9;
- const pr=clamp(S/SMAX);rail.querySelector('.rf').style.clipPath='inset(0 0 '+((1-pr)*100).toFixed(2)+'% 0)';rail.querySelector('.rh').style.top=(pr*100)+'%';
- const ch=CH.filter(c=>{const b=BL.find(x=>x.id===c[1]);return b.top-S+F<700}).pop();rail.querySelectorAll('.rl button').forEach(x=>x.classList.toggle('on',!!ch&&x.dataset.b===ch[1]));$('#trt').textContent=ch?ch[0]:'';
+ const col=ERA[era]||ERA.all;if(col!==lastEra){lastEra=col;UI.head.style.setProperty('--era',col)}
+ const vis=m===null?0:1;
+ if(vis!==lastVis){lastVis=vis;UI.pill.style.opacity=vis;UI.line.style.opacity=vis}
+ if(label!==lastLabel){lastLabel=label;UI.pillB.textContent=label}
+ const rt=role?'人类在 '+role:'';if(rt!==lastRole){lastRole=rt;UI.pillS.textContent=rt}
+ const lo=S<300?0:.9;if(lo!==lastLegend){lastLegend=lo;UI.legend.style.opacity=lo}
+ const pr=clamp(S/SMAX),cp=((1-pr)*100).toFixed(1)+'%';
+ if(cp!==lastPr){lastPr=cp;UI.rf.style.clipPath='inset(0 0 '+cp+' 0)';UI.rh.style.top=(pr*100).toFixed(2)+'%'}
+ const ch=CHB.filter(c=>c[1].top-S+F<700).pop();
+ if(ch!==lastCh){lastCh=ch;RAILBTNS.forEach(x=>x.classList.toggle('on',!!ch&&x.dataset.b===ch[1].id));UI.trt.textContent=ch?ch[0]:''}
  const cb=BL.filter(b=>b.top-S+F<500).pop();if(cb&&cb!==curB){curB=cb;history.replaceState(null,'','#'+cb.id.slice(2))}}
 addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(()=>update())}},{passive:true});
 addEventListener('resize',()=>{const S=lastS;fit();space.style.height=(SMAX*K+innerHeight)+'px';scrollTo(0,S*K);update(true)});
@@ -1047,7 +1072,10 @@ addEventListener('resize',()=>{const S=lastS;fit();space.style.height=(SMAX*K+in
 /* ---------- navigation ---------- */
 function paintRail(){const st=[];BL.forEach(b=>{const c=b.t?ERA[eraOf(mf(b.t))]:ERA[b.el.dataset.era]||ERA.all,a=clamp((b.top-200)/SMAX)*100,z=clamp((b.top+b.h+b.gap-200)/SMAX)*100;st.push(c+' '+a.toFixed(2)+'%',c+' '+z.toFixed(2)+'%')});
  rail.querySelector('.rt').style.background=rail.querySelector('.rf').style.background='linear-gradient(to bottom,'+st.join(',')+')';
- rail.querySelector('.rl').innerHTML=CH.map(c=>{const b=BL.find(x=>x.id===c[1]);return '<button type="button" data-b="'+c[1]+'" style="top:'+(clamp(b.top/SMAX)*100)+'%;--ch:'+ERA[c[2]]+'">'+c[0]+'</button>'}).join('')}
+ rail.querySelector('.rl').innerHTML=CH.map(c=>{const b=BL.find(x=>x.id===c[1]);return '<button type="button" data-b="'+c[1]+'" style="top:'+(clamp(b.top/SMAX)*100)+'%;--ch:'+ERA[c[2]]+'">'+c[0]+'</button>'}).join('');
+ RAILBTNS=[...rail.querySelectorAll('.rl button')];
+ CHB=CH.map(c=>[c[0],BL.find(x=>x.id===c[1])||{top:1e9,id:c[1]},c[2]]);
+ lastCh=null}
 function goB(id,inst){const b=BL.find(x=>x.id===id);if(b)scrollTo({top:Math.max(0,(b.top+F-150)*K),behavior:inst?'instant':'smooth'})}
 addEventListener('keydown',e=>{if(e.target.closest&&e.target.closest('input,textarea'))return;const S=lastS;
  if(['ArrowDown','PageDown','ArrowRight'].includes(e.key)){e.preventDefault();const n=BL.find(b=>b.top+F-150>S+20);if(n)goB(n.id)}

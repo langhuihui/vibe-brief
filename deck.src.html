@@ -60,6 +60,13 @@ h2 small{display:block;font-size:26px;font-weight:500;color:var(--mut);letter-sp
 .lg.xl{width:150px;height:150px;border-radius:36px;background:linear-gradient(145deg,#1b2230,#0b0f16);box-shadow:0 0 80px rgba(34,211,238,.25),inset 0 0 0 1px rgba(255,255,255,.12)}.lg.xl svg{width:84px;height:84px}
 .lg.m{font:800 15px/1 var(--sans);color:#fff;background:var(--mc,#334155);letter-spacing:-.02em}
 .lg.sm.m{font-size:12px}
+/* compact marks: card titles and the six-column tool landscape */
+.lg.tiny{width:24px;height:24px;border-radius:6px;background:rgba(255,255,255,.09)}
+.lg.tiny svg{width:15px;height:15px}
+.lg.tiny.m{font-size:11px}
+.lg.mini{width:16px;height:16px;border-radius:4px;background:rgba(255,255,255,.1);border:none}
+.lg.mini svg{width:11px;height:11px}
+.lg.mini.m{font-size:9px}
 
 /* month / content layout */
 .mhead{display:flex;align-items:flex-end;gap:34px;height:150px}
@@ -535,8 +542,9 @@ html.static .js{opacity:1!important}
 .tmap .tmhead{font-size:22px;font-weight:800;line-height:1.2}
 .tmap .tmsub{font:600 12.5px var(--mono);color:var(--mut);margin-top:6px;letter-spacing:.05em}
 .tmap .tmlist{margin-top:12px;padding-top:11px;border-top:1px solid var(--line)}
-.tmap .tmitem{position:relative;padding-left:17px;margin-top:10px}
+.tmap .tmitem{position:relative;padding-left:21px;margin-top:10px}
 .tmap .tmitem>u{position:absolute;left:0;top:7px;width:8px;height:8px;border-radius:50%;background:var(--mc);text-decoration:none}
+.tmap .tmitem>.lg.mini{position:absolute;left:0;top:3px}
 
 .tmap .tmitem b{font-size:16px;font-weight:700;line-height:1.35}
 .tmap .tmitem em{font-style:normal;font:500 11.5px var(--mono);color:var(--dim);margin-left:8px;line-height:1.35}
@@ -1842,11 +1850,7 @@ html.static .js{opacity:1!important}
 
 <!--LOGOS-->
 <script>
-const COLORS={claude:'#D97757',anthropic:'#F0EEE6',googlegemini:'#8E75B2',google:'#4285F4',replit:'#F26207',stackblitz:'#1389FD',huggingface:'#FFD21E',deepseek:'#4D6BFE',alibabacloud:'#FF6A00',qwen:'#7C6CF0',xiaomi:'#FF6900',meta:'#0467DF',mistralai:'#FA520F',nvidia:'#76B900',cloudflare:'#F38020',figma:'#F24E1E',linear:'#8A93F0',docker:'#2496ED',slack:'#E01E5A',googlechrome:'#4285F4',perplexity:'#1FB8CD',sentry:'#A78BFA',visualstudiocode:'#3EA6FF',amazonaws:'#FF9900',codeium:'#09B6A2',netlify:'#00C7B7',shopify:'#95BF47',linuxfoundation:'#5DADE2',jetbrains:'#ffffff'};
-function fillLogos(root){
-  root.querySelectorAll('[data-l]').forEach(el=>{const n=el.dataset.l,p=LOGOS[n];if(!p)return;el.innerHTML='<svg viewBox="0 0 24 24" fill="'+(el.dataset.c||COLORS[n]||'#fff')+'"><path d="'+p+'"/></svg>'});
-  root.querySelectorAll('[data-svgl]').forEach(el=>{const n=el.dataset.svgl,p=LOGOS[n];if(p)el.innerHTML='<path d="'+p+'" fill="'+(el.dataset.c||COLORS[n]||'#fff')+'"/>'});
-}
+/* logos + COLORS + fillLogos/brandify/decorateTools all live in the shared logos.js */
 
 /* ---------- spine ---------- */
 (function(){

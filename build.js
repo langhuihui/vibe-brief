@@ -13,8 +13,8 @@ fs.writeFileSync(path.join(dir, 'index.html'), deck);
 
 /* ---- shared pieces for the story ---- */
 const pick = (re, what) => { const m = src.match(re); if (!m) throw new Error('cannot find ' + what); return m[0]; };
-const colors = pick(/^const COLORS=.*$/m, 'COLORS');
-const fillLogos = pick(/function fillLogos\(root\)\{[\s\S]*?\n\}/, 'fillLogos');
+/* COLORS / fillLogos / brandify / decorateTools now ship in the shared logos.js,
+   injected into both outputs through <!--LOGOS--> — nothing to copy here any more. */
 const concepts = pick(/const CONCEPTS=\{[\s\S]*?\n\};/, 'CONCEPTS');
 const CONCEPTS = Function(concepts + ';return CONCEPTS')();
 /* mention counts across the deck text (index slide excluded), same rule as the deck's word cloud */
@@ -29,7 +29,7 @@ Object.values(CONCEPTS).flat().forEach(x => { let n = cnt(x[0]); if (!n) n = Mat
 let story = read('story.src.html');
 for (const ph of ['<!--LOGOS-->', '/*SHARED*/', '/*CONCEPTS*/']) if (!story.includes(ph)) throw new Error('missing ' + ph + ' in story.src.html');
 story = story.replace('<!--LOGOS-->', () => logos)
-  .replace('/*SHARED*/', () => colors + '\n' + fillLogos)
+  .replace('/*SHARED*/', () => '/* shared logo runtime comes from logos.js */')
   .replace('/*CONCEPTS*/', () => concepts + '\nconst CONCEPT_N=' + JSON.stringify(N) + ';');
 fs.writeFileSync(path.join(dir, 'scroll.html'), story);
 console.log('index.html', deck.length, '| scroll.html', story.length);
