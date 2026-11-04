@@ -772,7 +772,7 @@ function fillLogos(root){
   root.querySelectorAll('[data-svgl]').forEach(el=>{const n=el.dataset.svgl,p=LOGOS[n];if(p)el.innerHTML='<path d="'+p+'" fill="'+(el.dataset.c||COLORS[n]||'#fff')+'"/>'});
 }
 const clamp=(v,a=0,b=1)=>v<a?a:v>b?b:v, seg=(p,a,b)=>clamp((p-a)/(b-a));
-const Eo=x=>1-Math.pow(1-x,3), Eb=x=>{const c=1.70158;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+const Eo=x=>1-Math.pow(1-x,3), Eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2, Eb=x=>{const c=1.70158;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
 const $=s=>document.querySelector(s);
 const ERA={'2023':'#38bdf8','2024':'#a78bfa','2025':'#fb923c','2026':'#34d399',all:'#22d3ee',ht:'#e0b354'};
 const mf=t=>{const a=String(t).split('.').map(Number);return (a[0]-2021)*12+((a[1]||1)-1)+((a[2]||1)-1)/30};
@@ -981,18 +981,24 @@ function lifelines(s,yN){const R=1846,mN=mf(NOW),Ym=m=>Pm(m)*s,SW=3;
  const L=LIVES.map(l=>({l,b:mf(l[1]),e:l[2]?Math.min(mf(l[2]),mN):mN,end:l[2]?mf(l[2]):null}));
  const alive=(x,m)=>m<x.b?0:(x.end!==null&&x.end<=mN&&m>x.e?1-Eo(clamp((m-x.e)/2.5)):1);
  const gap=m=>SW+23*Math.pow(1-clamp((m-mf('2023.01'))/(mf('2025.10')-mf('2023.01'))),1.6);
- const X=(j,m)=>{let r=0;for(let k=0;k<j;k++)r+=alive(L[k],m);return R-gap(m)*r};
- let g='',lab='';
+ /* a newborn line starts well clear of the bundle and glides in over ~5 months (offset only shrinks → still moves right only) */
+ const NEW=110,NEWM=5,off=(j,m)=>NEW*(1-Eio(clamp((m-L[j].b)/NEWM)));
+ const X=(j,m)=>{let r=0;for(let k=0;k<j;k++)r+=alive(L[k],m);return R-gap(m)*r-off(j,m)};
+ /* the older a stretch of line is, the fainter it gets: full at birth → 18% after ~16 months */
+ const FADE=16,FMIN=.18,opAt=(j,m)=>1-(1-FMIN)*Eo(clamp((m-L[j].b)/FADE));
+ let g='',lab='',defs='';
  L.forEach((x,j)=>{const c=x.l[3],pts=[];for(let m=x.b;m<x.e;m+=.2)pts.push([X(j,m),Ym(m)]);pts.push([X(j,x.e),Ym(x.e)]);
-  g+='<path d="M'+pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L')+'" stroke="'+c+'" stroke-width="'+SW+'" fill="none" stroke-linejoin="round" stroke-linecap="butt"/>';
+  defs+='<linearGradient id="lf'+j+'" gradientUnits="userSpaceOnUse" x1="0" x2="0" y1="'+Ym(x.b).toFixed(1)+'" y2="'+Ym(x.b+FADE).toFixed(1)+'">'+[0,.25,.5,.75,1].map(f=>'<stop offset="'+f+'" stop-color="'+c+'" stop-opacity="'+opAt(j,x.b+f*FADE).toFixed(3)+'"/>').join('')+'</linearGradient>';
+  g+='<path d="M'+pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' L')+'" stroke="url(#lf'+j+')" stroke-width="'+SW+'" fill="none" stroke-linejoin="round" stroke-linecap="butt"/>';
   const bx=X(j,x.b),by=Ym(x.b);g+='<circle cx="'+bx.toFixed(1)+'" cy="'+by.toFixed(1)+'" r="6" fill="'+c+'" style="filter:drop-shadow(0 0 6px '+c+')"/>';
   lab+='<div class="lfl" style="left:'+(bx-22).toFixed(1)+'px;top:'+(by+12)+'px;--lc:'+c+'">'+x.l[0]+'<small>'+x.l[1]+'</small></div>';
-  x.l[5].forEach(t=>{const m=mf(t[0]);lab+='<div class="lft" style="left:'+(X(j,m)-24).toFixed(1)+'px;top:'+Ym(m).toFixed(1)+'px;--lc:'+c+'">'+t[1]+'</div>'});
+  x.l[5].forEach(t=>{const m=mf(t[0]);lab+='<div class="lft" style="left:'+(X(j,m)-24).toFixed(1)+'px;top:'+Ym(m).toFixed(1)+'px;--lc:'+c+';opacity:'+Math.max(.55,opAt(j,m)).toFixed(2)+'">'+t[1]+'</div>'});
   if(x.end!==null){const ex=X(j,x.e),ey=Ym(x.e);
-   if(x.end>mN){g+='<path d="M'+ex.toFixed(1)+','+ey.toFixed(1)+' V'+(ey+70)+'" stroke="'+c+'" stroke-width="'+SW+'" stroke-dasharray="6 6" fill="none"/>';lab+='<div class="lfn" style="left:'+(ex-24).toFixed(1)+'px;top:'+(ey+80)+'px">'+x.l[4]+'</div>'}
+   const eo=Math.max(.6,opAt(j,x.e)).toFixed(2);
+   if(x.end>mN){g+='<path d="M'+ex.toFixed(1)+','+ey.toFixed(1)+' V'+(ey+70)+'" stroke="'+c+'" stroke-opacity="'+eo+'" stroke-width="'+SW+'" stroke-dasharray="6 6" fill="none"/>';lab+='<div class="lfn" style="left:'+(ex-24).toFixed(1)+'px;top:'+(ey+80)+'px">'+x.l[4]+'</div>'}
    else lab+='<div class="lfe" style="left:'+ex.toFixed(1)+'px;top:'+ey.toFixed(1)+'px;--lc:'+c+'"></div><div class="lfn" style="left:'+(ex-24).toFixed(1)+'px;top:'+(ey+8).toFixed(1)+'px">'+x.l[4]+'</div>'}});
  const H=Math.ceil(yN+300);
- return '<svg style="position:absolute;left:0;top:0;width:1920px;height:'+H+'px;overflow:visible" viewBox="0 0 1920 '+H+'">'+g+'</svg>'+lab}
+ return '<svg style="position:absolute;left:0;top:0;width:1920px;height:'+H+'px;overflow:visible" viewBox="0 0 1920 '+H+'"><defs>'+defs+'</defs>'+g+'</svg>'+lab}
 /* front: buzz (weeks) */
 function buildFront(){const s=1.5,L3=$('#L3');L3.innerHTML=BUZZ.map((b,i)=>{const y=P(b[1])*s,left=i%2===0;const x=left?(18+(i*37)%60):(1460+(i*53)%120);
  return '<div class="bz '+(b[2]||'')+'" style="top:'+y+'px;left:'+x+'px">'+b[0]+'</div>'}).join('');
