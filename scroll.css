@@ -1,0 +1,33 @@
+/* ===================== scroll version (html.scrolly) ===================== */
+html.scrolly,html.scrolly body{height:auto;overflow-x:hidden;overflow-y:auto}
+html.scrolly{scrollbar-width:none;--era:#22d3ee}
+html.scrolly::-webkit-scrollbar{display:none}
+html.scrolly body{background:radial-gradient(1200px 700px at 85% -10%,rgba(56,189,248,.10),transparent 60%),radial-gradient(900px 600px at -10% 110%,rgba(167,139,250,.10),transparent 60%),#07090d;background-attachment:fixed}
+html.scrolly #stage{position:relative;left:auto;top:auto;width:auto;height:auto;transform:none!important;overflow:visible;background:none}
+html.scrolly #stage::before{position:fixed;z-index:0}
+html.scrolly #glow{position:fixed;z-index:0;transition:background 1.2s}
+html.scrolly .frame{position:relative;width:100%;overflow:hidden;z-index:1}
+html.scrolly .fit{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;will-change:transform}
+html.scrolly .slide{position:absolute;inset:0;opacity:1;pointer-events:auto;transition:none;will-change:opacity}
+html.scrolly #nav-l,html.scrolly #nav-r,html.scrolly #seek{display:none}
+html.scrolly #prog{position:fixed;top:0;left:0;height:3px;z-index:60;transition:none}
+html.scrolly #chapters{position:fixed;top:12px;z-index:60}
+html.scrolly #hud{position:fixed;left:0;right:0;bottom:0;height:44px;padding:0 84px 8px 28px;z-index:60;background:linear-gradient(transparent,rgba(7,9,13,.92) 60%)}
+html.scrolly #hud a{pointer-events:auto;color:var(--mut);text-decoration:none;border-bottom:1px solid rgba(148,163,184,.4)}
+html.scrolly #hud a:hover{color:#fff}
+
+/* the rail = scrollbar = timeline */
+#rail{position:fixed;right:18px;top:64px;bottom:64px;width:26px;z-index:60;cursor:pointer;touch-action:none}
+#rail .rt,#rail .rf{position:absolute;left:10px;top:0;bottom:0;width:6px;border-radius:6px}
+#rail .rt{opacity:.22}
+#rail .rf{box-shadow:0 0 12px var(--era)}
+#rail .rl{position:absolute;inset:0;pointer-events:none}
+#rail .rl button{position:absolute;right:24px;transform:translateY(-50%);pointer-events:auto;font:700 12px var(--mono);letter-spacing:.06em;color:var(--dim);background:none;border:none;cursor:pointer;white-space:nowrap;padding:2px 4px;transition:color .2s}
+#rail .rl button::after{content:"";position:absolute;right:-14px;top:50%;width:8px;height:1px;background:currentColor}
+#rail .rl button:hover,#rail .rl button.on{color:var(--ch)}
+#rail .rh{position:absolute;left:13px;width:0;height:0;pointer-events:none}
+#rail .rh i{position:absolute;left:-8px;top:-8px;width:16px;height:16px;border-radius:50%;background:#07090d;border:3px solid var(--ch,#22d3ee);box-shadow:0 0 14px var(--ch,#22d3ee)}
+#rail .rh span{position:absolute;right:22px;top:-11px;font:700 13px var(--mono);color:#0b0f16;background:var(--ch,#22d3ee);padding:3px 9px;border-radius:999px;white-space:nowrap;opacity:0;transition:opacity .2s}
+#rail:hover .rh span,#rail.drag .rh span{opacity:1}
+#rail:hover .rl button,#rail.drag .rl button{color:var(--mut)}
+@media (max-width:900px){#rail .rl{display:none}#rail{right:6px}html.scrolly #hud{display:none}html.scrolly #chapters{top:8px;gap:4px}html.scrolly #chapters button{white-space:nowrap;padding:4px 8px;font-size:11px;letter-spacing:0}}
