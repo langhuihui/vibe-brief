@@ -33,25 +33,27 @@ svg *{transform-box:fill-box;transform-origin:center}
 .role{position:absolute;left:60px;font:900 110px/1 var(--sans);letter-spacing:-.03em;color:#fff;opacity:.012;white-space:nowrap;pointer-events:none;transition:opacity .6s}
 .role.on{opacity:.1}
 .role small{display:block;font:700 22px var(--mono);letter-spacing:.2em;margin-bottom:12px}
-.spinehint{position:absolute;left:120px;font:600 12px var(--mono);color:var(--dim);white-space:nowrap}
+/* time-scale typography: date ticks / axis headers were 11-18px, hard to read
+   at 1920x1080; bumped ~1.4x while keeping every label inside its lane */
+.spinehint{position:absolute;left:120px;font:600 17px var(--mono);color:var(--dim);white-space:nowrap}
 .phase{position:absolute;left:144px;width:16px;border-radius:8px;opacity:.28}
-.phl{position:absolute;left:104px;writing-mode:vertical-rl;font:800 18px var(--sans);letter-spacing:.2em;white-space:nowrap}
+.phl{position:absolute;left:104px;writing-mode:vertical-rl;font:800 23px var(--sans);letter-spacing:.2em;white-space:nowrap}
 .cms{position:absolute;left:152px;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:#07090d;border:3px solid var(--mc)}
 .cms.big{width:20px;height:20px;box-shadow:0 0 14px var(--mc)}
-.cml{position:absolute;left:182px;transform:translateY(-50%);font:600 15px var(--mono);color:#cbd5e1;white-space:nowrap;max-width:205px;overflow:hidden;text-overflow:ellipsis}
-.cml em{display:block;font-style:normal;font-size:12px;color:var(--mc)}
-.cursorhd{position:absolute;left:120px;display:flex;align-items:center;gap:10px;font:800 16px var(--mono);letter-spacing:.12em;color:#fff}
+.cml{position:absolute;left:182px;transform:translateY(-50%);font:600 18px var(--mono);color:#cbd5e1;white-space:nowrap;max-width:236px;overflow:hidden;text-overflow:ellipsis}
+.cml em{display:block;font-style:normal;font-size:17px;color:var(--mc)}
+.cursorhd{position:absolute;left:120px;display:flex;align-items:center;gap:10px;font:800 21px var(--mono);letter-spacing:.12em;color:#fff}
 .life{position:absolute;width:2px;border-radius:2px;background:var(--lc);opacity:.75}
 .life.fut{background:repeating-linear-gradient(var(--lc) 0 6px,transparent 6px 12px)}
 .lfd{position:absolute;width:12px;height:12px;margin:-6px 0 0 -5px;border-radius:50%;background:var(--lc);box-shadow:0 0 12px var(--lc)}
-.lfl{position:absolute;writing-mode:vertical-rl;font:700 14px var(--sans);color:var(--lc);white-space:nowrap;letter-spacing:.06em;text-shadow:0 0 6px #07090d,0 0 3px #07090d}
-.lfl small{font:600 11px var(--mono);opacity:.75;margin-top:6px}
+.lfl{position:absolute;writing-mode:vertical-rl;font:700 18px var(--sans);color:var(--lc);white-space:nowrap;letter-spacing:.06em;text-shadow:0 0 6px #07090d,0 0 3px #07090d}
+.lfl small{font:600 15px var(--mono);opacity:.85;margin-top:6px}
 .lfe{position:absolute;width:12px;height:2px;margin-left:-6px;background:var(--lc)}
-.lfn{position:absolute;writing-mode:vertical-rl;font:600 12px var(--mono);color:#cbd5e1;white-space:nowrap;text-shadow:0 0 6px #07090d,0 0 3px #07090d}
-.lft{position:absolute;font:800 11px var(--mono);color:#0b0f16;background:var(--lc);padding:1px 3px;border-radius:4px;transform:translate(-100%,-50%);white-space:nowrap}
-.lifehd{position:absolute;right:86px;font:800 14px var(--mono);letter-spacing:.12em;color:var(--mut);text-align:right;white-space:nowrap}
+.lfn{position:absolute;writing-mode:vertical-rl;font:600 16px var(--mono);color:#cbd5e1;white-space:nowrap;text-shadow:0 0 6px #07090d,0 0 3px #07090d}
+.lft{position:absolute;font:800 15px var(--mono);color:#0b0f16;background:var(--lc);padding:2px 5px;border-radius:5px;transform:translate(-100%,-50%);white-space:nowrap}
+.lifehd{position:absolute;right:86px;font:800 19px var(--mono);letter-spacing:.12em;color:var(--mut);text-align:right;white-space:nowrap}
 .today{position:absolute;left:100px;width:1720px;height:0;border-top:2px dashed rgba(255,255,255,.35)}
-.today b{position:absolute;right:420px;top:-34px;font:800 15px var(--mono);color:#fff}
+.today b{position:absolute;right:420px;top:-40px;font:800 21px var(--mono);color:#fff}
 #thread{position:absolute;left:358px;width:2px;background:linear-gradient(var(--c23),var(--c24) 30%,var(--c25) 55%,var(--c26) 80%,var(--call));opacity:.35}
 .td{position:absolute;left:359px;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#07090d;border:2px solid var(--c)}
 .blk{position:absolute;left:400px;width:1000px;--ac:var(--call)}
@@ -164,8 +166,8 @@ svg *{transform-box:fill-box;transform-origin:center}
 .costhd b{font-size:28px;font-weight:900;display:flex;align-items:baseline;gap:12px}.costhd b:first-child{grid-column:2}
 .costhd small{font:600 13px var(--mono);color:var(--mut)}
 .vtick{position:absolute;left:0;right:0;height:0;border-top:1px dashed rgba(255,255,255,.08)}
-.vtick b{position:absolute;left:0;top:-12px;font:800 20px var(--mono);color:var(--dim);background:#07090d;padding-right:10px}
-.vtick.mo2 b{font-size:13px;font-weight:600;top:-9px}
+.vtick b{position:absolute;left:0;top:-18px;font:800 30px var(--mono);color:var(--dim);background:#07090d;padding-right:12px}
+.vtick.mo2 b{font-size:19px;font-weight:600;top:-13px}
 .cv{position:absolute;width:480px;padding:10px 14px 10px 14px;border-left:3px solid var(--lc);border-radius:0 12px 12px 0}
 .cv em{font:600 12px var(--mono);color:var(--lc);font-style:normal;margin-right:10px}.cv b{font-size:18px;font-weight:800}.cv span{font-size:14px;color:var(--mut);margin-left:10px}
 .vrow{position:absolute;left:0;right:0;height:56px;display:flex;align-items:center}
@@ -187,8 +189,10 @@ svg *{transform-box:fill-box;transform-origin:center}
 .jstep b{font-size:23px}.jstep span{display:block;font-size:16px;color:var(--mut);margin-top:2px}
 .card .h{display:flex;align-items:center;gap:12px}
 .card .h b{font-size:22px;font-weight:780;line-height:1.2}
-.card .h em{margin-left:auto;font:600 14px var(--mono);color:var(--ac);font-style:normal;white-space:nowrap;align-self:flex-start;padding-top:3px}
+.card .h em{margin-left:auto;font:700 17px var(--mono);color:var(--ac);font-style:normal;white-space:nowrap;align-self:flex-start;padding-top:3px}
 .card p{font-size:17px;color:#aab2c5;margin-top:8px;line-height:1.45}
+/* category chip: the six "tool forms" survive as a tag instead of a separate grid */
+.tcat{flex:none;font:700 12px var(--mono);letter-spacing:.06em;color:var(--tc);border:1px solid color-mix(in srgb,var(--tc) 45%,transparent);background:color-mix(in srgb,var(--tc) 12%,transparent);padding:3px 7px;border-radius:6px;white-space:nowrap}
 .card.dsx{border-color:rgba(107,132,255,.45);background:linear-gradient(180deg,rgba(28,36,80,.96),rgba(14,18,36,.96))}
 .card.dsx .h em,.card.dsx .h b{color:var(--ds)}
 .card.red{border-color:rgba(248,113,113,.4);background:linear-gradient(180deg,rgba(60,20,24,.95),rgba(20,12,16,.95))}
@@ -306,13 +310,6 @@ svg *{transform-box:fill-box;transform-origin:center}
 .ci span{display:block;font-size:13px;color:var(--mut);white-space:nowrap}
 .sweep{position:absolute;top:-24px;height:624px;width:2px;background:#fff;box-shadow:0 0 16px #fff}
 .sweep b{position:absolute;top:-26px;left:50%;transform:translateX(-50%);font:800 14px var(--mono);color:#0b0f16;background:#fff;padding:2px 8px;border-radius:999px;white-space:nowrap}
-.tmc{position:absolute;top:0;width:270px;height:600px;border-radius:20px;padding:20px 18px;background:linear-gradient(180deg,color-mix(in srgb,var(--mc) 12%,#0b0f16),#0b0f16);border:1px solid color-mix(in srgb,var(--mc) 30%,transparent)}
-.tmc .h{font-size:22px;font-weight:850}.tmc .s{font:700 12px var(--mono);letter-spacing:.12em;color:var(--mc);margin-top:4px}
-.tmc .it{margin-top:9px;padding-left:28px;position:relative;min-height:22px}
-.tmc .it::before{content:none}
-.tmc .it>.lg.mini{position:absolute;left:0;top:1px}
-.tmc .it b{display:block;font-size:17px}.tmc .it span{display:block;font-size:13px;color:var(--mut)}
-.tmc .nt{position:absolute;left:18px;right:18px;bottom:16px;font-size:14px;color:var(--mut);line-height:1.4}
 #cloud{position:relative;width:1720px;height:740px;margin-top:10px}
 #cloud .w{position:absolute;white-space:nowrap;line-height:1;cursor:pointer;color:var(--cc);font-weight:var(--fw);letter-spacing:-.01em}
 #cloud .w:hover{text-shadow:0 0 18px var(--cc);z-index:30}
@@ -339,19 +336,19 @@ svg *{transform-box:fill-box;transform-origin:center}
 .bz::before{content:"热议 ";font:700 13px var(--mono);color:var(--pink);letter-spacing:.14em;vertical-align:3px}
 .bz.ds{background:rgba(77,107,254,.12);border-color:rgba(107,132,255,.45);color:#c7d2fe}
 #nowline{position:absolute;left:0;right:0;top:560px;height:0;border-top:1px solid rgba(255,255,255,.07);z-index:5;pointer-events:none;transition:opacity .4s}
-#nowpill{position:absolute;left:16px;top:544px;z-index:6;display:flex;flex-direction:column;align-items:flex-start;gap:6px;font:800 15px var(--mono);pointer-events:none;transition:opacity .4s}
-#nowpill b{color:#0b0f16;background:var(--era);padding:5px 10px;border-radius:999px}
-#nowpill span{color:#e2e8f0;font:700 14px var(--sans);text-shadow:0 0 8px #07090d,0 0 4px #07090d;max-width:140px;white-space:nowrap}
+#nowpill{position:absolute;left:16px;top:514px;z-index:6;display:flex;flex-direction:column;align-items:flex-start;gap:8px;font:800 26px var(--mono);pointer-events:none;transition:opacity .4s}
+#nowpill b{color:#0b0f16;background:var(--era);padding:7px 15px;border-radius:999px;letter-spacing:.02em}
+#nowpill span{color:#e2e8f0;font:700 20px var(--sans);text-shadow:0 0 8px #07090d,0 0 4px #07090d;max-width:230px;white-space:nowrap}
 #tr{position:absolute;right:100px;bottom:24px;display:flex;gap:18px;align-items:center;font:600 15px var(--mono);color:var(--dim);z-index:20}
 #tr a{color:var(--mut);text-decoration:none;border-bottom:1px solid rgba(148,163,184,.4)}#tr a:hover{color:#fff}
-#legend{position:absolute;left:100px;bottom:22px;z-index:20;display:flex;gap:22px;font:600 13px var(--mono);color:var(--dim);transition:opacity .4s}
+#legend{position:absolute;left:100px;bottom:22px;z-index:20;display:flex;gap:22px;font:600 17px var(--mono);color:var(--dim);transition:opacity .4s}
 #legend span{display:flex;align-items:center;gap:8px}
 #legend i{display:inline-block;height:4px;border-radius:2px;background:currentColor}
 #rail{position:fixed;right:10px;top:64px;bottom:64px;width:26px;z-index:60;cursor:pointer;touch-action:none}
 #rail .rt,#rail .rf{position:absolute;left:10px;top:0;bottom:0;width:5px;border-radius:5px}
 #rail .rt{opacity:.2}
 #rail .rl{position:absolute;inset:0;pointer-events:none}
-#rail .rl button{position:absolute;right:24px;transform:translateY(-50%);pointer-events:auto;font:700 12px var(--mono);color:var(--dim);background:none;border:none;cursor:pointer;white-space:nowrap;padding:2px 4px;opacity:0;transition:opacity .2s,color .2s}
+#rail .rl button{position:absolute;right:24px;transform:translateY(-50%);pointer-events:auto;font:700 20px var(--mono);color:var(--dim);background:none;border:none;cursor:pointer;white-space:nowrap;padding:2px 4px;opacity:0;transition:opacity .2s,color .2s}
 #rail .rl button.on{color:var(--ch);opacity:.9}
 #rail:hover .rl button,#rail.drag .rl button{opacity:1}
 #rail .rh{position:absolute;left:12px;width:0;height:0;pointer-events:none}
@@ -733,12 +730,6 @@ svg *{transform-box:fill-box;transform-origin:center}
   </div>
 </div>
 
-<div class="blk" id="b-tools" data-era="all" style="left:100px;width:1720px" data-span="900">
-  <div class="kk">回望 · 工具谱系</div>
-  <h2>同一个概念，<span class="grad">长成了六种形态</span></h2>
-  <div id="tmcols" style="position:relative;height:600px;margin-top:30px"></div>
-</div>
-
 <div class="blk" id="b-cloud" data-era="all" style="left:100px;width:1720px" data-span="1100">
   <div class="kk">回望 · 概念词云 · 字号 = 被提及次数 · 悬停看释义 · 点击跳回</div>
   <h2 style="font-size:50px">三年 <span class="grad" id="ccount">100+</span> 个新概念</h2>
@@ -996,11 +987,64 @@ function evMark(x,m,k){
  document.getElementById('gov').innerHTML='<p style="font:700 15px var(--mono);letter-spacing:.12em;color:#22d3ee;margin-bottom:18px" data-k=".7 .75">归宿：交给中立方</p>'+G.map((g,i)=>'<div data-k="'+(.72+i*.03).toFixed(2)+' '+(.78+i*.03).toFixed(2)+'" data-fx="right"><em>'+g[0]+'</em><b>'+g[1]+'</b>'+(g[2]?'<span>'+g[2]+'</span>':'')+'</div>').join('')+'<p style="font-size:19px;color:#cbd5e1;line-height:1.55;margin-top:6px" data-k=".9 .96">每条边都从<span style="color:#fff;font-weight:700">一家的私有接口</span>变成<span style="color:#22d3ee;font-weight:700">中立标准</span>：换模型、换编辑器，都不必重写 Agent。</p>'})();
 
 
-(function tools(){const C=[['IDE · 整体重写','EDITOR FORK','#22d3ee',[['Cursor','Anysphere · VS Code 分叉'],['Windsurf','Codeium → Cognition'],['Trae','字节 · 03 国内 / 06 开放'],['Qoder','阿里 · 08 · Quest 模式'],['CodeBuddy','腾讯 · 09.09 公测'],['Antigravity','Google · 2025.11.18'],['Kiro','AWS · 07 · 规范驱动']],'编辑器整个重写，Agent 是主角'],['终端 / CLI','TERMINAL','#fb923c',[['Claude Code','Anthropic · 02.24'],['Codex CLI','OpenAI · 04 / 05'],['Gemini CLI','Google · 06'],['Amp · Crush','Sourcegraph · Charm'],['OpenCode · Aider','开源'],['Qwen Code','阿里'],['CodeBuddy Code','腾讯']],'在 shell 里；可脚本化、可后台跑'],['插件','PLUGIN','#38bdf8',[['GitHub Copilot','补全起家，转 Agent'],['Augment','Context Engine 实时索引'],['Cline · Kilo Code','开源'],['JetBrains Junie · Air','经 ACP 接任何 Agent'],['Xcode · Android Studio','平台 IDE 内置 Agent']],'不改编辑器，能力长在上面'],['云 / 组织','CLOUD & ORG','#a78bfa',[['Devin','Cognition'],['Droid','Factory · 重构 / 迁移'],['Jules','Google'],['Codex 云','OpenAI · 并行沙箱'],['Cursor 后台','云端跑完再回来']],'跑在看不见的地方，回来交结果'],['对话 → 应用','PROMPT TO APP','#f472b6',[['v0','Vercel'],['Bolt','StackBlitz'],['Lovable',''],['Replit','']],'不给你代码，直接给能跑的应用'],['运行时 / 底座','HARNESS','#34d399',[['DSH','DeepSeek · 一切皆插件'],['Agents API','OpenAI · 托管会话'],['MicroVM 沙箱','硬件级隔离'],['Agent SDK','Cursor · Agents as Code']],'Agent = 模型 + 底座']];
- document.getElementById('tmcols').innerHTML=C.map((c,i)=>{const a=(.12+i*.1).toFixed(2);return '<div class="tmc" style="left:'+(i*290)+'px;--mc:'+c[2]+'" data-k="'+a+' '+(+a+.12).toFixed(2)+'" data-fx="up"><div class="h">'+c[0]+'</div><div class="s">'+c[1]+'</div>'+c[3].map(t=>'<div class="it"><b>'+t[0]+'</b><span>'+t[1]+'</span></div>').join('')+'<div class="nt">'+c[4]+'</div></div>'}).join('')})();
+/* Tool genealogy is retired: instead of a "six forms" review grid, every tool
+   now sits in the historical flow at its own release date. The six forms survive
+   as a small .tcat chip on each card.
+   [id, anchor date, shown date, name, form, one-line note, logo key(s), monogram colour]
+   Anchor dates are first public release / public preview, checked 2026-11-04.
+   Tools that already own a card in the flow are intentionally NOT duplicated:
+   Cursor / Devin / v0 / Bolt · Lovable / Claude Code / Codex CLI / Gemini CLI /
+   GitHub Copilot / Cursor 后台 / DSH / Agents API / MicroVM / Agent SDK /
+   Junie 正式版 / JetBrains Air / Antigravity 2.0.
+   Coze appears as 扣子编程 / Coze 2.0 (2026.01.19 Agent Coding), not the 2024 Bot platform. */
+(function scatterTools(){
+ const CAT={ide:['IDE','#22d3ee'],cli:['CLI','#fb923c'],plug:['插件','#38bdf8'],cloud:['云','#a78bfa'],app:['应用','#f472b6'],base:['底座','#34d399']};
+ const T=[
+  ['aider','2023.05.20','2023','Aider','cli','开源终端结对编程；repo map 让模型读懂整个仓库',null,'#86EFAC'],
+  ['augment','2024.01.15','2024','Augment','plug','Context Engine 实时索引整个代码库，插件形态的上下文派',null,'#FBBF24'],
+  ['replitagent','2024.09.11','2024.09','Replit Agent','app','在云 IDE 里用一句话生成并部署整个应用','replit'],
+  ['windsurf','2024.11.13','2024.11','Windsurf','ide','Codeium 推出 Cascade：首个「Agentic IDE」','windsurf'],
+  ['cline','2024.12.10','2024.12','Cline','plug','VS Code 开源 Agent，Plan / Act 双模式','cline'],
+  ['jules','2024.12.11','2024.12','Jules','cloud','Google Labs 首次展示异步编码 Agent；25.05 公测、25.08 GA','googlejules'],
+  ['trae','2025.01.20','2025.01','Trae','ide','字节发布国际版；03 国内版、06 全面开放','trae'],
+  ['junie','2025.03.26','2025.03','JetBrains Junie','plug','内置 IDE 的编码 Agent，靠 IDE 语义索引对抗上下文漂移','jetbrains'],
+  ['kilo','2025.03.27','2025.03','Kilo Code','plug','从 Roo Code 分叉的开源全形态编码 Agent','kilocode'],
+  ['codexcloud','2025.05.16','2025.05','Codex 云','cloud','OpenAI 研究预览：云端隔离沙箱并行跑任务，回来交 PR','codex'],
+  ['droid','2025.05.28','2025','Droid','cloud','Factory 的重构 / 迁移专用 Agent',null,'#A78BFA'],
+  ['opencode','2025.06.19','2025.06','OpenCode','cli','SST 开源终端 Agent，BYOK 接 75+ 模型供应商','opencode'],
+  ['kiro','2025.07.14','2025.07','Kiro','ide','AWS 公开预览：spec-driven，先写规范再让 Agent 写代码','kiro'],
+  ['amp','2025.07.20','2025.07','Amp','cli','Sourcegraph 在 Cody 之后推出的编码 Agent','amp'],
+  ['crush','2025.07.29','2025.07','Crush','cli','Charm 开源终端 Agent，BYOK 任意模型',null,'#F472B6'],
+  ['qwencode','2025.08.01','2025.08','Qwen Code','cli','阿里开源终端 Agent，兼容 OpenAI / Anthropic API','qwen'],
+  ['qoder','2025.08.05','2025.08','Qoder','ide','阿里 Agentic 编程平台，一次可检索 10 万个代码文件','qoder'],
+  ['codebuddy','2025.09.09','2025.09.09','CodeBuddy','ide','腾讯 IDE 公测：插件 / IDE / CLI 三形态同日打通','codebuddy'],
+  ['codebuddycode','2025.09.09','2025.09.09','CodeBuddy Code','cli','终端原生 CLI Agent，自然语言驱动开发到部署全流程','codebuddy'],
+  ['platformide','2025.09.20','2025','Xcode · Android Studio','plug','平台 IDE 把 Agent 内置进原生工具链',['xcode','androidstudio']],
+  ['antigravity','2025.11.18','2025.11.18','Antigravity','ide','Google 随 Gemini 3 发布 agent-first IDE','antigravity'],
+  ['coze','2026.01.19','2026.01','扣子编程 / Coze 2.0','app','官方定位一站式云端 Vibe Coding 平台；2025.12 免费公测，01.19 随扣子 2.0 发布 Agent Coding','coze']
+ ];
+ const L2=document.getElementById('L2');
+ const dated=()=>[...L2.querySelectorAll('.blk[data-t]')].map(el=>({el,m:mf(el.dataset.t)}));
+ T.sort((a,b)=>mf(a[1])-mf(b[1]));
+ T.forEach(t=>{
+  const [id,d,show,name,cat,desc,logo,mono]=t,c=CAT[cat];
+  const marks=(Array.isArray(logo)?logo:[logo]).map(k=>k
+   ?'<span class="lg mini" data-l="'+k+'"></span>'
+   :'<span class="lg mini m" style="--mc:'+(mono||'#94a3b8')+'">'+name.charAt(0)+'</span>').join('');
+  const tmp=document.createElement('div');
+  tmp.innerHTML='<div class="blk cb toolcard" id="b-tool-'+id+'" data-t="'+d+'" data-era="'+d.slice(0,4)+'">'
+   +'<div class="card glass" data-k="0 .4" data-fx="up"><div class="h">'+marks+'<b>'+name+'</b>'
+   +'<span class="tcat" style="--tc:'+c[1]+'">'+c[0]+'</span><em>'+show+'</em></div>'
+   +'<p>'+desc+'</p></div></div>';
+  const node=tmp.firstChild,m=mf(d),next=dated().find(x=>x.m>m+1e-6);
+  L2.insertBefore(node,next?next.el:null);
+ });
+})();
 
 /*CONCEPTS*/
-const JUMP={'s-prelude':'b-copilot','s-2023':'b-cmdk','s-2024a':'b-devin','s-2024b':'b-o1','s-swe':'b-swe','s-mcp':'b-mcp','s-2025':'b-spec','s-vibe':'b-vibe','s-2025a':'b-cc','s-ctx':'b-ctx','s-2025b':'b-agentsmd','s-2025c':'b-25q4','s-2026':'b-m01','s-fork':'b-fork','s-shift':'b-shift','s-mem':'b-mem','s-proto':'b-proto','s-cost':'b-cost','s-val':'b-now','s-tools':'b-tools','s-hty':'b-hty','s-ht1':'b-ht1','s-index':'b-cloud'};
+/* b-tools is gone: the paged "工具谱系" slide now lands on the first tool
+   card scattered into the flow (Aider, 2023) instead of a dead anchor. */
+const JUMP={'s-prelude':'b-copilot','s-2023':'b-cmdk','s-2024a':'b-devin','s-2024b':'b-o1','s-swe':'b-swe','s-mcp':'b-mcp','s-2025':'b-spec','s-vibe':'b-vibe','s-2025a':'b-cc','s-ctx':'b-ctx','s-2025b':'b-agentsmd','s-2025c':'b-25q4','s-2026':'b-m01','s-fork':'b-fork','s-shift':'b-shift','s-mem':'b-mem','s-proto':'b-proto','s-cost':'b-cost','s-val':'b-now','s-tools':'b-tool-aider','s-hty':'b-hty','s-ht1':'b-ht1','s-index':'b-cloud'};
 ['s-jan','s-feb','s-mar','s-apr','s-may','s-jun','s-jul','s-aug','s-sep','s-oct'].forEach((id,i)=>JUMP[id]='b-m'+String(i+1).padStart(2,'0'));
 (function cloud(){const col={'2023':'#38bdf8','2024':'#a78bfa','2025':'#fb923c','2026':'#34d399'};const box=document.getElementById('cloud'),W=1720,H=740;
  const words=[];Object.keys(CONCEPTS).forEach(y=>CONCEPTS[y].forEach(x=>words.push({y,name:x[0],go:x[1],def:x[2],n:Math.max(1,CONCEPT_N[x[0]]||1)})));
@@ -1040,7 +1084,7 @@ const LIVES=[
  ['ACP','2025.08.27',null,'#22d3ee','',[]],
  ['Agent Skills','2025.10.16',null,'#fb923c','',[]]
 ];
-const BUZZ=[['「复制粘贴工程师」','2023.02'],['Prompt Engineering 当红','2023.04'],['AutoGPT 自主 Agent 热潮','2023.05'],['Cognition 估值 20 亿美元','2024.04'],['Aider · Repo Map','2024.05'],['Apply 模型：快速落地 diff','2024.07'],['Replit Agent','2024.09'],['Copilot 支持 Claude / Gemini','2024.10'],['Qwen2.5-Coder 开源','2024.11.10'],['Cline · Plan/Act','2024.12.10'],['DeepSeek 开源周 · FlashMLA · DeepEP · 3FS','2025.02.26','ds'],['MCP 工具投毒 · Slopsquatting','2025.04.10'],['Jules · A2A','2025.04.25'],['Claude 4','2025.05.22'],['计价风波','2025.06.20'],['Windsurf 收购战','2025.07.12'],['Kimi K2 · Qwen3-Coder · GLM-4.5','2025.07.22'],['GitHub Spec Kit','2025.09.05'],['DeepSeek V3.2-Exp · DSA','2025.09.29','ds'],['Gemini 3','2025.11.18'],['技术债以光速生成','2025.11.25'],['Vibe Coding 清理师','2025.12.10'],['Vibe Shift：DHH、Torvalds 转向','2026.01.12'],['Anthropic 封禁第三方订阅客户端','2026.01.22'],['Cloudflare 一周用 AI 重写 Next.js','2026.02.10'],['SpaceX 并购 xAI','2026.02.22'],['VS Code 改为周更','2026.03.12'],['Google Stitch 设计转代码','2026.03.26'],['并行 Agent 一周末烧掉 $2000','2026.04.12'],['Opus 4.7 · xhigh 档','2026.04.20'],['MCP 无状态大改版','2026.05.10'],['xAI Grok Build 入局','2026.05.24'],['Zed 1.0','2026.06.08'],['订阅只覆盖交互式使用','2026.06.22'],['OSWorld 突破 90%','2026.07.08'],['工信部风险提示 Claude Code','2026.07.20'],['DeepSeek V4-Pro GA · 峰谷定价','2026.08.08','ds'],['Slack Code · 项目频道写码','2026.08.22'],['TypeSafe Jev','2026.09.15'],['Claude Sonnet 5.5','2026.09.26'],['PAP · Agent 登录网站','2026.10.07'],['Haiku 5.5 · $0.10 子代理','2026.10.12'],['Gemini 4 Argon','2026.10.24']];
+const BUZZ=[['「复制粘贴工程师」','2023.02'],['Prompt Engineering 当红','2023.04'],['AutoGPT 自主 Agent 热潮','2023.05'],['Cognition 估值 20 亿美元','2024.04'],['Aider · Repo Map','2024.05'],['Apply 模型：快速落地 diff','2024.07'],['Replit Agent','2024.09'],['Copilot 支持 Claude / Gemini','2024.10'],['Qwen2.5-Coder 开源','2024.11.10'],['Cline · Plan/Act','2024.12.10'],['DeepSeek 开源周 · FlashMLA · DeepEP · 3FS','2025.02.26','ds'],['MCP 工具投毒 · Slopsquatting','2025.04.10'],['Jules · A2A','2025.04.25'],['Claude 4','2025.05.22'],['计价风波','2025.06.20'],['Windsurf 收购战','2025.07.12'],['Kimi K2 · Qwen3-Coder · GLM-4.5','2025.07.22'],['GitHub Spec Kit','2025.09.05'],['DeepSeek V3.2-Exp · DSA','2025.09.29','ds'],['Gemini 3','2025.11.18'],['技术债以光速生成','2025.11.25'],['Vibe Coding 清理师','2025.12.10'],['Vibe Shift：DHH、Torvalds 转向','2026.01.12'],['扣子 2.0 · Agent Coding','2026.01.19'],['Anthropic 封禁第三方订阅客户端','2026.01.22'],['Cloudflare 一周用 AI 重写 Next.js','2026.02.10'],['SpaceX 并购 xAI','2026.02.22'],['VS Code 改为周更','2026.03.12'],['Google Stitch 设计转代码','2026.03.26'],['并行 Agent 一周末烧掉 $2000','2026.04.12'],['Opus 4.7 · xhigh 档','2026.04.20'],['MCP 无状态大改版','2026.05.10'],['xAI Grok Build 入局','2026.05.24'],['Zed 1.0','2026.06.08'],['订阅只覆盖交互式使用','2026.06.22'],['OSWorld 突破 90%','2026.07.08'],['工信部风险提示 Claude Code','2026.07.20'],['DeepSeek V4-Pro GA · 峰谷定价','2026.08.08','ds'],['Slack Code · 项目频道写码','2026.08.22'],['TypeSafe Jev','2026.09.15'],['Claude Sonnet 5.5','2026.09.26'],['PAP · Agent 登录网站','2026.10.07'],['Haiku 5.5 · $0.10 子代理','2026.10.12'],['Gemini 4 Argon','2026.10.24']];
 
 /* ================= engine ================= */
 const F=560;
