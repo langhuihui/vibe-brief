@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Vibe Coding 简史 · 滚动版</title>
+<style>
+:root{
+  --bg:#06080c;--fg:#e8ecf3;--mut:#8b93a7;--dim:#5b6375;--line:rgba(255,255,255,.08);
+  --c23:#38bdf8;--c24:#a78bfa;--c25:#fb923c;--c26:#34d399;--call:#22d3ee;--cht:#e0b354;--pink:#f472b6;--red:#f87171;--ds:#8fa2ff;
+  --mono:"JetBrains Mono","SF Mono",Menlo,Consolas,monospace;
+  --sans:"Inter","PingFang SC","HarmonyOS Sans SC","Microsoft YaHei",-apple-system,sans-serif;
+  --era:#22d3ee;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg);scrollbar-width:none}
+html::-webkit-scrollbar{display:none}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+#space{width:1px}
+#stage{position:fixed;left:50%;top:50%;width:1920px;height:1080px;transform-origin:center;overflow:hidden;
+  background:radial-gradient(1200px 700px at 85% -10%,rgba(56,189,248,.08),transparent 60%),radial-gradient(900px 600px at -10% 110%,rgba(167,139,250,.08),transparent 60%),#07090d}
+#stage::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse at center,#000 30%,transparent 80%)}
+#glow{position:absolute;width:1000px;height:1000px;border-radius:50%;filter:blur(130px);opacity:.15;background:var(--era);right:-320px;top:-420px;pointer-events:none}
+#bigyr{position:absolute;right:90px;bottom:96px;height:330px;width:1100px;pointer-events:none}
+#bigyr b{position:absolute;right:0;bottom:0;font:900 330px/1 var(--sans);letter-spacing:-.06em;color:transparent;-webkit-text-stroke:2px var(--era);opacity:0;transition:opacity .7s,transform .7s;transform:translateY(60px)}
+#bigyr b.on{opacity:.075;transform:none}
+svg *{transform-box:fill-box;transform-origin:center}
+
+/* ---------- scenes ---------- */
+.sc{position:absolute;inset:0;visibility:hidden;--ac:var(--call)}
+.sc.live{visibility:visible}
+.sc[data-era="2023"]{--ac:var(--c23)}.sc[data-era="2024"]{--ac:var(--c24)}.sc[data-era="2025"]{--ac:var(--c25)}.sc[data-era="2026"]{--ac:var(--c26)}.sc[data-era="ht"]{--ac:var(--cht)}
+.ab{position:absolute}
+.hd{position:absolute;left:100px;top:118px}
+.kk{font:600 19px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--ac)}
+h1{font-size:150px;line-height:1;font-weight:900;letter-spacing:-.04em}
+h2{font-size:58px;line-height:1.12;font-weight:850;letter-spacing:-.02em;margin-top:14px}
+h2 small{display:block;font-size:24px;font-weight:500;color:var(--mut);letter-spacing:0;margin-top:12px}
+.grad{background:linear-gradient(92deg,var(--ac),#f0abfc 60%,#fde68a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mut{color:var(--mut)}.ds{color:var(--ds)}
+.lg{width:42px;height:42px;border-radius:11px;background:rgba(255,255,255,.07);display:inline-grid;place-items:center;flex:none;border:1px solid rgba(255,255,255,.06);vertical-align:middle}
+.lg svg{width:23px;height:23px}
+.lg.sm{width:32px;height:32px;border-radius:8px}.lg.sm svg{width:18px;height:18px}
+.lg.xs{width:22px;height:22px;border-radius:5px;background:none;border:none}.lg.xs svg{width:17px;height:17px}
+.lg.xl{width:120px;height:120px;border-radius:30px;background:linear-gradient(145deg,#1b2230,#0b0f16);box-shadow:0 0 70px rgba(34,211,238,.2),inset 0 0 0 1px rgba(255,255,255,.12)}.lg.xl svg{width:66px;height:66px}
+.lg.m{font:800 15px/1 var(--sans);color:#fff;background:var(--mc,#334155);letter-spacing:-.02em}
+.lg.sm.m{font-size:12px}
+.chip{display:inline-flex;align-items:center;gap:8px;font:600 16px var(--mono);padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid var(--line);color:#cbd5e1;white-space:nowrap}
+.chip em{font-style:normal;color:var(--ac)}
+
+/* caption steps (replace each other at one spot) */
+.cap{position:absolute;left:100px;top:300px;width:640px}
+.st{position:absolute;left:0;top:0;width:100%}
+.st em{font:600 19px var(--mono);color:var(--ac);font-style:normal;letter-spacing:.04em}
+.st b{display:block;font-size:50px;font-weight:850;line-height:1.14;margin-top:12px;letter-spacing:-.01em}
+.st p{font-size:23px;color:var(--mut);margin-top:16px;line-height:1.55}
+.st p i{font-style:normal;color:#e2e8f0}
+.st .ds{color:var(--ds)}
+
+/* cards */
+.card{border-radius:18px;padding:18px 22px;background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));border:1px solid var(--line)}
+.card .h{display:flex;align-items:center;gap:12px}
+.card .h b{font-size:23px;font-weight:780;line-height:1.2}
+.card .h em{margin-left:auto;font:600 15px var(--mono);color:var(--ac);font-style:normal;white-space:nowrap;align-self:flex-start;padding-top:3px}
+.card p{font-size:17px;color:#aab2c5;margin-top:9px;line-height:1.45}
+.card.dsx{border-color:rgba(107,132,255,.4);background:linear-gradient(180deg,rgba(77,107,254,.13),rgba(77,107,254,.03))}
+.card.dsx .h em{color:var(--ds)}
+
+/* ticker: a list that scrolls past a focus line */
+.tk{position:absolute;overflow:hidden;-webkit-mask-image:linear-gradient(transparent,#000 22%,#000 78%,transparent);mask-image:linear-gradient(transparent,#000 22%,#000 78%,transparent)}
+.tk .tl{position:absolute;left:0;right:0;top:0}
+.ti{height:62px;display:flex;align-items:center;gap:14px;white-space:nowrap}
+.ti em{font:600 15px var(--mono);color:var(--ac);width:72px;flex:none;font-style:normal}
+.ti b{font-size:21px;font-weight:750}
+.ti span{color:var(--mut);font-size:16px;overflow:hidden;text-overflow:ellipsis}
+.ti.ds b{color:var(--ds)}.ti.cu b{color:#e2e8f0}.ti.cu b::before{content:"CURSOR ";font:700 12px var(--mono);color:var(--dim);letter-spacing:.1em}
+.tkf{position:absolute;height:62px;border-left:3px solid var(--ac);background:linear-gradient(90deg,color-mix(in srgb,var(--ac) 14%,transparent),transparent 70%);pointer-events:none}
+
+/* editor */
+.ed{position:absolute;border-radius:18px;background:#0b1018;border:1px solid rgba(255,255,255,.1);box-shadow:0 30px 90px rgba(0,0,0,.55);overflow:hidden}
+.edbar{height:50px;display:flex;align-items:center;gap:8px;padding:0 18px;border-bottom:1px solid var(--line);font:600 15px var(--mono);color:var(--mut)}
+.edbar>i{width:12px;height:12px;border-radius:50%;background:#2b3444}
+.edbar .tab{margin-left:12px;padding:6px 12px;border-radius:8px;background:rgba(255,255,255,.05);color:#cbd5e1}
+.edbar .brand{margin-left:auto;display:flex;align-items:center;gap:8px;color:#e2e8f0}
+.edb{padding:26px 0;font:500 23px/1.75 var(--mono);color:#cbd5e1}
+.ln{display:flex;white-space:pre}
+.ln>u{width:72px;text-align:right;padding-right:22px;color:#3b4456;text-decoration:none;flex:none}
+.kw{color:#c084fc}.fn{color:#7dd3fc}.cm{color:#64748b;transition:color .3s,text-shadow .3s}
+.cm.on{color:#fde68a;text-shadow:0 0 18px rgba(253,230,138,.6)}
+.ghost{color:#526077;white-space:pre;transition:color .25s}
+.ghost.on{color:#7ee0b8;text-shadow:0 0 14px rgba(126,224,184,.35)}
+.key{position:absolute;font:700 22px var(--mono);padding:12px 20px;border-radius:12px;border:2px solid #475569;color:#94a3b8;transition:all .2s}
+.key.on{border-color:var(--ac);color:#fff;box-shadow:0 0 30px var(--ac)}
+.add{background:rgba(52,211,153,.12);color:#86efac}.del{background:rgba(248,113,113,.12);color:#fca5a5;text-decoration:line-through;text-decoration-color:rgba(248,113,113,.5)}
+.term{position:absolute;border-radius:18px;background:#05070b;border:1px solid rgba(255,255,255,.12);box-shadow:0 30px 90px rgba(0,0,0,.55);overflow:hidden}
+.term .edb{font-size:21px;line-height:1.85;padding:22px 26px}
+.ok{color:#86efac}.bad{color:#fca5a5}.dm{color:#64748b}.ac{color:var(--ac)}
+
+/* role meter + ruler (persistent) */
+#role{position:absolute;left:100px;top:36px;display:flex;align-items:center;gap:16px;font:600 15px var(--mono);color:var(--dim);z-index:20;transition:opacity .4s}
+#roleTxt{position:relative;width:170px;height:30px}
+#roleTxt b{position:absolute;left:0;top:0;font:800 22px var(--sans);color:#fff;white-space:nowrap;opacity:0;transform:translateY(10px);transition:opacity .35s,transform .35s}
+#roleTxt b.on{opacity:1;transform:none}
+#meter{position:relative;width:340px;height:6px;border-radius:6px;background:linear-gradient(90deg,#64748b,var(--era));opacity:.85}
+#meter::before,#meter::after{position:absolute;top:-24px;font:700 11px var(--mono);letter-spacing:.1em;color:var(--dim)}
+#meter::before{content:"人类动手";left:0}#meter::after{content:"AI 自治";right:0}
+#knob{position:absolute;top:-7px;width:20px;height:20px;margin-left:-10px;border-radius:50%;background:#07090d;border:3px solid var(--era);box-shadow:0 0 16px var(--era)}
+#loop{font:700 12px var(--mono);letter-spacing:.12em;color:var(--era)}
+#tr{position:absolute;right:100px;top:40px;display:flex;gap:18px;align-items:center;font:600 15px var(--mono);color:var(--dim);z-index:20}
+#tr a{color:var(--mut);text-decoration:none;border-bottom:1px solid rgba(148,163,184,.4)}
+#tr a:hover{color:#fff}
+#ruler{position:absolute;left:100px;top:996px;width:1720px;height:70px;z-index:20;transition:opacity .5s}
+#ruler .ax{position:absolute;left:0;right:0;top:14px;height:2px;background:rgba(255,255,255,.1)}
+#ruler .done{position:absolute;left:0;top:14px;height:2px;background:linear-gradient(90deg,var(--c23),var(--c24),var(--c25),var(--c26))}
+#ruler .yr{position:absolute;top:28px;font:700 14px var(--mono);color:var(--dim);transform:translateX(-50%)}
+#ruler .yt{position:absolute;top:6px;width:1px;height:18px;background:rgba(255,255,255,.18)}
+#ruler .ms{position:absolute;top:10px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:#1e2633;border:2px solid #334155;transition:all .3s}
+#ruler .ms.on{background:var(--mc);border-color:var(--mc);box-shadow:0 0 10px var(--mc)}
+#ruler .ms span{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);font:600 12px var(--mono);color:var(--dim);white-space:nowrap;opacity:0;transition:opacity .3s}
+#ruler .ms.big.on span{opacity:0}
+#ruler .ms.cur span{opacity:1;color:#fff}
+#ruler .ph{position:absolute;top:-2px;width:2px;height:34px;margin-left:-1px;background:#fff;box-shadow:0 0 12px var(--era)}
+#ruler .ph b{position:absolute;top:38px;left:50%;transform:translateX(-50%);font:800 13px var(--mono);color:#0b0f16;background:var(--era);padding:2px 8px;border-radius:999px;white-space:nowrap}
+#ruler .cur0{position:absolute;left:-96px;top:6px;display:flex;gap:8px;align-items:center;font:700 12px var(--mono);letter-spacing:.12em;color:var(--dim)}
+#hint{position:absolute;left:50%;top:930px;transform:translateX(-50%);font:600 16px var(--mono);color:var(--dim);letter-spacing:.2em;z-index:20;transition:opacity .4s}
+#hint i{display:block;text-align:center;font-style:normal;font-size:24px;animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(8px)}}
+
+/* rail (screen space) */
+#rail{position:fixed;right:12px;top:64px;bottom:64px;width:26px;z-index:60;cursor:pointer;touch-action:none}
+#rail .rt,#rail .rf{position:absolute;left:10px;top:0;bottom:0;width:5px;border-radius:5px}
+#rail .rt{opacity:.2}
+#rail .rl{position:absolute;inset:0;pointer-events:none}
+#rail .rl button{position:absolute;right:24px;transform:translateY(-50%);pointer-events:auto;font:700 12px var(--mono);color:var(--dim);background:none;border:none;cursor:pointer;white-space:nowrap;padding:2px 4px;opacity:0;transition:opacity .2s,color .2s}
+#rail .rl button.on{color:var(--ch);opacity:.9}
+#rail:hover .rl button,#rail.drag .rl button{opacity:1}
+#rail .rh{position:absolute;left:12px;width:0;height:0;pointer-events:none}
+#rail .rh i{position:absolute;left:-8px;top:-8px;width:16px;height:16px;border-radius:50%;background:#07090d;border:3px solid var(--era);box-shadow:0 0 14px var(--era)}
+@media (max-width:900px){#rail .rl{display:none}#rail{right:3px}}
+
+/* ---------- scene specific ---------- */
+.bub{position:absolute;border-radius:18px;background:#0f141d;border:1px solid rgba(16,163,127,.4);box-shadow:0 20px 60px rgba(0,0,0,.5);padding:18px 22px}
+.bub .h{display:flex;align-items:center;gap:10px;font:700 16px var(--mono);color:#6ee7b7}
+.bub pre{font:500 17px/1.6 var(--mono);color:#cbd5e1;margin-top:12px}
+.bub .cp{margin-top:12px;font:700 15px var(--mono);color:#0b0f16;background:#6ee7b7;display:inline-block;padding:5px 12px;border-radius:8px}
+.kbar{position:absolute;left:96px;right:40px;padding:12px 18px;border-radius:12px;background:#151b26;border:1px solid var(--ac);box-shadow:0 0 30px color-mix(in srgb,var(--ac) 35%,transparent);font:600 19px var(--mono);color:#e2e8f0}
+.kbar span{color:var(--ac);margin-right:10px}
+.side{position:absolute;top:50px;right:0;bottom:0;width:390px;background:#0e131c;border-left:1px solid rgba(255,255,255,.1);padding:20px}
+.side .msg{border-radius:12px;padding:12px 14px;font-size:17px;line-height:1.5;margin-bottom:12px}
+.side .me{background:rgba(56,189,248,.12);color:#e0f2fe;margin-left:40px}
+.side .ai{background:rgba(255,255,255,.05);color:#cbd5e1}
+.side .ai code{font:600 15px var(--mono);color:var(--ac)}
+.vec{position:absolute;left:20px;right:20px;bottom:20px;height:190px;border-radius:12px;background:rgba(255,255,255,.02);border:1px dashed rgba(255,255,255,.1)}
+.vec i{position:absolute;width:10px;height:10px;border-radius:50%;background:#38bdf8;opacity:.45}
+.vec i.hit{background:#a78bfa;opacity:1;box-shadow:0 0 12px #a78bfa}
+.vec span{position:absolute;left:12px;top:8px;font:700 13px var(--mono);color:var(--dim)}
+.runlog{position:absolute;right:26px;top:80px;width:450px;border-radius:14px;background:#0e131c;border:1px solid rgba(167,139,250,.35);padding:18px 20px;font:500 18px/1.9 var(--mono)}
+.runlog .t{font:700 14px var(--mono);color:#c4b5fd;letter-spacing:.08em;margin-bottom:6px}
+.acc{position:absolute;font:700 17px var(--mono);padding:9px 16px;border-radius:10px;background:var(--ac);color:#0b0f16}
+.pane{position:absolute;width:236px;height:180px;border-radius:14px;background:#0b0f16;border:1px solid rgba(255,255,255,.1);padding:14px}
+.pane .ph{display:flex;align-items:center;gap:8px;font:700 15px var(--mono);color:#cbd5e1}
+.pane .sk{height:9px;border-radius:5px;background:rgba(255,255,255,.08);margin-top:12px}
+.pane .pg{position:absolute;left:14px;right:14px;bottom:14px;height:6px;border-radius:4px;background:rgba(255,255,255,.06);overflow:hidden}
+.pane .pg i{position:absolute;inset:0;background:var(--ac);transform-origin:left}
+.pane .stt{position:absolute;right:14px;bottom:28px;font:700 13px var(--mono);color:#86efac}
+.tweet{position:absolute;left:330px;top:210px;width:1260px;border-radius:26px;background:#0d1219;border:1px solid rgba(255,255,255,.12);padding:40px 48px;box-shadow:0 30px 100px rgba(0,0,0,.6)}
+.tweet .who{display:flex;align-items:center;gap:16px}
+.tweet .who b{font-size:26px}.tweet .who span{font:500 17px var(--mono);color:var(--mut)}
+.tweet .q{font-size:40px;line-height:1.45;margin-top:26px;font-weight:600;min-height:174px}
+.tweet .q mark{background:none;color:var(--ac)}
+.tweet .zh{font-size:24px;color:var(--mut);margin-top:16px}
+.stat{position:absolute;text-align:left}
+.stat b{display:block;font:900 64px/1 var(--sans);letter-spacing:-.03em;color:var(--ac)}
+.stat span{display:block;font-size:19px;color:var(--mut);margin-top:10px}
+.ctxbar{position:absolute;left:100px;top:420px;width:1720px;height:120px;border-radius:18px;overflow:hidden;display:flex;border:1px solid rgba(255,255,255,.12)}
+.ctxbar>div{position:relative;height:100%;display:flex;align-items:center;justify-content:center;font:700 18px var(--sans);color:#0b0f16;transform-origin:left;flex:none;overflow:hidden;white-space:nowrap}
+.ctxlab{position:absolute;left:100px;top:552px;width:1720px;display:flex}
+.ctxlab div{flex:none;font-size:15px;color:var(--mut);text-align:center}
+.tree{position:absolute;font:500 25px/1.95 var(--mono);color:#cbd5e1;white-space:pre}
+.tree .an{color:var(--dim);font-size:18px;margin-left:16px}
+.tree .an b{color:var(--ac);font-weight:700}
+.tree .ok{font-weight:700}
+.col2{position:absolute;top:290px;width:820px}
+.col2 .t{font:800 30px var(--sans);display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.col2 .t i{font-style:normal;font:700 14px var(--mono);letter-spacing:.14em;padding:6px 12px;border-radius:999px}
+.row{display:flex;align-items:baseline;gap:14px;padding:11px 0;border-bottom:1px solid var(--line);font-size:21px}
+.row em{font:600 15px var(--mono);color:var(--ac);width:70px;flex:none;font-style:normal}
+.row b{font-weight:750}.row span{color:var(--mut);font-size:17px}
+.row.ds b{color:var(--ds)}
+.metr{position:absolute;left:1000px;top:690px;width:820px;border-radius:20px;padding:22px 28px;background:linear-gradient(180deg,rgba(248,113,113,.12),rgba(248,113,113,.02));border:1px solid rgba(248,113,113,.35);display:flex;align-items:center;gap:28px}
+.metr b{font:900 76px/1 var(--sans);color:#fca5a5;letter-spacing:-.03em}
+.metr p{font-size:19px;color:#cbd5e1;line-height:1.5}
+/* 2026 track */
+#track{position:absolute;left:0;top:290px;height:660px;will-change:transform}
+.mo{position:absolute;top:0;width:780px;height:640px;border-radius:26px;padding:30px 36px;background:linear-gradient(180deg,rgba(52,211,153,.10),rgba(255,255,255,.015));border:1px solid rgba(52,211,153,.24);transform-origin:50% 50%;will-change:transform,opacity}
+.mo .top{display:flex;align-items:flex-start;gap:20px}
+.mo .n{font:900 96px/0.9 var(--sans);color:rgba(52,211,153,.9);letter-spacing:-.05em}
+.mo .w{font-size:46px;font-weight:850;line-height:1.1;letter-spacing:-.01em}
+.mo .s{font-size:20px;color:var(--mut);margin-top:8px;line-height:1.4}
+.mo .lgs{margin-left:auto;display:flex;gap:6px}
+.mo pre{margin-top:18px;font:600 17px var(--mono);color:#6ee7b7;background:#05070b;border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:10px 14px;white-space:pre}
+.mo ul{list-style:none;margin-top:16px}
+.mo li{display:flex;gap:12px;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--line)}
+.mo li em{font:600 14px var(--mono);color:var(--c26);width:52px;flex:none;font-style:normal}
+.mo li b{font-size:19px;font-weight:750;white-space:nowrap}
+.mo li span{font-size:15px;color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mo li.ds b,.mo li.ds em{color:var(--ds)}
+.mo .cu{position:absolute;left:36px;right:36px;bottom:22px;font:600 14px var(--mono);color:var(--dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mo .cu b{color:#cbd5e1}
+.mo.seed{background:linear-gradient(180deg,rgba(244,114,182,.12),rgba(255,255,255,.015));border-color:rgba(244,114,182,.35)}
+.mo.seed .n{color:var(--pink)}
+.mo.q{border-style:dashed;opacity:.6}
+/* fork */
+.br{position:absolute;top:470px;width:760px}
+.br .bh{display:flex;align-items:center;gap:14px;font-size:30px;font-weight:850}
+.br .bh span{font:600 16px var(--mono);color:var(--mut)}
+.bw{display:flex;gap:14px;margin-top:14px;padding:14px 18px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid var(--line)}
+.bw b{font-size:21px}.bw em{font:600 13px var(--mono);color:var(--mut);font-style:normal;margin-left:10px}
+.bw p{font-size:16px;color:#aab2c5;margin-top:4px}
+/* retros */
+.node{position:absolute;width:230px;text-align:center;transform:translate(-50%,-13px)}
+.node .c{width:26px;height:26px;border-radius:50%;margin:0 auto;background:#0b0f16;border:4px solid var(--nc);box-shadow:0 0 22px var(--nc)}
+.node .d{font:700 15px var(--mono);color:var(--nc);margin-top:12px}
+.node .t{font-size:25px;font-weight:800;margin-top:4px}
+.node .s{font-size:17px;color:var(--mut);margin-top:4px}
+.rolebar{position:absolute;left:100px;top:880px;width:1720px;display:flex;justify-content:space-between}
+.rolebar span{font:700 20px var(--mono);color:var(--dim);transition:color .3s}
+.rolebar span.on{color:#fff}
+.memc{position:absolute;bottom:250px;width:320px;border-radius:20px;padding:20px;background:linear-gradient(180deg,color-mix(in srgb,var(--mc) 15%,transparent),rgba(255,255,255,.015));border:1px solid color-mix(in srgb,var(--mc) 35%,transparent);transform-origin:bottom}
+.memc .w{font:700 14px var(--mono);letter-spacing:.1em;color:var(--mc)}
+.memc .t{font-size:28px;font-weight:850;margin-top:8px}
+.memc .d{font:600 14px var(--mono);color:var(--mut);margin-top:6px}
+.memc .l{margin-top:12px;padding-top:10px;border-top:1px solid var(--line);font-size:16px;color:#aab2c5;line-height:1.6}
+.memc .l b{color:#e2e8f0}
+.memc .q{position:absolute;left:20px;right:20px;bottom:18px;font-size:16px;font-weight:700;color:var(--mc)}
+.pxn{position:absolute;width:262px;margin:-40px 0 0 -131px;padding:11px 14px;border-radius:14px;background:#0e141e;border:1px solid rgba(34,211,238,.35)}
+.pxn .h{display:flex;align-items:center;gap:8px}.pxn b{font-size:22px;font-weight:800}.pxn em{margin-left:auto;font:600 13px var(--mono);color:#22d3ee;font-style:normal}
+.pxn span{display:block;font-size:15px;color:var(--mut);margin-top:4px}
+.gov div{position:relative;padding-left:22px;margin-bottom:20px;border-left:2px solid rgba(34,211,238,.35)}
+.gov em{display:block;font:600 13px var(--mono);color:#22d3ee;font-style:normal}
+.gov b{display:block;font-size:21px;font-weight:750;margin-top:2px}
+.gov span{display:block;font-size:15px;color:var(--mut)}
+.lane{position:absolute;left:100px;width:1720px;height:186px}
+.lane .ln0{position:absolute;left:0;top:0;bottom:0;width:120px;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:26px;font-weight:900;color:var(--lc);background:color-mix(in srgb,var(--lc) 10%,transparent);border:1px solid color-mix(in srgb,var(--lc) 30%,transparent)}
+.lane .ln0 small{font:600 12px var(--mono);color:var(--mut);margin-top:6px}
+.lane .trk{position:absolute;left:140px;right:0;top:0;bottom:0;border-radius:14px;background:rgba(255,255,255,.025);border:1px solid var(--line)}
+.ci{position:absolute;width:176px;padding:8px 10px 8px 11px;border-left:3px solid var(--lc);background:#0d131c;border-radius:0 9px 9px 0;opacity:.12;transform:translateY(8px);transition:opacity .35s,transform .35s}
+.ci.on{opacity:1;transform:none}
+.ci em{display:block;font:600 12px var(--mono);color:var(--lc);font-style:normal}
+.ci b{display:block;font-size:17px;font-weight:800;margin-top:2px;white-space:nowrap}
+.ci span{display:block;font-size:13px;color:var(--mut);white-space:nowrap}
+#sweep{position:absolute;top:262px;height:640px;width:2px;background:#fff;box-shadow:0 0 16px var(--era)}
+#sweep b{position:absolute;top:-28px;left:50%;transform:translateX(-50%);font:800 14px var(--mono);color:#0b0f16;background:#fff;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.tmc{position:absolute;top:300px;width:270px;height:600px;border-radius:20px;padding:20px 18px;background:linear-gradient(180deg,color-mix(in srgb,var(--mc) 12%,transparent),rgba(255,255,255,.012));border:1px solid color-mix(in srgb,var(--mc) 30%,transparent)}
+.tmc .h{font-size:22px;font-weight:850}.tmc .s{font:700 12px var(--mono);letter-spacing:.12em;color:var(--mc);margin-top:4px}
+.tmc .it{margin-top:10px;padding-left:16px;position:relative}
+.tmc .it::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:50%;background:var(--mc)}
+.tmc .it b{display:block;font-size:18px}.tmc .it span{display:block;font-size:13px;color:var(--mut)}
+.tmc .nt{position:absolute;left:18px;right:18px;bottom:16px;font-size:14px;color:var(--mut);line-height:1.4}
+#cloud{position:absolute;left:100px;top:200px;width:1720px;height:740px}
+#cloud .w{position:absolute;white-space:nowrap;line-height:1;cursor:pointer;color:var(--cc);font-weight:var(--fw);letter-spacing:-.01em}
+#cloud .w:hover{text-shadow:0 0 18px var(--cc);z-index:30}
+#cloud .w:hover::after{content:attr(data-def);position:absolute;left:50%;bottom:calc(100% + 10px);transform:translateX(-50%);white-space:nowrap;background:#f8fafc;color:#0b0f16;font:600 17px/1.3 var(--sans);letter-spacing:0;padding:9px 14px;border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.5);pointer-events:none;text-shadow:none}
+#cloud .w.dn:hover::after{bottom:auto;top:calc(100% + 10px)}#cloud .w.lt:hover::after{left:0;transform:none}#cloud .w.rt:hover::after{left:auto;right:0;transform:none}
+.prompt{display:inline-flex;align-items:center;gap:16px;font:600 40px var(--mono);padding:22px 32px;border-radius:18px;background:#0b0f16;border:1px solid rgba(255,255,255,.12)}
+.prompt .pr{color:var(--ac)}
+.caret{width:16px;height:40px;background:var(--ac);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.msgx{display:flex;gap:12px;align-items:flex-start;padding:12px 16px;border-radius:14px;background:rgba(255,255,255,.035);border:1px solid var(--line);margin-bottom:12px}
+.msgx .av{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font-weight:800;flex:none;color:#0b0f16;background:var(--cht)}
+.msgx b{font-size:17px}.msgx em{font:600 12px var(--mono);color:var(--cht);font-style:normal;margin-left:8px}
+.msgx p{font-size:17px;color:#cbd5e1;margin-top:3px}
+.dir{display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:14px;background:#0e141e;border:1px solid rgba(224,179,84,.3);margin-bottom:12px}
+.dir b{font-size:19px}.dir span{font-size:14px;color:var(--mut);margin-left:8px}
+.dir code{margin-left:auto;font:600 15px var(--mono);color:#f0cf86}
+.jn{position:absolute;width:250px;text-align:center}
+.jn i{display:grid;place-items:center;margin:0 auto;width:74px;height:74px;border-radius:20px;font-style:normal;font:800 30px var(--sans);color:#0b0f16;background:var(--cht);box-shadow:0 0 30px rgba(224,179,84,.4)}
+.jn b{display:block;font-size:23px;margin-top:14px}.jn span{display:block;font-size:16px;color:var(--mut);margin-top:6px}
+.flow{display:flex;align-items:center;gap:16px;padding:14px 18px;border-radius:14px;background:#0e141e;border:1px solid var(--line);margin-bottom:12px;font-size:18px}
+.flow b{width:200px;flex:none;font:700 16px var(--mono);color:#9bd7c4}
+.flow code{margin-left:auto;font:600 14px var(--mono);color:var(--mut)}
+</style>
+</head>
+<body>
+<div id="stage">
+<div id="glow"></div>
+<div id="bigyr"><b></b><b></b></div>
+
+<!-- ================= HERO ================= -->
+<section class="sc" id="hero" data-len="1.8" data-era="all" data-date="2023.11 2023.11" data-auto="0 0" data-roles="0:—" data-ruler="0">
+  <div class="ab" style="left:100px;top:250px">
+    <div class="kk" data-k="-.1 0">2023.11 — 2026.11 · 以 Cursor 为脉络</div>
+    <h1 style="margin-top:34px" data-k="-.1 0">Vibe Coding<br><span class="grad">简史</span></h1>
+    <p style="font-size:30px;color:var(--mut);margin-top:40px;line-height:1.5" data-k="-.1 0">三年只发生了一件事：<br><span style="color:#fff;font-weight:700">把「自治滑杆」从人类那头，一路推到 AI 这头。</span></p>
+  </div>
+  <div class="ab" style="left:1240px;top:300px;width:520px">
+    <div class="lg xl" data-l="cursor" data-k="-.1 0" data-fx="zoom"></div>
+    <div style="margin-top:40px;display:flex;flex-direction:column;gap:12px" data-k="-.1 0">
+      <span class="chip"><em>2023</em> 对话</span><span class="chip"><em style="color:var(--c24)">2024</em> Agent</span><span class="chip"><em style="color:var(--c25)">2025</em> 终端 · 后台</span><span class="chip"><em style="color:var(--c26)">2026</em> 舰队 · 自治</span>
+    </div>
+  </div>
+  <div class="ab" style="left:100px;top:126px;font:600 16px var(--mono);color:var(--dim)" data-k=".25 .45">↑ 上面这根滑杆会陪你走完全程：它表示「此刻人类在做什么」</div>
+</section>
+
+<!-- ================= PRELUDE ================= -->
+<section class="sc" id="p1" data-len="3.4" data-era="2023" data-date="2021.06 2023.03" data-auto="0 .06" data-roles="0:敲键盘|.33:按 Tab|.6:复制粘贴|.85:说英语" data-tr="fade" data-stops=".3 .55 .78 .94">
+  <div class="hd"><div class="kk" data-k=".0 .05">前传 · 2021 — 2023.03</div><h2 data-k=".02 .08">Tab 键时代</h2></div>
+  <div class="cap">
+    <div class="st" data-k=".06 .14" data-x=".33 .38"><em>2021.06 · GitHub Copilot</em><b>AI 先学会了<br>「猜你下一行」</b><p>灰色 ghost text 浮出来，<i>按一下 Tab</i> 就是你的了。</p></div>
+    <div class="st" data-k=".39 .46" data-x=".58 .62"><em>2022.11 · ChatGPT</em><b>复制 → 粘贴<br>式编程</b><p>在对话框里写，<i>手动搬回</i>编辑器。</p></div>
+    <div class="st" data-k=".63 .69" data-x=".8 .84"><em>2023.01 · Andrej Karpathy</em><b>「最热门的编程语言<br>是英语」</b><p>注释，开始变成代码本身。</p></div>
+    <div class="st" data-k=".85 .91"><em>2023.03 · Cursor 发布</em><b>AI-first 编辑器</b><p>2022 年 MIT 四人成立 Anysphere，<br>从 VS Code 分叉，搭上 GPT-4。</p></div>
+  </div>
+  <div class="ed" style="left:820px;top:250px;width:1000px;height:540px">
+    <div class="edbar"><i></i><i></i><i></i><span class="tab">prime.ts</span><span class="brand" data-k=".86 .93" data-fx="right"><span class="lg sm" data-l="cursor"></span>Cursor · GPT-4</span></div>
+    <div class="edb">
+      <div class="ln"><u>1</u><span class="cm" data-on=".66">// 判断一个数是不是素数</span></div>
+      <div class="ln"><u>2</u><span><span class="kw">function</span> <span class="fn">isPrime</span>(n) {</span></div>
+      <div class="ln"><u>3</u><span class="ghost" data-k=".1 .27" data-fx="type" data-on=".3" data-text="  if (n &lt; 2) return false;&#10;  for (let i = 2; i * i &lt;= n; i++)&#10;    if (n % i === 0) return false;&#10;  return true;"></span></div>
+      <div class="ln" style="margin-top:132px"><u>7</u><span>}</span></div>
+    </div>
+    <div class="key" style="right:36px;bottom:30px" data-on=".29" data-k=".08 .12" data-fx="fade">Tab ⇥</div>
+    <div class="ab" style="right:40px;bottom:96px;font:700 17px var(--mono);color:var(--c26)" data-k=".3 .33" data-x=".37 .4">+1 accepted</div>
+  </div>
+  <div class="bub" style="left:1230px;top:170px;width:560px" data-k=".4 .48" data-fx="up" data-x=".6 .64">
+    <div class="h"><span class="lg sm" data-l="openai"></span>ChatGPT · 2022.11</div>
+    <pre>function isPrime(n) {
+  if (n &lt; 2) return false; …
+}</pre>
+    <div class="cp" data-k=".5 .54" data-fx="pop">⧉ 复制 → 粘贴进编辑器</div>
+  </div>
+</section>
+
+<!-- ================= 2023 ================= -->
+<section class="sc" id="y23" data-len="3.2" data-era="2023" data-date="2023.03 2023.12" data-auto=".06 .18" data-roles="0:指挥一行|.4:提问" data-tr="fade" data-stops=".32 .66 .94">
+  <div class="hd"><div class="kk" data-k=".0 .05">2023 · 对话</div><h2 data-k=".02 .08">对话即编程</h2></div>
+  <div class="cap">
+    <div class="st" data-k=".06 .13" data-x=".33 .37"><em>2023 · Cursor ⌘K</em><b>选中代码，<br>一句话改写</b><p>人不再敲每一个字，<i>指挥一行</i>。<br>Copilot++ 开始预测「下一处要改哪里」。</p></div>
+    <div class="st" data-k=".38 .45" data-x=".64 .68"><em>2023 · Chat · @codebase</em><b>把整个代码库<br>塞进对话框</b><p>向量检索整个仓库，再回答。<br>人的动作变成 <i>提问</i>。</p></div>
+    <div class="st" data-k=".69 .75"><em>2023 下半年 · 同期</em><b>侧栏对话<br>成了标配</b><p>Copilot Chat GA · DevDay 的 GPTs 与 128K 上下文 · v0 一句话生成界面 · <span class="ds">DeepSeek-Coder 开源</span>。</p></div>
+  </div>
+  <div class="ed" style="left:820px;top:250px;width:1000px;height:540px">
+    <div class="edbar"><i></i><i></i><i></i><span class="tab">prime.ts</span><span class="brand"><span class="lg sm" data-l="cursor"></span>Cursor</span></div>
+    <div class="edb">
+      <div class="ln"><u>1</u><span class="cm">// 判断一个数是不是素数</span></div>
+      <div class="ln"><u>2</u><span><span class="kw">function</span> <span class="fn">isPrime</span>(n<span class="add" data-k=".2 .26" data-fx="fade">: bigint</span>) {</span></div>
+      <div class="ln"><u>3</u><span>  if (n &lt; <span class="del" data-on=".2">2</span><span class="add" data-k=".2 .26" data-fx="fade">2n</span>) return false;</span></div>
+      <div class="ln"><u>4</u><span>  for (let i = <span class="add" data-k=".22 .28" data-fx="fade">2n</span>; i * i &lt;= n; i++)</span></div>
+      <div class="ln"><u>5</u><span>    if (n % i === <span class="add" data-k=".22 .28" data-fx="fade">0n</span>) return false;</span></div>
+      <div class="ln"><u>6</u><span>  return true;</span></div>
+      <div class="ln"><u>7</u><span>}</span></div>
+    </div>
+    <div class="kbar" style="top:110px" data-k=".09 .15" data-x=".3 .34"><span>⌘K</span>改成支持 BigInt</div>
+    <div class="side" data-k=".38 .46" data-fx="right">
+      <div class="msg me" data-k=".44 .5">@codebase 鉴权逻辑在哪？为什么登录会超时？</div>
+      <div class="msg ai" data-k=".58 .64">在 <code>src/auth/session.ts</code> 第 42 行：token 刷新和 <code>middleware.ts</code> 的超时设置冲突……</div>
+      <div class="vec" data-k=".48 .53" data-fx="fade"><span>仓库向量索引</span></div>
+    </div>
+  </div>
+  <div class="ab" style="left:820px;top:830px;display:flex;gap:12px;flex-wrap:wrap;width:1000px">
+    <span class="chip" data-k=".74 .78" data-fx="pop"><em>06</em> Function Calling</span>
+    <span class="chip" data-k=".76 .8" data-fx="pop"><em>10</em> v0 · SWE-bench 基准</span>
+    <span class="chip" data-k=".78 .82" data-fx="pop"><em>11</em> GPTs · 128K</span>
+    <span class="chip" data-k=".8 .84" data-fx="pop" style="border-color:rgba(107,132,255,.45)"><span class="lg xs" data-l="deepseek"></span><em style="color:var(--ds)">11</em> DeepSeek-Coder</span>
+    <span class="chip" data-k=".82 .86" data-fx="pop"><em>12</em> Copilot Chat GA</span>
+  </div>
+</section>
+
+<!-- ================= 2024 ================= -->
+<section class="sc" id="y24" data-len="4.4" data-era="2024" data-date="2024.01 2024.12" data-auto=".18 .4" data-roles="0:审 diff|.55:看它跑" data-tr="fade" data-stops=".4 .78 .95">
+  <div class="hd"><div class="kk" data-k=".0 .04">2024 · Agent</div><h2 data-k=".01 .06">从补全到「AI 工程师」</h2></div>
+  <div class="cap" style="top:290px;height:300px">
+    <div class="st" data-k=".04 .1" data-x=".44 .48"><em>2024 · Cursor Composer</em><b>一次改多个文件</b><p>人的工作从敲键盘，<br>变成了 <i>审 diff</i>。</p></div>
+    <div class="st" data-k=".49 .55"><em>2024.11 · Cursor Agent 模式</em><b>自己读、改、<br>跑测试、再改</b><p>同月 Windsurf Cascade：首个「Agentic IDE」。</p></div>
+  </div>
+  <div class="tk" id="tk24" data-tk=".06 .96" style="left:100px;top:600px;width:660px;height:360px"></div>
+  <div class="ed" style="left:820px;top:250px;width:1000px;height:540px">
+    <div class="edbar"><i></i><i></i><i></i><span class="tab">RegisterForm.tsx</span><span class="tab" data-k=".08 .12" data-fx="fade">schema.ts</span><span class="tab" data-k=".16 .2" data-fx="fade">api/register.ts</span><span class="brand"><span class="lg sm" data-l="cursor"></span>Composer</span></div>
+    <div class="edb" style="font-size:20px;line-height:1.7" id="cmpz"></div>
+    <div class="acc" style="right:30px;bottom:26px" data-k=".33 .37" data-fx="pop" data-x=".44 .48">Accept All ✓</div>
+    <div class="runlog" style="left:60px;right:60px;width:auto;top:90px;font-size:22px;padding:26px 32px" data-k=".5 .55" data-fx="up">
+      <div class="t">AGENT · 0.43</div>
+      <div data-k=".55 .58" data-fx="fade">● Read <span class="dm">src/auth/*.ts</span></div>
+      <div data-k=".59 .62" data-fx="fade">● Edit <span class="dm">3 files</span></div>
+      <div data-k=".63 .66" data-fx="fade">● Run <span class="dm">pnpm test</span> <span class="bad">✗ 2 failed</span></div>
+      <div data-k=".67 .7" data-fx="fade">● Fix <span class="dm">session.ts</span></div>
+      <div data-k=".71 .74" data-fx="fade">● Run <span class="dm">pnpm test</span> <span class="ok">✓ 41 passed</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SWE-BENCH ================= -->
+<section class="sc" id="swe" data-len="3" data-era="all" data-date="2024.12 2024.12" data-auto=".4 .4" data-roles="0:看它跑">
+  <div class="hd"><div class="kk" data-k=".0 .05">能力曲线 · SWE-BENCH</div><h2 data-k=".02 .07">修复真实 GitHub Issue：<span class="grad"><span data-k=".05 .85" data-fx="num" data-n="93.9" data-dec="0" data-pre="" data-suf="%"></span></span></h2></div>
+  <div class="ab" id="bars" style="left:100px;top:300px;width:1720px;height:560px"></div>
+  <p class="ab" style="left:100px;top:915px;width:1720px;font-size:16px;color:var(--dim);line-height:1.6" data-k=".86 .92">2024.03 前为原始 SWE-bench，之后为 Verified；2026.09 OpenAI 以「饱和」停用 Verified，行业转向 SWE-Bench Pro。另一把尺：METR 量出 Agent 能独立完成的任务长度约每 7 个月翻一倍（2025.03）。</p>
+</section>
+
+<!-- ================= MCP ================= -->
+<section class="sc" id="mcp" data-len="3.2" data-era="2024" data-date="2024.11 2024.11" data-auto=".4 .42" data-roles="0:接工具">
+  <div class="hd"><div class="kk" data-k=".0 .05">2024.11.25 · MODEL CONTEXT PROTOCOL</div><h2 data-k=".02 .07">MCP：<span class="grad">AI 世界的 USB-C</span></h2></div>
+  <svg class="ab" id="mcpsvg" style="left:360px;top:270px;width:1200px;height:560px" viewBox="0 0 760 360"></svg>
+  <div class="ab" style="left:100px;top:880px;width:1720px;display:flex;gap:10px;flex-wrap:nowrap" id="mcpchips"></div>
+</section>
+
+<!-- ================= R1 ================= -->
+<section class="sc" id="r1" data-len="2.2" data-era="2025" data-date="2025.01 2025.02" data-auto=".42 .44" data-roles="0:派任务">
+  <div class="ab" style="left:100px;top:230px">
+    <div class="kk" data-k=".0 .06">2025.01.20 · 开年第一声</div>
+    <div style="display:flex;align-items:center;gap:30px;margin-top:30px" data-k=".04 .12"><span class="lg xl" data-l="deepseek" style="box-shadow:0 0 80px rgba(77,107,254,.35)"></span><h1 style="font-size:120px">DeepSeek 时刻</h1></div>
+    <p style="font-size:30px;color:var(--mut);margin-top:30px" data-k=".12 .2">开源推理模型 R1，冲击了「推理只能靠堆算力」的叙事。</p>
+  </div>
+  <div class="ab" style="left:100px;top:640px;display:flex;gap:22px">
+    <div class="card dsx" style="width:400px" data-k=".22 .3" data-fx="pop"><div class="h"><b>GRPO 纯 RL 推理</b></div><p>不靠人工标注思维链，强化学习自己学会「先想」</p></div>
+    <div class="card dsx" style="width:400px" data-k=".28 .36" data-fx="pop"><div class="h"><b>开放思维链 · 蒸馏</b></div><p>推理过程可见，能力蒸馏进小模型</p></div>
+    <div class="card dsx" style="width:400px" data-k=".34 .42" data-fx="pop"><div class="h"><b>SWE-bench 49.2%</b></div><p>开源模型追平当时闭源第一梯队</p></div>
+    <div class="card dsx" style="width:400px" data-k=".5 .58" data-fx="pop"><div class="h"><b>开源周</b><em>2025.02</em></div><p>FlashMLA · DeepEP · 3FS 一周连发底层基建</p></div>
+  </div>
+</section>
+
+<!-- ================= VIBE ================= -->
+<section class="sc" id="vibe" data-len="2.8" data-era="2025" data-date="2025.02 2025.02" data-auto=".44 .5" data-roles="0:全凭感觉">
+  <div class="ab" style="left:100px;top:118px"><div class="kk" data-k=".0 .05">2025.02.02 · 命名时刻</div></div>
+  <div class="tweet" data-k=".02 .1" data-fx="zoom">
+    <div class="who"><span class="lg m" style="--mc:#0f172a;width:56px;height:56px;border-radius:50%;font-size:20px">AK</span><div><b>Andrej Karpathy</b><br><span>@karpathy · 2025.02.02</span></div></div>
+    <div class="q" data-k=".1 .5" data-fx="type" data-text="There's a new kind of coding I call &quot;vibe coding&quot;, where you fully give in to the vibes, embrace exponentials, and forget that the code even exists."></div>
+    <div class="zh" data-k=".5 .56">完全顺从感觉，拥抱指数增长，忘掉代码的存在。—— Composer + Sonnet，语音输入，「Accept All」从不读 diff</div>
+  </div>
+  <div class="stat" style="left:330px;top:760px" data-k=".58 .64"><b data-k=".58 .8" data-fx="num" data-n="450" data-suf=" 万+"></b><span>原帖浏览</span></div>
+  <div class="stat" style="left:800px;top:760px" data-k=".68 .74"><b>年度词汇</b><span>Collins 词典 2025（2025.11）</span></div>
+  <div class="stat" style="left:1250px;top:760px" data-k=".78 .84"><b>→ Agentic</b><span>一年后 Karpathy 改口：Agentic Engineering（2026.02）</span></div>
+</section>
+
+<!-- ================= TERMINAL ================= -->
+<section class="sc" id="term" data-len="4.2" data-era="2025" data-date="2025.02 2025.06" data-auto=".5 .6" data-roles="0:派任务|.5:并行派活" data-stops=".42 .9">
+  <div class="hd"><div class="kk" data-k=".0 .04">2025 H1 · 终端 Agent 元年</div><h2 data-k=".01 .06">Agent 走出 IDE，<span class="grad">进入终端和云</span></h2></div>
+  <div class="cap" style="top:330px">
+    <div class="st" data-k=".05 .12" data-x=".24 .28"><em>2025.02.24 · Claude Code</em><b>一个终端，<br>一句任务</b><p>开局读 <i>CLAUDE.md</i> 记住项目规矩，<br>自己读、改、测、开 PR。</p></div>
+    <div class="st" data-k=".29 .35" data-x=".46 .5"><em>04 → 06 · 各家跟进</em><b>终端成了<br>新的编辑器</b><p>Codex CLI 开源 · Copilot Coding Agent 把 Issue 指派给 AI · Gemini CLI 免费额度 · Cursor CLI（08）。</p></div>
+    <div class="st" data-k=".51 .57"><em>2025.05 / 06 · 后台与云</em><b>一个人，<br>八个并行</b><p>Codex 云端沙箱、Cursor Background Agent、BugBot 自动审 PR：<i>跑完再回来</i>，人开始只设边界。</p></div>
+  </div>
+  <div class="term" style="left:820px;top:280px;width:1000px;height:560px" data-k=".02 .08" data-x=".46 .52">
+    <div class="edbar"><i></i><i></i><i></i><span class="tab"><span class="lg xs" data-l="claude"></span> claude</span><span class="tab" data-k=".3 .33" data-fx="pop"><span class="lg xs" data-l="openai"></span> codex</span><span class="tab" data-k=".33 .36" data-fx="pop"><span class="lg xs" data-l="googlegemini"></span> gemini</span><span class="tab" data-k=".36 .39" data-fx="pop"><span class="lg xs" data-l="cursor"></span> cursor-agent</span></div>
+    <div class="edb">
+      <div data-k=".06 .08" data-fx="fade"><span class="ac">$</span> claude</div>
+      <div data-k=".08 .1" data-fx="fade" class="dm">╭─ Claude Code ── CLAUDE.md loaded ─╮</div>
+      <div data-k=".1 .17" data-fx="type" data-text="&gt; 修复登录页 flaky 测试并提 PR"></div>
+      <div data-k=".17 .19" data-fx="fade">● Read <span class="dm">src/auth/login.test.ts</span></div>
+      <div data-k=".19 .21" data-fx="fade">● Edit <span class="dm">2 files</span></div>
+      <div data-k=".21 .23" data-fx="fade">● Bash <span class="dm">pnpm test</span> <span class="ok">✓ 41 passed</span></div>
+      <div data-k=".23 .26" data-fx="fade">● gh pr create → <span class="ok">#812 opened</span> <span class="dm">· 3m 41s</span></div>
+    </div>
+  </div>
+  <div class="ab" id="panes" style="left:820px;top:280px;width:1000px;height:560px"></div>
+  <div class="ab" style="left:820px;top:870px;font:600 16px var(--mono);color:var(--dim);display:flex;gap:16px;align-items:center" data-k=".8 .86"><span class="lg sm" data-l="cursor"></span><b style="color:#cbd5e1">CURSOR</b> 0.45 MCP + Rules（01）· Background Agent（05）· 1.0 BugBot · Memories（06）· 计价风波（06）</div>
+</section>
+
+<!-- ================= CONTEXT ================= -->
+<section class="sc" id="ctx" data-len="2.6" data-era="2025" data-date="2025.06 2025.06" data-auto=".6 .62" data-roles="0:装配上下文">
+  <div class="hd"><div class="kk" data-k=".0 .05">2025.06 · 新词</div><h2 data-k=".02 .07">Context Engineering<small>Tobi Lütke / Karpathy：为每一步装配恰好的信息</small></h2></div>
+  <div class="ctxbar" id="ctxbar"></div>
+  <div class="ctxlab" id="ctxlab"></div>
+  <div class="ab" id="ctxarrow" style="top:600px;font:800 24px var(--sans);color:#86efac" data-k=".5 .56">你写的 Prompt，只占这么一小块 ↗</div>
+  <div class="ab" style="left:100px;top:700px;width:1720px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
+    <div class="card" data-k=".58 .64" data-fx="pop"><div class="h"><b>Context Rot</b><em>2025</em></div><p>上下文越长，模型越「笨」</p></div>
+    <div class="card" data-k=".62 .68" data-fx="pop"><div class="h"><b>Compaction</b><em>2025→26</em></div><p>自动摘要旧对话，续命长任务</p></div>
+    <div class="card" data-k=".66 .72" data-fx="pop"><div class="h"><b>Cursor 装配线</b><em>2025</em></div><p>.cursor/rules · Memories · @Docs · @Web · 语义检索</p></div>
+    <div class="card dsx" data-k=".7 .76" data-fx="pop"><div class="h"><span class="lg sm" data-l="deepseek"></span><b>光学上下文压缩</b><em>2025.10</em></div><p>DeepSeek-OCR：把长文本「拍成图」再读</p></div>
+  </div>
+</section>
+
+<!-- ================= SPEC ================= -->
+<section class="sc" id="spec" data-len="3.4" data-era="2025" data-date="2025.07 2025.10" data-auto=".62 .68" data-roles="0:定规范" data-stops=".6 .94">
+  <div class="hd"><div class="kk" data-k=".0 .04">2025 H2 · 规范、技能与可组合</div><h2 data-k=".01 .06">先写规范，<span class="grad">再让 Agent 写码</span></h2></div>
+  <div class="tree" style="left:100px;top:300px" id="tree"></div>
+  <div class="tk" id="tk25" data-tk=".08 .94" style="left:1180px;top:290px;width:640px;height:620px"></div>
+</section>
+
+<!-- ================= Q4 ================= -->
+<section class="sc" id="q4" data-len="2.8" data-era="2025" data-date="2025.10 2025.12" data-auto=".68 .7" data-roles="0:定规范">
+  <div class="hd"><div class="kk" data-k=".0 .05">2025 Q4 · 主流化，与反噬</div><h2 data-k=".02 .07">进了词典，<span class="grad">也上了事故报告</span></h2></div>
+  <div class="col2" style="left:100px">
+    <div class="t" data-k=".06 .12"><i style="background:rgba(52,211,153,.15);color:#6ee7b7">主流</i>它赢了</div>
+    <div class="row" data-k=".1 .16" data-fx="left"><em>10.28</em><b>GitHub Agent HQ</b><span>一个控制台指挥多家 Agent</span></div>
+    <div class="row" data-k=".22 .28" data-fx="left"><em>10.29</em><b>Cursor 2.0</b><span>自研 Composer · 8 Agent 并行</span></div>
+    <div class="row" data-k=".34 .4" data-fx="left"><em>11</em><b>Collins 年度词汇</b><span>vibe coding</span></div>
+    <div class="row" data-k=".46 .52" data-fx="left"><em>11.18</em><b>Antigravity · Opus 4.5</b><span>Agent-first IDE · 资深工程师的日常主力</span></div>
+    <div class="row ds" data-k=".58 .64" data-fx="left"><em>12</em><b>DeepSeek V3.2</b><span>思考中调用工具 · Speciale 达 IMO 金牌</span></div>
+    <div class="row" data-k=".7 .76" data-fx="left"><em>12</em><b>AAIF · 估值 293 亿美元</b><span>MCP/AGENTS.md 交 Linux 基金会 · Cursor 收购 Graphite</span></div>
+  </div>
+  <div class="col2" style="left:1000px">
+    <div class="t" data-k=".06 .12"><i style="background:rgba(248,113,113,.15);color:#fca5a5">反噬</i>它的账单</div>
+    <div class="row" data-k=".16 .22" data-fx="right"><em>04</em><b>工具投毒 · Slopsquatting</b><span>MCP 描述藏指令 · 抢注幻觉包名</span></div>
+    <div class="row" data-k=".28 .34" data-fx="right"><em>07</em><b>删库事件</b><span>Agent 误删生产库，还「编」数据</span></div>
+    <div class="row" data-k=".4 .46" data-fx="right"><em>08</em><b>Vibe Hacking</b><span>用编码 Agent 发动网络攻击</span></div>
+    <div class="row" data-k=".52 .58" data-fx="right"><em>11</em><b>「LGTM 反射」</b><span>技术债以光速生成 · Vibe Coding 清理师</span></div>
+  </div>
+  <div class="metr" data-k=".64 .72" data-fx="zoom"><b data-k=".66 .86" data-fx="num" data-n="19" data-pre="+" data-suf="%"></b><p>METR 随机对照（2025.07）：资深开发者用 AI 反而<b style="font-size:inherit;color:#fca5a5">慢了 19%</b>，<br>自己却以为快了 20%。</p></div>
+</section>
+
+<!-- ================= 2026 TRACK ================= -->
+<section class="sc" id="y26" data-len="12" data-era="2026" data-date="2026.01 2026.11" data-auto=".7 .95" data-roles="0:编排 Agent" data-stops="">
+  <div class="hd"><div class="kk" data-k="-.1 0">2026 · 每月一个主词</div><h2 data-k="-.1 0">从「写代码」到<span class="grad">「造闭环」</span></h2></div>
+  <div id="track"></div>
+</section>
+
+<!-- ================= FORK ================= -->
+<section class="sc" id="fork" data-len="3" data-era="2026" data-date="2026.11 2026.11" data-auto=".95 .95" data-roles="0:设计闭环">
+  <div class="hd"><div class="kk" data-k=".0 .05">2026 收束 · AGENT 的两种归属</div><h2 data-k=".02 .07">同一个 Coding Agent，<span class="grad">长成了两种「同事」</span></h2></div>
+  <svg class="ab" style="left:100px;top:300px;width:1720px;height:180px" viewBox="0 0 1720 180">
+    <path data-k=".08 .3" data-fx="draw" pathLength="1" d="M860,10 V60 C860,120 480,80 480,170 M860,60 C860,120 1240,80 1240,170" fill="none" stroke="#34d399" stroke-width="4" stroke-dasharray="1"/>
+  </svg>
+  <div class="ab" style="left:660px;top:262px;width:400px;text-align:center;font-size:20px" data-k=".04 .1" data-fx="pop"><b style="font-size:24px">已经能自己干活</b><span class="mut"> → 归属成了新问题</span></div>
+  <div class="br" style="left:100px">
+    <div class="bh" data-k=".28 .34"><span class="lg" data-l="claude"></span>个人 Agent<span>属于「我」· 记住你的偏好</span></div>
+    <div class="bw" data-k=".34 .4" data-fx="left"><span class="lg sm" data-l="claude"></span><div><b>Claude Cowork</b><em>01 · 04.09 GA · 09.16 融入每次对话</em><p>说「要什么」而不是「怎么做」，回来的是成品</p></div></div>
+    <div class="bw" data-k=".4 .46" data-fx="left"><span class="lg sm m" style="--mc:#1d4ed8">W</span><div><b>WorkBuddy</b><em>03 发布 · 06 企业版</em><p>桌面 Agent 工作台：专家 + 技能 + 连接器</p></div></div>
+    <div class="bw" data-k=".46 .52" data-fx="left"><span class="lg sm" data-l="x"></span><div><b>Grok Bot</b><em>08.11</em><p>常驻云端电脑、登录你的工具、只在决策点回来</p></div></div>
+  </div>
+  <div class="br" style="left:1060px">
+    <div class="bh" data-k=".52 .58"><span class="lg" data-l="slack"></span>组织 Agent<span>属于「团队」· 共享上下文</span></div>
+    <div class="bw" data-k=".58 .64" data-fx="right"><span class="lg sm" data-l="claude"></span><div><b>Claude Tag</b><em>08 · Slack</em><p>@Claude 是频道里的成员：多人共享、可主动跟进</p></div></div>
+    <div class="bw" data-k=".64 .7" data-fx="right"><span class="lg sm" data-l="slack"></span><div><b>Slack Code</b><em>08.20</em><p>项目频道即工作现场，上线动作需人批准</p></div></div>
+    <div class="bw" data-k=".7 .76" data-fx="right"><span class="lg sm m" style="--mc:#e0b354">ht</span><div><b>HTalk @me</b><em>见附录</em><p>多人共享同一会话 · ambient 主动 · 异步派发</p></div></div>
+  </div>
+</section>
+
+<!-- ================= SHIFT ================= -->
+<section class="sc" id="shift" data-len="2.8" data-era="all" data-date="2023.01 2026.11" data-auto="0 .95" data-roles="0:回望" data-ruler="0">
+  <div class="hd"><div class="kk" data-k=".0 .05">回望 · 关键词迁移</div><h2 data-k=".02 .07">人类的工作对象，<span class="grad">一层层往上抽象</span></h2></div>
+  <div class="ab" id="chain" style="left:100px;top:360px;width:1720px;height:480px"></div>
+  <div class="rolebar" id="rolebar"><span>写代码</span><span>按 Tab</span><span>读 diff</span><span>写规范</span><span>编排 Agent</span><span>设计闭环</span></div>
+</section>
+
+<!-- ================= MEMORY ================= -->
+<section class="sc" id="mem" data-len="2.6" data-era="all" data-date="2026.11 2026.11" data-auto=".95 .95" data-roles="0:回望" data-ruler="0">
+  <div class="hd"><div class="kk" data-k=".0 .05">回望 · 记忆 · 2025 → 2026</div><h2 data-k=".02 .07">记忆：<span class="grad">从人写说明书，到 Agent 自己记笔记</span></h2></div>
+  <div id="memst"></div>
+  <svg class="ab" style="left:100px;top:842px;width:1720px;height:30px" viewBox="0 0 1720 30"><path data-k=".1 .7" data-fx="draw" pathLength="1" stroke-dasharray="1" d="M10,15 H1700 M1688,6 L1702,15 L1688,24" stroke="#22d3ee" stroke-width="3" fill="none"/></svg>
+  <div class="ab" style="left:100px;top:880px;width:1720px;display:flex;justify-content:space-around;font:600 15px var(--mono);color:var(--mut)" data-k=".7 .78"><span>写的人：开发者</span><span>工具 + 人确认</span><span>Agent 自己</span><span>后台整理者</span><span>平台托管 · 跨工具</span></div>
+  <div class="ab" style="left:100px;top:930px;width:1720px;font-size:16px;color:var(--dim)" data-k=".8 .86"><span class="ds">模型层也在拆记忆：DeepSeek Engram（2026.01）条件记忆「存算分离」</span> · <span style="color:#fca5a5">风险：记忆投毒（MINJA）→ 先清洗再落盘、按人隔离、设过期</span></div>
+</section>
+
+<!-- ================= PROTOCOLS ================= -->
+<section class="sc" id="proto" data-len="2.8" data-era="all" data-date="2026.11 2026.11" data-auto=".95 .95" data-roles="0:回望" data-ruler="0">
+  <div class="hd"><div class="kk" data-k=".0 .05">回望 · 协议 · 2024.11 → 2026.10</div><h2 data-k=".02 .07">Agent 的每一条边，<span class="grad">都长出了一个标准</span></h2></div>
+  <div class="ab" id="hub" style="left:100px;top:290px;width:1040px;height:660px"></div>
+  <div class="ab gov" style="left:1200px;top:300px;width:620px" id="gov"></div>
+</section>
+
+<!-- ================= COST ================= -->
+<section class="sc" id="cost" data-len="3.2" data-era="all" data-date="2026.11 2026.11" data-auto=".95 .95" data-roles="0:回望" data-ruler="0">
+  <div class="hd"><div class="kk" data-k=".0 .05">回望 · 代价 · 2025.06 → 2026.10</div><h2 data-k=".02 .07">能力的另一面：<span class="grad">风险、对策和账单</span></h2></div>
+  <div id="lanes"></div>
+  <div id="sweep" data-k=".05 .1" data-fx="fade"><b>2025.06</b></div>
+  <div class="ab" style="left:100px;top:920px;width:1720px;display:flex;gap:40px;font-size:20px;color:#cbd5e1">
+    <div data-k=".86 .92"><b style="color:#6ee7b7">人退出了逐条审批</b> — 边界改由身份、沙箱、网关和自证来守</div>
+    <div data-k=".9 .96"><b style="color:#fde68a">包月撑不住常驻 Agent</b> — 贵模型想，便宜模型跑</div>
+  </div>
+</section>
+
+<!-- ================= VALUATION ================= -->
+<section class="sc" id="val" data-len="2.4" data-era="all" data-date="2026.11 2026.11" data-auto=".95 .95" data-roles="0:回望" data-ruler="0">
+  <div class="hd"><div class="kk" data-k=".0 .05">回望 · CURSOR 三年身份变迁</div><h2 data-k=".02 .07">从 VS Code 分叉，<span class="grad">到火箭公司的一部分</span></h2></div>
+  <svg class="ab" id="valsvg" style="left:100px;top:290px;width:1120px;height:620px" viewBox="0 0 1120 620"></svg>
+  <div class="ab" style="left:1300px;top:310px;width:520px" id="ident"></div>
+</section>
+
+<!-- ================= TOOLS ================= -->
+<section class="sc" id="tools" data-len="2.6" data-era="all" data-date="2026.11 2026.11" data-auto=".95 .95" data-roles="0:回望" data-ruler="0">
+  <div class="hd"><div class="kk" data-k=".0 .05">回望 · 工具谱系</div><h2 data-k=".02 .07">同一个概念，<span class="grad">长成了六种形态</span></h2></div>
+  <div id="tmcols"></div>
+</section>
+
+<!-- ================= CLOUD ================= -->
+<section class="sc" id="cloudsc" data-len="2.8" data-era="all" data-date="2026.11 2026.11" data-auto=".95 .95" data-roles="0:回望" data-ruler="0">
+  <div class="hd"><div class="kk" data-k=".0 .05">回望 · 概念词云 · 字号 = 被提及次数 · 悬停看释义 · 点击跳回</div><h2 data-k=".02 .07" style="font-size:50px">三年 <span class="grad" id="ccount">100+</span> 个新概念</h2></div>
+  <div id="cloud"></div>
+</section>
+
+<!-- ================= END ================= -->
+<section class="sc" id="end" data-len="2.2" data-era="all" data-date="2026.11 2026.11" data-auto=".95 1" data-roles="0:设计闭环" data-ruler="0">
+  <div class="ab" style="left:100px;top:250px">
+    <div class="kk" data-k=".0 .06">下一个三年</div>
+    <h1 style="font-size:116px;margin-top:30px;line-height:1.1"><span data-k=".05 .15" style="display:inline-block">人类写的，</span><br><span data-k=".15 .25" style="display:inline-block">不再是代码，</span><span class="grad" data-k=".25 .35" style="display:inline-block">而是闭环。</span></h1>
+    <div class="prompt" style="margin-top:60px" data-k=".4 .46"><span class="pr">›</span><span data-k=".46 .7" data-fx="type" data-text="/goal 让这一切继续下去"></span><span class="caret"></span></div>
+  </div>
+</section>
+
+<!-- ================= HTALK 1 ================= -->
+<section class="sc" id="ht1" data-len="3" data-era="ht" data-date="2026.11 2026.11" data-auto="1 1" data-roles="0:附 · 下一站" data-ruler="0">
+  <div class="hd"><div class="kk" data-k=".0 .05">附 · 下一站 · HTALK</div><h2 data-k=".02 .07">团队深度用 AI 之后，<span class="grad">人成了 AI 之间的传话筒</span></h2></div>
+  <div class="ab" style="left:100px;top:320px;width:820px">
+    <div class="card" data-k=".08 .14" data-fx="left" style="border-color:rgba(224,179,84,.3)"><div class="h"><b>01 · AI 不在现场的割裂感</b></div><p>整理现场需求，再转述给另一个页面里的对话框 → 诉求：一个时刻站在身边、<b style="color:#f0cf86">见我所见</b>的分身</p></div>
+    <div class="card" data-k=".16 .22" data-fx="left" style="border-color:rgba(224,179,84,.3);margin-top:18px"><div class="h"><b>02 · 好用的个人 AI，只能自己用</b></div><p>别人来找我，我再把需求转述给 AI → 诉求：多人、多 AI 之间<b style="color:#f0cf86">信息与能力</b>的快速通道</p></div>
+  </div>
+  <div class="ab" style="left:1000px;top:300px;width:820px;height:600px">
+    <div class="ab" style="left:0;top:0;width:250px" data-k=".3 .4" data-fx="left">
+      <div class="dir" style="margin:0 0 12px"><b>群聊</b></div><div class="dir"><b>数据看板</b></div><div class="dir"><b>业务页面</b></div><div class="dir"><b>+ 更多现场</b></div>
+      <div style="font:700 14px var(--mono);color:#f0cf86;margin-top:10px">01 · CONTEXT 现场</div>
+    </div>
+    <div class="ab" style="left:300px;top:120px;width:220px;height:220px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,rgba(224,179,84,.35),rgba(224,179,84,.05));border:2px solid #e0b354;font:900 52px var(--sans);color:#f0cf86" data-k=".42 .5" data-fx="pop">@me</div>
+    <div class="ab" style="left:570px;top:0;width:250px" data-k=".52 .62" data-fx="right">
+      <div class="dir" style="margin:0 0 12px"><b>团队云机</b></div><div class="dir"><b>个人 PC</b></div><div class="dir"><b>同事分享</b></div><div class="dir"><b>WorkBuddy</b></div>
+      <div style="font:700 14px var(--mono);color:#f0cf86;margin-top:10px">02 · 组织的计算网络</div>
+    </div>
+    <div class="ab" style="left:0;top:470px;width:820px;font-size:24px;line-height:1.5" data-k=".66 .74">@me：连接 <b style="color:#f0cf86">现场</b> 与 <b style="color:#f0cf86">组织的计算网络</b>，<br><span class="mut">不被具体交互页面束缚的分身。</span></div>
+  </div>
+</section>
+
+<!-- ================= HTALK 2 · journey ================= -->
+<section class="sc" id="ht2" data-len="3" data-era="ht" data-date="2026.11 2026.11" data-auto="1 1" data-roles="0:附 · 下一站" data-ruler="0">
+  <div class="hd"><div class="kk" data-k=".0 .05">HTALK · 一次 @me 的旅程</div><h2 data-k=".02 .07">从群里一句 @me，<span class="grad">到一页项目日记</span></h2></div>
+  <svg class="ab" style="left:100px;top:330px;width:1720px;height:40px" viewBox="0 0 1720 40"><path data-k=".05 .75" data-fx="draw" pathLength="1" stroke-dasharray="1" d="M140,20 H1580" stroke="#e0b354" stroke-width="3" fill="none"/></svg>
+  <div id="journey"></div>
+  <div class="ab" style="left:100px;top:640px;width:1720px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px">
+    <div class="msgx" data-k=".3 .38" data-fx="up"><span class="av">企</span><div><b>需求群</b><em>→ cursor-cloud</em><p>@me 上传大文件后在开发视图里看不到</p></div></div>
+    <div class="msgx" data-k=".4 .48" data-fx="up"><span class="av">看</span><div><b>数据看板</b><em>→ 数据分析 Agent</em><p>@me 这周转化率为什么掉了</p></div></div>
+    <div class="msgx" data-k=".5 .58" data-fx="up"><span class="av">页</span><div><b>业务页面</b><em>→ Code Agent</em><p>@me 给这个列表补个导出</p></div></div>
+  </div>
+  <div class="ab" style="left:100px;top:800px;width:1720px;font-size:21px;color:#cbd5e1" data-k=".74 .82">单 · 自动生成 → <b style="color:#f0cf86">14:02 派发 · 14:09 定位 · 14:21 PR</b> <span class="mut">—— 所有动态汇聚成项目日记，沉淀团队判断力</span></div>
+</section>
+
+<!-- ================= HTALK 3 · phone numbers + self-organize ================= -->
+<section class="sc" id="ht3" data-len="3.4" data-era="ht" data-date="2026.11 2026.11" data-auto="1 1" data-roles="0:附 · 下一站" data-ruler="0" data-stops=".46 .94">
+  <div class="hd"><div class="kk" data-k=".0 .05">HTALK · 组织的计算网络</div><h2 data-k=".02 .07"><span data-x=".46 .5" style="display:inline-block">让孤立的 Agent，<span class="grad">拥有「电话号码」</span></span></h2>
+    <h2 class="ab" style="left:0;top:33px;white-space:nowrap" data-k=".5 .56">Agent 按需，<span class="grad">自己组建团队</span></h2></div>
+  <div class="ab" style="left:100px;top:300px;width:820px" data-x=".46 .5">
+    <div class="dir" data-k=".06 .1" data-fx="left"><span class="lg sm m" style="--mc:#1d4ed8">W</span><b>WorkBuddy</b><span>klaus 的</span><code>☏ @htalk:agent:wb-demo</code></div>
+    <div class="dir" data-k=".09 .13" data-fx="left"><span class="lg sm m" style="--mc:#0e7490">C</span><b>CodeBuddy</b><span>团队共享</span><code>☏ @htalk:agent:coder</code></div>
+    <div class="dir" data-k=".12 .16" data-fx="left"><span class="lg sm" data-l="cursor"></span><b>cursor-cloud</b><span>我的</span><code>☏ @htalk:agent:cursor-cloud</code></div>
+    <div class="dir" data-k=".15 .19" data-fx="left"><span class="lg sm" data-l="openai"></span><b>Codex</b><span>同事的</span><code>☏ @htalk:agent:codex-x</code></div>
+    <div class="dir" data-k=".18 .22" data-fx="left"><span class="lg sm m" style="--mc:#b45309">B</span><b>Bug 定位助手</b><span>amazeqiu 分享</span><code>☏ @htalk:agent:bug-helper</code></div>
+  </div>
+  <div class="ab" style="left:1000px;top:310px;width:820px;font-size:22px;line-height:2" data-x=".46 .5">
+    <div data-k=".24 .28"><b style="color:#f0cf86">例</b> 执行 Agent 缺调试环境</div>
+    <div data-k=".28 .32" class="mut">→ 发现 amazeqiu 的 Bug 定位助手跑在测试机上</div>
+    <div data-k=".32 .36" class="mut">→ 派发任务，会话关系系统自动管理</div>
+    <div data-k=".36 .4" class="mut">→ 5 分钟后回看进展，向用户汇报</div>
+    <div data-k=".4 .44" style="font:600 16px var(--mono);color:var(--dim);margin-top:12px">完整的会话 · 历史交互关系 · 相关任务</div>
+  </div>
+  <div class="ab" style="left:100px;top:300px;width:1100px">
+    <div style="font:700 16px var(--mono);color:#f0cf86;margin-bottom:14px" data-k=".52 .56">需求攻坚群 · 由执行 Agent 创建 · 4 位成员</div>
+    <div class="msgx" data-k=".56 .62"><span class="av">执</span><div><b>执行 Agent</b><p>拆成三块：复现 / 修复 / 回归，各自领一块 @复现 @修复 @回归</p></div></div>
+    <div class="msgx" data-k=".64 .7"><span class="av">复</span><div><b>复现 Agent</b><em>新建</em><p>测试机上已复现，日志在会话 #2</p></div></div>
+    <div class="msgx" data-k=".72 .78"><span class="av">修</span><div><b>修复 Agent</b><em>新建</em><p>根因：分片上传未写入索引，PR 已开</p></div></div>
+    <div class="msgx" data-k=".8 .86"><span class="av">回</span><div><b>回归 Agent</b><em>新建</em><p>128 项回归通过 ✓</p></div></div>
+    <div class="msgx" data-k=".88 .93" style="border-color:rgba(56,189,248,.4)"><span class="av" style="background:#38bdf8">我</span><div><b>你（随时介入）</b><p>合并前我再看一眼 diff</p></div></div>
+  </div>
+  <div class="ab" style="left:1260px;top:320px;width:560px;font-size:21px;line-height:2.1;color:#cbd5e1">
+    <div data-k=".56 .6">1 · 按需创建新的 Agent 服务</div>
+    <div data-k=".62 .66">2 · 自己拉群、开会话、派任务</div>
+    <div data-k=".68 .72">3 · 成员各自执行，人随时介入</div>
+  </div>
+</section>
+
+<!-- ================= YOBIRU ================= -->
+<section class="sc" id="hty" data-len="2.4" data-era="ht" data-date="2026.11 2026.11" data-auto="1 1" data-roles="0:附 · 同路者" data-ruler="0">
+  <div class="hd"><div class="kk" data-k=".0 .05">附 · 同路者 · YOBIRU</div><h2 data-k=".02 .07">让 Agent 互相说话，<span class="grad">不止一种做法</span></h2></div>
+  <div class="ab" style="left:100px;top:300px;width:900px">
+    <div style="font-size:24px;margin-bottom:18px" data-k=".05 .1">Let your agents talk to each other. <span class="mut" style="font:500 15px var(--mono)">v0.7.21 · 2026.11.02 · 跑在你自己的 tailnet 上</span></div>
+    <div class="flow" data-k=".12 .18" data-fx="left"><b>Grok Bot · 个人</b>X 上今天：三个新版本的 bug 报告<code>signals.json</code></div>
+    <div class="flow" data-k=".22 .28" data-fx="left"><b>Codex · 家里</b>能在服务器上复现这几个吗？<code>plan.md</code></div>
+    <div class="flow" data-k=".32 .38" data-fx="left"><b>Codex · 服务器</b>三个里复现了两个，细节在里面<code>results.json</code></div>
+    <div class="flow" data-k=".42 .48" data-fx="left" style="border-color:rgba(155,215,196,.5)"><b>回到 Grok Bot</b>结果自己回来了，人不用传话<code>SHA-256 ✓</code></div>
+  </div>
+  <div class="ab" style="left:1080px;top:310px;width:740px;font-size:18px">
+    <div class="row" data-k=".52 .58"><em style="width:110px">门牌号</em><b style="color:#f0cf86">@htalk:agent:xxx</b><span>↔ bots.yobiru.com/@alice</span></div>
+    <div class="row" data-k=".58 .64"><em style="width:110px">谁能找你</em><b style="color:#f0cf86">会话关系自动管理</b><span>↔ 关注 · 互关成好友 · 消息请求</span></div>
+    <div class="row" data-k=".64 .7"><em style="width:110px">边界</em><b style="color:#f0cf86">执行会话隔离</b><span>↔ 只给 offer 的能力，私人记忆不外泄</span></div>
+    <p style="margin-top:22px;color:var(--mut);line-height:1.6" data-k=".72 .78">接入清单同样分成「个人 Agent」与「编码 Agent」两类 —— 和 2026 的分叉是同一件事。</p>
+  </div>
+</section>
+
+<!-- ================= HTALK FINALE ================= -->
+<section class="sc" id="ht6" data-len="2" data-era="ht" data-date="2026.11 2026.11" data-auto="1 1" data-roles="0:Talk to @me" data-ruler="0">
+  <div class="ab" style="left:100px;top:260px;width:1720px;text-align:center">
+    <div class="kk" data-k=".0 .06">给你一个不被具体交互页面束缚的 Agent 计算网络</div>
+    <h1 style="font-size:140px;margin-top:40px" data-k=".06 .16" data-fx="zoom">Talk to <span style="color:#f0cf86">@me</span></h1>
+    <p style="font-size:24px;color:var(--mut);margin-top:30px" data-k=".18 .26">任何具有 HTalk Skill 的 Agent（WorkBuddy、Codex 等）都具备等价的 Agent 网络协调调度能力</p>
+    <div style="display:flex;justify-content:center;gap:16px;margin-top:60px;font:700 20px var(--mono)">
+      <span class="chip" data-k=".3 .34" data-fx="pop"><em style="color:var(--c23)">2023</em> 对话</span><span class="chip" data-k=".34 .38" data-fx="pop"><em style="color:var(--c24)">2024</em> Agent</span><span class="chip" data-k=".38 .42" data-fx="pop"><em style="color:var(--c25)">2025</em> 终端 · 后台</span><span class="chip" data-k=".42 .46" data-fx="pop"><em style="color:var(--c26)">2026</em> 舰队 · 自治</span><span class="chip" data-k=".46 .52" data-fx="pop" style="border-color:#e0b354"><em style="color:#f0cf86">Next</em> Agent 计算网络</span>
+    </div>
+  </div>
+</section>
+
+<!-- persistent layers -->
+<div id="role"><span>人类在</span><span id="roleTxt"><b></b><b></b></span><div id="meter"><i id="knob"></i></div><span id="loop">HUMAN IN THE LOOP</span></div>
+<div id="tr"><span id="trt"></span><a id="todeck" href="index.html">翻页版 ↗</a></div>
+<div id="ruler"></div>
+<div id="hint"><i>↓</i>向下滚动 · 可随时回滚</div>
+</div>
+<div id="space"></div>
+
+<!--LOGOS-->
+<script>
+/*SHARED*/
+const clamp=(v,a=0,b=1)=>v<a?a:v>b?b:v, seg=(p,a,b)=>clamp((p-a)/(b-a));
+const Eo=x=>1-Math.pow(1-x,3), Eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2, Eb=x=>{const c=1.70158;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2)};
+const $=s=>document.querySelector(s);
+const ERA={'2023':'#38bdf8','2024':'#a78bfa','2025':'#fb923c','2026':'#34d399',all:'#22d3ee',ht:'#e0b354'};
+const mi=s=>{const[y,m]=s.split('.').map(Number);return (y-2023)*12+(m||1)-1};
+const mlabel=i=>{const y=2023+Math.floor(i/12),m=((i%12)+12)%12+1;return y+'.'+String(m).padStart(2,'0')};
+
+/* ================= content generators ================= */
+function ticker(id,items){ // items: 'date|title|desc|flag'
+  const el=document.getElementById(id);
+  el.innerHTML='<div class="tkf" style="left:0;right:0;top:'+(el.offsetHeight||parseInt(el.style.height))/2+'px;margin-top:-31px"></div><div class="tl">'+items.map(s=>{const[d,t,x,f]=s.split('|');return '<div class="ti '+(f||'')+'"><em>'+d+'</em><b>'+t+'</b><span>'+(x||'')+'</span></div>'}).join('')+'</div>';
+}
+ticker('tk24',['03|Devin|首个「AI 软件工程师」演示','04|SWE-agent|为 Agent 设计的计算机接口','04|Copilot Workspace|Issue → 计划 → 代码','05|DeepSeek-V2 · MLA|¥1/百万 token 掀价格战|ds','06|Claude 3.5 Sonnet|编码能力拐点','06|Artifacts|边聊边实时预览','08|Composer · A 轮|估值 4 亿美元|cu','09|o1 推理模型|先想再写：测试时计算','10|Computer Use|模型亲手操作鼠标键盘','10|Bolt.new · Lovable|Prompt-to-App 品类成形','11|Agent 模式 · Cascade|Cursor 0.43 · Windsurf|cu','11|MCP|AI 世界的 USB-C','12|DeepSeek-V3|MoE + FP8，训练约 557 万美元|ds','12|估值 26 亿美元|收购 Supermaven|cu']);
+ticker('tk25',['06|Subagents · Hooks|独立上下文 · 生命周期钩子','07|Kiro|需求 → 设计 → 任务 → 代码','07|Kimi K2 · Qwen3-Coder · GLM-4.5|国产编码模型齐发','07|删库事件|Agent 误删生产库','08|AGENTS.md|跨工具通用说明书','08|ACP|Zed：编辑器 ↔ Agent 协议','08|DeepSeek V3.1|兼容 Anthropic API，可「换芯」|ds','08|Cursor CLI|编辑器之外|cu','09|GPT-5-Codex · Sonnet 4.5|连跑 30 小时','09|Trae · Qoder · CodeBuddy|国内 IDE 齐备','09|DeepSeek V3.2-Exp|DSA 稀疏注意力|ds','10|Agent Skills|SKILL.md 渐进披露','10.29|Cursor 2.0|自研 Composer + 8 Agent 并行|cu']);
+
+(function composer(){const L=[['f','▸ RegisterForm.tsx'],['-','const [email,setEmail]=useState("")'],['+','const {register,handleSubmit}=useForm()'],['+','<input {...register("email")}/>'],['f','▸ schema.ts'],['+','export const schema = z.object({'],['+','  email: z.string().email() })'],['f','▸ api/register.ts'],['-','if(!body.email) return 400'],['+','const data = schema.parse(body)']];
+ document.getElementById('cmpz').innerHTML=L.map((l,i)=>{const a=(.06+i*.025).toFixed(3),b=(+a+.04).toFixed(3);
+  return l[0]==='f'?'<div style="padding:0 28px;color:#94a3b8;font-weight:700;margin-top:6px" data-k="'+a+' '+b+'" data-fx="fade" data-x=".46 .5">'+l[1]+'</div>':'<div class="'+(l[0]=='+'?'add':'del')+'" style="padding:0 28px;margin:2px 22px;border-radius:6px;white-space:pre" data-k="'+a+' '+b+'" data-fx="left" data-x=".46 .5">'+l[0]+' '+l[1].replace(/</g,'&lt;')+'</div>'}).join('')})();
+
+(function vec(){const v=document.querySelector('#y23 .vec');let h='';for(let i=0;i<34;i++){const x=10+((i*53)%330),y=24+((i*37+i*i*7)%150),hit=[3,11,17].includes(i);h+='<i class="'+(hit?'hit':'')+'" style="left:'+x+'px;top:'+y+'px" '+(hit?'data-k=".54 .58" data-fx="pop"':'')+'></i>'}v.insertAdjacentHTML('beforeend',h)})();
+
+(function bars(){const d=[['2023.10','Claude 2',1.96,'claude'],['2024.03','Devin',13.9,null],['2024.10','Sonnet 3.5',49,'claude'],['2025.01','R1',49.2,'deepseek'],['2025.02','Sonnet 3.7',62.3,'claude'],['2025.05','Opus 4',72.5,'claude'],['2025.08','V3.1',66,'deepseek'],['2025.08','GPT-5',74.9,'openai'],['2025.09','Sonnet 4.5',77.2,'claude'],['2025.11','Opus 4.5',80.9,'claude'],['2026.04','Opus 4.7',87.6,'claude'],['2026.04','Mythos',93.9,'anthropic']];
+ const W=1680,n=d.length,bw=96,gap=(W-n*bw)/(n-1),H=440;let h='';
+ d.forEach((x,i)=>{const a=(.06+i*.065).toFixed(3),b=(+a+.1).toFixed(3),hh=Math.max(6,x[2]/100*H),c=ERA[x[0].slice(0,4)],ds=x[3]==='deepseek';const L=i*(bw+gap);
+  h+='<div class="ab" style="left:'+L+'px;top:'+(H-hh)+'px;width:'+bw+'px;height:'+hh+'px;border-radius:12px 12px 4px 4px;background:linear-gradient(180deg,'+(ds?'#6b84ff':c)+',transparent);transform-origin:bottom" data-k="'+a+' '+b+'" data-fx="gy"></div>';
+  h+='<div class="ab" style="left:'+(L-20)+'px;width:'+(bw+40)+'px;top:'+(H-hh-44)+'px;text-align:center;font:800 26px var(--sans);color:'+(ds?'#8fa2ff':c)+'" data-k="'+a+' '+b+'" data-fx="num" data-n="'+x[2]+'" data-dec="'+(x[2]%1?1:0)+'" data-suf="%"></div>';
+  h+='<div class="ab" style="left:'+(L-20)+'px;width:'+(bw+40)+'px;top:'+(H+14)+'px;text-align:center" data-k="'+a+' '+b+'" data-fx="fade"><div style="font:600 14px var(--mono);color:var(--dim)">'+x[0]+'</div><div style="margin-top:6px;font-size:17px;font-weight:700;display:flex;gap:6px;justify-content:center;align-items:center">'+(x[3]?'<span class="lg xs" data-l="'+x[3]+'"></span>':'')+x[1]+'</div></div>'});
+ h+='<div class="ab" style="left:0;right:0;top:'+H+'px;height:2px;background:rgba(255,255,255,.12)"></div>';
+ document.getElementById('bars').innerHTML=h})();
+
+(function mcp(){const hosts=['cursor','claude','openai','googlegemini'],tools=['github','slack','figma','linear'],ys=[50,130,210,290];
+ const tile=(x,y,n)=>'<rect x="'+(x-28)+'" y="'+(y-28)+'" width="56" height="56" rx="13" fill="#0e141e" stroke="rgba(255,255,255,.15)"/><g transform="translate('+(x-14)+','+(y-14)+') scale(1.17)" data-svgl="'+n+'"></g>';
+ let a='';hosts.forEach((h,i)=>tools.forEach((t,j)=>{const k=(.06+(i*4+j)*.012).toFixed(3);a+='<path data-k="'+k+' '+(+k+.08).toFixed(3)+'" data-fx="draw" data-x=".4 .48" pathLength="1" stroke-dasharray="1" d="M100,'+ys[i]+' L660,'+ys[j]+'" stroke="rgba(248,113,113,.55)" stroke-width="1.6" fill="none"/>'}));
+ a+='<text x="380" y="345" text-anchor="middle" font-family="JetBrains Mono" font-size="17" fill="#f87171" data-k=".3 .34" data-fx="fade" data-x=".4 .46">N × M = 16 套定制集成</text>';
+ hosts.forEach((h,i)=>{a+='<path data-k="'+(.52+i*.03).toFixed(2)+' '+(.6+i*.03).toFixed(2)+'" data-fx="draw" pathLength="1" stroke-dasharray="1" d="M100,'+ys[i]+' L320,170" stroke="#a78bfa" stroke-width="2.4" fill="none"/>'});
+ tools.forEach((t,j)=>{a+='<path data-k="'+(.6+j*.03).toFixed(2)+' '+(.68+j*.03).toFixed(2)+'" data-fx="draw" pathLength="1" stroke-dasharray="1" d="M440,170 L660,'+ys[j]+'" stroke="#c084fc" stroke-width="2.4" fill="none"/>'});
+ hosts.forEach((h,i)=>a+=tile(100,ys[i],h));tools.forEach((t,j)=>a+=tile(660,ys[j],t));
+ a+='<g data-k=".46 .54" data-fx="pop"><circle cx="380" cy="170" r="62" fill="#120f1f" stroke="#a78bfa" stroke-width="3"/><g transform="translate(356,138) scale(2)" data-svgl="modelcontextprotocol"></g><text x="380" y="210" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#c4b5fd">MCP</text></g>';
+ a+='<text x="380" y="345" text-anchor="middle" font-family="JetBrains Mono" font-size="17" fill="#c4b5fd" data-k=".66 .72" data-fx="fade">N + M = 8 · 写一次，到处能用</text>';
+ document.getElementById('mcpsvg').innerHTML=a;
+ const c=[['2024.11','Anthropic 开源'],['2025.03','OpenAI 采纳'],['2025.05','Windows · Google 跟进'],['2025.12','捐给 AAIF'],['2026.01','MCP Apps'],['2026.05','WebMCP'],['2026.10','Uber 800 服务器']];
+ document.getElementById('mcpchips').innerHTML=c.map((x,i)=>'<span class="chip" data-k="'+(.74+i*.025).toFixed(3)+' '+(.78+i*.025).toFixed(3)+'" data-fx="pop"><em>'+x[0]+'</em>'+x[1]+'</span>').join('')})();
+
+(function panes(){const p=[['claude','重构 auth',.62],['openai','加 E2E 测试',.66],['cursor','迁移 Tailwind v4',.7],['googlegemini','修复 #812',.6],['x','性能剖析',.74],['kimi','文档补全',.68],['claude','best-of-n ①',.72],['openai','best-of-n ②',.78]];
+ document.getElementById('panes').innerHTML=p.map((x,i)=>{const a=(.5+i*.03).toFixed(2),L=(i%4)*254,T=Math.floor(i/4)*200+60;
+  return '<div class="pane" style="left:'+L+'px;top:'+T+'px" data-k="'+a+' '+(+a+.06).toFixed(2)+'" data-fx="pop"><div class="ph"><span class="lg sm" data-l="'+x[0]+'"></span>'+x[1]+'</div><div class="sk" style="width:'+(60+i*13%35)+'%"></div><div class="sk" style="width:'+(40+i*17%45)+'%"></div><div class="sk" style="width:'+(55+i*7%30)+'%"></div><div class="stt" data-k="'+x[2]+' '+(x[2]+.04)+'" data-fx="fade">✓ PR</div><div class="pg"><i data-k="'+a+' '+x[2]+'" data-fx="gx"></i></div></div>'}).join('')})();
+
+(function ctx(){const s=[['系统提示',7,'#38bdf8'],['规则 · AGENTS.md',10,'#60a5fa'],['记忆',8,'#a78bfa'],['工具 · MCP',13,'#c084fc'],['检索到的代码 · 文档',30,'#fb923c'],['对话历史',20,'#fbbf24'],['Prompt',4,'#34d399'],['余量',8,'rgba(255,255,255,.08)']];
+ let a='',b='',x=0;s.forEach((v,i)=>{const w=v[1]/100*1720,k=(.08+i*.05).toFixed(2);a+='<div style="width:'+w+'px;background:'+v[2]+';'+(v[0]=='余量'?'color:#64748b;':'')+(v[0]=='Prompt'?'box-shadow:inset 0 0 0 3px #fff;':'')+'" data-k="'+k+' '+(+k+.06).toFixed(2)+'" data-fx="gx">'+(v[1]>=7?v[0]:'')+'</div>';b+='<div style="width:'+w+'px" data-k="'+k+' '+(+k+.06).toFixed(2)+'" data-fx="fade">'+v[1]+'%</div>';if(v[0]=='Prompt')document.getElementById('ctxarrow').style.left=(100+x-470)+'px';x+=w});
+ document.getElementById('ctxbar').innerHTML=a;document.getElementById('ctxlab').innerHTML=b})();
+
+(function tree(){const L=[['my-app/',''],['├─ <b class="ac">.kiro/specs/</b>','<b>07</b> Kiro：需求 → 设计 → 任务'],['│  ├─ requirements.md',''],['│  ├─ design.md',''],['│  └─ tasks.md',''],['├─ <b class="ac">AGENTS.md</b>','<b>08</b> 跨工具通用的 Agent 说明书'],['├─ <b class="ac">.claude/agents/</b>','<b>06–07</b> 子代理：独立上下文'],['├─ <b class="ac">hooks/</b>','生命周期钩子'],['├─ <b class="ac">skills/pdf/SKILL.md</b>','<b>10</b> 渐进披露的技能'],['└─ <span class="ok">src/  ✓</span>','代码，最后才出现']];
+ document.getElementById('tree').innerHTML=L.map((l,i)=>{const a=(.06+i*.075).toFixed(3);return '<div data-k="'+a+' '+(+a+.05).toFixed(3)+'" data-fx="left">'+l[0]+(l[1]?'<span class="an">← '+l[1]+'</span>':'')+'</div>'}).join('')})();
+
+(function journey(){const J=[['@','现场 @me','企微群里正在讨论需求'],['⌖','带着坐标','理解现场上下文'],['≡','同一主会话','各处的 @me 汇到一起'],['⇶','派发执行','找到合适的 Agent'],['▤','自动记一张单','关联现场 + 执行会话'],['✎','项目日记','积累团队判断力']];
+ document.getElementById('journey').innerHTML=J.map((j,i)=>{const a=(.06+i*.12).toFixed(2);return '<div class="jn" style="left:'+(115+i*288)+'px;top:300px" data-k="'+a+' '+(+a+.08).toFixed(2)+'" data-fx="pop"><i>'+j[0]+'</i><b>'+j[1]+'</b><span>'+j[2]+'</span></div>'}).join('')})();
+const MONTHS=[
+ ['01','Ralph Loop','让 Agent 通宵循环','while :; do cat PROMPT.md | claude ; done',['01|Gas Town|tmux 编排 20–30 个 Claude Code','01|Planner·Worker·Judge|数百 Agent 一周写出浏览器','01|Claude Cowork|说「要什么」，回来的是成品','01|OpenClaw|自托管个人 Agent','01|Engram · mHC|条件记忆「存算分离」|ds','01.26|MCP Apps · ACP Registry|工具渲染 UI · Zed × JetBrains'],'2.4 子代理 · Skills · Cursor Blame',['claude','cursor']],
+ ['02','Agentic Engineering','Karpathy 亲自改名：编排而非编码','',['02|99% 时间不写代码|编排并监督 Agent','02.05|Agent Teams · Opus 4.6|16 个 Agent 两周写出 C 编译器','02.05|GPT-5.3-Codex|首个参与构建自身的模型','02|Codex App|macOS 多 Agent 指挥中心','02.26|Claude Code 自动记忆|Agent 自己维护 MEMORY.md','02|36% 公开 Skills 有缺陷|技能也有供应链风险'],'长时运行 Agent · 2.5 插件市场（02.17）',['claude','openai']],
+ ['03','Automations','不再需要人类按下回车','on: slack · github · alert → agent.run()',['03.05|Automations|Slack / GitHub / 告警触发 Agent','03.24|Auto Mode|分类器代替逐条批准','03.17|Dispatch · Channels|手机派活，Telegram 回话','03.04|Cursor 进 JetBrains|经 ACP 以 Agent 身份入驻','03|WorkBuddy 发布|从编程扩到办公','03|亚马逊宕机|AI 代码须资深审批'],'2.6 MCP Apps · Composer 2（03.19）',['cursor','claude']],
+ ['04','Agents Window','编辑器不再是中心，Agent 控制台才是','',['04.02|Cursor 3「Glass」|Agents Window 取代 Composer','04.02|Best-of-N|多模型隔离比稿 · 跨厂商审查','04.07|Mythos · Glasswing|AI 挖出数千零日漏洞','04.24|DeepSeek-V4|1.6T 开源 · 1M 上下文 · 国产芯片|ds','04.09|Cowork GA|用量大半来自非工程团队','04.23|托管 Agent 记忆 · Codex 记忆|记忆离线整理'],'3.0 Glass · 3.1 Canvas · SpaceX 600 亿期权',['cursor','deepseek']],
+ ['05','WebMCP · /goal','网页把工具交给 Agent；Agent 只认目标','/goal 所有测试通过且 p95 < 200ms',['05.19|WebMCP|网站把函数 / 表单暴露为工具','05.21|/goal · Goal Mode|跑到可验证目标达成为止','05.28|Dynamic Workflows|把多 Agent 编排写成脚本','05.06|Dreaming|Agent 在两次运行间自我改进','05|Model + Harness = Agent|DeepSeek 的 Agent 公式|ds','05.19|Antigravity 2.0|无 IDE 的 Agent 管理器'],'3.3 并行构建 · Composer 2.5',['googlechrome','deepseek']],
+ ['06','Loop Engineering','不再雕琢 Prompt，而是设计闭环与停止条件','loop: act ⇄ observe · test ⇄ fix · STOP',['06.16|SpaceX × Cursor|600 亿美元全股票合并','06.17|Junie 正式版|JetBrains，基于 ACP 重建','06.24|Agent Identity|Agent 拥有自己的账号与审计','06|Agentjacking|借错误遥测注入劫持 Agent','06|Config Smells|91% 的 AGENTS.md 有坏味道','06|Copilot 按量计费|订阅只覆盖交互式使用'],'Auto-review 子代理 · 宣布并入 SpaceX',['claude','jetbrains']],
+ ['07','Model Router','模型从「卖点」变成「可插拔配件」','',['07.22|Cursor Router|Auto 模式逐请求选模型','07|自证正确|红 → 绿 → 回归，证据链才算交付','07.17|Human-on-the-loop|最小自主性，风险可见且有界','07|Grok 4.5|Cursor 与 SpaceXAI 联训','07.31|DeepSeek-V4-Flash|正式版|ds','07.29|平板指挥 Agent|iPad + Inbox 随处审 PR'],'Router · Cursor Start · iPad 版',['cursor','x']],
+ ['08','Agent-native Forge','代码仓库也搬进 Agent 的家','',['08.17|Origin|为 Agent 规模设计的 git forge','08.19|Subscriptions|Agent 订阅事件，坚持到完成','08.11|Grok Bot|常驻云端电脑的个人 Agent','08|Claude Tag|@Claude 成为频道成员','08.13|DeepSeek Harness（DSH）|一切皆插件 · 峰谷定价|ds','08.28|已定：OpenAI 将于 11.12 停供|模型供应风险'],'正式并入 SpaceX（08.14）· Origin',['cursor','x']],
+ ['09','Managed Harness','Agent 的底座被托管，沙箱升级为 microVM','',['09.10|Agents API|托管会话、压缩与子代理','09.14|Coordinator Agent|协调者分派云端子代理','09.22|JetBrains Air|IDE 变成编排与验证 Agent 的地方','09.24|MicroVM 沙箱|「容器不够」：硬件级隔离','09.15|Jev · System One|只回带概率的判断，不写文字','09|Reward Hacking|DSec：伪造 socket 骗评测|ds'],'Projects beta：协调者管理并行子代理',['openai','jetbrains']],
+ ['10','Agents as Code','一个 Agent 就是一个可测试、可部署的工程','agent-sdk eval ✓ 24/24 · agent-sdk deploy',['10.20|Cursor Agent SDK|Agent = 代码仓 · 10.21 Glean 跟进','10.08|REA · 逆向一切|MCP 把 Agent 接上 Ghidra / IDA','10.02|Claude Code Mods|插件改写 Agent 内部','10.25|Skills 进 AAIF|与 MCP 同归中立治理','10.27|Codex 记忆 v2|可从 Claude Code 导入','10.31|Super-agent|跑在 DSH 上的研究原型|ds'],'Origin 应用市场 · Agent SDK GA（10.20）',['cursor','deepseek']],
+ ['11','权重空间编程','研究苗头 · 截至 11.04','',['11.02|Sparks of Weight-Space Programming|MIT：模型直接读写另一个模型的权重','11.02|改 0.016% 参数|Qwen3.5-0.8B MATH-500 7.9% → 48.1%','11.02|边界|能去障碍，不能凭空造能力','11.12|已定：OpenAI 停供 Cursor|尚未发生'],'',[]],
+ ['12','?','下一个词','',[],'',[]]
+];
+(function track(){document.getElementById('track').innerHTML=MONTHS.map((m,i)=>{const cls=i==10?' seed':i==11?' q':'';
+ if(i==11)return '<div class="mo q" style="left:'+(i*840)+'px;display:flex;flex-direction:column;align-items:center;justify-content:center"><div class="n" style="font-size:200px">?</div><div class="s" style="font-size:28px;margin-top:20px">12 月 · 下一个词，还没出现</div></div>';
+ return '<div class="mo'+cls+'" style="left:'+(i*840)+'px"><div class="top"><div class="n">'+m[0]+'</div><div><div class="w">'+m[1]+'</div><div class="s">'+m[2]+'</div></div><div class="lgs">'+m[6].map(l=>'<span class="lg sm" data-l="'+l+'"></span>').join('')+'</div></div>'+(m[3]?'<pre>'+m[3]+'</pre>':'')+'<ul>'+m[4].map(s=>{const[d,t,x,f]=s.split('|');return '<li class="'+(f||'')+'"><em>'+d+'</em><b>'+t+'</b><span>'+x+'</span></li>'}).join('')+'</ul>'+(m[5]?'<div class="cu"><b>CURSOR</b> · '+m[5]+'</div>':'')+'</div>'}).join('')})();
+
+(function chain(){const n=[[130,330,'2023','Prompt Engineering','雕琢一句话','#38bdf8'],[345,250,'2025.06','Context Engineering','装配上下文','#a78bfa'],[600,170,'2025.07','Spec-driven','先写规范','#c084fc'],[860,120,'2026.02','Agentic Engineering','编排 Agent','#fb923c'],[1110,200,'2026.06','Loop Engineering','设计闭环','#fbbf24'],[1360,110,'2026.08','Harness Engineering','打造底座','#34d399'],[1590,60,'2026.10','Agents as Code','Agent 即工程','#2dd4bf']];
+ let d='M'+n[0][0]+','+n[0][1];for(let i=1;i<n.length;i++){const a=n[i-1],b=n[i],mx=(a[0]+b[0])/2;d+=' C'+mx+','+a[1]+' '+mx+','+b[1]+' '+b[0]+','+b[1]}
+ let h='<svg class="ab" style="left:0;top:0;width:1720px;height:480px" viewBox="0 0 1720 480"><defs><linearGradient id="gch" x1="0" x2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset=".5" stop-color="#fb923c"/><stop offset="1" stop-color="#2dd4bf"/></linearGradient></defs><path data-k=".08 .8" data-fx="draw" pathLength="1" stroke-dasharray="1" d="'+d+'" stroke="url(#gch)" stroke-width="5" fill="none"/></svg>';
+ n.forEach((x,i)=>{const a=(.08+i*.72/6).toFixed(3);h+='<div class="node" style="left:'+x[0]+'px;top:'+x[1]+'px;--nc:'+x[5]+'" data-k="'+a+' '+(+a+.06).toFixed(3)+'" data-fx="pop"><div class="c"></div><div class="d">'+x[2]+'</div><div class="t">'+x[3]+'</div><div class="s">'+x[4]+'</div></div>'});
+ document.getElementById('chain').innerHTML=h;
+ [...document.querySelectorAll('#rolebar span')].forEach((s,i)=>s.dataset.on=(.08+i*.14).toFixed(2))})();
+
+(function mem(){const C=[['#fb923c','01 · 人写','说明书','2025.02 → 08','<b>CLAUDE.md</b> 02.24<br><b>.cursor/rules</b><br><b>AGENTS.md</b> 08 · 跨工具','人写，Agent 每轮重读',['claude','cursor']],['#fbbf24','02 · 工具记','Memories','2025.06 → 07','<b>Cursor 1.0 → 1.2</b><br>从对话里抽出事实<br>后台生成需人批准','工具替你记，你来批',['cursor']],['#34d399','03 · Agent 自己记','Auto Memory','2026.02.26','每仓一个 <b>MEMORY.md</b><br>开局只读前 200 行<br><b>/memory</b> 随时看、改、关','默认开启：Agent 写，人可改',['claude']],['#2dd4bf','04 · 睡着时整理','Consolidation','2026.04 → 05','<b>Codex Memories</b> 04<br>空闲 6h → 提取 → 合并<br><b>Dreaming</b> 05.06','离线整理，不再边聊边写',['openai','claude']],['#38bdf8','05 · 记忆成资产','托管 · 可搬家','2026.04.23 → 10.27','<b>Managed Agents Memory</b><br><b>Codex memory v2</b> 10.27<br>可从 Claude Code <b>导入</b>','换工具时，记忆跟着人走',['claude','openai']]];
+ document.getElementById('memst').innerHTML=C.map((c,i)=>{const a=(.1+i*.12).toFixed(2),h=320+i*36;return '<div class="memc" style="left:'+(100+i*350)+'px;height:'+h+'px;--mc:'+c[0]+'" data-k="'+a+' '+(+a+.1).toFixed(2)+'" data-fx="gy"><div class="w">'+c[1]+'</div><div class="t">'+c[2]+'</div><div class="d">'+c[3]+'</div><div class="l">'+c[4]+'</div><div class="q">'+c[5]+'</div></div>'}).join('')})();
+
+(function hub(){const N=[['MCP','2024.11','工具 · Anthropic','modelcontextprotocol','s-mcp'],['A2A','2025.04','其他 Agent · Google','google','s-2025a'],['AGENTS.md','2025.08','项目说明 · OpenAI','openai','s-2025b'],['ACP','2025.08','编辑器 · Zed','zedindustries','s-2025'],['SKILL.md','2025.10','技能 · Anthropic','claude','s-2025b'],['MCP Apps','2026.01','界面 · MCP','modelcontextprotocol','s-jan'],['WebMCP','2026.05','网页 · 浏览器','googlechrome','s-may'],['PAP','2026.10','网站账号 · 登录','','s-oct']];
+ const cx=520,cy=330,rx=400,ry=268;let l='',d='';
+ N.forEach((x,i)=>{const ang=(-90+i*45)*Math.PI/180,X=cx+rx*Math.cos(ang),Y=cy+ry*Math.sin(ang),a=(.1+i*.08).toFixed(2);
+  l+='<path data-k="'+a+' '+(+a+.06).toFixed(2)+'" data-fx="draw" pathLength="1" stroke-dasharray="1" d="M'+cx+','+cy+' L'+X.toFixed(0)+','+Y.toFixed(0)+'" stroke="#22d3ee" stroke-opacity=".5" stroke-width="2.5" fill="none"/>';
+  d+='<div class="pxn" style="left:'+X.toFixed(0)+'px;top:'+Y.toFixed(0)+'px" data-k="'+(+a+.04).toFixed(2)+' '+(+a+.09).toFixed(2)+'" data-fx="pop" data-go="'+x[4]+'"><div class="h">'+(x[3]?'<span class="lg xs" data-l="'+x[3]+'"></span>':'<span class="lg xs m" style="--mc:#64748b">P</span>')+'<b>'+x[0]+'</b><em>'+x[1]+'</em></div><span>↔ '+x[2]+'</span></div>'});
+ document.getElementById('hub').innerHTML='<svg class="ab" style="left:0;top:0;width:1040px;height:660px" viewBox="0 0 1040 660">'+l+'</svg><div class="ab" style="left:'+(cx-90)+'px;top:'+(cy-90)+'px;width:180px;height:180px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(34,211,238,.28),rgba(34,211,238,.06));border:2px solid rgba(34,211,238,.6)" data-k=".04 .1" data-fx="pop"><b style="font-size:34px">Agent</b><span style="font:600 14px var(--mono);color:var(--mut)">模型 + 底座</span></div>'+d;
+ const G=[['2025.06','A2A → Linux 基金会',''],['2025.12','MCP + AGENTS.md → AAIF','Linux 基金会旗下 Agentic AI 基金会'],['2025.12','Agent Skills 开放为标准',''],['2026.01','ACP Registry · Zed × JetBrains','03 连 Cursor 也以 Agent 身份入驻'],['2026.10.25','SKILL.md 进 AAIF','与 MCP 同归中立治理']];
+ document.getElementById('gov').innerHTML='<div style="font:700 15px var(--mono);letter-spacing:.12em;color:#22d3ee;border:none;padding:0;margin-bottom:18px" data-k=".72 .76">归宿：交给中立方</div>'+G.map((g,i)=>'<div data-k="'+(.74+i*.03).toFixed(2)+' '+(.78+i*.03).toFixed(2)+'" data-fx="right"><em>'+g[0]+'</em><b>'+g[1]+'</b>'+(g[2]?'<span>'+g[2]+'</span>':'')+'</div>').join('')+'<p style="font-size:19px;color:#cbd5e1;line-height:1.55;margin-top:6px" data-k=".9 .96">每条边都从<span style="color:#fff;font-weight:700">一家的私有接口</span>变成<span style="color:#22d3ee;font-weight:700">中立标准</span>：换模型、换编辑器，都不必重写 Agent。</p>'})();
+
+const COSTM0=mi('2025.06'),COSTPX=85;
+(function lanes(){const L=[['风险','#f87171','根：提示注入',[['2025.07','删库事件','误删生产库还编数据'],['2025.11','LGTM 反射','技术债以光速生成'],['2026.02','Skills 缺陷','36% 公开 Skills 有洞'],['2026.03','亚马逊宕机','AI 代码须资深审批'],['2026.06','Agentjacking','遥测注入劫持 Agent'],['2026.07','工信部提示','点名 Claude Code 风险'],['2026.09','Reward Hacking','伪造 socket 骗评测'],['2026.10','逆向一切','源码不再是护城河']]],['对策','#34d399','',[['2026.03','Auto Mode','分类器代替逐条批准'],['2026.04','Mythos','让 AI 先挖零日'],['2026.06','Agent Identity','自有账号与审计'],['2026.07','红绿自证','回归测试证明自己'],['2026.09','MicroVM 沙箱','硬件级隔离'],['2026.10','MCP Gateway','一个网关管 5000 工具']]],['账单','#fbbf24','',[['2025.06','计价风波','Cursor 按次改按量'],['2026.01','封第三方客户端','订阅不许外接'],['2026.04','一周末 $2000','并行 Agent 烧钱'],['2026.06','Copilot 按量','订阅只管交互式'],['2026.08','峰谷定价','DeepSeek 闲时半价'],['2026.10','$0.10 子代理','Haiku 5.5 跑腿']]]];
+ document.getElementById('lanes').innerHTML=L.map((l,k)=>'<div class="lane" style="top:'+(290+k*206)+'px;--lc:'+l[1]+'"><div class="ln0">'+l[0]+(l[2]?'<small>'+l[2]+'</small>':'')+'</div><div class="trk">'+l[3].map((x,j)=>'<div class="ci" data-m="'+(mi(x[0])-COSTM0)+'" style="left:'+(14+(mi(x[0])-COSTM0)*COSTPX)+'px;top:'+(j%2?100:14)+'px"><em>'+x[0]+'</em><b>'+x[1]+'</b><span>'+x[2]+'</span></div>').join('')+'</div></div>').join('')})();
+
+(function val(){const P=[['2024.08',.4],['2024.12',2.6],['2025.06',9.9],['2025.11',29.3],['2026.06',60]],lo=Math.log10(.2),hi=Math.log10(100);
+ const X=s=>70+(mi(s)-mi('2024.08'))/(mi('2026.06')-mi('2024.08'))*960,Y=v=>540-(Math.log10(v)-lo)/(hi-lo)*480;
+ let g='';[.4,2.6,10,60].forEach(v=>g+='<line x1="60" x2="1060" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="rgba(255,255,255,.06)"/><text x="40" y="'+(Y(v)+5)+'" text-anchor="end" font-family="JetBrains Mono" font-size="14" fill="#5b6375">$'+v+'B</text>');
+ const d=P.map((p,i)=>(i?'L':'M')+X(p[0]).toFixed(0)+','+Y(p[1]).toFixed(0)).join(' ');
+ g+='<path data-k=".08 .78" data-fx="draw" pathLength="1" stroke-dasharray="1" d="'+d+'" stroke="#22d3ee" stroke-width="4" fill="none"/>';
+ P.forEach((p,i)=>{const a=(.08+i*.7/4).toFixed(2);g+='<g data-k="'+a+' '+(+a+.06).toFixed(2)+'" data-fx="pop"><circle cx="'+X(p[0])+'" cy="'+Y(p[1])+'" r="9" fill="#07090d" stroke="#22d3ee" stroke-width="3"/></g><text x="'+X(p[0])+'" y="'+(Y(p[1])-22)+'" text-anchor="middle" font-family="Inter" font-weight="800" font-size="24" fill="'+(i==4?'#34d399':'#fff')+'" data-k="'+a+' '+(+a+.12).toFixed(2)+'" data-fx="num" data-n="'+p[1]+'" data-dec="'+(p[1]%1?1:0)+'" data-pre="$" data-suf="'+(i==4?'B · SpaceX':'B')+'"></text><text x="'+X(p[0])+'" y="585" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#5b6375" data-k="'+a+' '+(+a+.06).toFixed(2)+'" data-fx="fade">'+p[0]+'</text>'});
+ document.getElementById('valsvg').innerHTML=g;
+ const I=[['23','AI 编辑器','VS Code 分叉 · Tab · Chat','#38bdf8'],['24','Agentic IDE','Composer · Agent 模式','#a78bfa'],['25','Agent 平台','CLI · 后台 Agent · BugBot · 自研模型','#fb923c'],['26','软件工厂','Origin · Router · SDK · 并入 SpaceX','#34d399']];
+ document.getElementById('ident').innerHTML=I.map((x,i)=>'<div style="display:flex;gap:18px;align-items:center;margin-bottom:26px" data-k="'+(.12+i*.18).toFixed(2)+' '+(.2+i*.18).toFixed(2)+'" data-fx="right"><b style="font:900 54px var(--sans);color:'+x[3]+';width:80px">'+x[0]+'</b><div><b style="font-size:26px">'+x[1]+'</b><div style="font-size:16px;color:var(--mut);margin-top:4px">'+x[2]+'</div></div></div>').join('')})();
+
+(function tools(){const C=[['IDE · 整体重写','EDITOR FORK','#22d3ee',[['Cursor','Anysphere · VS Code 分叉'],['Windsurf','Codeium → Cognition'],['Trae','字节 · 03 国内 / 06 开放'],['Qoder','阿里 · 08 · Quest 模式'],['CodeBuddy','腾讯 · 09.09 公测'],['Antigravity','Google · 2025.11.18'],['Kiro','AWS · 07 · 规范驱动']],'编辑器整个重写，Agent 是主角'],['终端 / CLI','TERMINAL','#fb923c',[['Claude Code','Anthropic · 02.24'],['Codex CLI','OpenAI · 04 / 05'],['Gemini CLI','Google · 06'],['Amp · Crush','Sourcegraph · Charm'],['OpenCode · Aider','开源'],['Qwen Code','阿里'],['CodeBuddy Code','腾讯']],'在 shell 里；可脚本化、可后台跑'],['插件','PLUGIN','#38bdf8',[['GitHub Copilot','补全起家，转 Agent'],['Augment','Context Engine 实时索引'],['Cline · Kilo Code','开源'],['JetBrains Junie · Air','经 ACP 接任何 Agent'],['Xcode · Android Studio','平台 IDE 内置 Agent']],'不改编辑器，能力长在上面'],['云 / 组织','CLOUD & ORG','#a78bfa',[['Devin','Cognition'],['Droid','Factory · 重构 / 迁移'],['Jules','Google'],['Codex 云','OpenAI · 并行沙箱'],['Cursor 后台','云端跑完再回来']],'跑在看不见的地方，回来交结果'],['对话 → 应用','PROMPT TO APP','#f472b6',[['v0','Vercel'],['Bolt','StackBlitz'],['Lovable',''],['Replit','']],'不给你代码，直接给能跑的应用'],['运行时 / 底座','HARNESS','#34d399',[['DSH','DeepSeek · 一切皆插件'],['Agents API','OpenAI · 托管会话'],['MicroVM 沙箱','硬件级隔离'],['Agent SDK','Cursor · Agents as Code']],'Agent = 模型 + 底座']];
+ document.getElementById('tmcols').innerHTML=C.map((c,i)=>{const a=(.08+i*.11).toFixed(2);return '<div class="tmc" style="left:'+(100+i*290)+'px;--mc:'+c[2]+'" data-k="'+a+' '+(+a+.1).toFixed(2)+'" data-fx="up"><div class="h">'+c[0]+'</div><div class="s">'+c[1]+'</div>'+c[3].map((t,j)=>'<div class="it" data-k="'+(+a+.04+j*.015).toFixed(3)+' '+(+a+.08+j*.015).toFixed(3)+'" data-fx="fade"><b>'+t[0]+'</b><span>'+t[1]+'</span></div>').join('')+'<div class="nt">'+c[4]+'</div></div>'}).join('')})();
+
+/*CONCEPTS*/
+const JUMP={'s-prelude':['p1',.5],'s-2023':['y23',.6],'s-2024a':['y24',.35],'s-2024b':['y24',.85],'s-swe':['swe',.8],'s-mcp':['mcp',.8],'s-2025':['spec',.6],'s-vibe':['vibe',.6],'s-2025a':['term',.6],'s-ctx':['ctx',.7],'s-2025b':['spec',.7],'s-2025c':['q4',.8],'s-2026':['y26',.04],'s-fork':['fork',.8],'s-shift':['shift',.8],'s-mem':['mem',.8],'s-proto':['proto',.8],'s-cost':['cost',.8],'s-val':['val',.8],'s-tools':['tools',.8],'s-hty':['hty',.8],'s-ht1':['ht1',.8]};
+['s-jan','s-feb','s-mar','s-apr','s-may','s-jun','s-jul','s-aug','s-sep','s-oct'].forEach((id,i)=>JUMP[id]=['y26',(i+.65)/11.6]);
+(function cloud(){const col={'2023':'#38bdf8','2024':'#a78bfa','2025':'#fb923c','2026':'#34d399'};const box=document.getElementById('cloud'),W=1720,H=740;
+ const words=[];Object.keys(CONCEPTS).forEach(y=>CONCEPTS[y].forEach(x=>words.push({y,name:x[0],go:x[1],def:x[2],n:Math.max(1,CONCEPT_N[x[0]]||1)})));
+ document.getElementById('ccount').textContent=words.length;
+ words.sort((a,b)=>b.n-a.n||a.name.length-b.name.length);const mx=words[0].n;
+ words.forEach((w,i)=>{const r=Math.sqrt((w.n-1)/Math.max(1,mx-1));w.fs=Math.round(20+46*r);const el=document.createElement('span');el.className='w';el.textContent=w.name;el.dataset.def=w.def+'（被提及 '+w.n+' 次）';el.dataset.jump=w.go;
+  el.style.cssText='font-size:'+w.fs+'px;--cc:'+col[w.y]+';--fw:'+(w.fs>38?850:w.fs>26?750:600);const a=.06+i/words.length*.62;el.dataset.k=a.toFixed(3)+' '+(a+.16).toFixed(3);el.dataset.fx='fly';box.appendChild(el);w.el=el});
+ function layout(){const placed=[],cx=W/2,cy=H/2;words.forEach((w,i)=>{w.el.style.transform='none';const bw=w.el.offsetWidth,bh=w.el.offsetHeight,px=w.fs>30?10:6,py=w.fs>30?6:4;let ok=false;
+  for(let t=0,a0=i*2.39996;t<900&&!ok;t+=.07){const rr=2.6*t,x=cx+rr*Math.cos(t+a0)*2.55-bw/2,y=cy+rr*Math.sin(t+a0)-bh/2;if(x<0||y<0||x+bw>W||y+bh>H)continue;
+   if(placed.every(p=>x+bw+px<=p.x||p.x+p.w+px<=x||y+bh+py<=p.y||p.y+p.h+py<=y)){placed.push({x,y,w:bw,h:bh});w.el.style.left=x.toFixed(1)+'px';w.el.style.top=y.toFixed(1)+'px';
+    const ang=Math.atan2(y+bh/2-cy,x+bw/2-cx);w.el._dx=Math.cos(ang)*900;w.el._dy=Math.sin(ang)*500;w.el.classList.toggle('dn',y<70);w.el.classList.toggle('lt',x<200);w.el.classList.toggle('rt',x+bw>W-200);ok=true}}
+  w.el.style.display=ok?'':'none'});if(window.__reapply)window.__reapply()}
+ layout();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(layout)})();
+
+fillLogos(document);
+
+/* ================= engine ================= */
+const stage=$('#stage'),space=$('#space');
+function fit(){const s=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform='translate(-50%,-50%) scale('+s+')'}
+const SC=[...document.querySelectorAll('.sc')].map(el=>{const d=(el.dataset.date||'').split(' '),au=(el.dataset.auto||'0 0').split(' ').map(Number);
+ return {el,id:el.id,len:+el.dataset.len,ov:+(el.dataset.ov||.6),d0:mi(d[0]),d1:mi(d[1]||d[0]),a0:au[0],a1:au[1],era:el.dataset.era,ruler:el.dataset.ruler!=='0',fade:el.dataset.tr==='fade',
+  roles:(el.dataset.roles||'').split('|').filter(Boolean).map(s=>{const k=s.indexOf(':');return [+s.slice(0,k),s.slice(k+1)]}),
+  stops:el.dataset.stops!==undefined&&el.dataset.stops!==''?el.dataset.stops.split(' ').map(Number):null,items:null,tks:null,live:false}});
+let acc=0;SC.forEach((s,i)=>{s.start=i?acc-s.ov:0;acc=s.start+s.len});
+/* content (choreography) runs over [start, start+cl]; then a short hold; then the hand-over */
+SC.forEach((s,i)=>{const nx=SC[i+1];s.cl=s.len-(nx?nx.ov:0)-(nx?.35:0)});
+const TOTAL=acc;
+function parseItems(sc){sc.items=[...sc.el.querySelectorAll('[data-k],[data-on],[data-x]')].map(el=>{const k=el.dataset.k?el.dataset.k.split(' ').map(Number):null,x=el.dataset.x?el.dataset.x.split(' ').map(Number):null;
+  if(el.dataset.text===undefined&&(el.dataset.fx||'').includes('type'))el.dataset.text=el.textContent;
+  return {el,k,x,fx:(el.dataset.fx||'up').split(' '),on:el.dataset.on!==undefined?+el.dataset.on:null,last:null,svg:el instanceof SVGElement}});
+ sc.tks=[...sc.el.querySelectorAll('[data-tk]')].map(el=>({el,r:el.dataset.tk.split(' ').map(Number),list:el.querySelector('.tl'),items:[...el.querySelectorAll('.ti')],h:el.offsetHeight||parseInt(el.style.height)}))}
+function fmtN(el,v){const dec=+(el.dataset.dec||0);return (el.dataset.pre||'')+(dec?v.toFixed(dec):String(Math.round(v)))+(el.dataset.suf||'')}
+function apply(it,p){const e=it.k?seg(p,it.k[0],it.k[1]):1,x=it.x?seg(p,it.x[0],it.x[1]):0,onv=it.on!==null&&p>=it.on;
+ const key=(e*1000|0)+'|'+(x*1000|0)+'|'+onv;if(key===it.last)return;it.last=key;
+ const el=it.el;if(it.on!==null)el.classList.toggle('on',onv);if(!it.k&&!it.x)return;
+ let op=1,tx=0,ty=0,sc=1,sx=1,sy=1,tf=false;const eo=Eo(e);
+ for(const f of it.fx){switch(f){
+  case'up':ty+=(1-eo)*40;op*=e;tf=true;break; case'left':tx-=(1-eo)*80;op*=e;tf=true;break; case'right':tx+=(1-eo)*80;op*=e;tf=true;break;
+  case'fade':op*=e;break; case'zoom':sc*=.88+.12*eo;op*=e;tf=true;break;
+  case'pop':sc*=e>=1?1:Math.max(0,Eb(e));op*=clamp(e*3);tf=true;break;
+  case'draw':el.style.strokeDashoffset=(1-eo).toFixed(4);break;
+  case'gy':sy=eo;tf=true;break; case'gx':sx=eo;tf=true;break;
+  case'fly':tx+=(1-eo)*(el._dx||0);ty+=(1-eo)*(el._dy||0);sc*=.4+.6*eo;op*=clamp(e*1.6);tf=true;break;
+  case'type':{const t=el.dataset.text||'';el.textContent=t.slice(0,Math.round(t.length*e));break}
+  case'num':el.textContent=fmtN(el,(+el.dataset.n||0)*eo);op*=clamp(e*4);break;
+  case'none':break}}
+ if(x>0){op*=1-x;ty-=x*30;tf=true}
+ el.style.opacity=op>=.999?'':op.toFixed(3);
+ if(tf&&!it.svg)el.style.transform=(tx||ty?'translate('+tx.toFixed(1)+'px,'+ty.toFixed(1)+'px) ':'')+(sc!==1?'scale('+sc.toFixed(4)+') ':'')+(sx!==1?'scaleX('+sx.toFixed(4)+') ':'')+(sy!==1?'scaleY('+sy.toFixed(4)+')':'');
+ else if(tf&&it.svg&&(sc!==1||ty||tx))el.style.transform='translate('+tx.toFixed(1)+'px,'+ty.toFixed(1)+'px) scale('+sc.toFixed(4)+')';
+ else if(tf&&it.svg)el.style.transform='';}
+function tickers(sc,p){for(const t of sc.tks){const n=t.items.length,idx=seg(p,t.r[0],t.r[1])*(n-1);t.list.style.transform='translateY('+(t.h/2-31-idx*62).toFixed(1)+'px)';
+ t.items.forEach((el,i)=>{const d=Math.abs(i-idx);el.style.opacity=(1-Math.min(1,d*.32)).toFixed(3)})}}
+
+/* scene-specific hooks: return overrides {m,auto,role} */
+const HOOK={
+ y26(p){const n=12,r=clamp(p*11.6-.3,0,11),i=Math.floor(r),f=r-i,idx=i+Eio(seg(f,.4,1));
+  $('#track').style.transform='translateX('+(960-390-idx*840).toFixed(1)+'px)';
+  [...$('#track').children].forEach((m,k)=>{const d=Math.abs(k-idx);m.style.transform='scale('+(1-Math.min(d,1)*.14).toFixed(4)+')';m.style.opacity=(1-Math.min(d,1.6)*.5).toFixed(3)});
+  const mm=Math.min(10,Math.round(idx));const roles=['编排 Agent','编排 Agent','只看结果','编排舰队','设定目标','设计闭环','只设边界','设计闭环','设计闭环','设计闭环','设计闭环'];
+  return {m:mi('2026.01')+Math.min(10,idx),auto:.7+Math.min(10,idx)*.025,role:roles[mm]}},
+ cost(p){const m=-1+seg(p,.08,.84)*17.5;$('#sweep').style.left=(240+14+m*COSTPX+88).toFixed(1)+'px';$('#sweep b').textContent=mlabel(COSTM0+Math.max(0,Math.min(16,Math.round(m))));
+  document.querySelectorAll('#lanes .ci').forEach(c=>c.classList.toggle('on',m>=+c.dataset.m))},
+ shift(p){return {auto:seg(p,.08,.8)*.95}}
+};
+/* ruler */
+(function(){const r=$('#ruler'),W=1720,X=m=>m/47*W;let h='<div class="cur0"><span class="lg xs" data-l="cursor"></span>CURSOR</div><div class="ax"></div><div class="done" id="rdone"></div>';
+ [0,12,24,36].forEach((m,i)=>h+='<div class="yt" style="left:'+X(m)+'px"></div><div class="yr" style="left:'+X(m+6)+'px">'+(2023+i)+'</div>');
+ const ms=[['2023.03','发布 · GPT-4',1],['2023.12','Copilot++',0],['2024.08','Composer · A 轮',0],['2024.11','Agent 模式',1],['2025.01','MCP · Rules',0],['2025.05','后台 Agent',0],['2025.06','1.0 · BugBot',1],['2025.08','Cursor CLI',0],['2025.10','2.0 自研模型',1],['2025.12','收购 Graphite',0],['2026.01','子代理 · Skills',0],['2026.02','插件市场',0],['2026.03','Automations',0],['2026.04','3.0 Agents 窗口',1],['2026.06','并入 SpaceX',1],['2026.07','Router',0],['2026.08','Origin',0],['2026.09','Projects',0],['2026.10','Agent SDK',1]];
+ ms.forEach(x=>{const m=mi(x[0]);h+='<div class="ms'+(x[2]?' big':'')+'" data-m="'+m+'" style="left:'+X(m)+'px;--mc:'+ERA[x[0].slice(0,4)]+'"><span>'+x[1]+'</span></div>'});
+ h+='<div class="ph" id="rph"><b></b></div>';r.innerHTML=h;fillLogos(r)})();
+const RMS=[...document.querySelectorAll('#ruler .ms')];
+
+/* rail */
+const CH=[['前传','p1','2023'],['2023','y23','2023'],['2024','y24','2024'],['2025','r1','2025'],['2026','y26','2026'],['回望','shift','all'],['附','ht1','ht']];
+const rail=document.createElement('nav');rail.id='rail';rail.innerHTML='<div class="rt"></div><div class="rf"></div><div class="rl"></div><div class="rh"><i></i></div>';document.body.appendChild(rail);
+(function(){const st=[];SC.forEach(s=>{const c=ERA[s.era==='all'||s.era==='ht'?s.era:s.era]||'#22d3ee';st.push(c+' '+(s.start/TOTAL*100).toFixed(2)+'%',c+' '+((s.start+s.len)/TOTAL*100).toFixed(2)+'%')});
+ rail.querySelector('.rt').style.background=rail.querySelector('.rf').style.background='linear-gradient(to bottom,'+st.join(',')+')';
+ rail.querySelector('.rl').innerHTML=CH.map(c=>{const s=SC.find(x=>x.id===c[1]);return '<button type="button" data-scene="'+c[1]+'" style="top:'+((s.start+.6)/TOTAL*100)+'%;--ch:'+ERA[c[2]]+'">'+c[0]+'</button>'}).join('')})();
+
+/* main loop */
+let UNIT=1,lastU=-1,cur=null,ticking=false,lastRole='',bigIdx=0,lastYear='';
+function measure(){UNIT=innerHeight*.9;space.style.height=(TOTAL*UNIT+innerHeight*.12)+'px';fit()}
+function uOf(y){return y/UNIT}
+function update(force){ticking=false;const u=Math.min(TOTAL-.001,uOf(scrollY));if(u===lastU&&!force)return;lastU=u;
+ let curS=SC[0];for(let i=1;i<SC.length;i++)if(u>=SC[i].start+SC[i].ov*.5)curS=SC[i];
+ for(let i=0;i<SC.length;i++){const s=SC[i],nx=SC[i+1],ul=u-s.start,live=ul>=0&&ul<=s.len;
+  if(live&&!s.live){s.el.classList.add('live');s.live=true}else if(!live&&s.live){s.el.classList.remove('live');s.live=false}
+  if(!live)continue;if(!s.items)parseItems(s);
+  const pv=SC[i-1],p=clamp(ul/s.cl),inn0=i?seg(ul,0,s.ov):1,ovOut=nx?nx.ov:0,out0=nx?seg(ul,s.len-ovOut,s.len):0;
+  /* shared-visual pairs cross-fade; everything else hands over: old leaves first, new arrives after */
+  const inn=i&&!(s.fade&&pv.fade)?seg(inn0,.55,1):inn0, out=nx&&!(s.fade&&nx.fade)?seg(out0,0,.45):out0;
+  s.el.style.opacity=(inn*(1-out)).toFixed(3);
+  s.el.style.transform=!s.fade&&out>0?'translateY('+(-Eo(out)*50).toFixed(1)+'px) scale('+(1-Eo(out)*.03).toFixed(4)+')':'';
+  s.el.style.zIndex=out>0?1:2;s.el.style.pointerEvents=out>.5?'none':'';
+  for(const it of s.items)apply(it,p);tickers(s,p);
+  const hk=HOOK[s.id]&&HOOK[s.id](p);s._hk=hk||null;s._p=p}
+ globals(curS)}
+function globals(s){const p=s._p||0,hk=s._hk||{};
+ const m=hk.m!==undefined?hk.m:s.d0+(s.d1-s.d0)*p,auto=hk.auto!==undefined?hk.auto:s.a0+(s.a1-s.a0)*p;
+ let role=hk.role;if(!role){role=s.roles.length?s.roles[0][1]:'';for(const r of s.roles)if(p>=r[0])role=r[1]}
+ const era=s.era==='all'||s.era==='ht'?s.era:String(2023+Math.floor(Math.max(0,m)/12));const col=ERA[era]||ERA.all;
+ document.documentElement.style.setProperty('--era',col);$('#glow').style.background=col;
+ $('#knob').style.left=(auto*100).toFixed(2)+'%';$('#loop').textContent=auto>.72?'HUMAN ON THE LOOP':'HUMAN IN THE LOOP';
+ $('#role').style.opacity=s.id==='hero'?.5:1;
+ if(role!==lastRole){lastRole=role;const b=$('#roleTxt').children;bigIdx^=1;b[bigIdx].textContent=role;b[bigIdx].classList.add('on');b[bigIdx^1].classList.remove('on')}
+ const yr=s.era==='all'?'':s.era==='ht'?'附':String(2023+Math.floor(Math.max(0,m)/12));const pre=s.id==='p1'&&m<0;
+ const ytxt=pre?'前传':yr;if(ytxt!==lastYear){lastYear=ytxt;const bb=$('#bigyr').children;const k=bb[0].classList.contains('on')?1:0;bb[k].textContent=ytxt;bb[k].classList.toggle('on',!!ytxt);bb[k^1].classList.remove('on')}
+ const R=$('#ruler');R.style.opacity=s.ruler?1:.22;const mm=clamp(m,0,47);$('#rph').style.left=(mm/47*1720).toFixed(1)+'px';$('#rdone').style.width=(mm/47*1720).toFixed(1)+'px';
+ $('#rph b').textContent=pre?'前传 · '+mlabel(Math.round(m)):mlabel(Math.round(mm));
+ let near=null,nd=9;RMS.forEach(e=>{const mv=+e.dataset.m,on=mv<=mm+.01;e.classList.toggle('on',on);const d=mm-mv;if(on&&d<nd){nd=d;near=e}});RMS.forEach(e=>e.classList.toggle('cur',e===near&&nd<1.6&&s.ruler));
+ $('#hint').style.opacity=s.id==='hero'&&p<.4?1:0;
+ const u=lastU;rail.querySelector('.rf').style.clipPath='inset(0 0 '+((1-u/TOTAL)*100).toFixed(2)+'% 0)';rail.querySelector('.rh').style.top=(u/TOTAL*100)+'%';
+ const ch=CH.filter(c=>SC.find(x=>x.id===c[1]).start<=u-.2).pop();rail.querySelectorAll('.rl button').forEach(b=>b.classList.toggle('on',ch&&b.dataset.scene===ch[1]));
+ $('#trt').textContent=ch?ch[0]:'';
+ if(s!==cur){cur=s;history.replaceState(null,'','#'+s.id)}}
+window.__reapply=()=>{SC.forEach(s=>s.items&&s.items.forEach(it=>it.last=null));update(true)};
+addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(()=>update())}},{passive:true});
+addEventListener('resize',()=>{const u=lastU;measure();scrollTo(0,u*UNIT);update(true)});
+
+/* navigation */
+function stopsAll(){const a=[];SC.forEach(s=>{const st=s.id==='y26'?MONTHS.map((_,k)=>(k+.65)/11.6):(s.stops||[1]);st.forEach(p=>a.push(s.start+Math.min(1,p)*s.cl+(p>=1?.15:0)))});return a.sort((x,y)=>x-y)}
+const STOPS=stopsAll();
+function goU(u,inst){scrollTo({top:u*UNIT,behavior:inst?'instant':'smooth'})}
+function goScene(id,p,inst){const s=SC.find(x=>x.id===id);if(s)goU(s.start+(p===undefined?(s.stops?s.stops[0]:1):p)*s.cl+(p===undefined&&!s.stops?.15:0),inst)}
+addEventListener('keydown',e=>{if(e.target.closest&&e.target.closest('input,textarea'))return;const u=lastU;
+ if(['ArrowDown','PageDown',' ','ArrowRight'].includes(e.key)){e.preventDefault();const n=STOPS.find(x=>x>u+.05);if(n!==undefined)goU(n)}
+ else if(['ArrowUp','PageUp','ArrowLeft'].includes(e.key)){e.preventDefault();const n=[...STOPS].reverse().find(x=>x<u-.05);goU(n!==undefined?n:0)}
+ else if(e.key==='Home'){e.preventDefault();goU(0)}else if(e.key==='End'){e.preventDefault();goU(TOTAL-.01)}});
+document.addEventListener('click',e=>{const b=e.target.closest('[data-scene]');if(b){goScene(b.dataset.scene,b.dataset.scene==='y26'?.056:.3);return}
+ const w=e.target.closest('[data-jump],[data-go]');if(w){const j=JUMP[w.dataset.jump||w.dataset.go];if(j)goScene(j[0],j[1])}});
+let drag=false;const rt=rail.querySelector('.rt');
+function railTo(cy){const r=rt.getBoundingClientRect();goU(clamp((cy-r.top)/r.height)*(TOTAL-.01),true)}
+rail.addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;drag=true;rail.classList.add('drag');rail.setPointerCapture(e.pointerId);railTo(e.clientY)});
+rail.addEventListener('pointermove',e=>{if(drag)railTo(e.clientY)});rail.addEventListener('pointerup',()=>{drag=false;rail.classList.remove('drag')});
+
+if('scrollRestoration' in history)history.scrollRestoration='manual';
+measure();
+(function(){const h=location.hash.slice(1);if(h&&SC.find(s=>s.id===h))goScene(h,h==='y26'?.056:undefined,true)})();
+update(true);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>update(true));
+window.goScene=goScene;window.SC=SC;window.UNIT_=()=>UNIT;
+</script>
+</body>
+</html>
