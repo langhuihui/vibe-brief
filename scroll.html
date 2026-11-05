@@ -194,7 +194,13 @@ svg *{transform-box:fill-box;transform-origin:center}
 .mo.seed{background:linear-gradient(135deg,rgba(244,114,182,.15),rgba(244,114,182,.03)) !important}
 .pad{padding:22px 26px;border-radius:22px}
 .blk.cb{width:520px}
-.blk.cb .card .h b{font-size:21px}
+/* compact event / tool cards: give the brand mark real presence. This scopes
+   the bump to these cards only, so the global .lg.sm / .lg.mini sizes used by
+   month heads, tool rails and orbit logos stay untouched. Verified on all 115
+   cards: no overflow, no title/date collision, same-column gap >= 72px. */
+.blk.cb .card .h .lg{width:48px;height:48px;border-radius:13px}
+.blk.cb .card .h .lg svg{width:30px;height:30px}
+.blk.cb .card .h b{font-size:26px}
 /* event cards with a person's portrait: avatar on the left, text on the right.
    Keeps the compact 520x96 card rhythm (72px avatar -> 110px card, and card
    blocks are spaced 120px apart so nothing downstream shifts). */
