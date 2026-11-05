@@ -407,15 +407,20 @@ h2 small{display:block;font-size:26px;font-weight:500;color:var(--mut);letter-sp
 
 
 /* shift */
-.chain{position:relative;height:500px;margin-top:30px}
+.shift-lead{margin-top:16px;font-size:21px;line-height:1.55;color:#aab2c5;max-width:1240px}
+.shift-lead b{color:#e8ecf3;font-weight:700}
+.chain{position:relative;height:500px;margin-top:22px}
 .chain .nd{position:absolute;width:220px;text-align:center;transform:translateX(-50%)}
 .chain .nd .c{width:26px;height:26px;border-radius:50%;margin:0 auto;background:#0b0f16;border:4px solid var(--nc);box-shadow:0 0 24px var(--nc)}
 .chain .nd .d{font:700 15px var(--mono);color:var(--nc);margin-top:14px}
+.chain .nd .pre{font:600 12px var(--mono);letter-spacing:.06em;color:var(--dim);margin-top:7px}
 .chain .nd .t{font-size:25px;font-weight:800;margin-top:6px;line-height:1.2}
 .chain .nd .t,.chain .nd .s,.chain .nd .d{text-shadow:0 0 10px #07090d,0 0 4px #07090d,0 0 2px #07090d}
-.chain .nd .t,.chain .nd .s,.chain .nd .d{text-shadow:0 0 10px #07090d,0 0 4px #07090d,0 0 2px #07090d}
 .chain .nd .s{font-size:17px;color:var(--mut);margin-top:6px}
-.chain .nd:last-child .d,.chain .nd:last-child .t,.chain .nd:last-child .s{position:relative;left:-110px}
+.chain .nd .tag{display:inline-block;margin-top:9px;padding:4px 11px;border-radius:999px;white-space:nowrap;font:700 13px var(--mono);letter-spacing:.02em;color:var(--nc);background:color-mix(in srgb,var(--nc) 14%,#0b0f16);border:1px solid color-mix(in srgb,var(--nc) 45%,transparent)}
+.chain .nd.key .tag{background:var(--nc);border-color:var(--nc);color:#080b11;box-shadow:0 0 22px color-mix(in srgb,var(--nc) 40%,transparent)}
+@keyframes ndin{from{opacity:0;transform:translateX(-50%) scale(.6)}to{opacity:1;transform:translateX(-50%) scale(1)}}
+.slide.active .chain .nd{animation:ndin .6s cubic-bezier(.3,1.6,.5,1) both;animation-delay:var(--d,0s)}
 .rolebar{height:70px;border-radius:999px;margin-top:40px;background:linear-gradient(90deg,rgba(56,189,248,.25),rgba(167,139,250,.25),rgba(251,146,60,.25),rgba(52,211,153,.32));display:grid;grid-template-columns:repeat(6,1fr);align-items:center;text-align:center;font-size:22px;font-weight:700}
 .rolebar span{border-right:1px solid rgba(255,255,255,.12)}.rolebar span:last-child{border:none}
 
@@ -1540,8 +1545,9 @@ html.static .htus .ul::before{transform:none}
 <section class="slide" id="s-shift" data-title="关键词迁移" data-era="all">
   <div class="kicker a">关键词迁移 · 2023 → 2026</div>
   <h2 class="a">人类的工作对象，<span class="grad">一层层往上抽象</span></h2>
+  <p class="shift-lead a">四层台阶：<b>先能跑</b>（Demo 阶段）→ <b>看得见</b> → <b>不出错</b> → <b>可问责</b>。时间线不一定按这个顺序走，缺的那层迟早要回来补。</p>
   <div class="chain a" id="chain">
-    <svg viewBox="0 0 1720 430" style="position:absolute;inset:0;width:100%;height:100%"><path class="draw" pathLength="1" d="M60,330 C250,330 250,250 345,250 S520,170 600,170 S760,120 860,120 S1010,200 1110,200 S1270,110 1360,110 S1550,60 1660,60" fill="none" stroke="url(#gch)" stroke-width="4" style="--d:.4s"/><defs><linearGradient id="gch" x1="0" x2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset=".4" stop-color="#a78bfa"/><stop offset=".65" stop-color="#fb923c"/><stop offset="1" stop-color="#34d399"/></linearGradient></defs></svg>
+    <svg viewBox="0 0 1720 430" preserveAspectRatio="xMidYMin meet" style="position:absolute;inset:0;width:100%;height:100%"><path class="draw" pathLength="1" d="M100,330 C250,330 250,250 345,250 S520,170 600,170 S760,120 860,120 S1010,200 1110,200 S1270,110 1360,110 S1550,60 1660,60" fill="none" stroke="url(#gch)" stroke-width="4" style="--d:.4s"/><defs><linearGradient id="gch" x1="0" x2="1"><stop offset="0" stop-color="#38bdf8"/><stop offset=".4" stop-color="#a78bfa"/><stop offset=".65" stop-color="#fb923c"/><stop offset="1" stop-color="#34d399"/></linearGradient></defs></svg>
   </div>
   <div class="rolebar a"><span>写代码</span><span>按 Tab</span><span>读 diff</span><span>写规范</span><span>编排 Agent</span><span>设计闭环</span></div>
 </section>
@@ -2038,8 +2044,16 @@ html.static .htus .ul::before{transform:none}
  let h='';p.forEach((x,i)=>{h+='<div class="pane"><div class="ph"><span class="lg sm" data-l="'+x[0]+'"></span>'+x[1]+'</div><div class="sk" style="width:'+(60+(i*13)%35)+'%"></div><div class="sk" style="width:'+(40+(i*17)%45)+'%"></div><div class="pg"><i style="--t:'+x[2]+'s"></i></div>'+(i==6?'<span class="star">★ 胜出</span>':'')+'</div>'});document.getElementById('panes').innerHTML=h})();
 
 /* ---------- shift chain ---------- */
-(function(){const n=[[60,330,'2023','Prompt Engineering','雕琢一句话','#38bdf8'],[345,250,'2025.06','Context Engineering','装配上下文','#a78bfa'],[600,170,'2025.07','Spec-driven','先写规范','#c084fc'],[860,120,'2026.02','Agentic Engineering','编排 Agent','#fb923c'],[1110,200,'2026.06','Loop Engineering','设计闭环','#fbbf24'],[1360,110,'2026.08','Harness Engineering','打造底座','#34d399'],[1610,60,'2026.10','Agents as Code','Agent 即工程','#2dd4bf']];
- let h='';n.forEach((x,i)=>{h+='<div class="nd pop" style="left:'+x[0]+'px;top:'+(x[1]-13)+'px;--nc:'+x[5]+';--d:'+(0.6+i*0.25)+'s"><div class="c"></div><div class="d">'+x[2]+'</div><div class="t">'+x[3]+'</div><div class="s">'+x[4]+'</div></div>'});document.getElementById('chain').insertAdjacentHTML('beforeend',h)})();
+(function(){const n=[
+ {x:100,y:330,d:'2023 → 2025.02',pre:'前身 · Prompt Engineering',t:'Vibe Coding',s:'把想法喊出来，先跑起来',tag:'Demo 阶段',c:'#38bdf8',k:1},
+ {x:345,y:250,d:'2025.06',t:'Context Engineering',s:'把该看的信息喂对',tag:'解决「看不见」',c:'#a78bfa',k:1},
+ {x:600,y:170,d:'2025.07',t:'Spec-driven',s:'把要求先写成文件',tag:'解决「想不清」',c:'#c084fc'},
+ {x:860,y:120,d:'2026.02',t:'Agentic Engineering',s:'把自主系统嵌进业务',tag:'解决「能交付 + 可问责」',c:'#fb923c',k:1},
+ {x:1110,y:200,d:'2026.06',t:'Loop Engineering',s:'把闭环设计出来',tag:'解决「跑不完」',c:'#fbbf24'},
+ {x:1360,y:110,d:'2026.08',t:'Harness Engineering',s:'把执行环境焊死',tag:'解决「会犯错」',c:'#34d399',k:1},
+ {x:1610,y:60,d:'2026.10',t:'Agents as Code',s:'把 Agent 当工程产物收编',tag:'解决「难复用」',c:'#2dd4bf'}];
+ let h='';n.forEach((x,i)=>{h+='<div class="nd pop'+(x.k?' key':'')+'" style="left:'+x.x+'px;top:'+(x.y-13)+'px;--nc:'+x.c+';--d:'+(0.6+i*0.25)+'s"><div class="c"></div><div class="d">'+x.d+'</div>'+(x.pre?'<div class="pre">'+x.pre+'</div>':'')+'<div class="t">'+x.t+'</div><div class="s">'+x.s+'</div><div class="tag">'+x.tag+'</div></div>'});
+ document.getElementById('chain').insertAdjacentHTML('beforeend',h)})();
 
 /* ---------- waves ---------- */
 (function(){const mk=(a,f,ph)=>{let d='M0,110';for(let x=0;x<=1920;x+=20)d+=' L'+x+','+(110+a*Math.sin(x/f+ph)).toFixed(1);return d};
