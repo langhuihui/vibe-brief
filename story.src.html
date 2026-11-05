@@ -161,6 +161,12 @@ svg *{transform-box:fill-box;transform-origin:center}
 .pad{padding:22px 26px;border-radius:22px}
 .blk.cb{width:520px}
 .blk.cb .card .h b{font-size:21px}
+/* event cards with a person's portrait: avatar on the left, text on the right.
+   Keeps the compact 520x96 card rhythm (72px avatar -> 110px card, and card
+   blocks are spaced 120px apart so nothing downstream shifts). */
+.blk.cb .card.evp{display:flex;align-items:center;gap:16px}
+.blk.cb .card.evp .evp-body{flex:1;min-width:0}
+.lg.portrait-ev{width:72px;height:72px;border:2px solid rgba(255,255,255,.24);border-radius:50%;box-shadow:0 0 0 4px rgba(255,255,255,.05),0 0 30px rgba(56,189,248,.14),0 10px 26px rgba(0,0,0,.5)}
 .blk.lbl h3{font-size:40px}
 .mo.head{padding:24px 32px}.mo.head ul{display:none}
 .costhd{display:grid;grid-template-columns:110px 500px 500px 500px;column-gap:40px;margin-top:30px}
@@ -670,7 +676,7 @@ svg *{transform-box:fill-box;transform-origin:center}
         <p class="fkth">记住你的偏好，越用越像你的私人同事</p>
         <div class="fki"><span class="lg sm" data-l="claude"></span><div><b>Claude Cowork</b><em>01 · 04.09 GA</em><p>说「要什么」，回来的是成品</p></div></div>
         <div class="fki"><span class="lg sm m" style="--mc:#1d4ed8">W</span><div><b>WorkBuddy</b><em>03 · 06 企业版</em><p>专家 + 技能 + 连接器</p></div></div>
-        <div class="fki"><span class="lg sm" data-l="x"></span><div><b>Grok Bot</b><em>08.11</em><p>常驻云端电脑，只在决策点回来</p></div></div>
+        <div class="fki"><span class="lg sm" data-l="grokbot"></span><div><b>Grok Bot</b><em>08.11</em><p>常驻云端电脑，只在决策点回来</p></div></div>
       </div>
       <div class="fkcol o" data-ghost="WE" data-k=".32 .54" data-fx="right">
         <div class="fkhead"><i>02</i><div><b>组织 Agent</b><em>ORGANIZATIONAL · 属于「团队」</em></div></div>
@@ -888,7 +894,7 @@ const eraOf=m=>m<mf('2024.01')?'2023':m<mf('2025.01')?'2024':m<mf('2026.01')?'20
  a+='<g data-k=".5 .58" data-fx="pop"><circle cx="380" cy="170" r="62" fill="#120f1f" stroke="#a78bfa" stroke-width="3"/><g transform="translate(356,138) scale(2)" data-svgl="modelcontextprotocol"></g><text x="380" y="210" text-anchor="middle" font-family="JetBrains Mono" font-size="14" fill="#c4b5fd">MCP</text></g>';
  a+='<text x="380" y="345" text-anchor="middle" font-family="JetBrains Mono" font-size="17" fill="#c4b5fd" data-k=".72 .8" data-fx="fade">N + M = 8 · 写一次，到处能用</text>';
  document.getElementById('mcpsvg').innerHTML=a})();
-(function panes(){const p=[['claude','重构 auth',.62],['openai','加 E2E 测试',.66],['cursor','迁移 Tailwind v4',.7],['googlegemini','修复 #812',.6],['x','性能剖析',.74],['kimi','文档补全',.68],['claude','best-of-n ①',.72],['openai','best-of-n ②',.78]];
+(function panes(){const p=[['claude','重构 auth',.62],['openai','加 E2E 测试',.66],['cursor','迁移 Tailwind v4',.7],['googlegemini','修复 #812',.6],['grok','性能剖析',.74],['kimi','文档补全',.68],['claude','best-of-n ①',.72],['openai','best-of-n ②',.78]];
  document.getElementById('panes').innerHTML=p.map((x,i)=>{const a=(.2+i*.04).toFixed(2),L=(i%4)*254,T=Math.floor(i/4)*184;
   return '<div class="pane" style="left:'+L+'px;top:'+T+'px" data-k="'+a+' '+(+a+.08).toFixed(2)+'" data-fx="pop"><div class="ph"><span class="lg sm" data-l="'+x[0]+'"></span>'+x[1]+'</div><div class="sk" style="width:'+(60+i*13%35)+'%"></div><div class="sk" style="width:'+(40+i*17%45)+'%"></div><div class="stt" data-k="'+(x[2]+.1).toFixed(2)+' '+(x[2]+.14).toFixed(2)+'" data-fx="fade">✓ PR</div><div class="pg"><i data-k="'+a+' '+(x[2]+.1).toFixed(2)+'" data-fx="gx"></i></div></div>'}).join('')})();
 (function ctx(){const S=[['系统提示',7,'#38bdf8'],['规则 · AGENTS.md',10,'#60a5fa'],['记忆',8,'#a78bfa'],['工具 · MCP',13,'#c084fc'],['检索到的代码 · 文档',30,'#fb923c'],['对话历史',20,'#fbbf24'],['Prompt',4,'#34d399'],['余量',8,'rgba(255,255,255,.08)']];
@@ -933,7 +939,8 @@ const eraOf=m=>m<mf('2024.01')?'2023':m<mf('2025.01')?'2024':m<mf('2026.01')?'20
 /* tooltips for the real-person portrait marks in the month heads */
 const AV_TITLE={ghuntley:'Geoffrey Huntley · Ralph Wiggum Loop 提出者',
                 steipete:'Peter Steinberger · OpenClaw / Clawdbot 作者',
-                diogoalmeida:'Diogo Almeida · TypeSafe CEO / Jev 作者'};
+                diogoalmeida:'Diogo Almeida · TypeSafe CEO / Jev 作者',
+                elonmusk:'Elon Musk · SpaceX 创始人 / CEO'};
 const MONTHS=[
  ['01','Ralph Loop','一个 bash 死循环，让 Agent 通宵干活','while :; do cat PROMPT.md | claude ; done',['01|Gas Town|tmux 编排 20–30 个 Claude Code','01|Planner·Worker·Judge|数百 Agent 一周写出浏览器','01|Claude Cowork|说「要什么」，回来的是成品','01|OpenClaw|Peter Steinberger · 自托管个人 Agent','01|Engram · mHC|条件记忆「存算分离」|ds','01.26|MCP Apps · ACP Registry|工具渲染 UI · Zed × JetBrains'],'2.4 子代理 · Skills · Cursor Blame',['@ghuntley','@steipete','claude','cursor']],
  ['02','Agentic Engineering','Vibe Coding 一周年，Karpathy 亲自改名','',['02|99% 时间不写代码|编排并监督 Agent','02.05|Agent Teams · Opus 4.6|16 个 Agent 两周写出 C 编译器','02.05|GPT-5.3-Codex|首个参与构建自身的模型','02|Codex App|macOS 多 Agent 指挥中心','02.26|Claude Code 自动记忆|Agent 自己维护 MEMORY.md','02|36% 公开 Skills 有缺陷|技能也有供应链风险'],'长时运行 Agent · 2.5 插件市场（02.17）',['claude','openai']],
@@ -941,8 +948,8 @@ const MONTHS=[
  ['04','Agents Window','编辑器不再是中心，Agent 控制台才是','',['04.02|Cursor 3「Glass」|Agents Window 取代 Composer','04.02|Best-of-N|多模型隔离比稿','04.07|Mythos · Glasswing|AI 挖出数千零日漏洞','04.24|DeepSeek-V4|1.6T 开源 · 1M 上下文|ds','04.09|Cowork GA|用量大半来自非工程团队','04.23|托管 Agent 记忆|记忆离线整理'],'3.0 Glass · 3.1 Canvas · SpaceX 600 亿期权',['cursor','deepseek']],
  ['05','WebMCP · /goal','网页把工具交给 Agent；Agent 只认目标','/goal 所有测试通过且 p95 < 200ms',['05.19|WebMCP|网站把函数暴露为工具','05.21|/goal · Goal Mode|跑到目标达成为止','05.28|Dynamic Workflows|编排写成脚本','05.06|Dreaming|两次运行间自我改进','05|Model + Harness = Agent|DeepSeek 的 Agent 公式|ds','05.19|Antigravity 2.0|无 IDE 的 Agent 管理器'],'3.3 并行构建 · Composer 2.5',['googlechrome','deepseek']],
  ['06','Loop Engineering','不再雕琢 Prompt，而是设计闭环与停止条件','loop: act ⇄ observe · test ⇄ fix · STOP',['06.16|SpaceX × Cursor|600 亿美元全股票合并','06.17|Junie 正式版|JetBrains，基于 ACP 重建','06.24|Agent Identity|Agent 自己的账号与审计','06|Agentjacking|借错误遥测劫持 Agent','06|Config Smells|91% 的 AGENTS.md 有坏味道','06|Copilot 按量计费|订阅只覆盖交互式'],'Auto-review 子代理 · 宣布并入 SpaceX',['claude','jetbrains']],
- ['07','Model Router','模型从「卖点」变成「可插拔配件」','',['07.22|Cursor Router|逐请求选模型','07|自证正确|红 → 绿 → 回归才算交付','07.17|Human-on-the-loop|最小自主性，风险有界','07|Grok 4.5|Cursor 与 SpaceXAI 联训','07.31|DeepSeek-V4-Flash|正式版|ds','07.29|平板指挥 Agent|iPad + Inbox 随处审 PR'],'Router · Cursor Start · iPad 版',['cursor','x']],
- ['08','Agent-native Forge','代码仓库也搬进 Agent 的家','',['08.17|Origin|为 Agent 规模设计的 git forge','08.19|Subscriptions|Agent 订阅事件，坚持到完成','08.11|Grok Bot|常驻云端电脑的个人 Agent','08|Claude Tag|@Claude 成为频道成员','08.13|DeepSeek Harness（DSH）|一切皆插件 · 峰谷定价|ds','08.28|已定：OpenAI 将于 11.12 停供|模型供应风险'],'正式并入 SpaceX（08.14）· Origin',['cursor','x']],
+ ['07','Model Router','模型从「卖点」变成「可插拔配件」','',['07.22|Cursor Router|逐请求选模型','07|自证正确|红 → 绿 → 回归才算交付','07.17|Human-on-the-loop|最小自主性，风险有界','07|Grok 4.5|Cursor 与 SpaceXAI 联训','07.31|DeepSeek-V4-Flash|正式版|ds','07.29|平板指挥 Agent|iPad + Inbox 随处审 PR'],'Router · Cursor Start · iPad 版',['cursor','grok']],
+ ['08','Agent-native Forge','代码仓库也搬进 Agent 的家','',['08.17|Origin|为 Agent 规模设计的 git forge','08.19|Subscriptions|Agent 订阅事件，坚持到完成','08.11|Grok Bot|常驻云端电脑的个人 Agent','08|Claude Tag|@Claude 成为频道成员','08.13|DeepSeek Harness（DSH）|一切皆插件 · 峰谷定价|ds','08.28|已定：OpenAI 将于 11.12 停供|模型供应风险'],'正式并入 SpaceX（08.14）· Origin',['cursor','grok']],
  ['09','Managed Harness','Agent 的底座被托管，沙箱升级为 microVM','',['09.10|Agents API|托管会话、压缩与子代理','09.14|Coordinator Agent|协调者分派云端子代理','09.22|JetBrains Air|IDE 变成编排与验证的地方','09.24|MicroVM 沙箱|「容器不够」：硬件级隔离','09.15|Jev · System One|只回带概率的判断','09|Reward Hacking|DSec：伪造 socket 骗评测|ds'],'Projects beta：协调者管理并行子代理',['@diogoalmeida','openai','jetbrains']],
  ['10','Agents as Code','一个 Agent 就是一个可测试、可部署的工程','agent-sdk eval ✓ 24/24 · agent-sdk deploy',['10.20|Cursor Agent SDK|Agent = 代码仓 · Glean 跟进','10.08|REA · 逆向一切|MCP 把 Agent 接上 Ghidra','10.02|Claude Code Mods|插件改写 Agent 内部','10.25|Skills 进 AAIF|与 MCP 同归中立治理','10.27|Codex 记忆 v2|可从 Claude Code 导入','10.31|Super-agent|跑在 DSH 上的研究原型|ds'],'Origin 应用市场 · Agent SDK GA（10.20）',['cursor','deepseek']]
 ];
@@ -956,6 +963,10 @@ const EV_RULES=[
  [/SpaceX|并购/i,'spacex'],[/MicroVM|沙箱/i,'docker'],
  [/loop|循环|闭环/i,'cursor'],[/github|spec kit/i,'github']
 ];
+/* A few event cards are really about a person: show the real portrait next to
+   the brand mark instead of only the month-head portrait. Keyed by exact card
+   title so no unrelated card is affected. */
+const EV_AV={'OpenClaw':'steipete','SpaceX × Cursor':'elonmusk'};
 function evMark(x,m,k){
  const s=x.t+' '+x.desc;
  const h=window.brandOf?brandOf(s):null;
@@ -972,7 +983,8 @@ function evMark(x,m,k){
   /* items: own date when given, otherwise spread through the month; kept strictly increasing */
   const it=m[4].map((x,k)=>{const[d,t,desc,f]=x.split('|');const dd=d.includes('.')?+d.split('.')[1]:null;return {d,t,desc,f,day:dd,k}});
   it.forEach(x=>{if(x.day===null)x.day=3+x.k*4});it.sort((a,b)=>a.day-b.day||a.k-b.k);let prev=1;it.forEach(x=>{x.day=Math.min(28,Math.max(x.day,prev+1));prev=x.day});
-  it.forEach((x,k)=>{html+='<div class="blk cb" id="b-m'+m[0]+'-'+k+'" data-t="2026.'+m[0]+'.'+x.day+'" data-era="2026"><div class="card glass '+(x.f==='ds'?'dsx':'')+'" data-k="0 .4" data-fx="up"><div class="h">'+evMark(x,m,k)+'<b>'+x.t+'</b><em>'+x.d+'</em></div><p>'+x.desc+'</p></div></div>'})});
+  it.forEach((x,k)=>{const av=EV_AV[x.t],ah=av?'<span class="lg portrait-ev" data-av="'+av+'" title="'+(AV_TITLE[av]||av)+'" style="border-radius:50%"></span>':'',body='<div class="h">'+evMark(x,m,k)+'<b>'+x.t+'</b><em>'+x.d+'</em></div><p>'+x.desc+'</p>';
+   html+='<div class="blk cb" id="b-m'+m[0]+'-'+k+'" data-t="2026.'+m[0]+'.'+x.day+'" data-era="2026"><div class="card glass '+(x.f==='ds'?'dsx ':'')+(av?'evp':'')+'" data-k="0 .4" data-fx="up">'+(av?ah+'<div class="evp-body">'+body+'</div>':body)+'</div></div>'})});
  document.getElementById('months').outerHTML=html;
  /* weight-space programming: an animated experiment bench instead of a text block */
 (function(){let cells='';const hits=[8,19,31,44,58];
