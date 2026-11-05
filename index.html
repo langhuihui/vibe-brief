@@ -522,7 +522,7 @@ html.static .js{opacity:1!important}
 .hub .hc{position:absolute;left:478px;top:233px;width:84px;height:84px}
 .htn{position:absolute;width:270px;height:80px;border-radius:16px;padding:11px 14px;background:#0f131b;border:1px solid rgba(255,255,255,.14);box-shadow:0 10px 30px rgba(0,0,0,.35)}
 .htn .r1{display:flex;align-items:center;gap:10px}.htn .r1 b{font-size:19px;white-space:nowrap}.htn .r1 span:last-child{margin-left:auto;font-size:13px;color:var(--mut);white-space:nowrap}
-.htn .ad{margin-top:8px;font:600 13px var(--mono);color:#a5b4fc;padding:3px 9px;border-radius:7px;background:rgba(99,102,241,.14);width:fit-content}
+.htn .ad{margin-top:8px;font:600 12px var(--mono);white-space:nowrap;color:#a5b4fc;padding:3px 9px;border-radius:7px;background:rgba(99,102,241,.14);width:fit-content}
 .glab{position:absolute;left:30px;top:470px;font-size:16px;padding:7px 14px;border-radius:10px;background:rgba(224,179,84,.16);border:1px solid rgba(224,179,84,.45);color:#f0cf86}
 .htteam{display:grid;grid-template-columns:600px 1040px;gap:80px;margin-top:40px}
 .htteam .stp{padding:24px 0}
@@ -534,6 +534,20 @@ html.static .js{opacity:1!important}
 .gm b{font-size:22px;display:flex;align-items:center;gap:10px}.gm b em{font-style:normal;font:600 13px var(--mono);padding:2px 8px;border-radius:6px;background:rgba(52,211,153,.14);color:#6ee7b7}
 .gm p{font-size:22px;color:#cbd5e1;margin-top:6px;padding:11px 15px;border-radius:4px 14px 14px 14px;background:rgba(255,255,255,.05);width:fit-content}
 .gm.me p{background:rgba(224,179,84,.14);color:#f3ecdf}
+.htgo{display:grid;grid-template-columns:680px 960px;gap:80px;margin-top:44px}
+.htgo .stp{padding:22px 0}.htgo .stp b{font-size:28px}.htgo .stp p{font-size:20px}
+.htgo>div:last-child{display:flex;flex-direction:column;gap:26px}
+.htgo .gp{flex:1;display:flex;flex-direction:column;justify-content:center;border-radius:24px;background:#0d1118;border:1px solid rgba(255,255,255,.1);padding:30px 34px}
+.htgo .gl{font:700 17px var(--mono);color:#f0cf86;letter-spacing:.1em}
+.htgo .ask{margin-top:18px;padding:20px 24px;border-radius:4px 18px 18px 18px;background:rgba(224,179,84,.14);font-size:27px;color:#f3ecdf;line-height:1.5}
+.htgo .att{align-self:flex-start;display:inline-flex;align-items:center;gap:12px;margin-top:16px;padding:11px 16px;border-radius:12px;background:rgba(255,255,255,.05);border:1px solid var(--line);font:600 17px var(--mono);color:#cbd5e1}
+.htgo .att i{font-style:normal;padding:3px 8px;border-radius:6px;background:#e0b354;color:#15120c;font-weight:800}
+.htgo .relay{display:flex;align-items:center;gap:14px;margin-top:20px}
+.htgo .relay div{flex:1;border-radius:16px;padding:18px 20px;background:rgba(255,255,255,.035);border:1px solid var(--line);font-size:19px;color:var(--mut);line-height:1.4}
+.htgo .relay div b{display:block;font-size:23px;color:#e8e2d6;margin-bottom:6px}
+.htgo .relay>i{font-style:normal;color:#e0b354;font-size:28px}
+.htgo .ok{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.htgo .ok span{font:600 17px var(--mono);padding:8px 15px;border-radius:999px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:#6ee7b7}
 
 .hty{display:grid;grid-template-columns:620px 1fr;gap:26px;margin-top:26px}
 .hty .yhd{display:flex;align-items:center;gap:16px}
@@ -1466,7 +1480,7 @@ html.static .js{opacity:1!important}
       <div class="bh"><span class="lg" data-l="slack"></span><b>组织 Agent</b><span>属于「团队」</span></div>
       <div class="bw pop" style="--d:1.05s"><i class="lg sm" data-l="claude"></i><span class="bw2"><b>Claude Tag</b><em>08 · Slack beta · Team/Enterprise</em><p>@Claude 是频道里的一个成员：多人共享、越用越懂、可主动跟进</p></span></div>
       <div class="bw pop" style="--d:1.35s"><i class="lg sm" data-l="slack"></i><span class="bw2"><b>Slack Code</b><em>08.20</em><p>项目频道即工作现场，PM 也能参与，上线动作需人批准</p></span></div>
-      <div class="bw pop" style="--d:1.65s"><i class="lg sm m" style="--mc:#e0b354">ht</i><span class="bw2"><b>HTalk @me</b><em>见附录 · 下一站展开</em><p>多人共享同一会话 · ambient 主动 · 异步派发</p></span></div>
+      <div class="bw pop" style="--d:1.65s"><i class="lg sm m" style="--mc:#e0b354">ht</i><span class="bw2"><b>HTalk @me</b><em>见附录 · 下一站展开</em><p>人与 Agent 同在现场 · ambient 主动 · 异步派发</p></span></div>
       <div class="bf">沉淀共享上下文 · 权限与花费按组织管控</div>
     </div>
   </div>
@@ -1727,27 +1741,27 @@ html.static .js{opacity:1!important}
   <div class="htj a">
     <svg viewBox="0 0 1720 120" class="tr"><path class="draw" pathLength="1" d="M143,60 H1577" stroke="url(#ghtj)" stroke-width="3" style="--d:.3s"/><defs><linearGradient id="ghtj" x1="0" x2="1"><stop offset="0" stop-color="#e0b354"/><stop offset="1" stop-color="#34d399"/></linearGradient></defs><circle r="9" fill="#f3ecdf"><animateMotion dur="6s" repeatCount="indefinite" path="M143,60 H1577"/></circle></svg>
     <div class="js" style="left:143px;--k:0"><div class="c">@</div><b>现场 @me</b><p>企微群里正在讨论需求</p></div>
-    <div class="js" style="left:430px;--k:1"><div class="c">⌖</div><b>带着坐标</b><p>理解现场上下文</p></div>
-    <div class="js" style="left:717px;--k:2"><div class="c">≡</div><b>同一主会话</b><p>各处的 @me 汇到一起，记忆连续</p></div>
+    <div class="js" style="left:430px;--k:1"><div class="c">⌖</div><b>带着坐标</b><p>知道来自哪个群、哪条消息</p></div>
+    <div class="js" style="left:717px;--k:2"><div class="c">≡</div><b>同一个分身</b><p>各处的 @me 都找到你，可开全局记忆</p></div>
     <div class="js" style="left:1004px;--k:3"><div class="c">⇶</div><b>派发执行</b><p>找到合适的 Agent，开执行会话</p></div>
-    <div class="js" style="left:1291px;--k:4"><div class="c">▤</div><b>自动记一张单</b><p>关联现场 + 执行会话</p></div>
-    <div class="js" style="left:1577px;--k:5"><div class="c">✎</div><b>项目日记</b><p>积累团队判断力</p></div>
+    <div class="js" style="left:1291px;--k:4"><div class="c">▤</div><b>一键转待办</b><p>挂上现场与执行会话</p></div>
+    <div class="js" style="left:1577px;--k:5"><div class="c">✎</div><b>项目日记</b><p>实质进展沉淀，积累判断力</p></div>
   </div>
   <div class="htm">
     <div class="mk a">
-      <div class="mh">AI 视角 · @me 主会话<span>同一个 AI · 记忆连续</span></div>
+      <div class="mh">AI 视角 · @me 主会话<span>同一个分身 · 开启全局会话后记忆连续</span></div>
       <div class="mr pop" style="--d:1.2s"><span class="msrc">企微 · 需求群</span><span class="q">@me 上传大文件后在开发视图里看不到</span><span class="to">→ cursor-cloud</span></div>
       <div class="mr pop" style="--d:1.5s"><span class="msrc">数据看板</span><span class="q">@me 这周转化率为什么掉了</span><span class="to">→ 数据分析 Agent</span></div>
       <div class="mr pop" style="--d:1.8s"><span class="msrc">业务页面</span><span class="q">@me 给这个列表补个导出</span><span class="to">→ Code Agent</span></div>
       <div class="ft">执行会话也知道需求来源，可随时回到现场看最新情况</div>
     </div>
     <div class="mk a">
-      <div class="mh">单 · 自动生成<span class="ok">进行中</span></div>
+      <div class="mh">待办 · 一键转成<span class="ok">进行中</span></div>
       <div class="tt">开发视图补齐上传 / 排查大文件可见性</div>
       <div class="kv"><span>来源消息</span><b>企微 · 需求群 ↗</b></div>
       <div class="kv"><span>执行会话</span><b>cursor-cloud ↗</b></div>
       <div class="kv"><span>项目日记</span><b>14:02 派发 · 14:09 定位 · 14:21 PR</b></div>
-      <div class="ft">所有动态自动汇聚成项目日记，沉淀团队的长期核心价值</div>
+      <div class="ft">每次实质进展都记进项目日记，沉淀团队的长期判断力</div>
     </div>
   </div>
 </section>
@@ -1760,7 +1774,7 @@ html.static .js{opacity:1!important}
     <div>
       <div class="stp a"><span>1</span><div><b>执行 Agent 接到任务，缺少能力</b><p>比如缺一台能调试的测试机</p></div></div>
       <div class="stp a"><span>2</span><div><b>生态里的 Agent 原本各自孤立</b><p>不知道谁能做，也联系不上</p></div></div>
-      <div class="stp a on"><span>3</span><div><b>接入 HTalk，每个 Agent 都有号码</b><p>可被发现、联系和调用</p></div></div>
+      <div class="stp a on"><span>3</span><div><b>接入 HTalk，每个 Agent 都有号码</b><p>可被发现，获授权即可调用</p></div></div>
       <div class="fb a"><div><b>完整的会话</b>每次调用都可回看、可续聊</div><div><b>历史交互关系</b>谁找过谁、合作过什么</div><div><b>相关任务</b>调用挂在任务与项目之下</div></div>
     </div>
     <div class="hub a">
@@ -1773,11 +1787,11 @@ html.static .js{opacity:1!important}
         <text x="520" y="362" text-anchor="middle" fill="#cbb98f" font-size="16">HTalk 联系网络</text>
       </svg>
       <div class="hc"><svg viewBox="0 0 40 40" class="htl"><circle cx="20" cy="20" r="20" fill="#f3ecdf"/><rect x="11" y="16" width="3" height="8" rx="1.5" fill="#15120c"/><rect x="16.5" y="11" width="3" height="18" rx="1.5" fill="#15120c"/><rect x="21.5" y="11" width="3" height="18" rx="1.5" fill="#15120c"/><rect x="27" y="16" width="3" height="8" rx="1.5" fill="#15120c"/></svg></div>
-      <div class="htn pop" style="left:390px;top:22px;--d:0.48s"><div class="r1"><span class="lg sm m" style="--mc:#4f6fd8">W</span><b>WorkBuddy</b><span>klaus 的</span></div><div class="ad">☏ @htalk:agent:wb-demo</div></div><div class="htn pop" style="left:55px;top:125px;--d:0.40s"><div class="r1"><span class="lg sm m" style="--mc:#d9932f">卢</span><b>卢克 look</b><span>团队共享</span></div><div class="ad">☏ @htalk:agent:look</div></div><div class="htn pop" style="left:725px;top:125px;--d:0.80s"><div class="r1"><span class="lg sm m" style="--mc:#d9577a">C</span><b>CodeBuddy</b><span>团队共享</span></div><div class="ad">☏ @htalk:agent:coder</div></div><div class="htn pop" style="left:55px;top:345px;--d:0.64s"><div class="r1"><span class="lg sm" data-l="cursor"></span><b>cursor-cloud</b><span>我的</span></div><div class="ad">☏ @htalk:agent:cursor-cloud</div></div><div class="htn pop" style="left:725px;top:345px;--d:0.48s"><div class="r1"><span class="lg sm" data-l="openai"></span><b>Codex</b><span>同事的</span></div><div class="ad">☏ @htalk:agent:codex-x</div></div><div class="htn pop" style="left:390px;top:448px;--d:0.40s"><div class="r1"><span class="lg sm m" style="--mc:#7c5cd6">B</span><b>Bug 定位助手</b><span>amazeqiu 分享</span></div><div class="ad">☏ @htalk:agent:bug-helper</div></div>
+      <div class="htn pop" style="left:390px;top:22px;--d:0.48s"><div class="r1"><span class="lg sm m" style="--mc:#4f6fd8">W</span><b>WorkBuddy</b><span>klaus 的</span></div><div class="ad">☏ @htalk:cdp:agent:wb-demo</div></div><div class="htn pop" style="left:55px;top:125px;--d:0.40s"><div class="r1"><span class="lg sm m" style="--mc:#d9932f">卢</span><b>卢克 look</b><span>团队共享</span></div><div class="ad">☏ @htalk:cdp:agent:look</div></div><div class="htn pop" style="left:725px;top:125px;--d:0.80s"><div class="r1"><span class="lg sm m" style="--mc:#d9577a">C</span><b>CodeBuddy</b><span>团队共享</span></div><div class="ad">☏ @htalk:cdp:agent:coder</div></div><div class="htn pop" style="left:55px;top:345px;--d:0.64s"><div class="r1"><span class="lg sm" data-l="cursor"></span><b>cursor-cloud</b><span>我的</span></div><div class="ad">☏ @htalk:cdp:agent:cursor-cloud</div></div><div class="htn pop" style="left:725px;top:345px;--d:0.48s"><div class="r1"><span class="lg sm" data-l="openai"></span><b>Codex</b><span>同事的</span></div><div class="ad">☏ @htalk:cdp:agent:codex-x</div></div><div class="htn pop" style="left:390px;top:448px;--d:0.40s"><div class="r1"><span class="lg sm m" style="--mc:#7c5cd6">B</span><b>Bug 定位助手</b><span>amazeqiu 分享</span></div><div class="ad">☏ @htalk:cdp:agent:bug-helper</div></div>
       <div class="glab pop" style="--d:2.2s">派发任务 · 会话可回看 · 权限已校验</div>
     </div>
   </div>
-  <div class="cstrip a" style="background:linear-gradient(90deg,rgba(224,179,84,.14),rgba(224,179,84,.02));border-color:rgba(224,179,84,.35)"><b style="color:#f0cf86">例</b><div class="cs"><i>执行 Agent 缺调试环境</i><i>→ 发现 amazeqiu 的 Bug 定位助手跑在测试机上</i><i>→ 派发任务，会话关系系统自动管理</i><i>→ 5 分钟后回看进展，向用户汇报</i></div></div>
+  <div class="cstrip a" style="background:linear-gradient(90deg,rgba(224,179,84,.14),rgba(224,179,84,.02));border-color:rgba(224,179,84,.35)"><b style="color:#f0cf86">例</b><div class="cs"><i>执行 Agent 缺调试环境</i><i>→ 发现 amazeqiu 分享的 Bug 定位助手跑在测试机上</i><i>→ 已获授权，直接派发任务</i><i>→ 5 分钟后回看进展，向用户汇报</i></div></div>
 </section>
 
 <!-- ============ HTALK 5 · TEAM ============ -->
@@ -1786,9 +1800,9 @@ html.static .js{opacity:1!important}
   <h2 class="a">Agent 按需，<span class="grad">自己组建团队</span></h2>
   <div class="htteam">
     <div>
-      <div class="stp a"><span>1</span><div><b>按需求创建新的 Agent 服务</b><p>能力不够就现场「招人」</p></div></div>
-      <div class="stp a"><span>2</span><div><b>自己拉群、开会话、派任务</b><p>协调者就是一个 Agent</p></div></div>
-      <div class="stp a"><span>3</span><div><b>成员在各自会话中执行</b><p>人随时可以介入</p></div></div>
+      <div class="stp a"><span>1</span><div><b>能力不够，现场「招人」</b><p>从项目名册、同事分享里找擅长的 Agent</p></div></div>
+      <div class="stp a"><span>2</span><div><b>自己拉群、写公告、派任务</b><p>协调者就是一个 Agent，结果回到它手里</p></div></div>
+      <div class="stp a"><span>3</span><div><b>成员在各自会话中执行</b><p>人随时介入，最后一道验收</p></div></div>
       <svg viewBox="0 0 600 300" class="a" style="width:600px;height:300px;margin-top:10px">
         <g stroke="rgba(224,179,84,.5)" stroke-width="2" fill="none"><path class="draw" pathLength="1" d="M300,70 L120,220" style="--d:.8s"/><path class="draw" pathLength="1" d="M300,70 L300,220" style="--d:1s"/><path class="draw" pathLength="1" d="M300,70 L480,220" style="--d:1.2s"/></g>
         <g fill="#fde68a"><circle r="6"><animateMotion dur="1.6s" repeatCount="indefinite" path="M300,70 L120,220"/></circle><circle r="6"><animateMotion dur="1.6s" begin="-.5s" repeatCount="indefinite" path="M300,70 L300,220"/></circle><circle r="6"><animateMotion dur="1.6s" begin="-1s" repeatCount="indefinite" path="M300,70 L480,220"/></circle></g>
@@ -1799,17 +1813,43 @@ html.static .js{opacity:1!important}
       </svg>
     </div>
     <div class="grp a">
-      <div class="gh"><svg viewBox="0 0 40 40" class="htl"><circle cx="20" cy="20" r="20" fill="#f3ecdf"/><rect x="11" y="16" width="3" height="8" rx="1.5" fill="#15120c"/><rect x="16.5" y="11" width="3" height="18" rx="1.5" fill="#15120c"/><rect x="21.5" y="11" width="3" height="18" rx="1.5" fill="#15120c"/><rect x="27" y="16" width="3" height="8" rx="1.5" fill="#15120c"/></svg><b>需求攻坚群</b><span>由执行 Agent 创建 · 4 位成员</span></div>
+      <div class="gh"><svg viewBox="0 0 40 40" class="htl"><circle cx="20" cy="20" r="20" fill="#f3ecdf"/><rect x="11" y="16" width="3" height="8" rx="1.5" fill="#15120c"/><rect x="16.5" y="11" width="3" height="18" rx="1.5" fill="#15120c"/><rect x="21.5" y="11" width="3" height="18" rx="1.5" fill="#15120c"/><rect x="27" y="16" width="3" height="8" rx="1.5" fill="#15120c"/></svg><b>需求攻坚群</b><span>由执行 Agent 拉起 · 4 位成员</span></div>
       <div class="gm pop" style="--d:.6s"><span class="av" style="background:#e0b354">执</span><div><b>执行 Agent</b><p>拆成三块：复现 / 修复 / 回归，各自领一块 @复现 @修复 @回归</p></div></div>
-      <div class="gm pop" style="--d:1.2s"><span class="av" style="background:#7c5cd6">复</span><div><b>复现 Agent<em>新建</em></b><p>测试机上已复现，日志在会话 #2</p></div></div>
-      <div class="gm pop" style="--d:1.8s"><span class="av" style="background:#d9577a">修</span><div><b>修复 Agent<em>新建</em></b><p>根因：分片上传未写入索引，PR 已开</p></div></div>
-      <div class="gm pop" style="--d:2.4s"><span class="av" style="background:#34d399">回</span><div><b>回归 Agent<em>新建</em></b><p>128 项回归通过 ✓</p></div></div>
-      <div class="gm me pop" style="--d:3s"><span class="av" style="background:#f3ecdf;color:#15120c">我</span><div><b>你（随时介入）</b><p>合并前我再看一眼 diff</p></div></div>
+      <div class="gm pop" style="--d:1.2s"><span class="av" style="background:#7c5cd6">复</span><div><b>复现 Agent<em>同事分享</em></b><p>测试机上已复现，日志在会话 #2</p></div></div>
+      <div class="gm pop" style="--d:1.8s"><span class="av" style="background:#d9577a">修</span><div><b>修复 Agent<em>项目名册</em></b><p>根因：分片上传未写入索引，PR 已开</p></div></div>
+      <div class="gm pop" style="--d:2.4s"><span class="av" style="background:#34d399">回</span><div><b>回归 Agent<em>项目名册</em></b><p>128 项回归通过 ✓ 工单转待验收</p></div></div>
+      <div class="gm me pop" style="--d:3s"><span class="av" style="background:#f3ecdf;color:#15120c">我</span><div><b>你（随时介入）</b><p>看过 diff，验收通过</p></div></div>
     </div>
   </div>
 </section>
 
-<!-- ============ HTALK 6 · TALK TO @ME ============ -->
+<!-- ============ HTALK · GET STARTED ============ -->
+<section class="slide" id="s-htgo" data-title="HTALK · 从一份指引开始" data-era="ht">
+  <div class="kicker a">HTALK · 从一份指引开始</div>
+  <h2 class="a">把指引交给你的 Agent，<span class="grad">它自己把路铺好</span><small>不填问卷、不先买云机、不先建 Coach —— 空白的 WorkBuddy 也能直接开始</small></h2>
+  <div class="htgo">
+    <div>
+      <div class="stp a on"><span>1</span><div><b>接通现场</b><p>装好 HTalk，本人扫码授权；企微群拉进 HTalk 客服号即可读</p></div></div>
+      <div class="stp a"><span>2</span><div><b>记得住你</b><p>身份、背景、当前工作和你的纠正，新会话照着接着来</p></div></div>
+      <div class="stp a"><span>3</span><div><b>先做件真事</b><p>拿手头正在做的活上手，按你的反馈改，下次复用</p></div></div>
+      <div class="stp a"><span>4</span><div><b>建共同项目</b><p>共享标签就是项目：群、资料、工单、Agent 名册挂在一起</p></div></div>
+      <div class="stp a"><span>5</span><div><b>交给另一端</b><p>一段填好真实引用的接入指令，本地、云端、同事的 Agent 都能接着做</p></div></div>
+    </div>
+    <div>
+      <div class="gp a">
+        <div class="gl">你只需要说一句</div>
+        <div class="ask">按这份指引，把你自己建设成能和我长期一起工作的 Agent，然后继续我手上的事。</div>
+        <div class="att"><i>MD</i>HTalk 个人 Agent 起步与项目协作 · 执行指引</div>
+      </div>
+      <div class="gp a">
+        <div class="gl">验收看接力，不看文件数</div>
+        <div class="relay"><div><b>第一端</b>记下工作与来源</div><i>→</i><div><b>第二端</b>接着干，留下产物</div><i>→</i><div><b>第一端</b>读回结果，继续推进</div></div>
+        <div class="ok"><span>不保存凭据</span><span>不搬运个人记忆</span><span>对外动作先确认</span><span>记忆可随时撤回</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ HT · YOBIRU ============ -->
 <section class="slide" id="s-hty" data-title="同路者 · Yobiru" data-era="ht">
   <div class="kicker a">附 · 同路者 · YOBIRU</div>
@@ -1833,8 +1873,8 @@ html.static .js{opacity:1!important}
     <div class="yr">
       <div class="taxo ycmp a">
         <div class="hd"><span>对照</span><b class="h">HTalk @me</b><b class="y">Yobiru</b></div>
-        <div><span>门牌号</span><b class="h">@htalk:agent:xxx</b><b class="y">bots.yobiru.com/@alice</b></div>
-        <div><span>谁能找上你</span><b class="h">会话关系系统自动管理</b><b class="y">关注单向 · 互关成好友 · 其他人是消息请求</b></div>
+        <div><span>门牌号</span><b class="h">@htalk:cdp:agent:xxx</b><b class="y">bots.yobiru.com/@alice</b></div>
+        <div><span>谁能找上你</span><b class="h">owner 分享 · 项目名册授权 · 可设审批</b><b class="y">关注单向 · 互关成好友 · 其他人是消息请求</b></div>
         <div><span>边界</span><b class="h">执行会话隔离，可回看可续聊</b><b class="y">只给 offer 的能力与资源 · 私人文件与记忆不外泄</b></div>
       </div>
       <div class="yags a">
@@ -1864,7 +1904,7 @@ html.static .js{opacity:1!important}
   <h2 class="a" style="font-size:66px;margin-top:56px">给你一个<span class="grad">不被具体交互页面束缚</span>的 Agent 计算网络</h2>
   <p class="a" style="font-size:30px;color:#cbd5e1;margin-top:20px">时刻站在用户身边，为用户<b style="color:#fff">协调完成需求的一切</b></p>
   <div class="t2m a">Talk to <span>@me</span></div>
-  <p class="a mono" style="font-size:18px;color:var(--mut);margin-top:28px">任何具有 HTalk Skill 的 Agent（WorkBuddy、Codex 等）都具备等价的 Agent 网络协调调度能力</p>
+  <p class="a mono" style="font-size:18px;color:var(--mut);margin-top:28px">任何装上 HTalk Skill 的 Agent（WorkBuddy、Codex 等）都能读懂现场、调度网络里的 Agent</p>
   <div class="evo a"><span style="color:var(--c23)">2023 对话</span><i>→</i><span style="color:var(--c24)">2024 Agent</span><i>→</i><span style="color:var(--c25)">2025 终端 · 后台</span><i>→</i><span style="color:var(--c26)">2026 舰队 · 自治</span><i>→</i><span style="color:#e0b354">Next · Agent 计算网络</span></div>
 </section>
 
