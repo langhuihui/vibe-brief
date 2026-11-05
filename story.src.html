@@ -22,6 +22,23 @@ body{background:var(--bg);color:var(--fg);font-family:var(--sans);-webkit-font-s
 #stage::before{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:64px 64px;mask-image:radial-gradient(ellipse at center,#000 30%,transparent 85%);z-index:0}
 svg *{transform-box:fill-box;transform-origin:center}
 
+/* ---------- cover orbit ----------
+   Mirrors the deck cover: a logo constellation replaces the old "how to read
+   this scroll" text block. Kept static on purpose — the scroll already runs
+   four parallax layers, so no perpetual spin on top of them. */
+.covorbit{position:absolute;width:700px;height:700px;pointer-events:none}
+/* soften the L0 outline glyphs behind the constellation, like the deck cover */
+.covorbit::before{content:"";position:absolute;inset:-60px;border-radius:50%;background:radial-gradient(circle,rgba(7,9,13,.9) 0%,rgba(7,9,13,.82) 44%,rgba(7,9,13,.42) 64%,rgba(7,9,13,0) 79%);pointer-events:none}
+.covorbit .covring{position:absolute;border-radius:50%;border:1px dashed rgba(255,255,255,.09)}
+.covorbit .covring.r2{inset:20px;border-color:rgba(255,255,255,.08)}
+.covorbit .covring.r1{inset:150px;border-color:rgba(255,255,255,.14)}
+.covorbit .covo{position:absolute;left:50%;top:50%;width:0;height:0;transform:rotate(var(--t)) translateX(var(--r)) rotate(calc(-1 * var(--t)))}
+.covorbit .covo .lg{position:absolute;left:-29px;top:-29px;width:58px;height:58px;border-radius:17px;background:rgba(15,20,30,.88)}
+.covorbit .covo .lg svg{width:30px;height:30px}
+.covorbit .covcore{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
+.covorbit .covcore .lg{width:108px;height:108px;border-radius:26px;background:rgba(15,20,30,.94);box-shadow:0 0 0 1px rgba(255,255,255,.1),0 0 70px rgba(56,189,248,.2)}
+.covorbit .covcore .lg svg{width:58px;height:58px}
+
 /* ---------- layers ---------- */
 .layer{position:absolute;left:0;top:0;width:1920px;height:0;will-change:transform}
 #L0{z-index:1}#L1{z-index:2}#L2{z-index:3}#L3{z-index:4;pointer-events:none}
@@ -395,15 +412,27 @@ svg *{transform-box:fill-box;transform-origin:center}
     <h1 style="font-size:150px;line-height:1;font-weight:900;letter-spacing:-.04em;margin-top:30px">Vibe Coding<br><span class="grad">简史</span></h1>
     <p style="font-size:28px;color:var(--mut);margin-top:36px;line-height:1.5">三年只发生了一件事：<br><span style="color:#fff;font-weight:700">把「自治滑杆」从人类那头，一路推到 AI 这头。</span></p>
   </div>
-  <div style="position:absolute;left:1010px;top:190px;width:700px">
-    <div class="kk" style="color:var(--mut)">怎么读这张长卷 · 四层，四种速度</div>
-    <div style="margin-top:22px;display:flex;flex-direction:column;gap:20px;font-size:20px;line-height:1.45">
-      <div><b style="font-size:24px">远景 · 时代与人的角色</b><span class="mut"> —— 以年计，走得最慢</span><div style="margin-top:8px;height:6px;width:90px;border-radius:3px;background:#64748b"></div></div>
-      <div><b style="font-size:24px">中景 · Cursor 主线与生命线</b><span class="mut"> —— 以月计；左边是 Cursor（越来越粗 = 估值），右边每条竖线是一个产品或协议，<span style="color:#e2e8f0">线有多长，它就活了多久</span></span><div style="margin-top:8px;height:6px;width:180px;border-radius:3px;background:#a78bfa"></div></div>
-      <div><b style="font-size:24px">近景 · 事件与发布</b><span class="mut"> —— 以天计，跟着你的滚动走</span><div style="margin-top:8px;height:6px;width:330px;border-radius:3px;background:#22d3ee"></div></div>
-      <div><b style="font-size:24px;color:#f9a8d4">前景 · 热议</b><span class="mut"> —— 以周计，一闪而过</span><div style="margin-top:8px;height:6px;width:500px;border-radius:3px;background:#f472b6"></div></div>
+  <!-- right side: same logo constellation as the deck cover, no explainer copy -->
+  <div class="covorbit" style="left:970px;top:90px">
+    <div class="covring r2">
+      <div class="covo" style="--t:0deg;--r:330px"><span class="lg" data-l="githubcopilot"></span></div>
+      <div class="covo" style="--t:45deg;--r:330px"><span class="lg" data-l="replit"></span></div>
+      <div class="covo" style="--t:90deg;--r:330px"><span class="lg" data-l="vercel"></span></div>
+      <div class="covo" style="--t:135deg;--r:330px"><span class="lg" data-l="windsurf"></span></div>
+      <div class="covo" style="--t:180deg;--r:330px"><span class="lg" data-l="stackblitz"></span></div>
+      <div class="covo" style="--t:225deg;--r:330px"><span class="lg" data-l="zedindustries"></span></div>
+      <div class="covo" style="--t:270deg;--r:330px"><span class="lg" data-l="jetbrains"></span></div>
+      <div class="covo" style="--t:315deg;--r:330px"><span class="lg" data-l="cline"></span></div>
     </div>
-    <p style="margin-top:30px;font:600 16px var(--mono);color:var(--dim)">四层在左侧「此刻」那条细线上对齐 · 向下滚动，可随时回滚 ↓</p>
+    <div class="covring r1">
+      <div class="covo" style="--t:0deg;--r:200px"><span class="lg" data-l="claude"></span></div>
+      <div class="covo" style="--t:60deg;--r:200px"><span class="lg" data-l="openai"></span></div>
+      <div class="covo" style="--t:120deg;--r:200px"><span class="lg" data-l="googlegemini"></span></div>
+      <div class="covo" style="--t:180deg;--r:200px"><span class="lg" data-l="modelcontextprotocol"></span></div>
+      <div class="covo" style="--t:240deg;--r:200px"><span class="lg" data-l="grok"></span></div>
+      <div class="covo" style="--t:300deg;--r:200px"><span class="lg" data-l="deepseek"></span></div>
+    </div>
+    <div class="covcore"><span class="lg" data-l="cursor"></span></div>
   </div>
 </div>
 
