@@ -336,21 +336,16 @@ h2 small{display:block;font-size:26px;font-weight:500;color:var(--mut);letter-sp
 .slide.active .term .l{animation:up .4s ease both;animation-delay:calc(.6s + var(--k)*.45s)}
 .term .ok{color:#4ade80}.term .ac{color:var(--ac)}.term .dm{color:#64748b}
 
-/* context composition — donut pie + full legend. Replaces the proportional
-   bar: a 4% / 7% segment was too narrow to hold its own label, so names got
-   clipped. The legend gives every slice its own full-width row instead. */
-.ctxviz{display:flex;align-items:center;gap:56px;margin-top:40px}
-.ctxpie{width:212px;height:212px;flex:none}
-.ctxpie svg{display:block;width:100%;height:100%}
-.slide.active .ctxpie{animation:pieIn .8s cubic-bezier(.2,.8,.2,1) both;animation-delay:.35s}
-@keyframes pieIn{from{opacity:0;transform:scale(.84) rotate(-28deg)}to{opacity:1;transform:none}}
-.ctxlegend{flex:1;display:grid;grid-auto-flow:column;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,1fr);gap:12px 48px}
-.ctxlegend .it{display:flex;align-items:center;gap:12px;font-size:19px;color:#cbd5e1}
-.slide.active .ctxlegend .it{animation:up .5s ease both;animation-delay:calc(.55s + var(--k)*.055s)}
-.ctxlegend .sw{width:16px;height:16px;border-radius:5px;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.14)}
-.ctxlegend .nm{flex:none;white-space:nowrap}
-.ctxlegend .pc{margin-left:auto;font:700 18px var(--mono);color:var(--mut);font-variant-numeric:tabular-nums}
-.ctxlegend .it.hi .nm,.ctxlegend .it.hi .pc{color:#34d399}
+/* context bar — the deck keeps the proportional bar; only the long-scroll
+   version needs the donut + full legend (its 4% / 7% segments are too narrow
+   to hold their own labels, see story.src.html). */
+.ctxbar{display:flex;height:120px;border-radius:18px;overflow:hidden;margin-top:48px;border:1px solid rgba(255,255,255,.12)}
+.ctxbar div{position:relative;display:flex;align-items:center;justify-content:center;font:700 19px var(--sans);color:#0b0f16;transform-origin:left;flex:none}
+.slide.active .ctxbar div{animation:growx .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(.4s + var(--k)*.15s)}
+@keyframes growx{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.ctxlab{display:flex;margin-top:12px}
+.ctxlab div{font-size:16px;color:var(--mut);text-align:center;flex:none;line-height:1.35}
+.ctxlab div b{display:block;color:#e2e8f0;font-size:17px}
 .trio{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:44px}
 /* the Jev card carries a 108px portrait; give the last card row the extra
    height so the 610px grid and its 18px gap to the buzz strip stay intact */
@@ -956,7 +951,8 @@ html.static .js{opacity:1!important}
 <section class="slide" id="s-ctx" data-title="Context Engineering" data-era="2025">
   <div class="kicker a">2025.06 · 新词</div>
   <h2 class="a" style="font-size:84px">Context Engineering<br><span class="grad">Prompt 只是上下文的一小块</span></h2>
-  <div class="ctxviz a" id="ctxviz"></div>
+  <div class="ctxbar a" id="ctxbar"></div>
+  <div class="ctxlab a" id="ctxlab"></div>
   <div class="trio">
     <div class="cc a"><div class="cc-h"><span class="lg m" style="--mc:#0f766e">CE</span><b>上下文工程</b><em>2025.06</em></div><p>Tobi Lütke / Karpathy：为每一步装配恰好的信息</p></div>
     <div class="cc a"><div class="cc-h"><span class="lg m" style="--mc:#b91c1c">CR</span><b>Context Rot</b><em>2025</em></div><p>上下文越长，模型越「笨」</p></div>
@@ -2063,15 +2059,9 @@ window.AVATARS={"ghuntley":"data:image/webp;base64,UklGRuxKAABXRUJQVlA4IOBKAABw1
  b+='<text x="380" y="450" text-anchor="middle" font-family="JetBrains Mono" font-size="17" fill="#c4b5fd">4 客户端 + 4 服务器</text>';
  document.getElementById('nxm').innerHTML=a;document.getElementById('npm').innerHTML=b})();
 
-/* ---------- context composition donut ---------- */
-(function(){const S=[['系统提示',7,'#38bdf8'],['规则 · AGENTS.md',10,'#60a5fa'],['记忆',8,'#a78bfa'],['工具 · MCP',13,'#c084fc'],['检索到的代码 · 文档',30,'#fb923c'],['对话历史',20,'#fbbf24'],['Prompt',4,'#34d399'],['余量',8,'rgba(255,255,255,.08)']];
- const C=2*Math.PI*70;let arcs='',leg='',acc=0;
- S.forEach((v,i)=>{const len=v[1]/100*C,d=Math.max(.5,len-Math.min(2,len*.2));
-  /* start at 12 o'clock via dashoffset (no SVG transform: story.src.html has a
-     global `svg *{transform-box:fill-box}` that shifts rotate() out of view) */
-  arcs+='<circle cx="100" cy="100" r="70" fill="none" stroke="'+v[2]+'" stroke-width="36" stroke-dasharray="'+d.toFixed(2)+' '+(C-d).toFixed(2)+'" stroke-dashoffset="'+(-(C*.75+acc)).toFixed(2)+'"/>';acc+=len;
-  leg+='<div class="it'+(v[0]==='Prompt'?' hi':'')+'" style="--k:'+i+'"><i class="sw" style="background:'+v[2]+'"></i><span class="nm">'+v[0]+'</span><b class="pc">'+v[1]+'%</b></div>'});
- document.getElementById('ctxviz').innerHTML='<div class="ctxpie"><svg viewBox="0 0 200 200" role="img" aria-label="上下文组成占比环形饼图">'+arcs+'<text x="100" y="97" text-anchor="middle" font-family="Inter,sans-serif" font-size="40" font-weight="800" fill="#34d399">4%</text><text x="100" y="122" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" fill="#8b93a7">Prompt</text></svg></div><div class="ctxlegend">'+leg+'</div>'})();
+/* ---------- context bar (deck only; story uses the donut) ---------- */
+(function(){const s=[['系统提示',7,'#38bdf8'],['规则 · AGENTS.md',10,'#60a5fa'],['记忆',8,'#a78bfa'],['工具 · MCP',13,'#c084fc'],['检索到的代码 · 文档',30,'#fb923c'],['对话历史',20,'#fbbf24'],['Prompt',4,'#34d399'],['余量',8,'rgba(255,255,255,.08)']];
+ let a='',b='';const W=1720;s.forEach((x,i)=>{const w=x[1]/100*W;a+='<div style="--k:'+i+';width:'+w+'px;background:'+x[2]+';'+(x[0]=='余量'?'color:#64748b':'')+(x[0]=='Prompt'?';box-shadow:inset 0 0 0 3px #fff':'')+'">'+(x[1]>=7?x[1]+'%':'')+'</div>';b+='<div style="width:'+w+'px"><b'+(x[0]=='Prompt'?' style="color:#34d399"':'')+'>'+x[0]+'</b></div>'});document.getElementById('ctxbar').innerHTML=a;document.getElementById('ctxlab').innerHTML=b})();
 
 /* ---------- agent panes ---------- */
 (function(){const p=[['claude','重构 auth',3.2],['openai','加 E2E 测试',4.1],['cursor','迁移 Tailwind v4',3.6],['googlegemini','修复 #812',2.8],['grok','性能剖析',4.6],['kimi','文档补全',3.0],['claude','best-of-n ①',3.8],['openai','best-of-n ②',4.4]];
