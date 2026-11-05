@@ -523,7 +523,7 @@ html.static .js{opacity:1!important}
 .htn{position:absolute;width:270px;height:80px;border-radius:16px;padding:11px 14px;background:#0f131b;border:1px solid rgba(255,255,255,.14);box-shadow:0 10px 30px rgba(0,0,0,.35)}
 .htn .r1{display:flex;align-items:center;gap:10px}.htn .r1 b{font-size:19px;white-space:nowrap}.htn .r1 span:last-child{margin-left:auto;font-size:13px;color:var(--mut);white-space:nowrap}
 .htn .ad{margin-top:8px;font:600 12px var(--mono);white-space:nowrap;color:#a5b4fc;padding:3px 9px;border-radius:7px;background:rgba(99,102,241,.14);width:fit-content}
-.glab{position:absolute;left:30px;top:470px;font-size:16px;padding:7px 14px;border-radius:10px;background:rgba(224,179,84,.16);border:1px solid rgba(224,179,84,.45);color:#f0cf86}
+.glab{position:absolute;left:30px;top:516px;font-size:16px;padding:7px 14px;border-radius:10px;background:rgba(224,179,84,.16);border:1px solid rgba(224,179,84,.45);color:#f0cf86}
 .htteam{display:grid;grid-template-columns:600px 1040px;gap:80px;margin-top:40px}
 .htteam .stp{padding:24px 0}
 .grp{border-radius:24px;background:#0d1118;border:1px solid rgba(255,255,255,.1);padding:26px 30px;height:780px}
@@ -546,6 +546,19 @@ html.static .js{opacity:1!important}
 .htgo .relay div{flex:1;border-radius:16px;padding:18px 20px;background:rgba(255,255,255,.035);border:1px solid var(--line);font-size:19px;color:var(--mut);line-height:1.4}
 .htgo .relay div b{display:block;font-size:23px;color:#e8e2d6;margin-bottom:6px}
 .htgo .relay>i{font-style:normal;color:#e0b354;font-size:28px}
+.htgo .relay{position:relative;padding-bottom:18px}
+.htgo .relay::before{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;border-radius:3px;background:rgba(224,179,84,.14)}
+.htgo .relay::after{content:"";position:absolute;bottom:-4px;left:0;width:11px;height:11px;margin-left:-5px;border-radius:50%;background:#fde68a;box-shadow:0 0 16px #e0b354;opacity:0}
+.slide.active .htgo .relay::after{animation:hgoRun 3.4s ease-in-out 1.6s infinite}
+@keyframes hgoRun{0%{left:0;opacity:0}10%,90%{opacity:1}100%{left:100%;opacity:0}}
+.htgo .ask .cr{display:inline-block;width:3px;height:26px;margin-left:4px;vertical-align:-4px;background:#e0b354;animation:blink 1s steps(1) infinite}
+.htgo .stp>span{transition:none}
+.slide.active .htgo .stp>span{animation:hgoStep 10s linear infinite}
+.slide.active .htgo .stp:nth-child(2)>span{animation-delay:2s}
+.slide.active .htgo .stp:nth-child(3)>span{animation-delay:4s}
+.slide.active .htgo .stp:nth-child(4)>span{animation-delay:6s}
+.slide.active .htgo .stp:nth-child(5)>span{animation-delay:8s}
+@keyframes hgoStep{0%,3%{background:transparent;border-color:#475569;color:#94a3b8;box-shadow:none}6%,20%{background:#e0b354;border-color:#e0b354;color:#15120c;box-shadow:0 0 24px rgba(224,179,84,.55)}24%,100%{background:transparent;border-color:#475569;color:#94a3b8;box-shadow:none}}
 .htgo .ok{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
 .htgo .ok span{font:600 17px var(--mono);padding:8px 15px;border-radius:999px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.3);color:#6ee7b7}
 
@@ -1742,8 +1755,8 @@ html.static .js{opacity:1!important}
     <svg viewBox="0 0 1720 120" class="tr"><path class="draw" pathLength="1" d="M143,60 H1577" stroke="url(#ghtj)" stroke-width="3" style="--d:.3s"/><defs><linearGradient id="ghtj" x1="0" x2="1"><stop offset="0" stop-color="#e0b354"/><stop offset="1" stop-color="#34d399"/></linearGradient></defs><circle r="9" fill="#f3ecdf"><animateMotion dur="6s" repeatCount="indefinite" path="M143,60 H1577"/></circle></svg>
     <div class="js" style="left:143px;--k:0"><div class="c">@</div><b>现场 @me</b><p>企微群里正在讨论需求</p></div>
     <div class="js" style="left:430px;--k:1"><div class="c">⌖</div><b>带着坐标</b><p>知道来自哪个群、哪条消息</p></div>
-    <div class="js" style="left:717px;--k:2"><div class="c">≡</div><b>同一个分身</b><p>各处的 @me 都找到你，可开全局记忆</p></div>
-    <div class="js" style="left:1004px;--k:3"><div class="c">⇶</div><b>派发执行</b><p>找到合适的 Agent，开执行会话</p></div>
+    <div class="js" style="left:717px;--k:2"><div class="c">≡</div><b>同一个分身</b><p>各处的 @me 都是你</p></div>
+    <div class="js" style="left:1004px;--k:3"><div class="c">⇶</div><b>派发执行</b><p>找到合适的 Agent 开工</p></div>
     <div class="js" style="left:1291px;--k:4"><div class="c">▤</div><b>一键转待办</b><p>挂上现场与执行会话</p></div>
     <div class="js" style="left:1577px;--k:5"><div class="c">✎</div><b>项目日记</b><p>实质进展沉淀，积累判断力</p></div>
   </div>
@@ -1787,7 +1800,7 @@ html.static .js{opacity:1!important}
         <text x="520" y="362" text-anchor="middle" fill="#cbb98f" font-size="16">HTalk 联系网络</text>
       </svg>
       <div class="hc"><svg viewBox="0 0 40 40" class="htl"><circle cx="20" cy="20" r="20" fill="#f3ecdf"/><rect x="11" y="16" width="3" height="8" rx="1.5" fill="#15120c"/><rect x="16.5" y="11" width="3" height="18" rx="1.5" fill="#15120c"/><rect x="21.5" y="11" width="3" height="18" rx="1.5" fill="#15120c"/><rect x="27" y="16" width="3" height="8" rx="1.5" fill="#15120c"/></svg></div>
-      <div class="htn pop" style="left:390px;top:22px;--d:0.48s"><div class="r1"><span class="lg sm m" style="--mc:#4f6fd8">W</span><b>WorkBuddy</b><span>klaus 的</span></div><div class="ad">☏ @htalk:cdp:agent:wb-demo</div></div><div class="htn pop" style="left:55px;top:125px;--d:0.40s"><div class="r1"><span class="lg sm m" style="--mc:#d9932f">卢</span><b>卢克 look</b><span>团队共享</span></div><div class="ad">☏ @htalk:cdp:agent:look</div></div><div class="htn pop" style="left:725px;top:125px;--d:0.80s"><div class="r1"><span class="lg sm m" style="--mc:#d9577a">C</span><b>CodeBuddy</b><span>团队共享</span></div><div class="ad">☏ @htalk:cdp:agent:coder</div></div><div class="htn pop" style="left:55px;top:345px;--d:0.64s"><div class="r1"><span class="lg sm" data-l="cursor"></span><b>cursor-cloud</b><span>我的</span></div><div class="ad">☏ @htalk:cdp:agent:cursor-cloud</div></div><div class="htn pop" style="left:725px;top:345px;--d:0.48s"><div class="r1"><span class="lg sm" data-l="openai"></span><b>Codex</b><span>同事的</span></div><div class="ad">☏ @htalk:cdp:agent:codex-x</div></div><div class="htn pop" style="left:390px;top:448px;--d:0.40s"><div class="r1"><span class="lg sm m" style="--mc:#7c5cd6">B</span><b>Bug 定位助手</b><span>amazeqiu 分享</span></div><div class="ad">☏ @htalk:cdp:agent:bug-helper</div></div>
+      <div class="htn pop" style="left:390px;top:22px;--d:0.48s"><div class="r1"><span class="lg sm m" style="--mc:#4f6fd8">W</span><b>WorkBuddy</b><span>klaus 的</span></div><div class="ad">☏ @htalk:cdp:agent:wb-demo</div></div><div class="htn pop" style="left:55px;top:125px;--d:0.40s"><div class="r1"><span class="lg sm m" style="--mc:#d9932f">卢</span><b>卢克 look</b><span>团队共享</span></div><div class="ad">☏ @htalk:cdp:agent:look</div></div><div class="htn pop" style="left:725px;top:125px;--d:0.80s"><div class="r1"><span class="lg sm m" style="--mc:#d9577a">C</span><b>CodeBuddy</b><span>团队共享</span></div><div class="ad">☏ @htalk:cdp:agent:coder</div></div><div class="htn pop" style="left:55px;top:345px;--d:0.64s"><div class="r1"><span class="lg sm" data-l="cursor"></span><b>cursor-cloud</b><span>我的</span></div><div class="ad">☏ @htalk:cdp:agent:cursor-cloud</div></div><div class="htn pop" style="left:725px;top:345px;--d:0.48s"><div class="r1"><span class="lg sm" data-l="openai"></span><b>Codex</b><span>同事的</span></div><div class="ad">☏ @htalk:cdp:agent:codex-x</div></div><div class="htn pop" style="left:390px;top:448px;--d:0.40s"><div class="r1"><span class="lg sm m" style="--mc:#7c5cd6">B</span><b>Bug 定位助手</b><span>amazeqiu 的</span></div><div class="ad">☏ @htalk:cdp:agent:bug-helper</div></div>
       <div class="glab pop" style="--d:2.2s">派发任务 · 会话可回看 · 权限已校验</div>
     </div>
   </div>
@@ -1833,12 +1846,12 @@ html.static .js{opacity:1!important}
       <div class="stp a"><span>2</span><div><b>记得住你</b><p>身份、背景、当前工作和你的纠正，新会话照着接着来</p></div></div>
       <div class="stp a"><span>3</span><div><b>先做件真事</b><p>拿手头正在做的活上手，按你的反馈改，下次复用</p></div></div>
       <div class="stp a"><span>4</span><div><b>建共同项目</b><p>共享标签就是项目：群、资料、工单、Agent 名册挂在一起</p></div></div>
-      <div class="stp a"><span>5</span><div><b>交给另一端</b><p>一段填好真实引用的接入指令，本地、云端、同事的 Agent 都能接着做</p></div></div>
+      <div class="stp a"><span>5</span><div><b>交给另一端</b><p>一段填好真实引用的接入指令，本地、云端、同事的 Agent 接着做</p></div></div>
     </div>
     <div>
       <div class="gp a">
         <div class="gl">你只需要说一句</div>
-        <div class="ask">按这份指引，把你自己建设成能和我长期一起工作的 Agent，然后继续我手上的事。</div>
+        <div class="ask">按这份指引，把你自己建设成能和我长期一起工作的 Agent，然后继续我手上的事。<span class="cr"></span></div>
         <div class="att"><i>MD</i>HTalk 个人 Agent 起步与项目协作 · 执行指引</div>
       </div>
       <div class="gp a">
