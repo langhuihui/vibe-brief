@@ -24,20 +24,37 @@ svg *{transform-box:fill-box;transform-origin:center}
 
 /* ---------- cover orbit ----------
    Mirrors the deck cover: a logo constellation replaces the old "how to read
-   this scroll" text block. Kept static on purpose — the scroll already runs
-   four parallax layers, so no perpetual spin on top of them. */
+   this scroll" text block. Same slow spin / counter-spin / core pulse as the
+   deck; all looping animations are viewport-gated below. */
 .covorbit{position:absolute;width:700px;height:700px;pointer-events:none}
 /* soften the L0 outline glyphs behind the constellation, like the deck cover */
 .covorbit::before{content:"";position:absolute;inset:-60px;border-radius:50%;background:radial-gradient(circle,rgba(7,9,13,.9) 0%,rgba(7,9,13,.82) 44%,rgba(7,9,13,.42) 64%,rgba(7,9,13,0) 79%);pointer-events:none}
+@keyframes covSpin{to{transform:rotate(360deg)}}
+@keyframes covSpinR{to{transform:rotate(-360deg)}}
+@keyframes covPulse{0%,100%{opacity:.88;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
 .covorbit .covring{position:absolute;border-radius:50%;border:1px dashed rgba(255,255,255,.09)}
-.covorbit .covring.r2{inset:20px;border-color:rgba(255,255,255,.08)}
-.covorbit .covring.r1{inset:150px;border-color:rgba(255,255,255,.14)}
+.covorbit .covring.r2{inset:20px;border-color:rgba(255,255,255,.08);animation:covSpin 90s linear infinite;animation-direction:reverse}
+.covorbit .covring.r1{inset:150px;border-color:rgba(255,255,255,.14);animation:covSpin 60s linear infinite}
 .covorbit .covo{position:absolute;left:50%;top:50%;width:0;height:0;transform:rotate(var(--t)) translateX(var(--r)) rotate(calc(-1 * var(--t)))}
 .covorbit .covo .lg{position:absolute;left:-29px;top:-29px;width:58px;height:58px;border-radius:17px;background:rgba(15,20,30,.88)}
+.covorbit .covring.r1 .covo .lg{animation:covSpinR 60s linear infinite}
+.covorbit .covring.r2 .covo .lg{animation:covSpin 90s linear infinite}
 .covorbit .covo .lg svg{width:30px;height:30px}
 .covorbit .covcore{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
-.covorbit .covcore .lg{width:108px;height:108px;border-radius:26px;background:rgba(15,20,30,.94);box-shadow:0 0 0 1px rgba(255,255,255,.1),0 0 70px rgba(56,189,248,.2)}
+.covorbit .covcore .lg{width:108px;height:108px;border-radius:26px;background:rgba(15,20,30,.94);box-shadow:0 0 0 1px rgba(255,255,255,.1),0 0 70px rgba(56,189,248,.2);animation:covPulse 4s ease-in-out infinite}
 .covorbit .covcore .lg svg{width:58px;height:58px}
+
+/* ---------- viewport-gated perpetual animation ----------
+   update() already toggles .vis on every block as it nears / leaves the window,
+   so no extra observer is needed. Freeze every looping animation inside an
+   off-screen block: no CPU off-screen, and on re-entry it resumes from where
+   it paused (the first entry starts at 0 because paused time never advances).
+   Scroll-driven data-fx effects stay as they are — they are only computed for
+   visible blocks by the same loop.
+   !important is deliberate: `.covorbit .covring.r1 .covo .lg` sets the animation
+   shorthand (which resets play-state to running) with higher specificity than
+   this gate, so without it the 14 counter-spinning logos kept running off-screen. */
+.blk:not(.vis) :is(.covring,.covring .lg,.covcore .lg,.caret,.wsp-grid i.hit){animation-play-state:paused!important}
 
 /* ---------- layers ---------- */
 .layer{position:absolute;left:0;top:0;width:1920px;height:0;will-change:transform}
@@ -413,7 +430,7 @@ svg *{transform-box:fill-box;transform-origin:center}
     <p style="font-size:28px;color:var(--mut);margin-top:36px;line-height:1.5">三年只发生了一件事：<br><span style="color:#fff;font-weight:700">把「自治滑杆」从人类那头，一路推到 AI 这头。</span></p>
   </div>
   <!-- right side: same logo constellation as the deck cover, no explainer copy -->
-  <div class="covorbit" style="left:970px;top:90px">
+  <div class="covorbit" style="left:910px;top:90px">
     <div class="covring r2">
       <div class="covo" style="--t:0deg;--r:330px"><span class="lg" data-l="githubcopilot"></span></div>
       <div class="covo" style="--t:45deg;--r:330px"><span class="lg" data-l="replit"></span></div>
