@@ -244,9 +244,17 @@ svg *{transform-box:fill-box;transform-origin:center}
 .tweet .zh{font-size:21px;color:var(--mut);margin-top:12px}
 .stat b{display:block;font:900 56px/1 var(--sans);letter-spacing:-.03em;color:var(--ac)}
 .stat span{display:block;font-size:17px;color:var(--mut);margin-top:10px}
-.ctxbar{position:relative;margin-top:30px;height:110px;border-radius:16px;overflow:hidden;display:flex;border:1px solid rgba(255,255,255,.12)}
-.ctxbar>div{position:relative;height:100%;display:flex;align-items:center;justify-content:center;font:700 15px var(--sans);color:#0b0f16;transform-origin:left;flex:none;overflow:hidden;white-space:nowrap}
-.ctxlab{display:flex;margin-top:10px}.ctxlab div{flex:none;font-size:14px;color:var(--mut);text-align:center}
+/* context composition — donut pie + full legend. The old bar clipped names
+   in its narrow segments (e.g. 规则 · AGENTS.md needed 118px in a 100px slot). */
+.ctxviz{display:flex;align-items:center;gap:32px;margin-top:22px}
+.ctxpie{width:172px;height:172px;flex:none}
+.ctxpie svg{display:block;width:100%;height:100%}
+.ctxlegend{flex:1;display:grid;grid-auto-flow:column;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,1fr);gap:8px 22px}
+.ctxlegend .it{display:flex;align-items:center;gap:9px;font-size:15px;color:#cbd5e1}
+.ctxlegend .sw{width:12px;height:12px;border-radius:4px;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.14)}
+.ctxlegend .nm{flex:none;white-space:nowrap}
+.ctxlegend .pc{margin-left:auto;font:700 14px var(--mono);color:var(--mut);font-variant-numeric:tabular-nums}
+.ctxlegend .it.hi .nm,.ctxlegend .it.hi .pc{color:#34d399}
 .tree{margin-top:22px;font:500 24px/1.9 var(--mono);color:#cbd5e1;white-space:pre}
 .tree .an{color:var(--dim);font-size:17px;margin-left:16px}
 .tree .an b{color:var(--ac);font-weight:700}
@@ -591,8 +599,7 @@ svg *{transform-box:fill-box;transform-origin:center}
   <div class="kk">2025.06 · 新词</div>
   <h3>Context Engineering</h3>
   <p class="lead">Tobi Lütke / Karpathy：为每一步装配恰好的信息。<span data-k=".75 .85" style="color:#86efac;font-weight:700;margin-left:10px">你写的 Prompt，只占绿色那一小块。</span></p>
-  <div class="ctxbar" id="ctxbar"></div>
-  <div class="ctxlab" id="ctxlab"></div>
+  <div class="ctxviz" id="ctxviz"></div>
   <div class="grid g2">
     <div class="card glass" data-k=".6 .75"><div class="h"><span class="lg mini" data-l="ico-ctx"></span><b>Context Rot</b></div><p>上下文越长，模型越「笨」</p></div>
     <div class="card glass" data-k=".64 .79"><div class="h"><span class="lg mini" data-l="ico-pack"></span><b>Compaction</b></div><p>自动摘要旧对话，续命长任务</p></div>
@@ -884,9 +891,14 @@ const eraOf=m=>m<mf('2024.01')?'2023':m<mf('2025.01')?'2024':m<mf('2026.01')?'20
 (function panes(){const p=[['claude','重构 auth',.62],['openai','加 E2E 测试',.66],['cursor','迁移 Tailwind v4',.7],['googlegemini','修复 #812',.6],['x','性能剖析',.74],['kimi','文档补全',.68],['claude','best-of-n ①',.72],['openai','best-of-n ②',.78]];
  document.getElementById('panes').innerHTML=p.map((x,i)=>{const a=(.2+i*.04).toFixed(2),L=(i%4)*254,T=Math.floor(i/4)*184;
   return '<div class="pane" style="left:'+L+'px;top:'+T+'px" data-k="'+a+' '+(+a+.08).toFixed(2)+'" data-fx="pop"><div class="ph"><span class="lg sm" data-l="'+x[0]+'"></span>'+x[1]+'</div><div class="sk" style="width:'+(60+i*13%35)+'%"></div><div class="sk" style="width:'+(40+i*17%45)+'%"></div><div class="stt" data-k="'+(x[2]+.1).toFixed(2)+' '+(x[2]+.14).toFixed(2)+'" data-fx="fade">✓ PR</div><div class="pg"><i data-k="'+a+' '+(x[2]+.1).toFixed(2)+'" data-fx="gx"></i></div></div>'}).join('')})();
-(function ctx(){const s=[['系统提示',7,'#38bdf8'],['规则 · AGENTS.md',10,'#60a5fa'],['记忆',8,'#a78bfa'],['工具 · MCP',13,'#c084fc'],['检索到的代码 · 文档',30,'#fb923c'],['对话历史',20,'#fbbf24'],['Prompt',4,'#34d399'],['余量',8,'rgba(255,255,255,.08)']];
- let a='',b='';s.forEach((v,i)=>{const w=v[1]/100*1000,k=(.15+i*.07).toFixed(2);a+='<div style="width:'+w+'px;background:'+v[2]+';'+(v[0]=='余量'?'color:#64748b;':'')+(v[0]=='Prompt'?'box-shadow:inset 0 0 0 3px #fff;':'')+'" data-k="'+k+' '+(+k+.07).toFixed(2)+'" data-fx="gx">'+(v[1]>=10?v[0]:'')+'</div>';b+='<div style="width:'+w+'px" data-k="'+k+' '+(+k+.07).toFixed(2)+'" data-fx="fade">'+v[1]+'%</div>'});
- document.getElementById('ctxbar').innerHTML=a;document.getElementById('ctxlab').innerHTML=b})();
+(function ctx(){const S=[['系统提示',7,'#38bdf8'],['规则 · AGENTS.md',10,'#60a5fa'],['记忆',8,'#a78bfa'],['工具 · MCP',13,'#c084fc'],['检索到的代码 · 文档',30,'#fb923c'],['对话历史',20,'#fbbf24'],['Prompt',4,'#34d399'],['余量',8,'rgba(255,255,255,.08)']];
+ const C=2*Math.PI*70;let arcs='',leg='',acc=0;
+ S.forEach((v,i)=>{const len=v[1]/100*C,d=Math.max(.5,len-Math.min(2,len*.2)),k=(.15+i*.07).toFixed(2);
+  /* start at 12 o'clock via dashoffset (no SVG transform: this file has a
+     global `svg *{transform-box:fill-box}` that shifts rotate() out of view) */
+  arcs+='<circle cx="100" cy="100" r="70" fill="none" stroke="'+v[2]+'" stroke-width="36" stroke-dasharray="'+d.toFixed(2)+' '+(C-d).toFixed(2)+'" stroke-dashoffset="'+(-(C*.75+acc)).toFixed(2)+'"/>';acc+=len;
+  leg+='<div class="it'+(v[0]==='Prompt'?' hi':'')+'" data-k="'+k+' '+(+k+.07).toFixed(2)+'" data-fx="fade"><i class="sw" style="background:'+v[2]+'"></i><span class="nm">'+v[0]+'</span><b class="pc">'+v[1]+'%</b></div>'});
+ document.getElementById('ctxviz').innerHTML='<div class="ctxpie" data-k="0 .35" data-fx="zoom"><svg viewBox="0 0 200 200" role="img" aria-label="上下文组成占比环形饼图">'+arcs+'<text x="100" y="97" text-anchor="middle" font-family="Inter,sans-serif" font-size="40" font-weight="800" fill="#34d399">4%</text><text x="100" y="122" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" fill="#8b93a7">Prompt</text></svg></div><div class="ctxlegend">'+leg+'</div>'})();
 (function tree(){const L=[['my-app/',''],['├─ <b class="acc">.kiro/specs/</b>','<b>07</b> Kiro：需求 → 设计 → 任务'],['│  ├─ requirements.md',''],['│  └─ tasks.md',''],['├─ <b class="acc">AGENTS.md</b>','<b>08</b> 跨工具通用的说明书'],['├─ <b class="acc">.claude/agents/</b>','<b>06–07</b> 子代理：独立上下文'],['├─ <b class="acc">hooks/</b>','生命周期钩子'],['├─ <b class="acc">skills/pdf/SKILL.md</b>','<b>10</b> 渐进披露的技能'],['└─ <span class="ok">src/  ✓</span>','代码，最后才出现']];
  document.getElementById('tree').innerHTML=L.map((l,i)=>{const a=(.12+i*.075).toFixed(3);return '<div data-k="'+a+' '+(+a+.06).toFixed(3)+'" data-fx="left">'+l[0]+(l[1]?'<span class="an">← '+l[1]+'</span>':'')+'</div>'}).join('')})();
 (function chain(){const n=[['2023.01','Prompt Engineering','雕琢一句话','#38bdf8'],['2025.06','Context Engineering','装配上下文','#a78bfa'],['2025.07','Spec-driven','先写规范','#c084fc'],['2026.02','Agentic Engineering','编排 Agent','#fb923c'],['2026.06','Loop Engineering','设计闭环','#fbbf24'],['2026.08','Harness Engineering','打造底座','#34d399'],['2026.10','Agents as Code','Agent 即工程','#2dd4bf']];
@@ -920,7 +932,8 @@ const eraOf=m=>m<mf('2024.01')?'2023':m<mf('2025.01')?'2024':m<mf('2026.01')?'20
 
 /* tooltips for the real-person portrait marks in the month heads */
 const AV_TITLE={ghuntley:'Geoffrey Huntley · Ralph Wiggum Loop 提出者',
-                steipete:'Peter Steinberger · OpenClaw / Clawdbot 作者'};
+                steipete:'Peter Steinberger · OpenClaw / Clawdbot 作者',
+                diogoalmeida:'Diogo Almeida · TypeSafe CEO / Jev 作者'};
 const MONTHS=[
  ['01','Ralph Loop','一个 bash 死循环，让 Agent 通宵干活','while :; do cat PROMPT.md | claude ; done',['01|Gas Town|tmux 编排 20–30 个 Claude Code','01|Planner·Worker·Judge|数百 Agent 一周写出浏览器','01|Claude Cowork|说「要什么」，回来的是成品','01|OpenClaw|Peter Steinberger · 自托管个人 Agent','01|Engram · mHC|条件记忆「存算分离」|ds','01.26|MCP Apps · ACP Registry|工具渲染 UI · Zed × JetBrains'],'2.4 子代理 · Skills · Cursor Blame',['@ghuntley','@steipete','claude','cursor']],
  ['02','Agentic Engineering','Vibe Coding 一周年，Karpathy 亲自改名','',['02|99% 时间不写代码|编排并监督 Agent','02.05|Agent Teams · Opus 4.6|16 个 Agent 两周写出 C 编译器','02.05|GPT-5.3-Codex|首个参与构建自身的模型','02|Codex App|macOS 多 Agent 指挥中心','02.26|Claude Code 自动记忆|Agent 自己维护 MEMORY.md','02|36% 公开 Skills 有缺陷|技能也有供应链风险'],'长时运行 Agent · 2.5 插件市场（02.17）',['claude','openai']],
@@ -930,7 +943,7 @@ const MONTHS=[
  ['06','Loop Engineering','不再雕琢 Prompt，而是设计闭环与停止条件','loop: act ⇄ observe · test ⇄ fix · STOP',['06.16|SpaceX × Cursor|600 亿美元全股票合并','06.17|Junie 正式版|JetBrains，基于 ACP 重建','06.24|Agent Identity|Agent 自己的账号与审计','06|Agentjacking|借错误遥测劫持 Agent','06|Config Smells|91% 的 AGENTS.md 有坏味道','06|Copilot 按量计费|订阅只覆盖交互式'],'Auto-review 子代理 · 宣布并入 SpaceX',['claude','jetbrains']],
  ['07','Model Router','模型从「卖点」变成「可插拔配件」','',['07.22|Cursor Router|逐请求选模型','07|自证正确|红 → 绿 → 回归才算交付','07.17|Human-on-the-loop|最小自主性，风险有界','07|Grok 4.5|Cursor 与 SpaceXAI 联训','07.31|DeepSeek-V4-Flash|正式版|ds','07.29|平板指挥 Agent|iPad + Inbox 随处审 PR'],'Router · Cursor Start · iPad 版',['cursor','x']],
  ['08','Agent-native Forge','代码仓库也搬进 Agent 的家','',['08.17|Origin|为 Agent 规模设计的 git forge','08.19|Subscriptions|Agent 订阅事件，坚持到完成','08.11|Grok Bot|常驻云端电脑的个人 Agent','08|Claude Tag|@Claude 成为频道成员','08.13|DeepSeek Harness（DSH）|一切皆插件 · 峰谷定价|ds','08.28|已定：OpenAI 将于 11.12 停供|模型供应风险'],'正式并入 SpaceX（08.14）· Origin',['cursor','x']],
- ['09','Managed Harness','Agent 的底座被托管，沙箱升级为 microVM','',['09.10|Agents API|托管会话、压缩与子代理','09.14|Coordinator Agent|协调者分派云端子代理','09.22|JetBrains Air|IDE 变成编排与验证的地方','09.24|MicroVM 沙箱|「容器不够」：硬件级隔离','09.15|Jev · System One|只回带概率的判断','09|Reward Hacking|DSec：伪造 socket 骗评测|ds'],'Projects beta：协调者管理并行子代理',['openai','jetbrains']],
+ ['09','Managed Harness','Agent 的底座被托管，沙箱升级为 microVM','',['09.10|Agents API|托管会话、压缩与子代理','09.14|Coordinator Agent|协调者分派云端子代理','09.22|JetBrains Air|IDE 变成编排与验证的地方','09.24|MicroVM 沙箱|「容器不够」：硬件级隔离','09.15|Jev · System One|只回带概率的判断','09|Reward Hacking|DSec：伪造 socket 骗评测|ds'],'Projects beta：协调者管理并行子代理',['@diogoalmeida','openai','jetbrains']],
  ['10','Agents as Code','一个 Agent 就是一个可测试、可部署的工程','agent-sdk eval ✓ 24/24 · agent-sdk deploy',['10.20|Cursor Agent SDK|Agent = 代码仓 · Glean 跟进','10.08|REA · 逆向一切|MCP 把 Agent 接上 Ghidra','10.02|Claude Code Mods|插件改写 Agent 内部','10.25|Skills 进 AAIF|与 MCP 同归中立治理','10.27|Codex 记忆 v2|可从 Claude Code 导入','10.31|Super-agent|跑在 DSH 上的研究原型|ds'],'Origin 应用市场 · Agent SDK GA（10.20）',['cursor','deepseek']]
 ];
 /* every dated event card gets a mark: real brand first, then a semantic rule,

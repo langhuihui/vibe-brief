@@ -336,15 +336,25 @@ h2 small{display:block;font-size:26px;font-weight:500;color:var(--mut);letter-sp
 .slide.active .term .l{animation:up .4s ease both;animation-delay:calc(.6s + var(--k)*.45s)}
 .term .ok{color:#4ade80}.term .ac{color:var(--ac)}.term .dm{color:#64748b}
 
-/* context bar */
-.ctxbar{display:flex;height:120px;border-radius:18px;overflow:hidden;margin-top:48px;border:1px solid rgba(255,255,255,.12)}
-.ctxbar div{position:relative;display:flex;align-items:center;justify-content:center;font:700 19px var(--sans);color:#0b0f16;transform-origin:left;flex:none}
-.slide.active .ctxbar div{animation:growx .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(.4s + var(--k)*.15s)}
-@keyframes growx{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-.ctxlab{display:flex;margin-top:12px}
-.ctxlab div{font-size:16px;color:var(--mut);text-align:center;flex:none;line-height:1.35}
-.ctxlab div b{display:block;color:#e2e8f0;font-size:17px}
+/* context composition — donut pie + full legend. Replaces the proportional
+   bar: a 4% / 7% segment was too narrow to hold its own label, so names got
+   clipped. The legend gives every slice its own full-width row instead. */
+.ctxviz{display:flex;align-items:center;gap:56px;margin-top:40px}
+.ctxpie{width:212px;height:212px;flex:none}
+.ctxpie svg{display:block;width:100%;height:100%}
+.slide.active .ctxpie{animation:pieIn .8s cubic-bezier(.2,.8,.2,1) both;animation-delay:.35s}
+@keyframes pieIn{from{opacity:0;transform:scale(.84) rotate(-28deg)}to{opacity:1;transform:none}}
+.ctxlegend{flex:1;display:grid;grid-auto-flow:column;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,1fr);gap:12px 48px}
+.ctxlegend .it{display:flex;align-items:center;gap:12px;font-size:19px;color:#cbd5e1}
+.slide.active .ctxlegend .it{animation:up .5s ease both;animation-delay:calc(.55s + var(--k)*.055s)}
+.ctxlegend .sw{width:16px;height:16px;border-radius:5px;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.14)}
+.ctxlegend .nm{flex:none;white-space:nowrap}
+.ctxlegend .pc{margin-left:auto;font:700 18px var(--mono);color:var(--mut);font-variant-numeric:tabular-nums}
+.ctxlegend .it.hi .nm,.ctxlegend .it.hi .pc{color:#34d399}
 .trio{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:44px}
+/* the Jev card carries a 108px portrait; give the last card row the extra
+   height so the 610px grid and its 18px gap to the buzz strip stay intact */
+#s-sep .cards{grid-template-rows:repeat(2,1fr) 1.25fr}
 
 /* spec pipeline */
 .doc{position:absolute;width:190px;height:240px;border-radius:16px;background:#0d131c;border:1px solid rgba(255,255,255,.14);padding:18px;font:500 15px var(--mono);color:var(--mut)}
@@ -946,8 +956,7 @@ html.static .js{opacity:1!important}
 <section class="slide" id="s-ctx" data-title="Context Engineering" data-era="2025">
   <div class="kicker a">2025.06 · 新词</div>
   <h2 class="a" style="font-size:84px">Context Engineering<br><span class="grad">Prompt 只是上下文的一小块</span></h2>
-  <div class="ctxbar a" id="ctxbar"></div>
-  <div class="ctxlab a" id="ctxlab"></div>
+  <div class="ctxviz a" id="ctxviz"></div>
   <div class="trio">
     <div class="cc a"><div class="cc-h"><span class="lg m" style="--mc:#0f766e">CE</span><b>上下文工程</b><em>2025.06</em></div><p>Tobi Lütke / Karpathy：为每一步装配恰好的信息</p></div>
     <div class="cc a"><div class="cc-h"><span class="lg m" style="--mc:#b91c1c">CR</span><b>Context Rot</b><em>2025</em></div><p>上下文越长，模型越「笨」</p></div>
@@ -1392,7 +1401,7 @@ html.static .js{opacity:1!important}
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="jetbrains"></span><b>JetBrains Air</b><em>09.22</em></div><p>IDE 老厂的回答：IDE 变成编排与验证 Agent 的地方，经 ACP 接任何 Agent</p></div>
       <div class="cc a"><div class="cc-h"><span class="lg" data-l="docker"></span><b>MicroVM 沙箱</b><em>09.24</em></div><p>「容器不够」：硬件级隔离 Agent</p></div>
       <div class="cc a" style="--ac:var(--red)"><div class="cc-h"><span class="lg" data-l="deepseek"></span><b>Reward Hacking</b><em>09</em></div><p>DeepSeek DSec 论文：伪造 socket、偷看日志</p></div>
-      <div class="cc a"><div class="cc-h"><span class="lg m" style="--mc:#22d3ee">J</span><b>Jev · System One</b><em>09.15</em></div><p>TypeSafe：不生成文字，只回带概率的 choice / score / noul——LLM 写，Jev 做门禁</p></div>
+      <div class="cc a ph"><div class="cc-h"><span class="lg portrait-cc" data-av="diogoalmeida" title="Diogo Almeida · TypeSafe CEO / Jev 作者" style="border-radius:50%"></span><b>Jev · System One</b><em>09.15</em></div><p>TypeSafe：不生成文字，只回带概率的 choice / score / noul——LLM 写，Jev 做门禁</p></div>
     </div>
   </div>
   <div class="buzz a"><span>热议</span><i class="ds"><span class="lg xs" data-l="deepseek"></span>DeepSeek V4.1-Flash</i><i>Cowork 融入每次对话（09.16）</i><i>Codex CLI 默认语音对话</i><i>Copilot「Code」标签 + Autopilot</i><i>Spec-Anchored &gt; Spec-as-Source</i><i>Claude Sonnet 5.5</i></div>
@@ -1912,9 +1921,15 @@ html.static .js{opacity:1!important}
  b+='<text x="380" y="450" text-anchor="middle" font-family="JetBrains Mono" font-size="17" fill="#c4b5fd">4 客户端 + 4 服务器</text>';
  document.getElementById('nxm').innerHTML=a;document.getElementById('npm').innerHTML=b})();
 
-/* ---------- context bar ---------- */
-(function(){const s=[['系统提示',7,'#38bdf8'],['规则 · AGENTS.md',10,'#60a5fa'],['记忆',8,'#a78bfa'],['工具 · MCP',13,'#c084fc'],['检索到的代码 · 文档',30,'#fb923c'],['对话历史',20,'#fbbf24'],['Prompt',4,'#34d399'],['余量',8,'rgba(255,255,255,.08)']];
- let a='',b='';const W=1720;s.forEach((x,i)=>{const w=x[1]/100*W;a+='<div style="--k:'+i+';width:'+w+'px;background:'+x[2]+';'+(x[0]=='余量'?'color:#64748b':'')+(x[0]=='Prompt'?';box-shadow:inset 0 0 0 3px #fff':'')+'">'+(x[1]>=7?x[1]+'%':'')+'</div>';b+='<div style="width:'+w+'px"><b'+(x[0]=='Prompt'?' style="color:#34d399"':'')+'>'+x[0]+'</b></div>'});document.getElementById('ctxbar').innerHTML=a;document.getElementById('ctxlab').innerHTML=b})();
+/* ---------- context composition donut ---------- */
+(function(){const S=[['系统提示',7,'#38bdf8'],['规则 · AGENTS.md',10,'#60a5fa'],['记忆',8,'#a78bfa'],['工具 · MCP',13,'#c084fc'],['检索到的代码 · 文档',30,'#fb923c'],['对话历史',20,'#fbbf24'],['Prompt',4,'#34d399'],['余量',8,'rgba(255,255,255,.08)']];
+ const C=2*Math.PI*70;let arcs='',leg='',acc=0;
+ S.forEach((v,i)=>{const len=v[1]/100*C,d=Math.max(.5,len-Math.min(2,len*.2));
+  /* start at 12 o'clock via dashoffset (no SVG transform: story.src.html has a
+     global `svg *{transform-box:fill-box}` that shifts rotate() out of view) */
+  arcs+='<circle cx="100" cy="100" r="70" fill="none" stroke="'+v[2]+'" stroke-width="36" stroke-dasharray="'+d.toFixed(2)+' '+(C-d).toFixed(2)+'" stroke-dashoffset="'+(-(C*.75+acc)).toFixed(2)+'"/>';acc+=len;
+  leg+='<div class="it'+(v[0]==='Prompt'?' hi':'')+'" style="--k:'+i+'"><i class="sw" style="background:'+v[2]+'"></i><span class="nm">'+v[0]+'</span><b class="pc">'+v[1]+'%</b></div>'});
+ document.getElementById('ctxviz').innerHTML='<div class="ctxpie"><svg viewBox="0 0 200 200" role="img" aria-label="上下文组成占比环形饼图">'+arcs+'<text x="100" y="97" text-anchor="middle" font-family="Inter,sans-serif" font-size="40" font-weight="800" fill="#34d399">4%</text><text x="100" y="122" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" fill="#8b93a7">Prompt</text></svg></div><div class="ctxlegend">'+leg+'</div>'})();
 
 /* ---------- agent panes ---------- */
 (function(){const p=[['claude','重构 auth',3.2],['openai','加 E2E 测试',4.1],['cursor','迁移 Tailwind v4',3.6],['googlegemini','修复 #812',2.8],['x','性能剖析',4.6],['kimi','文档补全',3.0],['claude','best-of-n ①',3.8],['openai','best-of-n ②',4.4]];
