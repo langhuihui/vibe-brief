@@ -533,10 +533,12 @@ svg *{transform-box:fill-box;transform-origin:center}
 <div class="blk cb" id="b-dsv3" data-t="2024.12.26" data-era="2024"><div class="card glass dsx" data-k="0 .4" data-fx="up"><div class="h"><span class="lg sm" data-l="deepseek"></span><b>DeepSeek-V3</b><em>2024.12</em></div><p>MoE + FP8 + MTP，训练成本约 557 万美元</p></div></div>
 
 <!-- ======================= 2025 ======================= -->
-<div class="blk" id="b-r1" data-t="2025.01.20" data-era="2025" data-span="700">
+<div class="blk" id="b-r1" data-t="2025.01.20" data-era="2025" data-span="760">
   <div class="kk">2025.01.20 · 开年第一声</div>
   <div style="display:flex;align-items:center;gap:26px;margin-top:20px"><span class="lg xl" data-l="deepseek" style="box-shadow:0 0 80px rgba(77,107,254,.35)"></span><div style="font-size:96px;font-weight:900;letter-spacing:-.03em">DeepSeek 时刻</div></div>
   <p class="lead">开源推理模型 R1，冲击了「推理只能靠堆算力」的叙事。</p>
+  <!-- the person behind the moment: 204px face, paired with Karpathy at b-vibe -->
+  <div class="pcard" style="margin-top:26px"><span class="lg portrait-md" data-av="liangwf" title="梁文锋 · DeepSeek / 幻方量化 创始人" style="border-radius:50%"></span><div class="pmeta"><b>梁文锋</b><span>DeepSeek / 幻方量化 创始人 · 2025.01.20 开源 R1</span></div></div>
 </div>
 <div class="blk cb" id="b-grpo" data-t="2025.01.21" data-era="2025"><div class="card glass dsx" data-k="0 .4" data-fx="up"><div class="h"><span class="lg sm" data-l="deepseek"></span><b>GRPO 纯 RL 推理</b><em>2025.01</em></div><p>不靠人工标注思维链，自己学会「先想」</p></div></div>
 <div class="blk cb" id="b-cot" data-t="2025.01.22" data-era="2025"><div class="card glass dsx" data-k="0 .4" data-fx="up"><div class="h"><span class="lg sm" data-l="deepseek"></span><b>开放思维链 · 蒸馏</b><em>2025.01</em></div><p>推理过程可见，能力蒸馏进小模型</p></div></div>
@@ -1000,7 +1002,10 @@ function evMark(x,m,k){
    Cursor / Devin / v0 / Bolt · Lovable / Claude Code / Codex CLI / Gemini CLI /
    GitHub Copilot / Cursor 后台 / DSH / Agents API / MicroVM / Agent SDK /
    Junie 正式版 / JetBrains Air / Antigravity 2.0.
-   Coze appears as 扣子编程 / Coze 2.0 (2026.01.19 Agent Coding), not the 2024 Bot platform. */
+   Coze appears as 扣子编程 / Coze 2.0 (2026.01.19 Agent Coding), not the 2024 Bot platform.
+   LobeHub appears only as CAO (2026.05.18, official issue #14936 / changelog),
+   the orchestration layer that runs Claude Code / Codex / OpenClaw as workers —
+   not the 2023 LobeChat chat UI. Only the vibe-coding-relevant form is kept. */
 (function scatterTools(){
  const CAT={ide:['IDE','#22d3ee'],cli:['CLI','#fb923c'],plug:['插件','#38bdf8'],cloud:['云','#a78bfa'],app:['应用','#f472b6'],base:['底座','#34d399']};
  const T=[
@@ -1025,7 +1030,8 @@ function evMark(x,m,k){
   ['codebuddycode','2025.09.09','2025.09.09','CodeBuddy Code','cli','终端原生 CLI Agent，自然语言驱动开发到部署全流程','codebuddy'],
   ['platformide','2025.09.20','2025','Xcode · Android Studio','plug','平台 IDE 把 Agent 内置进原生工具链',['xcode','androidstudio']],
   ['antigravity','2025.11.18','2025.11.18','Antigravity','ide','Google 随 Gemini 3 发布 agent-first IDE','antigravity'],
-  ['coze','2026.01.19','2026.01','扣子编程 / Coze 2.0','app','官方定位一站式云端 Vibe Coding 平台；2025.12 免费公测，01.19 随扣子 2.0 发布 Agent Coding','coze']
+  ['coze','2026.01.19','2026.01','扣子编程 / Coze 2.0','app','官方定位一站式云端 Vibe Coding 平台；2025.12 免费公测，01.19 随扣子 2.0 发布 Agent Coding','coze'],
+  ['lobehub','2026.05.18','2026.05','LobeHub CAO','base','Chief Agent Operator：Claude Code / Codex / OpenClaw 作为一等公民接入，Manager 拆任务、Worker 并行；Super-agent 架构的生产实现','lobehub']
  ];
  const L2=document.getElementById('L2');
  const dated=()=>[...L2.querySelectorAll('.blk[data-t]')].map(el=>({el,m:mf(el.dataset.t)}));
