@@ -1,7 +1,8 @@
 #!/usr/bin/env node
-/* Build both outputs:
-     index.html  — paged deck, from deck.src.html (presenting)
-     scroll.html — scroll-driven story, from story.src.html (reading / sharing)
+/* Build all outputs:
+     index.html   — paged deck, from deck.src.html (presenting)
+     scroll.html  — scroll-driven story, from story.src.html (reading / sharing)
+     hscroll.html — horizontal side-scroller, hscroll.src.html + story pieces
    Shared from the deck source: logos, COLORS + fillLogos, CONCEPTS (and their mention counts).
    Usage: node build.js */
 const fs = require('fs'), path = require('path');
@@ -26,10 +27,29 @@ const cnt = t => { if (!t || t.length < 2) return 0; const e = t.replace(/[.*+?^
 const N = {};
 Object.values(CONCEPTS).flat().forEach(x => { let n = cnt(x[0]); if (!n) n = Math.max(0, ...x[0].split(/ \/ | · /).filter(t => /^[\x20-\x7e]{3,}$/.test(t) || t.length >= 4).map(cnt)); N[x[0]] = Math.max(1, n); });
 
-let story = read('story.src.html');
+const storySrc = read('story.src.html');
+let story = storySrc;
 for (const ph of ['<!--LOGOS-->', '/*SHARED*/', '/*CONCEPTS*/']) if (!story.includes(ph)) throw new Error('missing ' + ph + ' in story.src.html');
+const conceptsJs = concepts + '\nconst CONCEPT_N=' + JSON.stringify(N) + ';';
 story = story.replace('<!--LOGOS-->', () => logos)
   .replace('/*SHARED*/', () => '/* shared logo runtime comes from logos.js */')
-  .replace('/*CONCEPTS*/', () => concepts + '\nconst CONCEPT_N=' + JSON.stringify(N) + ';');
+  .replace('/*CONCEPTS*/', () => conceptsJs);
 fs.writeFileSync(path.join(dir, 'scroll.html'), story);
-console.log('index.html', deck.length, '| scroll.html', story.length);
+
+/* ---- horizontal scroll: hscroll.src.html re-stages the story's own pieces ----
+   Taken verbatim from story.src.html so content lives in one place:
+     STORY_CSS    the story's <style> (cards, scenes, posters)
+     STORY_BLOCKS every block inside #L2
+     STORY_SCRIPT content generators, card scenes and far/mid/front data —
+                  everything before the vertical engine */
+const cut = (s, a, b, what) => { const i = s.indexOf(a), j = i < 0 ? -1 : s.indexOf(b, i + a.length); if (i < 0 || j < 0) throw new Error('cannot find ' + what + ' in story.src.html'); return s.slice(i + a.length, j); };
+const hPieces = {
+  '/*STORY_CSS*/': cut(storySrc, '<style>', '</style>', 'story <style>'),
+  '<!--STORY_BLOCKS-->': cut(storySrc, '<div id="thread"></div>', '</div><!-- /L2 -->', '#L2 blocks'),
+  '/*STORY_SCRIPT*/': cut(storySrc, '/*SHARED*/', '/* ================= engine ================= */', 'story script').replace('/*CONCEPTS*/', () => conceptsJs),
+  '<!--LOGOS-->': logos
+};
+let hs = read('hscroll.src.html');
+for (const [ph, v] of Object.entries(hPieces)) { if (!hs.includes(ph)) throw new Error('missing ' + ph + ' in hscroll.src.html'); hs = hs.replace(ph, () => v); }
+fs.writeFileSync(path.join(dir, 'hscroll.html'), hs);
+console.log('index.html', deck.length, '| scroll.html', story.length, '| hscroll.html', hs.length);
