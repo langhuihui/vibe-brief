@@ -1041,22 +1041,20 @@ svg *{transform-box:fill-box;transform-origin:center}
 <style>
 /* =====================================================================
    横卷版 · horizontal side-scroller
-   Everything above comes verbatim from story.src.html (cards, scenes,
-   HTalk posters). This sheet only re-stages it on a horizontal world:
-     y   0– 66  HUD
-     y  76–812  content (two lanes for cards, full height for wide blocks)
-     y 812–872  hero band: hero, flags, coins, 热议 chips
+   Everything above comes verbatim from story.src.html (scenes, posters).
+   This sheet re-stages it as a level:
+     y   0– 66  HUD          y  70–148  热议 弹幕 (sky)
+     y  76–784  stage sets, gates, actors (hologram screen + speech bubble)
+     y 794–872  the cast: NPC per logo / person, hero + vehicle
      y 873–903  the road = Cursor (width = valuation)
-     y 904–1004 time ruler
-     y1012–1068 minimap + autoplay
+     y 904–1004 time ruler   y1012–1068 minimap + autoplay
    ===================================================================== */
 html,body{overscroll-behavior:none}
 /* the stage must never scroll internally (content reaches past its edges on purpose) */
 #stage{overflow:hidden;overflow:clip;overflow-anchor:none}
-#L0{z-index:1}#L1{z-index:2}#gbg{z-index:3}#LG{z-index:4}#nowl{z-index:4}#L2{z-index:5}#L3{z-index:6;pointer-events:none}
-#nowr{z-index:6}#hero{z-index:8}#hint{z-index:8}#hud,#toast,#mm,#auto{z-index:9}
+#L0{z-index:1}#L1{z-index:2}#gbg{z-index:3}#LG{z-index:4}#nowl{z-index:4}#L2{z-index:5}#LN{z-index:6;pointer-events:none}
+#nowr{z-index:6}#hero{z-index:8}#sky{z-index:8}#hint{z-index:8}#hud,#toast,#mm,#auto{z-index:9}
 .blk{transform-origin:0 0}
-.blk.lbl{width:660px}
 
 /* ---------- far / mid scenery ---------- */
 .stars{position:absolute;top:0;height:560px;opacity:.5;pointer-events:none;
@@ -1070,7 +1068,7 @@ html,body{overscroll-behavior:none}
 .hrole.on{opacity:.14}
 .hrole small{display:block;font:700 18px var(--mono);letter-spacing:.2em;margin-bottom:10px}
 
-/* ---------- ground: road (Cursor), coins, flags, ruler ---------- */
+/* ---------- ground: road (Cursor), flags, ruler ---------- */
 #gbg{position:absolute;left:0;top:866px;width:1920px;height:214px;background:linear-gradient(180deg,rgba(6,8,12,0),#06080c 36px,#04060a);pointer-events:none}
 .road{position:absolute;top:858px;height:60px;overflow:visible;pointer-events:none}
 .soil{position:absolute;top:903px;height:120px;pointer-events:none;background:repeating-linear-gradient(90deg,rgba(255,255,255,.028) 0 1px,transparent 1px 48px),linear-gradient(180deg,rgba(255,255,255,.035),transparent 70%)}
@@ -1091,51 +1089,193 @@ html,body{overscroll-behavior:none}
 .rch b{position:absolute;left:10px;top:14px;right:0;font:700 13px var(--mono);color:#8b93a7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rnow{position:absolute;top:836px;height:72px;width:0;border-left:2px dashed rgba(255,255,255,.75)}
 .rnow b{position:absolute;left:8px;top:-2px;font:800 13px var(--mono);color:#07090d;background:#fff;padding:2px 8px;border-radius:999px;white-space:nowrap}
-.rcoin{position:absolute;top:860px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff7d6,#fbbf24 55%,#b45309);box-shadow:0 0 10px rgba(251,191,36,.55);transition:opacity .35s,transform .35s}
-.rcoin.got{opacity:.16;transform:translateY(-16px) scale(.55)}
 .flag{position:absolute;top:800px;height:86px;width:3px;border-radius:2px;background:linear-gradient(#e2e8f0,#475569)}
 .flag::before{content:"";position:absolute;left:-4px;top:-8px;width:11px;height:11px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c)}
 .flag b{position:absolute;left:3px;top:4px;padding:4px 18px 4px 9px;font:800 12px var(--mono);letter-spacing:.12em;color:#07090d;background:var(--c);clip-path:polygon(0 0,100% 0,86% 50%,100% 100%,0 100%);white-space:nowrap;transform-origin:left center;transform:scaleX(.25);opacity:.45;transition:transform .5s cubic-bezier(.3,1.5,.5,1),opacity .4s}
 .flag.up b{transform:none;opacity:1}
 .flag.goal b{padding:6px 22px 6px 12px;font-size:14px}
 
-/* ---------- 热议 chips: foreground collectibles ---------- */
-#L3 .bz{top:826px;font-size:15px;padding:6px 12px;opacity:.88;transition:opacity .4s,filter .4s}
-#L3 .bz::before{font-size:11px}
-#L3 .bz.got{opacity:.3;filter:saturate(.25)}
-#L3 .bz.pop::after{content:"+1";position:absolute;right:-8px;top:-10px;font:900 16px var(--mono);color:#fde68a;text-shadow:0 0 10px rgba(251,191,36,.8);animation:plus1 .75s ease-out both}
-@keyframes plus1{0%{opacity:0;transform:translateY(6px)}30%{opacity:1}100%{opacity:0;transform:translateY(-34px)}}
+/* ---------- vehicles (hero + power-up icons share the drawing) ---------- */
+.veh .wh circle{fill:#0b0f16;stroke:#cbd5e1;stroke-width:3}
+.veh .wh path{fill:none;stroke:#64748b;stroke-width:1.6}
+.veh .fr{fill:none;stroke:var(--era);stroke-width:3.6;stroke-linecap:round;stroke-linejoin:round}
+.veh .crk path{stroke:#e2e8f0;stroke-width:3;stroke-linecap:round}
+.veh .cb{fill:color-mix(in srgb,var(--era) 78%,#0b0f16);stroke:color-mix(in srgb,var(--era) 50%,#fff);stroke-width:1.5}
+.veh .cs{stroke:rgba(255,255,255,.45);stroke-width:2}
+.veh .hl{fill:#fde68a}
+.veh .sb{fill:#d7dee9;stroke:#fff;stroke-width:1}
+.veh .sf{fill:var(--era)}
+.veh .ss{stroke:var(--era);stroke-width:4;stroke-linecap:round}
+.veh .sl{fill:#fff}
 
 /* ---------- hero ---------- */
-#nowl{position:absolute;left:639px;top:66px;width:2px;height:806px;pointer-events:none;background:linear-gradient(transparent,rgba(255,255,255,.06) 10%,rgba(255,255,255,.06) 80%,color-mix(in srgb,var(--era) 55%,transparent))}
+#nowl{position:absolute;left:639px;top:66px;width:2px;height:806px;pointer-events:none;background:linear-gradient(transparent,rgba(255,255,255,.05) 10%,rgba(255,255,255,.05) 80%,color-mix(in srgb,var(--era) 50%,transparent))}
 #nowr{position:absolute;left:638px;top:903px;width:3px;height:100px;pointer-events:none;background:linear-gradient(var(--era),transparent);box-shadow:0 0 10px var(--era)}
-#hero{position:absolute;left:616px;top:810px;width:48px;height:66px;pointer-events:none}
-#hero .hf{position:absolute;inset:0;transition:transform .18s}
+/* local box 48×66, feet at y=66 (stage y 872) */
+#hero{position:absolute;left:616px;top:806px;width:48px;height:66px;pointer-events:none;transition:transform 1.3s cubic-bezier(.55,0,.85,.35),opacity 1.1s}
+#hero.gone{transform:translate(520px,-820px) rotate(-14deg);opacity:0}
+#hero .hf,#hero .hw,#hero .hv{position:absolute;inset:0}
+#hero .hf{transition:transform .18s}
 #hero.back .hf{transform:scaleX(-1)}
-#hero .hw{position:absolute;inset:0}
 #hero.jump .hw{animation:hJump .62s cubic-bezier(.25,.8,.35,1)}
-#hero .hb{position:absolute;left:0;top:0;width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,#222c3c,#0b0f16);border:2px solid var(--era);box-shadow:0 0 0 4px color-mix(in srgb,var(--era) 14%,transparent),0 0 26px color-mix(in srgb,var(--era) 55%,transparent);animation:hIdle 2.2s ease-in-out infinite;transition:border-color .4s,box-shadow .4s}
+#hero .hv>*{position:absolute}
+#hero .hbw{left:0;top:0;width:48px;height:48px;transform-origin:0 0;z-index:2;transition:transform .3s}
+#hero .hb{position:absolute;inset:0;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,#222c3c,#0b0f16);border:2px solid var(--era);box-shadow:0 0 0 4px color-mix(in srgb,var(--era) 14%,transparent),0 0 26px color-mix(in srgb,var(--era) 55%,transparent);animation:hIdle 2.2s ease-in-out infinite;transition:border-color .4s,box-shadow .4s}
 #hero .hb .lg{width:32px;height:32px;background:none;border:none}
 #hero .hb .lg svg{width:28px;height:28px}
-#hero .leg{position:absolute;top:44px;width:9px;height:16px;border-radius:3px 3px 5px 5px;background:#cbd5e1;transform-origin:50% 0}
+#hero .harm{position:absolute;left:43px;top:20px;width:8px;height:19px;border-radius:4px;background:#cbd5e1;transform-origin:50% 3px;transform:rotate(-16deg);transition:transform .22s cubic-bezier(.3,1.7,.5,1)}
+#hero.hi5 .harm{transform:rotate(-158deg)}
+#hero .leg{top:44px;width:9px;height:16px;border-radius:3px 3px 5px 5px;background:#cbd5e1;transform-origin:50% 0}
 #hero .leg.l{left:11px}#hero .leg.r{left:28px}
-#hero .dust{position:absolute;left:-16px;top:52px;width:10px;height:10px;border-radius:50%;background:rgba(203,213,225,.4);opacity:0}
-#hero .sh{position:absolute;left:2px;top:60px;width:44px;height:9px;border-radius:50%;background:radial-gradient(rgba(0,0,0,.8),transparent 70%)}
+#hero .dust{left:-16px;top:52px;width:10px;height:10px;border-radius:50%;background:rgba(203,213,225,.4);opacity:0}
+#hero .sh{position:absolute;left:2px;top:60px;width:44px;height:9px;border-radius:50%;background:radial-gradient(rgba(0,0,0,.8),transparent 70%);transition:all .3s}
+#hero .vbike,#hero .vcar,#hero .vship,#hero .vdome,#hero .flame,#hero .hglow,#hero .hbeam,#hero .puff{display:none}
+#hero .vbike{left:-22px;top:16px;width:92px;height:52px;z-index:1;overflow:visible}
+#hero .vcar{left:-44px;top:18px;width:140px;height:50px;z-index:3;overflow:visible}
+#hero .vship{left:-52px;top:-8px;width:150px;height:60px;z-index:1;overflow:visible}
+#hero .vdome{left:8px;top:-8px;width:44px;height:44px;z-index:3;fill:rgba(160,220,255,.14);stroke:rgba(220,240,255,.75);stroke-width:2}
+#hero .vdome path{fill:none;stroke:rgba(255,255,255,.7);stroke-width:2.5;stroke-linecap:round}
+#hero .hbeam{left:92px;top:28px;width:130px;height:38px;background:linear-gradient(90deg,rgba(253,230,138,.38),transparent);clip-path:polygon(0 30%,100% 0,100% 100%,0 70%)}
+#hero .puff{left:-58px;top:46px;width:14px;height:14px;border-radius:50%;background:rgba(203,213,225,.45);opacity:0}
+#hero .flame{left:-92px;top:14px;width:52px;height:16px;border-radius:50%;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--era) 70%,transparent) 40%,#fde68a 80%,#fff);filter:blur(1px);transform-origin:100% 50%;animation:hFlame .12s ease-in-out infinite alternate}
+#hero .hglow{left:-14px;top:38px;width:76px;height:52px;background:linear-gradient(180deg,color-mix(in srgb,var(--era) 30%,transparent),transparent);clip-path:polygon(30% 0,70% 0,100% 100%,0 100%)}
+#hero .poof{position:absolute;left:-26px;top:-20px;width:100px;height:100px;border-radius:50%;border:4px solid var(--era);opacity:0;pointer-events:none}
+#hero.pw .poof{animation:hPoof .6s ease-out}
+#hero.pw .hv{animation:hPw .6s ease-out}
+#hero .pmsg{position:absolute;left:24px;top:-34px;transform:translateX(-50%);font:900 18px var(--sans);color:#fff;white-space:nowrap;text-shadow:0 0 12px var(--era),0 2px 0 #000;opacity:0}
+#hero.pw .pmsg{animation:hMsg 1.6s ease-out}
+#hero[data-v=bike] .vbike,#hero[data-v=car] .vcar,#hero[data-v=car] .hbeam,#hero[data-v=car] .puff,#hero[data-v=ship] .vship,#hero[data-v=ship] .vdome,#hero[data-v=ship] .flame,#hero[data-v=ship] .hglow{display:block}
+#hero:not([data-v=walk]) .leg,#hero:not([data-v=walk]) .dust{display:none}
+#hero[data-v=bike] .hbw{transform:translate(4px,-12px) scale(.833) rotate(5deg)}
+#hero[data-v=car] .hbw{transform:translate(12px,8px) scale(.667)}
+#hero[data-v=car] .sh{left:-42px;width:136px}
+#hero[data-v=ship] .hbw{transform:translate(16px,0) scale(.583)}
+#hero[data-v=ship] .hv{animation:hHover 1.8s ease-in-out infinite}
+#hero[data-v=ship] .sh{left:6px;width:36px;opacity:.5}
+#hero[data-v=car] .hv{animation:hVib .18s linear infinite}
 #hero.run .hb{animation:hBob .3s ease-in-out infinite}
 #hero.run .leg.l{animation:hLeg .3s linear infinite}
 #hero.run .leg.r{animation:hLeg .3s linear -.15s infinite}
 #hero.run .dust{animation:hDust .3s linear infinite}
+#hero.run .wh{animation:wSpin .32s linear infinite}
+#hero.run .crk{animation:wSpin .5s linear infinite}
+#hero.run .puff{animation:hPuff .5s linear infinite}#hero.run .puff.b{animation-delay:-.25s}
+#hero.run .flame{width:96px;left:-136px}
+#hero:not(.run) .hb{animation-name:hIdle}
 #hero.jump .sh{animation:hShadow .62s ease}
 @keyframes hIdle{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 @keyframes hBob{0%,100%{transform:translateY(0) rotate(5deg)}50%{transform:translateY(-4px) rotate(5deg)}}
 @keyframes hLeg{0%,100%{transform:rotate(34deg)}50%{transform:rotate(-34deg)}}
 @keyframes hDust{0%{opacity:.6;transform:translate(0,0) scale(.6)}100%{opacity:0;transform:translate(-18px,-6px) scale(1.4)}}
+@keyframes hPuff{0%{opacity:.7;transform:translate(0,0) scale(.5)}100%{opacity:0;transform:translate(-30px,-14px) scale(1.8)}}
 @keyframes hJump{0%{transform:translateY(0)}45%{transform:translateY(-80px) rotate(-10deg)}75%{transform:translateY(-24px)}100%{transform:none}}
 @keyframes hShadow{45%{transform:scale(.45);opacity:.35}}
-#hint{position:absolute;left:690px;top:828px;font:700 15px var(--mono);color:#e2e8f0;white-space:nowrap;pointer-events:none;transition:opacity .4s;animation:hintB 1.2s steps(2) infinite}
+@keyframes hHover{0%,100%{transform:translateY(-26px)}50%{transform:translateY(-34px)}}
+@keyframes hVib{0%,100%{transform:translateY(0)}50%{transform:translateY(-1px)}}
+@keyframes hFlame{from{transform:scaleX(.8) scaleY(.85)}to{transform:scaleX(1.12) scaleY(1.1)}}
+@keyframes wSpin{to{transform:rotate(360deg)}}
+@keyframes hPoof{0%{opacity:1;transform:scale(.2)}100%{opacity:0;transform:scale(1.8)}}
+@keyframes hPw{0%{filter:brightness(3)}40%{transform:scale(1.25)}100%{filter:none;transform:none}}
+@keyframes hMsg{0%{opacity:0;transform:translate(-50%,10px)}15%,70%{opacity:1;transform:translate(-50%,-14px)}100%{opacity:0;transform:translate(-50%,-40px)}}
+#hint{position:absolute;left:700px;top:828px;font:700 15px var(--mono);color:#e2e8f0;white-space:nowrap;pointer-events:none;transition:opacity .4s;animation:hintB 1.2s steps(2) infinite}
 #hint b{color:var(--era)}
 #hint.off{animation:none;opacity:0}
 @keyframes hintB{50%{opacity:.35}}
+
+/* ---------- power-ups: a floating box on the road at each new year ---------- */
+.pu{position:absolute;top:744px;width:0;height:0}
+.pu .pub{position:absolute;left:-36px;top:0;width:72px;height:54px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,color-mix(in srgb,var(--c) 34%,#0b0f16),#0b0f16 80%);border:2px solid var(--c);box-shadow:0 0 26px color-mix(in srgb,var(--c) 55%,transparent);animation:puBob 1.6s ease-in-out infinite}
+.pu .pub::after{content:"?";position:absolute;right:-9px;top:-11px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font:900 14px var(--sans);color:#0b0f16;background:var(--c)}
+.pu .pub svg{width:56px;height:34px;overflow:visible;--era:var(--c)}
+.pu b{position:absolute;left:-70px;width:140px;top:62px;text-align:center;font:800 13px var(--mono);letter-spacing:.1em;color:var(--c);white-space:nowrap}
+.pu.got .pub{animation:puGot .7s ease-out forwards}
+.pu.got b{opacity:.25}
+@keyframes puBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes puGot{0%{transform:translateY(0)}35%{transform:translateY(-34px) scale(1.15)}100%{transform:translateY(-60px) scale(.4);opacity:0}}
+
+/* ---------- the cast: one NPC per logo / person, on the ground at its date ---------- */
+.npc{position:absolute;top:872px;width:0;height:0;--vc:#94a3b8}
+.npc>*{position:absolute}
+.npc .nsh{left:-20px;top:-6px;width:40px;height:10px;border-radius:50%;background:radial-gradient(rgba(0,0,0,.8),transparent 70%)}
+.npc .nb{left:0;top:0;width:0;height:0}
+.npc .nb>*{position:absolute}
+.npc .nleg{bottom:1px;width:7px;height:15px;border-radius:3px 3px 4px 4px;background:#cbd5e1}
+.npc .nleg.l{left:-9px}.npc .nleg.r{left:2px}
+.npc .ntor{left:-13px;bottom:14px;width:26px;height:21px;border-radius:10px 10px 6px 6px;background:linear-gradient(180deg,var(--vc),color-mix(in srgb,var(--vc) 50%,#0b0f16))}
+.npc .narm{bottom:18px;width:6px;height:17px;border-radius:3px;background:color-mix(in srgb,var(--vc) 70%,#fff);transform-origin:50% 3px;transition:transform .22s cubic-bezier(.3,1.7,.5,1)}
+.npc .narm.l{left:-18px;transform:rotate(22deg)}.npc .narm.r{left:12px;transform:rotate(-22deg)}
+.npc .nhd{left:-22px;bottom:33px;width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(145deg,#212a39,#0b0f16);border:2px solid color-mix(in srgb,var(--vc) 75%,#fff);box-shadow:0 0 18px color-mix(in srgb,var(--vc) 45%,transparent)}
+.npc .nhd svg{width:27px;height:27px}
+.npc .nhd.m{font:900 20px/1 var(--sans);color:#fff;background:var(--mc,#334155)}
+.npc .nhd.avimg{border-radius:50%;width:50px;height:50px;left:-25px}
+.npc .nfx{left:-58px;bottom:96px;width:64px;text-align:center;font:900 22px var(--sans);color:#fde68a;text-shadow:0 0 14px rgba(251,191,36,.9),0 2px 0 #000;opacity:0;white-space:nowrap}
+.npc .nring{left:-40px;bottom:58px;width:30px;height:30px;border-radius:50%;border:3px solid #fde68a;opacity:0}
+.npc .nck{left:14px;bottom:70px;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font:900 11px var(--sans);color:#0b0f16;background:#86efac;transform:scale(0);transition:transform .3s cubic-bezier(.3,1.7,.5,1)}
+.npc.red .ntor{background:linear-gradient(180deg,#f87171,#7f1d1d)}
+.npc.on .nb{animation:nIdle 2.6s ease-in-out infinite;animation-delay:var(--dl,0s)}
+.npc.on .narm.r{animation:nWave 2.6s ease-in-out infinite;animation-delay:var(--dl,0s)}
+.npc.hi5 .nb{animation:nJump .7s cubic-bezier(.3,.8,.4,1)}
+.npc.hi5 .narm.l{transform:rotate(158deg)}
+.npc.hi5 .nfx{animation:nPop .9s ease-out}
+.npc.hi5 .nring{animation:nRing .45s ease-out}
+.npc.done .nck{transform:none}
+@keyframes nIdle{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes nWave{0%,70%,100%{transform:rotate(-22deg)}78%,92%{transform:rotate(-140deg)}85%{transform:rotate(-110deg)}}
+@keyframes nJump{0%{transform:none}40%{transform:translateY(-26px)}100%{transform:none}}
+@keyframes nPop{0%{opacity:0;transform:scale(.4)}25%{opacity:1;transform:scale(1.2)}70%{opacity:1;transform:translateY(-16px)}100%{opacity:0;transform:translateY(-30px)}}
+@keyframes nRing{0%{opacity:1;transform:scale(.3)}100%{opacity:0;transform:scale(2.4)}}
+
+/* ---------- actors: each event is someone doing their thing ----------
+   hologram screen (the card scene) ← light cone ← speech bubble ← NPC on the road */
+.blk.act{width:560px;display:flex;flex-direction:column;align-items:center;--lift:0px}
+.act .ascr{position:relative;padding:8px;border-radius:20px;background:rgba(4,7,12,.5);border:1px solid color-mix(in srgb,var(--vc) 50%,transparent);box-shadow:0 0 44px color-mix(in srgb,var(--vc) 22%,transparent),0 24px 60px rgba(0,0,0,.45)}
+.act .ascr::after{content:"";position:absolute;inset:8px;border-radius:16px;background:repeating-linear-gradient(0deg,rgba(255,255,255,.03) 0 1px,transparent 1px 3px);pointer-events:none}
+.act .ascr::before{content:"";position:absolute;left:50%;top:-4px;width:60px;height:4px;margin-left:-30px;border-radius:2px;background:var(--vc);box-shadow:0 0 12px var(--vc)}
+.act .vz{width:528px;margin:0}
+.act .abeam{display:block;width:430px;height:calc(36px + var(--lift));flex:none;background:linear-gradient(0deg,color-mix(in srgb,var(--vc) 38%,transparent),color-mix(in srgb,var(--vc) 5%,transparent));clip-path:polygon(47% 100%,53% 100%,100% 0,0 0);opacity:.5}
+/* comic speech bubble: light, sized to what the character says */
+.act{--bb:color-mix(in srgb,var(--vc) 12%,#eef2f7)}
+.act.red{--bb:#ffe1e3}.act.dsx{--bb:#e1e6ff}
+.act .abub{position:relative;width:max-content;min-width:190px;max-width:328px;flex:none;padding:11px 16px 12px;border-radius:22px;background:var(--bb);color:#0b0f16;box-shadow:0 0 0 3px color-mix(in srgb,var(--vc) 60%,transparent),0 14px 30px rgba(0,0,0,.5)}
+.act .abub::after{content:"";position:absolute;left:50%;bottom:-11px;width:22px;height:14px;margin-left:-11px;background:var(--bb);clip-path:polygon(0 0,100% 0,40% 100%)}
+.act .abh{font-size:21px;font-weight:850;line-height:1.15;letter-spacing:-.01em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.act .abm{display:flex;align-items:center;gap:8px;margin-top:4px}
+.act .abm em{font:800 13px var(--mono);font-style:normal;color:color-mix(in srgb,var(--vc) 60%,#0b0f16)}
+.act .abm .tcat{color:color-mix(in srgb,var(--tc) 55%,#0b0f16);background:color-mix(in srgb,var(--tc) 18%,transparent)}
+.act .abub p{margin-top:4px;font-size:15px;line-height:1.42;color:#374151;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.act .abub p .dm,.act .abub p .mut{color:#6b7280}
+
+/* ---------- gates: month heads and labels become signs on posts over the road ---------- */
+.blk.gate{--gc:var(--ac)}
+#L2 .blk.gate .mo.head{background:linear-gradient(180deg,rgba(12,30,26,.95),rgba(7,12,15,.95))!important;border:2px solid color-mix(in srgb,var(--gc) 70%,transparent)!important;box-shadow:0 0 0 6px rgba(0,0,0,.3),0 0 70px color-mix(in srgb,var(--gc) 26%,transparent)!important}
+.blk.gate.lbl{width:max-content;max-width:1000px;padding:24px 34px;border-radius:22px;background:linear-gradient(180deg,rgba(18,24,35,.95),rgba(9,12,18,.95));border:2px solid color-mix(in srgb,var(--gc) 60%,transparent);box-shadow:0 0 60px color-mix(in srgb,var(--gc) 20%,transparent)}
+.blk.gate.lbl h3{font-size:54px}
+.gpost{position:absolute;top:100%;width:12px;height:var(--post,300px);border-radius:3px;background:linear-gradient(90deg,#1b222d,#6b7a90 45%,#1b222d);box-shadow:0 0 0 1px rgba(0,0,0,.4)}
+.gpost.l{left:70px}.gpost.r{right:70px}
+.gpost::after{content:"";position:absolute;left:-6px;bottom:-4px;width:24px;height:8px;border-radius:3px;background:#2a3342}
+
+/* ---------- 热议 弹幕: flies across the sky when the hero reaches its week ---------- */
+#sky{position:absolute;left:0;top:72px;width:1920px;height:80px;overflow:hidden;pointer-events:none}
+.skd{position:absolute;left:0;top:0;display:flex;align-items:center;gap:9px;padding:5px 15px;border-radius:999px;background:rgba(48,14,36,.8);border:1px solid rgba(244,114,182,.5);font:700 18px var(--sans);color:#fde7f3;white-space:nowrap;will-change:transform;box-shadow:0 6px 18px rgba(0,0,0,.45)}
+.skd:not(.fly){display:none}
+.skd i{font:800 11px var(--mono);font-style:normal;letter-spacing:.14em;color:#f472b6}
+.skd em{font:600 12px var(--mono);font-style:normal;color:#f9a8d4;opacity:.8}
+.skd.ds{background:rgba(20,26,66,.82);border-color:rgba(107,132,255,.55);color:#dbe2ff}
+.skd.ds i,.skd.ds em{color:#a5b4fc}
+
+/* ---------- concept 弹幕 (replaces the word cloud) ---------- */
+.dmf{position:relative;overflow:hidden;margin-top:20px;border-radius:24px;background:radial-gradient(120% 90% at 50% 0%,rgba(34,211,238,.07),transparent 60%),#05070b;border:1px solid rgba(255,255,255,.1);box-shadow:inset 0 0 90px rgba(0,0,0,.75)}
+.dmf::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.02) 0 1px,transparent 1px 4px);pointer-events:none}
+.dmw{position:absolute;left:0;top:0;display:none;white-space:nowrap;line-height:1;cursor:pointer;color:var(--cc);font-weight:var(--fw);letter-spacing:-.01em;text-shadow:0 2px 0 rgba(0,0,0,.6),0 0 10px rgba(0,0,0,.9);will-change:transform}
+.dmw.fly{display:block}
+.dmw.hot{padding:4px 14px 8px;border-radius:14px;border:1.5px solid color-mix(in srgb,var(--cc) 60%,transparent);background:color-mix(in srgb,var(--cc) 12%,rgba(0,0,0,.45))}
+.dmw:hover{z-index:3;text-shadow:0 0 18px var(--cc);outline:2px solid color-mix(in srgb,var(--cc) 70%,transparent);outline-offset:4px;border-radius:8px}
+.dmbar{display:flex;align-items:center;gap:22px;margin-top:14px;min-height:32px;font:600 18px var(--sans);color:#cbd5e1}
+.dmbar .yl{display:flex;gap:14px;flex:none;font:700 14px var(--mono)}
+.dmbar .yl span{display:flex;align-items:center;gap:6px}
+.dmbar .yl i{width:10px;height:10px;border-radius:3px;background:currentColor}
+.dminfo{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dminfo b{color:var(--cc,#fff);margin-right:10px}
 
 /* ---------- HUD ---------- */
 #hud{position:absolute;left:0;top:0;width:1920px;height:66px;display:flex;align-items:center;gap:38px;padding:0 64px;background:linear-gradient(180deg,rgba(5,7,11,.95),rgba(5,7,11,.72) 70%,rgba(5,7,11,0));pointer-events:none}
@@ -1150,12 +1290,13 @@ html,body{overscroll-behavior:none}
 #hud .sp{flex:1}
 #hud .coin{display:inline-grid;place-items:center;width:20px;height:20px;margin-right:8px;border-radius:50%;vertical-align:2px;background:radial-gradient(circle at 35% 30%,#fde68a,#f59e0b 60%,#b45309);color:#7c2d12;font:900 12px var(--sans);font-style:normal;box-shadow:0 0 10px rgba(251,191,36,.5);animation:coinSpin 3s ease-in-out infinite}
 @keyframes coinSpin{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.25)}}
+#hud .hand{width:21px;height:21px;margin-right:7px;vertical-align:-3px;fill:none;stroke:#fde68a;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 #hud .hp{display:inline-block;width:92px;height:8px;margin-left:10px;border-radius:4px;vertical-align:3px;background:rgba(255,255,255,.1);overflow:hidden}
 #hud .hp i{display:block;height:100%;width:0;background:linear-gradient(90deg,#34d399,#a3e635);transition:width .3s}
 #hud .lnk{flex-direction:row;gap:16px;pointer-events:auto}
 #hud .lnk a{font:600 14px var(--mono);color:#8b93a7;text-decoration:none;border-bottom:1px solid rgba(148,163,184,.35)}
 #hud .lnk a:hover{color:#fff}
-#toast{position:absolute;left:50%;top:84px;transform:translate(-50%,-10px);padding:12px 30px 14px;border-radius:16px;background:rgba(7,9,13,.88);border:1px solid color-mix(in srgb,var(--era) 60%,transparent);box-shadow:0 0 40px color-mix(in srgb,var(--era) 30%,transparent);text-align:center;opacity:0;pointer-events:none}
+#toast{position:absolute;left:50%;top:160px;transform:translate(-50%,-10px);padding:12px 30px 14px;border-radius:16px;background:rgba(7,9,13,.88);border:1px solid color-mix(in srgb,var(--era) 60%,transparent);box-shadow:0 0 40px color-mix(in srgb,var(--era) 30%,transparent);text-align:center;opacity:0;pointer-events:none}
 #toast.show{animation:toast 2.4s ease both}
 #toast small{display:block;font:800 13px var(--mono);letter-spacing:.32em;color:var(--era)}
 #toast b{display:block;font:850 34px var(--sans);margin-top:4px;white-space:nowrap}
@@ -1845,9 +1986,18 @@ html,body{overscroll-behavior:none}
 
 
 </div>
-<div class="layer" id="L3" data-s="1.45"></div>
+<div class="layer" id="LN" data-s="1"></div>
 <div id="nowr"></div>
-<div id="hero" aria-hidden="true"><div class="hf"><i class="dust"></i><div class="hw"><i class="leg l"></i><i class="leg r"></i><div class="hb"><span class="lg" data-l="cursor"></span></div></div></div><i class="sh"></i></div>
+<div id="sky" aria-hidden="true"></div>
+<div id="hero" data-v="walk" aria-hidden="true"><i class="sh"></i><div class="hf"><div class="hw"><div class="hv">
+  <i class="dust"></i><i class="puff"></i><i class="puff b"></i><i class="flame"></i><i class="hglow"></i><i class="hbeam"></i>
+  <svg class="veh vbike" viewBox="0 0 92 52"><g class="wh"><circle cx="16" cy="36" r="14"/><path d="M16 22V50M2 36H30"/></g><g class="wh"><circle cx="76" cy="36" r="14"/><path d="M76 22V50M62 36H90"/></g><path class="fr" d="M16 36L38 36L28 16H58L76 36M38 36L58 16M58 16L60 7H67M23 14H34"/><g class="crk"><path d="M32 41L44 31"/></g></svg>
+  <svg class="veh vship" viewBox="0 0 150 60"><path class="sf" d="M30 17L14 1H32L48 15ZM30 43L14 59H32L48 45Z"/><path class="sb" d="M10 30Q16 14 56 12L112 14Q144 20 148 30Q144 40 112 46L56 48Q16 46 10 30Z"/><path class="ss" d="M24 30H62M104 30H140"/><circle class="sl" cx="124" cy="30" r="3"/></svg>
+  <i class="leg l"></i><i class="leg r"></i>
+  <div class="hbw"><div class="hb"><span class="lg" data-l="cursor"></span></div><i class="harm"></i></div>
+  <svg class="veh vcar" viewBox="0 0 140 50"><path class="cb" d="M4 41V31Q4 22 16 20L40 18H96L104 5H108L101 18L124 20Q136 22 136 32V41Z"/><path class="cs" d="M8 30H132"/><circle class="hl" cx="131" cy="27" r="3.5"/><g class="wh"><circle cx="32" cy="39" r="10"/><path d="M32 29V49M22 39H42"/></g><g class="wh"><circle cx="106" cy="39" r="10"/><path d="M106 29V49M96 39H116"/></g></svg>
+  <svg class="vdome" viewBox="0 0 44 44"><circle cx="22" cy="22" r="20"/><path d="M10 14Q14 6 24 5"/></svg>
+</div></div></div><i class="poof"></i><b class="pmsg"></b></div>
 <div id="hint">▶ 滚动 / <b>→</b> 前进 · <b>空格</b> 自动播放</div>
 <div id="hud">
   <div class="hwd"><small>World</small><div><b id="hW">START</b><span id="hWn">Vibe Coding 简史</span></div></div>
@@ -1856,7 +2006,7 @@ html,body{overscroll-behavior:none}
   <div class="sp"></div>
   <div class="hcu"><small>Cursor 估值</small><b><i class="coin">$</i><span id="hC">—</span></b></div>
   <div class="hsw"><small>SWE-bench 最高</small><b><span id="hS">—</span><i class="hp"><i id="hSb"></i></i></b></div>
-  <div class="hcn"><small>事件</small><b><span id="hE">0</span><em id="hEt"></em></b></div>
+  <div class="hcn"><small>击掌</small><b><svg class="hand" viewBox="0 0 24 24"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V11V3.5a1.5 1.5 0 0 1 3 0V11V5a1.5 1.5 0 0 1 3 0v8.5V8.5a1.5 1.5 0 0 1 3 0V15a7 7 0 0 1-7 7h-1a7 7 0 0 1-5.6-2.8L3.6 15.4a1.6 1.6 0 0 1 2.5-2L8 15.5"/></svg><span id="hE">0</span><em id="hEt"></em></b></div>
   <div class="hbz"><small>热议</small><b><span id="hB">0</span><em id="hBt"></em></b></div>
   <div class="lnk"><a href="index.html">翻页版 ↗</a><a href="scroll.html">长卷版 ↗</a></div>
 </div>
@@ -2588,7 +2738,12 @@ const BUZZ=[['「复制粘贴工程师」','2023.02'],['Prompt Engineering 当�
    hero at the same date — the same trick the vertical scroll uses for its
    now line, turned 90°.
    ===================================================================== */
-const F=640,ZT=76,ZB=812,ZH=ZB-ZT,LANE=(ZH-12)/2,RY=888,M=1.25,CHUNK=6000;
+const F=640,ZT=76,ZB=812,ZH=ZB-ZT,M=1.25,CHUNK=6000;
+/* actors: NPC feet on the road, bubble right above the head, screen above that.
+   Neighbours sit ASP apart; when that is closer than a screen is wide, every
+   other actor lifts its screen one tier so screens never overlap. */
+const GROUND=872,BUB_B=GROUND-88,AW=560,ASP=360,LIFT=250;
+const VEH={'2024':['bike','自行车'],'2025':['car','汽车'],'2026':['ship','飞船']};
 const stage=$('#stage'),space=$('#space'),L2=$('#L2'),hero=$('#hero');
 const LY=[...document.querySelectorAll('#stage>.layer')].map(el=>({el,s:+el.dataset.s}));
 const LS={};LY.forEach(l=>LS[l.el.id]=l.s);
@@ -2604,8 +2759,8 @@ const estW=(s,px)=>{let w=0;for(const ch of String(s))w+=ch.charCodeAt(0)>255?px
   const k=hb.querySelector('.kk');if(k)k.innerHTML=k.innerHTML.replace('一张长卷','一张横卷')}
  const cu=$('#b-cursor .lead i');if(cu)cu.innerHTML='↓ 脚下这条路就是 Cursor：路面越宽，估值越高。整张横卷都沿着它走。';
  const nl=$('#b-now .lead');if(nl)nl.innerHTML=nl.innerHTML.replace(/回头看中景[\s\S]*?活了多久。/,'回头看脚下：一路走来的那条路就是 Cursor，<i>路面越宽 = 估值越高</i>——从 VS Code 分叉，到 600 亿美元、成了火箭公司的一部分；再往前是生命线，每条线的长度，就是它活了多久。');
- /* month heads ride the upper lane like level banners; their cards trail underneath */
- document.querySelectorAll('#L2>.blk').forEach(b=>{if(b.querySelector(':scope>.mo.head'))b.dataset.lane='U'});
+ /* month heads and section labels become signs on two posts over the road */
+ document.querySelectorAll('#L2>.blk').forEach(b=>{if(b.querySelector(':scope>.mo.head')||b.classList.contains('lbl')){b.classList.add('gate');b.insertAdjacentHTML('beforeend','<i class="gpost l"></i><i class="gpost r"></i>')}});
  /* HTalk dogfood: the easter egg joins the numbers column so the poster stays short */
  const hu=$('#b-htus');if(hu){const n=hu.querySelector('.hnums'),eg=hu.querySelector('.hegg');if(n&&eg){const w=document.createElement('div');n.parentNode.insertBefore(w,n);w.appendChild(n);w.appendChild(eg)}}
 })();
@@ -2694,12 +2849,80 @@ let SWE=[];
   +'<div class="vax" data-hax="2021.06 '+PX+' '+L0+' '+Math.round(X(mN)-L0)+'" style="position:relative;width:'+W+'px;height:'+H+'px;margin-top:26px">'+g+nm+'<div class="nowclip" style="position:absolute;left:0;top:0;width:'+W+'px;height:'+H+'px">'+r+'</div></div></div>')})();
 fillLogos(hero);
 
-/* ---------- layout: a continuous level, two lanes for cards ---------- */
-let BL=[],A=[],SMAX=1,K=1,WORLDS=[],COINS=[],CHIPS=[],FLAGS=[],NAV=[];
-/* checkpoints stay full height even when they are short enough for a lane */
-const FULL=new Set(['b-hero','b-now','b-end','b-ht6']);
+/* ---------- actors: every event card becomes someone doing their thing ----------
+   The card's scene turns into a hologram the character projects, its text into
+   a speech bubble, and its logo (or the person's photo) into the character's
+   head. The character itself lives on the road in #LN, see buildCast(). */
+const headOf=el=>{if(!el)return null;if(el.dataset.av)return {av:el.dataset.av};if(el.dataset.l)return {l:el.dataset.l,c:el.dataset.c||''};
+ const t=(el.textContent||'').trim();return t?{m:t.slice(0,2),mc:el.style.getPropertyValue('--mc')||'#475569'}:null};
+(function actorize(){
+ document.querySelectorAll('#L2>.blk.cb').forEach(blk=>{const c=blk.querySelector(':scope>.card');if(!c)return;
+  const vc=getComputedStyle(c).getPropertyValue('--vc').trim()||'#22d3ee';
+  const pe=c.querySelector('.hmk>.portrait-ev'),m0=c.querySelector('.hmk>.lg:not(.portrait-ev)');
+  const title=qt(c,'.htx>b'),date=qt(c,'.hmeta>em'),tc=c.querySelector('.hmeta>.tcat'),desc=qh(c,':scope>p'),vz=c.querySelector(':scope>.vz');
+  const kind=c.classList.contains('red')?'red':c.classList.contains('dsx')?'dsx':'';
+  blk._head=headOf(pe)||headOf(m0);blk._kind=kind;
+  blk.className='blk act'+(kind?' '+kind:'');blk.style.setProperty('--vc',vc);
+  blk.innerHTML=(vz?'<div class="ascr" data-k=".04 .3" data-fx="zoom"></div><i class="abeam"></i>':'')
+   +'<div class="abub" data-k="0 .24" data-fx="up"><div class="abh">'+esc(title)+'</div><div class="abm"><em>'+esc(date)+'</em>'+(tc?tc.outerHTML:'')+'</div><p>'+desc+'</p></div>';
+  if(vz)blk.querySelector('.ascr').appendChild(vz)})})();
+/* who stands on the road under a stage set / gate: a person first, then the brand it is about */
+function npcHeadOf(el){const av=el.querySelector('[data-av]');if(av)return {av:av.dataset.av};
+ const lg=el.querySelector('.lgs [data-l]');if(lg)return headOf(lg);
+ const h=window.brandOf&&brandOf(qt(el,'.kk')+' '+qt(el,'h2')+' '+qt(el,'h3'));if(h&&BRANDS[h][0])return {l:BRANDS[h][0],c:BRANDS[h][1]};
+ const any=[...el.querySelectorAll('[data-l]')].find(x=>!x.closest('.vz'));return any?headOf(any):null}
+
+/* ---------- 弹幕 engine: rows of text flying right → left ----------
+   Used twice: the 热议 sky (fed when the hero reaches a week) and the concept
+   wall that replaces the word cloud (fed forever while it is on screen). */
+function makeDm(box,o){
+ const R=[...Array(o.rows)].map((_,i)=>({y:o.y(i),v:o.v(i),it:[],pause:false}));
+ const D={R,act:[],running:false,last:0};
+ const W=o.W;
+ D.free=r=>{const t=r.it[r.it.length-1];return !t||t._x+t._w+t._gap<W};
+ D.spawn=(el,r)=>{el.classList.add('fly');if(!el._w)el._w=el.offsetWidth;el._x=W;el._gap=o.gap();el._r=r;el.style.top=r.y+'px';r.it.push(el);D.act.push(el)};
+ D.step=dt=>{
+  for(const r of R){if(r.pause)continue;for(const el of r.it)el._x-=r.v*dt;
+   while(r.it.length&&r.it[0]._x+r.it[0]._w<0){const e=r.it.shift();D.act.splice(D.act.indexOf(e),1);e.classList.remove('fly');e.style.transform=''}}
+  const order=R.slice().sort(()=>Math.random()-.5);
+  for(const r of order){if(r.pause||!D.free(r))continue;const el=o.feed(r);if(!el)break;D.spawn(el,r)}};
+ D.render=()=>{for(const el of D.act)el.style.transform='translate3d('+el._x.toFixed(1)+'px,0,0)'};
+ D.tick=t=>{if(!D.running)return;const dt=Math.min(.05,(t-D.last)/1000);D.last=t;D.step(dt);D.render();
+  if(D.act.length||o.keep)requestAnimationFrame(D.tick);else D.running=false};
+ D.start=()=>{if(D.running)return;D.running=true;D.last=performance.now();requestAnimationFrame(D.tick)};
+ D.stop=()=>{D.running=false};
+ D.clear=()=>{if(D.q)D.q.length=0;for(const el of D.act){el.classList.remove('fly');el.style.transform=''}D.act.length=0;R.forEach(r=>r.it.length=0)};
+ D.prefill=sec=>{for(let i=0;i<sec*30;i++)D.step(1/30);D.render()};
+ return D}
+
+/* concept wall: font size = mentions, colour = year it appeared */
+let CDM=null;
+(function conceptWall(){const blk=$('#b-cloud'),old=$('#cloud');if(!blk||!old)return;window.__cloudLayout=null;
+ const col={'2023':'#38bdf8','2024':'#a78bfa','2025':'#fb923c','2026':'#34d399'};
+ const words=[];Object.keys(CONCEPTS).forEach(y=>CONCEPTS[y].forEach(x=>words.push({y,name:x[0],go:x[1],def:x[2],n:Math.max(1,CONCEPT_N[x[0]]||1)})));
+ words.sort((a,b)=>b.n-a.n);const mx=words[0].n,FW=2600,ROWS=9,RH=62,FH=ROWS*RH+20;
+ const k=blk.querySelector('.kk');if(k)k.textContent='回望 · 概念弹幕 · 字号 = 被提及次数 · 悬停暂停看释义 · 点击跳回';
+ const f=document.createElement('div');f.className='dmf';f.style.cssText='width:'+FW+'px;height:'+FH+'px';
+ const bar=document.createElement('div');bar.className='dmbar';
+ bar.innerHTML='<div class="yl">'+Object.keys(col).map(y=>'<span style="color:'+col[y]+'"><i></i>'+y+'</span>').join('')+'</div><div class="dminfo">把鼠标停在任意一条弹幕上</div>';
+ old.replaceWith(f);f.after(bar);blk.style.width=FW+'px';
+ const info=bar.querySelector('.dminfo');
+ words.forEach((w,i)=>{const r=Math.sqrt((w.n-1)/Math.max(1,mx-1)),fs=Math.round(20+34*r),el=document.createElement('span');
+  el.className='dmw'+(i<6?' hot':'');el.textContent=w.name;el.dataset.jump=w.go;
+  el.style.cssText='font-size:'+fs+'px;--cc:'+col[w.y]+';--fw:'+(fs>40?850:fs>28?750:600);
+  el.addEventListener('mouseenter',()=>{if(el._r)el._r.pause=true;info.style.setProperty('--cc',col[w.y]);info.innerHTML='<b>'+esc(w.name)+'</b>'+esc(w.def)+' <span class="mut">· '+w.y+' · 被提及 '+w.n+' 次</span>'});
+  el.addEventListener('mouseleave',()=>{if(el._r)el._r.pause=false});
+  f.appendChild(el);w.el=el});
+ let qi=0;
+ CDM=makeDm(f,{rows:ROWS,W:FW,keep:true,y:i=>10+i*RH+4,v:i=>130+((i*37)%5)*20,gap:()=>50+Math.random()*220,
+  feed:()=>{for(let n=0;n<words.length;n++){const w=words[qi];qi=(qi+1)%words.length;if(!w.el.classList.contains('fly'))return w.el}return null}});
+ CDM.filled=false})();
+
+/* ---------- layout: one continuous level ---------- */
+let BL=[],A=[],SMAX=1,K=1,WORLDS=[],FLAGS=[],NAV=[],NPCS=[],PUS=[],BZ=[];
 const byId=id=>BL.find(b=>b.id===id);
-function collect(){BL=[...L2.children].filter(e=>e.classList.contains('blk')).map(el=>({el,id:el.id,t:el.dataset.t||null,era:el.dataset.era||'all',card:el.classList.contains('cb'),lane:el.dataset.lane||null,gap:+(el.dataset.gap||170)}))}
+function collect(){BL=[...L2.children].filter(e=>e.classList.contains('blk')).map(el=>{const kind=el.classList.contains('act')?'act':el.classList.contains('gate')?'gate':'full';
+ return {el,id:el.id,t:el.dataset.t||null,era:el.dataset.era||'all',kind,head:kind==='act'?el._head:null,red:el._kind==='red',gap:+(el.dataset.gap||170)}})}
 function P(t){if(typeof t==='string'&&t[0]==='@'){const b=byId(t.slice(1));return b?b.left+100:0}return Pm(mf(t))}
 function Pm(m){if(!A.length)return 0;if(m<=A[0][0])return A[0][1]-(A[0][0]-m)*60;
  for(let i=1;i<A.length;i++)if(m<=A[i][0]){const a=A[i-1],b=A[i];return a[1]+(b[1]-a[1])*(m-a[0])/(b[0]-a[0])}
@@ -2707,25 +2930,38 @@ function Pm(m){if(!A.length)return 0;if(m<=A[0][0])return A[0][1]-(A[0][0]-m)*60
 function Minv(S){if(!A.length||S<A[0][1])return null;for(let i=1;i<A.length;i++)if(S<=A[i][1]){const a=A[i-1],b=A[i];return a[0]+(b[0]-a[0])*(S-a[1])/(b[1]-a[1])}return A[A.length-1][0]}
 function fit(){K=Math.min(innerWidth/1920,innerHeight/1080);stage.style.transform='translate(-50%,-50%) scale('+K+')';space.style.height=(SMAX*K/M+innerHeight)+'px'}
 function layout(){
- if(window.__cloudLayout)window.__cloudLayout();
- const end={U:100-F,D:100-F};let prev=-1e9,last='D';
+ /* fullEnd: right edge of the last stage set / gate; lastNpc: x of the last character on the road */
+ let fullEnd=100-F,actRight=-1e9,lastNpc=-1e9,tier=0,prevEra=null;PUS=[];
+ /* bubbles differ in height: a low screen must clear its neighbours' bubbles too */
+ BL.forEach(b=>{b.bh=b.kind==='act'?(b.el.querySelector('.abub')||{offsetHeight:0}).offsetHeight:0});
+ BL.forEach((b,i)=>{if(b.kind!=='act')return;const nb=[BL[i-1],BL[i+1]].filter(x=>x&&x.kind==='act').map(x=>x.bh);b.pad=Math.max(0,...nb,b.bh)-b.bh});
  BL.forEach(b=>{const el=b.el;el.style.transform='';el.style.left='0px';el.style.top='0px';
-  const w=el.offsetWidth,h=el.offsetHeight,lane=!FULL.has(b.id)&&h<=LANE*1.16;let left,top,sc;
-  if(lane){sc=Math.min(1,LANE/h);
-   const ln=b.lane||(end.U<end.D-1?'U':end.D<end.U-1?'D':(last==='U'?'D':'U'));
-   left=Math.max(end[ln],prev+(b.card?300:240));top=ln==='U'?ZT:ZB-h*sc;end[ln]=left+w*sc+40;last=ln}
-  else{sc=Math.min(1,ZH/h);left=Math.max(end.U,end.D,prev+200)+(prev>-1e9?60:0);top=ZT+(ZH-h*sc)/2;
-   end.U=end.D=left+w*sc+100+Math.min(b.gap,700)*.45}
-  prev=left;Object.assign(b,{left,top,sc,w:w*sc,h:h*sc,full:!lane,items:null,clips:null,vis:undefined,live:undefined});
+  /* a new year: leave room on the road for the vehicle power-up */
+  const yr=b.t?eraOf(mf(b.t)):null;
+  if(yr&&yr!==prevEra&&VEH[yr]&&!PUS.some(p=>p.yr===yr)){const R=Math.max(fullEnd,actRight+40,lastNpc+200);
+   PUS.push({yr,v:VEH[yr][0],name:VEH[yr][1],x:R+110});fullEnd=R+240;lastNpc=Math.max(lastNpc,R+240-ASP+AW/2)}
+  if(yr)prevEra=yr;
+  let left,top,sc=1,w,h;b.npcX=null;
+  if(b.kind==='act'){
+   const nx=Math.max(fullEnd+AW/2,lastNpc+ASP);tier=nx-lastNpc<AW+40?1-tier:0;
+   el.style.setProperty('--lift',((tier?LIFT:0)+b.pad)+'px');w=el.offsetWidth;h=el.offsetHeight;
+   left=nx-AW/2;top=BUB_B-h;lastNpc=nx;actRight=Math.max(actRight,left+w);b.npcX=nx}
+  else{w=el.offsetWidth;h=el.offsetHeight;
+   left=Math.max(fullEnd,actRight+80,lastNpc+170)+(fullEnd>100-F?40:0);
+   if(b.kind==='gate'){top=ZT+34;el.style.setProperty('--post',(GROUND-top-h)+'px');fullEnd=left+w+90}
+   else{sc=Math.min(1,ZH/h);top=ZT+(ZH-h*sc)/2;fullEnd=left+w*sc+100+Math.min(b.gap,700)*.45}
+   b.head=b.t?npcHeadOf(el):null;
+   if(b.head){b.npcX=b.kind==='gate'?left+w/2:left+70;lastNpc=Math.max(lastNpc,b.npcX)}}
+  Object.assign(b,{left,top,sc,w:w*sc,h:h*sc,full:b.kind!=='act',items:null,clips:null,vis:undefined,live:undefined});
   el.style.left=left.toFixed(1)+'px';el.style.top=top.toFixed(1)+'px';if(sc<.999)el.style.transform='scale('+sc.toFixed(4)+')';
-  b.span=b.full?Math.min(1500,520+b.w*.55):720;
+  b.span=b.full?Math.min(1500,520+b.w*.55):620;
   const hx=el.querySelector('[data-hax]');b.hax=null;
   if(hx){const a=hx.dataset.hax.split(' ');b.hax={m0:mf(a[0]),px:+a[1],x0:hx.offsetLeft+ +a[2],w:+a[3]}}});
  /* date → world x, strictly increasing in both axes */
- A=[];BL.forEach(b=>{if(!b.t)return;const m=mf(b.t),p=b.left+(b.card?30:80);
+ A=[];BL.forEach(b=>{if(!b.t)return;const m=mf(b.t),p=b.kind==='act'?b.npcX:b.left+(b.kind==='gate'?30:80);
   if(!A.length)A.push([m,p]);else if(m>A[A.length-1][0]+1e-6)A.push([m,Math.max(p,A[A.length-1][1]+1)])});
  const lb=BL[BL.length-1];SMAX=Math.max(lb.left+lb.w+F-1820,lb.left+F-1700+lb.span);
- buildWorlds();buildFar();buildMid();buildGround();buildFront();buildMini();fit()}
+ buildWorlds();buildFar();buildMid();buildGround();buildCast();buildSky();buildMini();fit()}
 
 function buildWorlds(){const yr=k=>YEARS.find(y=>y[0]===k),nm=k=>{const y=yr(k);return y?y[0]+(y[3]?' · '+y[3]:''):k};
  const first=t=>BL.find(b=>b.t&&mf(b.t)>=mf(t)-1e-6);
@@ -2733,7 +2969,7 @@ function buildWorlds(){const yr=k=>YEARS.find(y=>y[0]===k),nm=k=>{const y=yr(k);
   [first('2025.01'),'WORLD 3',nm('2025'),'2025','2025'],[first('2026.01'),'WORLD 4',nm('2026'),'2026','2026'],[byId('b-now'),'CHECKPOINT','今天 · '+NOW,'all',''],
   [byId('b-life'),'BONUS','回望 · 三年复盘','all','回望'],[byId('b-ht1'),'NEXT',nm('附'),'ht','附']]
   .filter(w=>w[0]).map(w=>({b:w[0],k:w[1],n:w[2],era:w[3],mini:w[4]}));
- NAV=BL.map(b=>({b,s:b.left+F-(b.full?140:520)})).sort((a,b)=>a.s-b.s)}
+ NAV=BL.map(b=>({b,s:b.kind==='act'?b.npcX-260:b.left+F-140})).sort((a,b)=>a.s-b.s)}
 
 /* era-tinted gradient stops in a layer's own coordinates */
 function eraStops(s){return [[P('@b-hero')*s,'#38bdf8'],[P('2024.01')*s,'#a78bfa'],[P('2025.01')*s,'#fb923c'],[P('2026.01')*s,'#34d399'],[P(NOW)*s,'#22d3ee'],[P('@b-ht1')*s,'#e0b354']]}
@@ -2785,22 +3021,36 @@ function buildGround(){const x0=BL[0].left-600,x1=SMAX+2600,len=x1-x0,mA=mf('202
   h+='<i class="rcm'+(c[2]?' big':'')+'" style="left:'+x.toFixed(1)+'px;--c:'+col+'"></i><div class="rcl'+(c[2]?' big':'')+'" style="left:'+(x-6).toFixed(1)+'px;top:'+(966+r*18)+'px;--c:'+col+'"><em>◆ '+esc(t)+'</em>'+esc(c[1])+'</div>'});
  /* undated chapters (cover, retro, HTalk) get a bracket instead of months */
  BL.forEach(b=>{if(b.t||!b.full)return;const t=qt(b.el,'.kk').trim();h+='<div class="rch" style="left:'+(b.left+10).toFixed(0)+'px;width:'+Math.max(60,b.w-20).toFixed(0)+'px;--c:'+(ERA[b.era]||ERA.all)+'"><b>'+esc(t)+'</b></div>'});
- /* coins: one per dated event, collected as the hero walks past */
- let cx=-1e9;const cs=[];BL.forEach(b=>{if(!b.t)return;cx=Math.max(Pm(mf(b.t)),cx+16);cs.push(cx)});
- cs.forEach(x=>{h+='<i class="rcoin" style="left:'+x.toFixed(1)+'px"></i>'});
  const fl=WORLDS.map(w=>[w.b.left-70,w.k,ERA[w.era]||ERA.all,'']);fl.push([SMAX-40,'GOAL','#fde68a','goal']);
  fl.forEach(f=>{h+='<div class="flag '+f[3]+'" style="left:'+f[0].toFixed(0)+'px;--c:'+f[2]+'"><b>'+f[1]+'</b></div>'});
  const LG=$('#LG');LG.innerHTML=h;
- COINS=[...LG.querySelectorAll('.rcoin')].map((el,i)=>({el,x:cs[i],got:null}));
  FLAGS=[...LG.querySelectorAll('.flag')].map((el,i)=>({el,x:fl[i][0],up:null,k:fl[i][1]}))}
-function buildFront(){const s=LS.L3,L=$('#L3');L.innerHTML=BUZZ.map(b=>'<div class="bz '+(b[2]||'')+'">'+esc(b[0])+'</div>').join('');
- CHIPS=[...L.children].map((el,i)=>({el,x:P(BUZZ[i][1])*s,w:el.offsetWidth,got:null})).sort((a,b)=>a.x-b.x);
- let e=-1e9;CHIPS.forEach(c=>{c.x=Math.max(c.x,e+14);e=c.x+c.w;c.el.style.left=c.x.toFixed(1)+'px';c.at=(c.x+c.w/2)/s})}
+/* the cast: a character on the road for every actor, stage set and gate that
+   has a face (logo or photo), plus the vehicle power-ups */
+const headHTML=h=>h.av?'<span class="lg nhd" data-av="'+esc(h.av)+'"></span>'
+ :h.l?'<span class="lg nhd" data-l="'+esc(h.l)+'"'+(h.c?' data-c="'+esc(h.c)+'"':'')+'></span>'
+ :'<span class="lg nhd m" style="--mc:'+esc(h.mc||'#475569')+'">'+esc(h.m||'?')+'</span>';
+const vehSVG=v=>{const s=hero.querySelector('.v'+v);return s?s.outerHTML.replace(/ class="veh v\w+"/,' class="veh"'):''};
+function buildCast(){const LN=$('#LN');let h='';const list=[];
+ BL.forEach((b,i)=>{if(b.npcX===null||!b.head)return;const vc=b.kind==='act'?b.el.style.getPropertyValue('--vc'):(ERA[b.t?eraOf(mf(b.t)):b.era]||ERA.all);
+  list.push(b.npcX);
+  h+='<div class="npc'+(b.red?' red':'')+'" style="left:'+b.npcX.toFixed(1)+'px;--vc:'+vc+';--dl:-'+(rr(i,31)*2.6).toFixed(2)+'s"><i class="nsh"></i><div class="nb"><i class="nleg l"></i><i class="nleg r"></i><i class="ntor"></i><i class="narm l"></i><i class="narm r"></i>'+headHTML(b.head)+'</div><i class="nring"></i><b class="nfx">啪!</b><i class="nck">✓</i></div>'});
+ PUS.forEach(p=>{h+='<div class="pu" style="left:'+p.x.toFixed(1)+'px;--c:'+ERA[p.yr]+'"><div class="pub">'+vehSVG(p.v)+'</div><b>'+p.name+' · '+p.yr+'</b></div>'});
+ LN.innerHTML=h;fillLogos(LN);
+ NPCS=[...LN.querySelectorAll('.npc')].map((el,i)=>({el,x:list[i],done:null,on:null}));
+ [...LN.querySelectorAll('.pu')].forEach((el,i)=>{PUS[i].el=el;PUS[i].got=null})}
+/* 热议 become 弹幕 in the sky, launched when the hero reaches their week */
+let SKY=null;
+function buildSky(){const sky=$('#sky');
+ if(!SKY){SKY=makeDm(sky,{rows:2,W:1920,y:i=>4+i*38,v:()=>300,gap:()=>90,feed:()=>SKY.q.shift()||null});SKY.q=[]}
+ BZ=BUZZ.map(b=>({x:P(b[1]),b,el:null,sent:null})).sort((a,b)=>a.x-b.x)}
+function launchBuzz(z){if(!z.el){const d=document.createElement('div');d.className='skd'+(z.b[2]?' '+z.b[2]:'');d.innerHTML='<i>热议</i>'+esc(z.b[0])+'<em>'+esc(z.b[1])+'</em>';$('#sky').appendChild(d);z.el=d}
+ if(z.el.classList.contains('fly')||SKY.q.includes(z.el))return;SKY.q.push(z.el);if(SKY.q.length>5)SKY.q.shift();SKY.start()}
 function buildMini(){const mm=$('#mm'),st=[];
  BL.forEach(b=>{const c=b.t?ERA[eraOf(mf(b.t))]:ERA[b.era]||ERA.all;st.push(c+' '+(clamp(b.left/SMAX)*100).toFixed(2)+'%',c+' '+(clamp((b.left+b.w)/SMAX)*100).toFixed(2)+'%')});
  const g='linear-gradient(90deg,'+st.join(',')+')';mm.querySelector('.mt').style.background=g;mm.querySelector('.mf').style.background=g;
  mm.querySelector('.ml').innerHTML=WORLDS.filter(w=>w.mini).map(w=>'<button type="button" data-b="'+w.b.id+'" style="left:'+(clamp(w.b.left/SMAX)*100).toFixed(2)+'%;--ch:'+(ERA[w.era]||ERA.all)+'">'+w.mini+'</button>').join('');
- $('#hEt').textContent='/'+COINS.length;$('#hBt').textContent='/'+CHIPS.length}
+ $('#hEt').textContent='/'+NPCS.length;$('#hBt').textContent='/'+BZ.length}
 
 /* ---------- scrubbed items (same vocabulary as the vertical scroll) ---------- */
 function parseItems(b){const offX=el=>{const v=el.closest('.vax');return v?v.offsetLeft:0};
@@ -2838,6 +3088,10 @@ const put=(k,el,v,prop)=>{if(LAST[k]===v)return false;LAST[k]=v;if(el){if(prop)e
 const bump=el=>{if(el.animate)el.animate([{transform:'scale(1.3)',color:'#fde68a'},{transform:'none'}],{duration:320})};
 function toast(w){UI.toast.querySelector('small').textContent=w.k;UI.toast.querySelector('b').textContent=w.n;UI.toast.classList.remove('show');void UI.toast.offsetWidth;UI.toast.classList.add('show')}
 function jump(){hero.classList.remove('jump');void hero.offsetWidth;hero.classList.add('jump')}
+let h5T=0;
+function hi5(n){const el=n.el;el.classList.remove('hi5');void el.offsetWidth;el.classList.add('hi5');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('hi5'),900);
+ hero.classList.add('hi5');clearTimeout(h5T);h5T=setTimeout(()=>hero.classList.remove('hi5'),420)}
+function powerUp(name){hero.querySelector('.pmsg').textContent='获得 '+name+'！';hero.classList.remove('pw');void hero.offsetWidth;hero.classList.add('pw');setTimeout(()=>hero.classList.remove('pw'),1700)}
 function update(force){ticking=false;const S=curS();if(S===lastS&&!force)return;const dS=lastS<-1e8?0:S-lastS,smooth=Math.abs(dS)<400;lastS=S;
  for(const l of LY)l.el.style.transform='translate3d('+(F-S*l.s).toFixed(2)+'px,0,0)';
  for(const b of BL){const X=b.left-S+F,vis=X<=2240&&X+b.w>=-320,live=vis&&X<=1840&&X+b.w>=80;
@@ -2851,12 +3105,24 @@ function update(force){ticking=false;const S=curS();if(S===lastS&&!force)return;
   for(const c of b.clips){const v=Math.max(0,c.w-(F+40-(X+c.x0*b.sc))/b.sc).toFixed(1);if(v!==c.last){c.last=v;c.el.style.clipPath='inset(0 '+v+'px 0 0)'}}
   if(booted&&smooth&&b.full&&dS>0&&S-dS<b.left&&S>=b.left)jump()}
  /* hero */
- if(!force&&Math.abs(dS)>.4){hero.classList.add('run');hero.classList.toggle('back',dS<0);clearTimeout(runT);runT=setTimeout(()=>hero.classList.remove('run'),150)}
+ if(!force&&Math.abs(dS)>.4){if(smooth){hero.classList.add('run');hero.classList.toggle('back',dS<0)}else hero.classList.remove('back');clearTimeout(runT);runT=setTimeout(()=>hero.classList.remove('run'),150)}
+ /* a jump or a step back: whatever was flying in the sky no longer belongs here */
+ if(SKY&&!force&&(!smooth||dS<0)&&(SKY.act.length||SKY.q.length))SKY.clear();
+ if(!smooth&&!force)UI.toast.classList.remove('show');
  if(put('hint',null,S>60))UI.hint.classList.toggle('off',S>60);
- /* collectibles */
- let ec=0,bc=0;
- for(const c of COINS){const g=S>=c.x;if(g)ec++;if(g!==c.got){c.got=g;c.el.classList.toggle('got',g)}}
- for(const c of CHIPS){const g=S>=c.at;if(g)bc++;if(g!==c.got){const was=c.got;c.got=g;c.el.classList.toggle('got',g);if(g&&was===false&&smooth){c.el.classList.remove('pop');void c.el.offsetWidth;c.el.classList.add('pop')}}}
+ /* the cast: idle only when on screen; high-five as the hero reaches them */
+ let ec=0,bc=0;const live=booted&&smooth&&dS>0;
+ for(const n of NPCS){const sx=n.x-S+F,on=sx>-120&&sx<2040;if(on!==n.on){n.on=on;n.el.classList.toggle('on',on)}
+  const d=S>=n.x-30;if(d)ec++;
+  if(d!==n.done){const was=n.done;n.done=d;n.el.classList.toggle('done',d);if(d&&was===false&&live)hi5(n)}}
+ /* vehicle by year; gone once the appendix starts */
+ let veh='walk',vn='';for(const p of PUS){const g=S>=p.x;if(g){veh=p.v;vn=p.name}if(g!==p.got){const was=p.got;p.got=g;p.el.classList.toggle('got',g);if(g&&was===false&&live)powerUp(vn)}}
+ if(hero.dataset.v!==veh)hero.dataset.v=veh;
+ const htB=byId('b-ht1'),gone=!!htB&&S>=htB.left-360;if(put('gone',null,gone))hero.classList.toggle('gone',gone);
+ /* 热议 弹幕 */
+ for(const z of BZ){const g=S>=z.x;if(g)bc++;if(g!==z.sent){const was=z.sent;z.sent=g;if(g&&was===false&&live)launchBuzz(z)}}
+ /* concept wall runs only while it is on screen */
+ const cw=byId('b-cloud');if(CDM&&cw){if(cw.live){if(!CDM.filled){CDM.filled=true;CDM.prefill(14)}CDM.start()}else CDM.stop()}
  for(const f of FLAGS){const u=S>=f.x;if(u!==f.up){const was=f.up;f.up=u;f.el.classList.toggle('up',u);if(u&&was===false&&f.k==='GOAL')toast({k:'STAGE CLEAR',n:'下一个三年 · 写闭环'})}}
  if(put('E',UI.E,String(ec))&&booted)bump(UI.E);if(put('B',UI.B,String(bc))&&booted)bump(UI.B);
  /* HUD: world, time, role, valuation, best SWE score */
@@ -2887,7 +3153,7 @@ stage.addEventListener('scroll',()=>{if(stage.scrollTop||stage.scrollLeft){stage
 
 /* ---------- navigation ---------- */
 function toS(S,smooth){scrollTo({top:clamp(S,0,SMAX)*K/M,behavior:smooth?'smooth':'instant'})}
-function goB(id,inst){const b=byId(id);if(b)toS(b.left+F-(b.full?140:520),!inst)}
+function goB(id,inst){const b=byId(id);if(b)toS(b.kind==='act'?b.npcX-260:b.left+F-140,!inst)}
 const SPEEDS=[.25,.5,.75,1,1.5,2,3,4],BASE=160;let playing=false,si=3,apS=0,apT=0;
 const qs=new URLSearchParams(location.search);if(qs.get('speed')){const v=+qs.get('speed');let bi=0;SPEEDS.forEach((x,i)=>{if(Math.abs(x-v)<Math.abs(SPEEDS[bi]-v))bi=i});si=bi}
 function showSpeed(){$('#asr').value=si;$('#aso').textContent=SPEEDS[si]+'×'}
