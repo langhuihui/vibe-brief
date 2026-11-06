@@ -120,9 +120,10 @@ html,body{overscroll-behavior:none}
 .fp{position:absolute;overflow:visible;pointer-events:none}
 .fp.spin{animation:wSpin 90s linear infinite}
 /* ---------- 回望: indoors — a bright, lit office in the mid layer (hides the night sky behind it) ----------
-   Kept deliberately quiet: pale wall, ceiling light panels and their spill,
-   a few window walls, low furniture near the floor. Everything sits in
-   light greys so the (re-coloured, see liteify) foreground stays readable. */
+   The room is night-time: pale wall, ceiling light panels and their spill,
+   office desks + chairs on the floor, and window walls whose glass stays
+   black because it is still dark outside. Semi-transparent wedges at the
+   door throw the indoor light back out into the night. */
 .inr{position:absolute;top:0;height:905px;overflow:visible;pointer-events:none}
 .inr .ow{fill:url(#zow)}
 .inr .ow.ht{fill:url(#zowh)}
@@ -133,14 +134,26 @@ html,body{overscroll-behavior:none}
 .inr .olp{fill:#fff;stroke:#e2e8f0;stroke-width:1}
 .inr .olg{fill:url(#zolg)}
 .inr .ogl{fill:url(#zogl)}
+.inr .ost{fill:#fff;opacity:.3}
+.inr .ore{fill:#fff;opacity:.035}
 .inr .omu{fill:none;stroke:#c9d2de;stroke-width:4}
-.inr .of{fill:#dde3ea;stroke:#cdd5df;stroke-width:1.5}
-.inr .ofd{fill:none;stroke:#c3ccd8;stroke-width:1.5;stroke-linecap:round}
+.inr .of{fill:#cdd8e3;stroke:#b0bdcb;stroke-width:1.5}
+.inr .ofd{fill:none;stroke:#b6c2d0;stroke-width:1.5;stroke-linecap:round}
 .inr .olf{fill:#b9cfc2}
-.inr .opt{fill:#d6dce4}
+.inr .opt{fill:#cfd7e1}
+.inr .oms{fill:#0d1522;stroke:#a8b6c6;stroke-width:1.5}
+.inr .okb{fill:#bcc8d6}
+.inr .omg{fill:#f1f5f9;stroke:#b6c2d0;stroke-width:1}
+.inr .och{fill:#a9b8ca;stroke:#8fa1b5;stroke-width:1.5}
+.inr .ocm{fill:none;stroke:#8b9db2;stroke-width:3;stroke-linecap:round}
+.inr .ocw{fill:#8497ad}
 .inr .odr{fill:#e9edf2;stroke:#c3ccd8;stroke-width:2}
 .inr .osn{font:800 20px var(--sans);letter-spacing:.32em;fill:#334155}
 .inr .osn2{font:600 11px var(--mono);letter-spacing:.24em;fill:#64748b}
+/* doorway: light wedges, semi-transparent so the night sky still reads through */
+.inr .osb,.inr .osf{fill:url(#zosp)}
+.inr .osb2{fill:#ffedc8;opacity:.06}
+.inr .ose{fill:#fff2d2;opacity:.32}
 .infloor{position:absolute;top:903px;height:120px;pointer-events:none;background:linear-gradient(180deg,rgba(226,232,240,.07),transparent 80%)}
 /* foreground re-coloured for a bright room (blocks from 回望 on get .lite) */
 .blk.lite{--fg:#0f172a;--mut:#475569;--dim:#64748b;--line:rgba(15,23,42,.1);color:#0f172a}
@@ -899,12 +912,14 @@ function zPat(id,seed,cw,ch,cols,rows,lit,p){SD=seed;let s='';
  for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){const on=zn()<p;s+='<rect x="'+(x*cw+1.5)+'" y="'+(y*ch+2)+'" width="'+(cw-3)+'" height="'+(ch-4)+'" fill="'+(on?lit:'#fff')+'" fill-opacity="'+(on?(.3+zn()*.45).toFixed(2):'.045')+'"/>'}
  return '<pattern id="'+id+'" width="'+cols*cw+'" height="'+rows*ch+'" patternUnits="userSpaceOnUse">'+s+'</pattern>'}
 const zDefs=()=>'<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>'+zPat('zwm0',3,7,9,6,7,'#fed7aa',.3)+zPat('zwm1',5,7,9,6,7,'#fdba74',.38)+zPat('zwm2',9,7,9,6,7,'#f8fafc',.26)+zPat('zwf0',13,6,12,7,5,'#6ee7b7',.45)+zPat('zwf1',17,6,12,7,5,'#67e8f9',.4)
- /* indoors: a bright office — wall, floor, light spill, window glass */
+ /* indoors: a bright office — wall, floor, light spill, black night glass */
  +'<linearGradient id="zow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3f6f9"/><stop offset="1" stop-color="#e4e9ef"/></linearGradient>'
  +'<linearGradient id="zowh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7f3ea"/><stop offset="1" stop-color="#ebe4d6"/></linearGradient>'
  +'<linearGradient id="zofl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dfe4eb"/><stop offset="1" stop-color="#cbd2dc"/></linearGradient>'
  +'<linearGradient id="zolg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>'
- +'<linearGradient id="zogl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d6e4f2"/><stop offset="1" stop-color="#edf3f9"/></linearGradient>'
+ +'<linearGradient id="zogl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05070c"/><stop offset=".7" stop-color="#080d15"/><stop offset="1" stop-color="#0c1420"/></linearGradient>'
+ /* door light: bright where it leaves the room, gone by the time it reaches the night */
+ +'<linearGradient id="zosp" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffe9b5" stop-opacity=".54"/><stop offset=".3" stop-color="#ffe9b5" stop-opacity=".19"/><stop offset="1" stop-color="#ffe9b5" stop-opacity="0"/></linearGradient>'
  +'</defs></svg>';
 function scenery(s){const [x0,x1]=vspan(s),door=DOOR(),cut=[x0,P('2024.01')*s,P('2025.01')*s,P('2026.01')*s,door===null?x1:door*s],it=[[],[]];
  Object.keys(ZSET).forEach((k,i)=>{const Z=ZSET[k],a=cut[i]+24,b=cut[i+1]-24,c=ERA[k];SD=101+i*977;
@@ -920,21 +935,39 @@ function scenery(s){const [x0,x1]=vspan(s),door=DOOR(),cut=[x0,P('2024.01')*s,P(
  return h}
 /* ---------- 回望 indoors ----------
    From the BONUS world on, the hero walks into a bright office: an opaque room in
-   the mid layer hides sky and hills. Kept simple on purpose — ceiling light
-   panels with their spill, a few window walls, low furniture on the floor —
-   so the foreground (re-coloured by liteify) stays the thing you read. */
+   the mid layer hides sky and hills. Ceiling light panels and their spill, office
+   desks and chairs, black window glass (it is night outside), and semi-transparent
+   light wedges at the door where the two worlds meet. */
 const DOOR=()=>{const b=byId('b-life');return b?b.left-160:null};
 const OFW={
- win(){const n=zi(3,5),pw=112,T=150,B=790;let s='<rect class="of" x="-8" y="'+(T-8)+'" width="'+(n*pw+16)+'" height="'+(B-T+16)+'"/><rect class="ogl" x="0" y="'+T+'" width="'+n*pw+'" height="'+(B-T)+'"/>';
-  let d='M0,'+zf(T+(B-T)*.62)+'H'+n*pw;for(let i=1;i<n;i++)d+='M'+i*pw+','+T+'V'+B;
-  return {w:n*pw,s:s+'<path class="omu" d="'+d+'"/>'}}};
+ win(){const n=zi(3,5),pw=112,T=150,B=790,W=n*pw;
+  let s='<rect class="of" x="-8" y="'+(T-8)+'" width="'+(W+16)+'" height="'+(B-T+16)+'"/><rect class="ogl" x="0" y="'+T+'" width="'+W+'" height="'+(B-T)+'"/>';
+  /* outside stays black at night: just a handful of faint stars and a glass sheen */
+  for(let i=0;i<n;i++)for(let j=0;j<5;j++)s+='<circle class="ost" cx="'+(i*pw+14+(j*47+i*29)%(pw-28))+'" cy="'+(T+26+(j*83+i*61)%(B-T-52))+'" r="'+(j%3?0.9:1.4)+'"/>';
+  s+='<path class="ore" d="M'+zf(pw*.62)+','+T+'H'+zf(pw*.86)+'L'+zf(pw*.86-56)+','+B+'H'+zf(pw*.62-56)+'Z"/>';
+  let d='M0,'+zf(T+(B-T)*.62)+'H'+W;for(let i=1;i<n;i++)d+='M'+i*pw+','+T+'V'+B;
+  return {w:W,s:s+'<path class="omu" d="'+d+'"/>'}}};
+/* one office chair, reusable at any scale: back, seat, gas lift, five-star base */
+const oChair=(cx,sc)=>'<g transform="translate('+zf(cx)+',0) scale('+sc+')">'
+ +'<rect class="och" x="-21" y="-94" width="42" height="56" rx="10"/>'
+ +'<rect class="och" x="-25" y="-34" width="50" height="10" rx="5"/>'
+ +'<path class="ocm" d="M0,-24V-9M-19,-7H19M0,-9L-15,-4M0,-9L15,-4"/>'
+ +'<circle class="ocw" cx="-16" cy="-2" r="4"/><circle class="ocw" cx="16" cy="-2" r="4"/>'
+ +'</g>';
 const OFF={
  plant(){const H=zi(90,140),k=zi(5,7);let s='';
   for(let i=0;i<k;i++){const a=zr(-50,50),l=zr(.55,1)*H*.42;s+='<ellipse class="olf" cx="26" cy="'+zf(-40-l)+'" rx="'+zf(l*.3)+'" ry="'+zf(l)+'" transform="rotate('+zf(a)+' 26 -40)"/>'}
   return {w:52,s:s+'<path class="opt" d="M8,-40H44L39,0H13Z"/>'}},
  cab(){const W=zi(160,220);return {w:W,s:'<rect class="of" x="0" y="-58" width="'+W+'" height="58" rx="3"/><path class="ofd" d="M'+zf(W/3)+',-52V-6M'+zf(W*2/3)+',-52V-6M'+zf(W/3-12)+',-30h6M'+zf(W*2/3+6)+',-30h6"/>'}},
- desk(){const W=zi(220,280),n=Math.max(2,Math.round(W/110));let s='<rect class="of" x="0" y="-76" width="'+W+'" height="7" rx="3"/><path class="ofd" d="M10,-69V0M'+(W-10)+',-69V0" style="stroke-width:4"/>';
-  for(let i=0;i<n;i++){const cx=zf(W*(i+.5)/n);s+='<rect class="of" x="'+zf(cx-36)+'" y="-128" width="72" height="44" rx="3"/><path class="ofd" d="M'+cx+',-84V-76M'+zf(cx-14)+',-77H'+zf(cx+14)+'" style="stroke-width:3"/><path class="opt" d="M'+zf(cx-22)+',-56H'+zf(cx+22)+'V-48H'+zf(cx-22)+'ZM'+zf(cx-3)+',-48H'+zf(cx+3)+'V-8H'+zf(cx-3)+'Z"/>'}
+ chair(){return {w:100,s:oChair(50,1)}},
+ desk(){const W=zi(240,300),n=Math.max(2,Math.round(W/120));
+  let s='<rect class="of" x="0" y="-76" width="'+W+'" height="8" rx="3"/><path class="ocm" d="M10,-68V0M'+(W-10)+',-68V0"/>';
+  for(let i=0;i<n;i++){const cx=zf(W*(i+.5)/n);
+   s+='<rect class="oms" x="'+zf(cx-38)+'" y="-132" width="76" height="46" rx="3"/>'
+    +'<path class="ofd" d="M'+cx+',-86V-76M'+zf(cx-15)+',-77H'+zf(cx+15)+'" style="stroke-width:3"/>'
+    +'<rect class="okb" x="'+zf(cx-26)+'" y="-74" width="52" height="3" rx="1"/>'
+    +'<rect class="omg" x="'+zf(cx+28)+'" y="-84" width="10" height="9" rx="2"/>'
+    +oChair(cx,.6)}
   return {w:W,s}}};
 function indoor(s){const door=DOOR();if(door===null)return '';
  const x1=vspan(s)[1],xi=door*s,ht=byId('b-ht1'),xh=ht?(ht.left-300)*s:1e12;
@@ -944,14 +977,30 @@ function indoor(s){const door=DOOR();if(door===null)return '';
   let o=R(0,92,'oc')+R(92,4,'ocl')+R(96,716,'ow')+R(812,8,'osk')+R(820,40,'ofl');
   const hx=Math.max(a,xh);if(hx<a+cw)o+=R(96,716,'ow ht',hx,a+cw-hx);
   bg.push([cx,o])}
- SD=777;const wall=[],floor=[],light=[];
+ SD=777;const wall=[],floor=[],light=[],mid=[];
  for(let x=xi+260+zr(0,300);x<x1-600;){const p=OFW.win();wall.push([x,'<g transform="translate('+zf(x)+',0)">'+p.s+'</g>']);x+=p.w+zr(900,1600)}
- for(let x=xi+200+zr(0,200);x<x1-300;){const k=zPick({plant:1.2,cab:.8,desk:1.1}),p=OFF[k]();floor.push([x,'<g transform="translate('+zf(x)+',840)">'+p.s+'</g>']);x+=p.w+zr(240,620)}
+ for(let x=xi+200+zr(0,200);x<x1-300;){
+  const k=zPick({plant:.8,cab:.55,desk:2.4}),p=OFF[k]();
+  floor.push([x,'<g transform="translate('+zf(x)+',840)">'+p.s+'</g>']);
+  let gap=zr(180,460);
+  if(k==='desk'){const c=OFF.chair(),cx=x+p.w+zr(18,54);
+   floor.push([cx,'<g transform="translate('+zf(cx)+',840)">'+c.s+'</g>']);gap=c.w+zr(70,220)}
+  x+=p.w+gap}
+ /* a quieter row of desks further back, so the room reads as a busy office */
+ for(let x=xi+420;x<x1-400;x+=zr(560,820)){const p=OFF.desk();mid.push([x,'<g opacity=".4" transform="translate('+zf(x)+',806) scale(.7)">'+p.s+'</g>'])}
  for(let x=xi+180;x<x1;x+=360)light.push([x,'<path class="olg" d="M'+zf(x+20)+',96H'+zf(x+180)+'L'+zf(x+300)+',660H'+zf(x-100)+'Z" opacity=".7"/><rect class="olp" x="'+zf(x)+'" y="84" width="200" height="8" rx="4"/>']);
+ /* the doorway: semi-transparent triangles of indoor light falling into the night */
+ const SP=640,beam='<svg class="inr" style="left:'+zf(xi-SP)+'px;width:'+SP+'px" viewBox="0 0 '+SP+' 905">'
+  +'<path class="osb" d="M'+SP+',96V812L'+zf(SP*.05)+',470Z"/>'
+  +'<path class="osb2" d="M'+SP+',190V700L'+zf(SP*.24)+',455Z"/>'
+  +'<path class="osb2" d="M'+SP+',150V186L'+zf(SP*.2)+',330Z"/>'
+  +'<path class="osf" d="M'+SP+',812V860H'+zf(SP*.28)+'Z"/>'
+  +'</svg>';
  /* the door: a light frame where outside ends, the room's name hung on it */
- const dr='<rect class="odr" x="'+zf(xi-30)+'" y="0" width="50" height="860"/><rect class="olp" x="'+zf(xi-24)+'" y="300" width="38" height="140" rx="6"/>'
+ const dr='<rect class="ose" x="'+zf(xi-36)+'" y="96" width="5" height="716" rx="2"/>'
+  +'<rect class="odr" x="'+zf(xi-30)+'" y="0" width="50" height="860"/><rect class="olp" x="'+zf(xi-24)+'" y="300" width="38" height="140" rx="6"/>'
   +['回','望','馆'].map((c,i)=>'<text class="osn" x="'+zf(xi-5)+'" y="'+(336+i*36)+'" text-anchor="middle" style="letter-spacing:0">'+c+'</text>').join('');
- return chunks(bg)+chunks(light)+chunks(wall)+chunks(floor)+chunks([[xi,dr]])}
+ return beam+chunks(bg)+chunks(light)+chunks(wall)+chunks(mid)+chunks(floor)+chunks([[xi,dr]])}
 /* the foreground was drawn for a night sky: from 回望 on, flip it for a bright room.
    Generic on purpose (the chapters are built by many generators): light text goes
    dark in its own hue, faint white hairlines go faint dark; dark panels (lanes,
