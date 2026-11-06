@@ -77,6 +77,48 @@ html,body{overscroll-behavior:none}
 .veh .sf{fill:var(--era)}
 .veh .ss{stroke:var(--era);stroke-width:4;stroke-linecap:round}
 .veh .sl{fill:#fff}
+.veh .hbd{fill:#6b4a2f;stroke:color-mix(in srgb,var(--era) 55%,#fff);stroke-width:1.5;stroke-linejoin:round}
+.veh .hlg path{fill:none;stroke:#6b4a2f;stroke-width:6;stroke-linecap:round;transform-box:fill-box;transform-origin:50% 0}
+.veh .hlg.f path{stroke:#4a3220}
+.veh .hmn,.veh .htl{fill:none;stroke:#2b1a0e;stroke-width:4.5;stroke-linecap:round}
+.veh .hsd{fill:var(--era)}
+.veh .hey{fill:#0b0f16}
+.veh .hrn{fill:none;stroke:#e2e8f0;stroke-opacity:.6;stroke-width:1.2}
+
+/* ---------- period scenery: 2023 古代 · 2024 近代 · 2025 现代 · 2026 未来 ----------
+   silhouettes in the mid layer (dark fill, year-colour outline, period accent lights) */
+.scn{position:absolute;top:560px;height:340px;overflow:visible;pointer-events:none}
+.scn.zbk{opacity:.4}
+.scn .zb{fill:#0a0e15;stroke:var(--c);stroke-opacity:.42;stroke-width:1.6;stroke-linejoin:round}
+.scn .zp{stroke:none}
+.scn .zd{fill:none;stroke:var(--c);stroke-opacity:.3;stroke-width:1.3;stroke-linecap:round}
+.scn .zl{fill:none;stroke:var(--c);stroke-opacity:.45;stroke-width:2.6;stroke-linecap:round}
+.scn .zw{fill:var(--c);opacity:.75}
+.scn .zg{fill:#fbbf24;opacity:.6}.scn .zg.zlo{opacity:.16}
+.scn .zlan{fill:#f97316;opacity:.8}
+.scn .zgate{fill:#fbbf24;opacity:.12}
+.scn .zglow{fill:#fbbf24;opacity:.1}
+.scn .zsm{fill:#94a3b8;opacity:.07}
+.scn .zface{fill:#fef3c7;fill-opacity:.38;stroke:var(--c);stroke-opacity:.5}
+.scn .zhand{stroke:#0a0e15;stroke-width:1.8;stroke-linecap:round}
+.scn .zwire{fill:none;stroke:var(--c);stroke-opacity:.2;stroke-width:1}
+.scn .zwo{fill:none;stroke:var(--c);stroke-opacity:.45;stroke-width:11;stroke-linecap:round}
+.scn .zwh{fill:none;stroke:#0a0e15;stroke-width:8;stroke-linecap:round}
+.scn .zrl{fill:#f87171;opacity:.85}
+.scn .zcw,.scn .zcr{fill:none;stroke-width:2.5;stroke-linecap:round;stroke:#f8fafc;stroke-opacity:.6}.scn .zcr{stroke:#f87171}
+.scn .zws{fill:none;stroke:#f8fafc;stroke-opacity:.35;stroke-width:2;stroke-dasharray:2 3}
+.scn .zbl{fill:none;stroke:color-mix(in srgb,var(--c) 50%,#e2e8f0);stroke-opacity:.5;stroke-width:3;stroke-linecap:round}
+.scn .zn{fill:none;stroke:var(--c);stroke-opacity:.7;stroke-width:2}
+.scn .znl{fill:none;stroke:#67e8f9;stroke-opacity:.55;stroke-width:1.5;stroke-linecap:round}
+.scn .ztip{fill:#a7f3d0}
+.scn .ztube{fill:none;stroke:var(--c);stroke-opacity:.2;stroke-width:9;stroke-linecap:round}
+.scn .zpod{fill:#e0f2fe;opacity:.8}
+.scn .ztrail{fill:none;stroke:#67e8f9;stroke-opacity:.3;stroke-width:2;stroke-linecap:round}
+.scn .zhb{fill:color-mix(in srgb,#e879f9 8%,transparent);stroke:#e879f9;stroke-opacity:.6;stroke-width:1.5}
+.scn .zhl{fill:none;stroke:#f0abfc;stroke-opacity:.5;stroke-width:2.5;stroke-linecap:round}
+.scn .zglw{fill:var(--c);opacity:.18}
+.fp{position:absolute;overflow:visible;pointer-events:none}
+.fp.spin{animation:wSpin 90s linear infinite}
 
 /* ---------- hero ---------- */
 #nowl{position:absolute;left:639px;top:66px;width:2px;height:806px;pointer-events:none;background:linear-gradient(transparent,rgba(255,255,255,.05) 10%,rgba(255,255,255,.05) 80%,color-mix(in srgb,var(--era) 50%,transparent))}
@@ -87,7 +129,6 @@ html,body{overscroll-behavior:none}
 #hero .hf,#hero .hw,#hero .hv{position:absolute;inset:0}
 #hero .hf{transition:transform .18s}
 #hero.back .hf{transform:scaleX(-1)}
-#hero.jump .hw{animation:hJump .62s cubic-bezier(.25,.8,.35,1)}
 #hero .hv>*{position:absolute}
 #hero .hbw{left:0;top:0;width:48px;height:48px;transform-origin:0 0;z-index:2;transition:transform .3s}
 #hero .hb{position:absolute;inset:0;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,#222c3c,#0b0f16);border:2px solid var(--era);box-shadow:0 0 0 4px color-mix(in srgb,var(--era) 14%,transparent),0 0 26px color-mix(in srgb,var(--era) 55%,transparent);animation:hIdle 2.2s ease-in-out infinite;transition:border-color .4s,box-shadow .4s}
@@ -99,7 +140,8 @@ html,body{overscroll-behavior:none}
 #hero .leg.l{left:11px}#hero .leg.r{left:28px}
 #hero .dust{left:-16px;top:52px;width:10px;height:10px;border-radius:50%;background:rgba(203,213,225,.4);opacity:0}
 #hero .sh{position:absolute;left:2px;top:60px;width:44px;height:9px;border-radius:50%;background:radial-gradient(rgba(0,0,0,.8),transparent 70%);transition:all .3s}
-#hero .vbike,#hero .vcar,#hero .vship,#hero .vdome,#hero .flame,#hero .hglow,#hero .hbeam,#hero .puff{display:none}
+#hero .vhorse,#hero .vbike,#hero .vcar,#hero .vship,#hero .vdome,#hero .flame,#hero .hglow,#hero .hbeam,#hero .puff{display:none}
+#hero .vhorse{left:-34px;top:2px;width:110px;height:66px;z-index:1;overflow:visible}
 #hero .vbike{left:-22px;top:16px;width:92px;height:52px;z-index:1;overflow:visible}
 #hero .vcar{left:-44px;top:18px;width:140px;height:50px;z-index:3;overflow:visible}
 #hero .vship{left:-52px;top:-8px;width:150px;height:60px;z-index:1;overflow:visible}
@@ -114,8 +156,11 @@ html,body{overscroll-behavior:none}
 #hero.pw .hv{animation:hPw .6s ease-out}
 #hero .pmsg{position:absolute;left:24px;top:-34px;transform:translateX(-50%);font:900 18px var(--sans);color:#fff;white-space:nowrap;text-shadow:0 0 12px var(--era),0 2px 0 #000;opacity:0}
 #hero.pw .pmsg{animation:hMsg 1.6s ease-out}
-#hero[data-v=bike] .vbike,#hero[data-v=car] .vcar,#hero[data-v=car] .hbeam,#hero[data-v=car] .puff,#hero[data-v=ship] .vship,#hero[data-v=ship] .vdome,#hero[data-v=ship] .flame,#hero[data-v=ship] .hglow{display:block}
+#hero[data-v=horse] .vhorse,#hero[data-v=bike] .vbike,#hero[data-v=car] .vcar,#hero[data-v=car] .hbeam,#hero[data-v=car] .puff,#hero[data-v=ship] .vship,#hero[data-v=ship] .vdome,#hero[data-v=ship] .flame,#hero[data-v=ship] .hglow{display:block}
 #hero:not([data-v=walk]) .leg,#hero:not([data-v=walk]) .dust{display:none}
+#hero[data-v=horse] .hbw{transform:translate(-2px,-13px) scale(.7)}
+#hero[data-v=horse] .sh{left:-32px;width:108px}
+#hero.run[data-v=horse] .hv{animation:hGb .36s ease-in-out infinite}
 #hero[data-v=bike] .hbw{transform:translate(4px,-12px) scale(.833) rotate(5deg)}
 #hero[data-v=car] .hbw{transform:translate(12px,8px) scale(.667)}
 #hero[data-v=car] .sh{left:-42px;width:136px}
@@ -132,14 +177,16 @@ html,body{overscroll-behavior:none}
 #hero.run .puff{animation:hPuff .5s linear infinite}#hero.run .puff.b{animation-delay:-.25s}
 #hero.run .flame{width:96px;left:-136px}
 #hero:not(.run) .hb{animation-name:hIdle}
-#hero.jump .sh{animation:hShadow .62s ease}
+#hero.run .hlg path{animation:hGal .36s ease-in-out infinite alternate}
+#hero.run .hlg path+path{animation-delay:-.18s}
+#hero.run .hlg.f path{animation-direction:alternate-reverse}
 @keyframes hIdle{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 @keyframes hBob{0%,100%{transform:translateY(0) rotate(5deg)}50%{transform:translateY(-4px) rotate(5deg)}}
 @keyframes hLeg{0%,100%{transform:rotate(34deg)}50%{transform:rotate(-34deg)}}
 @keyframes hDust{0%{opacity:.6;transform:translate(0,0) scale(.6)}100%{opacity:0;transform:translate(-18px,-6px) scale(1.4)}}
 @keyframes hPuff{0%{opacity:.7;transform:translate(0,0) scale(.5)}100%{opacity:0;transform:translate(-30px,-14px) scale(1.8)}}
-@keyframes hJump{0%{transform:translateY(0)}45%{transform:translateY(-80px) rotate(-10deg)}75%{transform:translateY(-24px)}100%{transform:none}}
-@keyframes hShadow{45%{transform:scale(.45);opacity:.35}}
+@keyframes hGal{from{transform:rotate(28deg)}to{transform:rotate(-28deg)}}
+@keyframes hGb{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
 @keyframes hHover{0%,100%{transform:translateY(-26px)}50%{transform:translateY(-34px)}}
 @keyframes hVib{0%,100%{transform:translateY(0)}50%{transform:translateY(-1px)}}
 @keyframes hFlame{from{transform:scaleX(.8) scaleY(.85)}to{transform:scaleX(1.12) scaleY(1.1)}}
@@ -223,6 +270,12 @@ html,body{overscroll-behavior:none}
 .gpost{position:absolute;top:100%;width:12px;height:var(--post,300px);border-radius:3px;background:linear-gradient(90deg,#1b222d,#6b7a90 45%,#1b222d);box-shadow:0 0 0 1px rgba(0,0,0,.4)}
 .gpost.l{left:70px}.gpost.r{right:70px}
 .gpost::after{content:"";position:absolute;left:-6px;bottom:-4px;width:24px;height:8px;border-radius:3px;background:#2a3342}
+/* posts follow the period: lacquered wood · riveted iron · steel · light */
+.blk.gate[data-sty=a] .gpost{background:linear-gradient(90deg,#3f0d0d,#b91c1c 45%,#3f0d0d)}
+.blk.gate[data-sty=a] .gpost::after{background:#57301a}
+.blk.gate[data-sty=b] .gpost{background:repeating-linear-gradient(180deg,transparent 0 22px,rgba(0,0,0,.5) 22px 25px),linear-gradient(90deg,#1c1917,#78716c 45%,#1c1917)}
+.blk.gate[data-sty=d] .gpost{width:6px;margin-left:3px;border-radius:3px;background:linear-gradient(180deg,var(--gc),color-mix(in srgb,var(--gc) 8%,transparent));box-shadow:0 0 14px var(--gc)}
+.blk.gate[data-sty=d] .gpost::after{left:-9px;background:color-mix(in srgb,var(--gc) 40%,#0b0f16)}
 
 /* ---------- 热议 弹幕: flies across the sky when the hero reaches its week ---------- */
 #sky{position:absolute;left:0;top:72px;width:1920px;height:80px;overflow:hidden;pointer-events:none}
@@ -369,6 +422,7 @@ html,body{overscroll-behavior:none}
 <div id="sky" aria-hidden="true"></div>
 <div id="hero" data-v="walk" aria-hidden="true"><i class="sh"></i><div class="hf"><div class="hw"><div class="hv">
   <i class="dust"></i><i class="puff"></i><i class="puff b"></i><i class="flame"></i><i class="hglow"></i><i class="hbeam"></i>
+  <svg class="veh vhorse" viewBox="0 0 110 66"><path class="htl" d="M24 25Q9 23 8 45"/><g class="hlg f"><path d="M33 38V61"/><path d="M71 38V61"/></g><path class="hbd" d="M84 5L86 -3L90 3Z"/><path class="hbd" d="M22 30Q22 18 40 18H66L80 4Q84 0 90 2L104 12Q107 16 102 18L92 16L84 30Q82 42 66 42H38Q22 42 22 30Z"/><path class="hmn" d="M67 15Q74 8 80 3"/><g class="hlg"><path d="M28 38V61"/><path d="M76 38V61"/></g><path class="hsd" d="M40 17H58V25Q49 28 40 25Z"/><circle class="hey" cx="92" cy="8" r="1.6"/><path class="hrn" d="M100 14L56 16"/></svg>
   <svg class="veh vbike" viewBox="0 0 92 52"><g class="wh"><circle cx="16" cy="36" r="14"/><path d="M16 22V50M2 36H30"/></g><g class="wh"><circle cx="76" cy="36" r="14"/><path d="M76 22V50M62 36H90"/></g><path class="fr" d="M16 36L38 36L28 16H58L76 36M38 36L58 16M58 16L60 7H67M23 14H34"/><g class="crk"><path d="M32 41L44 31"/></g></svg>
   <svg class="veh vship" viewBox="0 0 150 60"><path class="sf" d="M30 17L14 1H32L48 15ZM30 43L14 59H32L48 45Z"/><path class="sb" d="M10 30Q16 14 56 12L112 14Q144 20 148 30Q144 40 112 46L56 48Q16 46 10 30Z"/><path class="ss" d="M24 30H62M104 30H140"/><circle class="sl" cx="124" cy="30" r="3"/></svg>
   <i class="leg l"></i><i class="leg r"></i>
@@ -410,7 +464,9 @@ const F=640,ZT=76,ZB=812,ZH=ZB-ZT,M=1.25,CHUNK=6000;
    Neighbours sit ASP apart; when that is closer than a screen is wide, every
    other actor lifts its screen one tier so screens never overlap. */
 const GROUND=872,BUB_B=GROUND-88,AW=560,ASP=360,LIFT=250;
-const VEH={'2024':['bike','自行车'],'2025':['car','汽车'],'2026':['ship','飞船']};
+const VEH={'2023':['horse','马'],'2024':['bike','自行车'],'2025':['car','汽车'],'2026':['ship','飞船']};
+/* each year is a period: the scenery, the gate posts and the ride all follow it */
+const STY={'2023':'古代','2024':'近代','2025':'现代','2026':'未来'},STK={'2023':'a','2024':'b','2025':'c','2026':'d'};
 const stage=$('#stage'),space=$('#space'),L2=$('#L2'),hero=$('#hero');
 const LY=[...document.querySelectorAll('#stage>.layer')].map(el=>({el,s:+el.dataset.s}));
 const LS={};LY.forEach(l=>LS[l.el.id]=l.s);
@@ -589,7 +645,8 @@ let CDM=null;
 let BL=[],A=[],SMAX=1,K=1,WORLDS=[],FLAGS=[],NAV=[],NPCS=[],PUS=[],BZ=[];
 const byId=id=>BL.find(b=>b.id===id);
 function collect(){BL=[...L2.children].filter(e=>e.classList.contains('blk')).map(el=>{const kind=el.classList.contains('act')?'act':el.classList.contains('gate')?'gate':'full';
- return {el,id:el.id,t:el.dataset.t||null,era:el.dataset.era||'all',kind,head:kind==='act'?el._head:null,red:el._kind==='red',gap:+(el.dataset.gap||170)}})}
+ return {el,id:el.id,t:el.dataset.t||null,era:el.dataset.era||'all',kind,head:kind==='act'?el._head:null,red:el._kind==='red',gap:+(el.dataset.gap||170)}});
+ BL.forEach(b=>{if(b.kind!=='gate')return;const k=b.t?STK[eraOf(mf(b.t))]:b.era==='all'?'d':'';if(k)b.el.dataset.sty=k;else delete b.el.dataset.sty})}
 function P(t){if(typeof t==='string'&&t[0]==='@'){const b=byId(t.slice(1));return b?b.left+100:0}return Pm(mf(t))}
 function Pm(m){if(!A.length)return 0;if(m<=A[0][0])return A[0][1]-(A[0][0]-m)*60;
  for(let i=1;i<A.length;i++)if(m<=A[i][0]){const a=A[i-1],b=A[i];return a[1]+(b[1]-a[1])*(m-a[0])/(b[0]-a[0])}
@@ -603,8 +660,8 @@ function layout(){
  BL.forEach(b=>{b.bh=b.kind==='act'?(b.el.querySelector('.abub')||{offsetHeight:0}).offsetHeight:0});
  BL.forEach((b,i)=>{if(b.kind!=='act')return;const nb=[BL[i-1],BL[i+1]].filter(x=>x&&x.kind==='act').map(x=>x.bh);b.pad=Math.max(0,...nb,b.bh)-b.bh});
  BL.forEach(b=>{const el=b.el;el.style.transform='';el.style.left='0px';el.style.top='0px';
-  /* a new year: leave room on the road for the vehicle power-up */
-  const yr=b.t?eraOf(mf(b.t)):null;
+  /* a new calendar year: leave room on the road for the vehicle power-up */
+  const yr=b.t?String(2021+Math.floor(mf(b.t)/12)):null;
   if(yr&&yr!==prevEra&&VEH[yr]&&!PUS.some(p=>p.yr===yr)){const R=Math.max(fullEnd,actRight+40,lastNpc+200);
    PUS.push({yr,v:VEH[yr][0],name:VEH[yr][1],x:R+110});fullEnd=R+240;lastNpc=Math.max(lastNpc,R+240-ASP+AW/2)}
   if(yr)prevEra=yr;
@@ -653,13 +710,173 @@ function ridges(x0,x1,o,s,id){const st=eraStops(s),len=x1-x0,H=o.base-o.top+40;l
 const vspan=s=>[-F-600,SMAX*s+1920-F+600];
 function buildFar(){const s=LS.L0,[x0,x1]=vspan(s);
  let h='<div class="stars" style="left:'+x0.toFixed(0)+'px;width:'+(x1-x0).toFixed(0)+'px"></div>';
- YEARS.forEach((y,i)=>{const p=P(y[1])*s;h+='<div class="blob" style="left:'+(p-450).toFixed(0)+'px;top:'+(i%2?-380:220)+'px;--bc:'+y[2]+'"></div><div class="hyr" style="left:'+(p-40).toFixed(0)+'px;top:'+(i%2?400:80)+'px;--c:'+y[2]+'"><b>'+y[0]+'</b>'+(y[3]?'<span>'+y[3]+'</span>':'')+'</div>'});
+ YEARS.forEach((y,i)=>{const p=P(y[1])*s,sub=[y[3],STY[y[0]]].filter(Boolean).join(' · ');h+='<div class="blob" style="left:'+(p-450).toFixed(0)+'px;top:'+(i%2?-380:220)+'px;--bc:'+y[2]+'"></div><div class="hyr" style="left:'+(p-40).toFixed(0)+'px;top:'+(i%2?400:80)+'px;--c:'+y[2]+'"><b>'+y[0]+'</b>'+(sub?'<span>'+sub+'</span>':'')+'</div>'});
  h+=ridges(x0,x1,{base:830,amp:330,step:120,seed:3,rough:.35,top:440,fill:.1,stroke:.32},s,'f');
+ h+=farProps(s);
  $('#L0').innerHTML=h}
-function buildMid(){const s=LS.L1,[x0,x1]=vspan(s);let h='';
+function buildMid(){const s=LS.L1;
+ let h=zDefs()+scenery(s);
  ROLES.forEach((r,i)=>{h+='<div class="hrole" data-r="'+i+'" style="left:'+(P(r[0])*s-10).toFixed(0)+'px;top:'+(i%2?520:590)+'px"><small>人类在</small>'+esc(r[1])+'</div>'});
- h+=ridges(x0,x1,{base:900,amp:150,step:52,seed:7,rough:.12,top:700,fill:.92,stroke:.22,dark:1},s,'m');
  $('#L1').innerHTML=h}
+
+/* ---------- period scenery ----------
+   Each year span of the mid layer gets its own skyline, cut at P(year)·s so the
+   period changes exactly where the hero crosses into the new year:
+     2023 古代  pines, halls, pagodas, pavilions, arched bridges, city gates, sky lanterns
+     2024 近代  terraces, sawtooth factories + smoke, clock / water towers, gas lamps,
+                telegraph lines, truss bridges, a steam train, an iron lattice tower, balloons
+     2025 现代  glass towers, slab blocks, a TV tower, overpasses, wind turbines, cranes
+     2026 未来  twisted towers, ringed spires, domes, arcologies, holo boards, maglev, sky islands
+   Everything is static SVG (one animated element would repaint a whole 6000px chunk). */
+let SD=1;const zn=()=>(SD=SD*16807%2147483647)/2147483647,zr=(a,b)=>a+(b-a)*zn(),zi=(a,b)=>Math.round(zr(a,b)),zf=v=>Math.round(v*10)/10;
+const SKB=320;
+const zRoof=(x0,W,y,rh)=>{const k=zf(Math.min(30,W*.28)),c=zf(y-rh*.35);
+ return '<path class="zb" d="M'+(x0-10)+','+(y-6)+'Q'+x0+','+y+' '+(x0+10)+','+y+'H'+(x0+W-10)+'Q'+(x0+W)+','+y+' '+(x0+W+10)+','+(y-6)+'Q'+zf(x0+W-k/2)+','+c+' '+zf(x0+W-k)+','+(y-rh)+'H'+zf(x0+k)+'Q'+zf(x0+k/2)+','+c+' '+(x0-10)+','+(y-6)+'Z"/>'};
+const ZG={
+ /* 古代 */
+ pine(){const h=zi(80,130),l=zi(-10,10),n=zi(3,4);let s='<path class="zb" d="M-3,0Q'+zf(l*.3)+','+(-h/2)+' '+(l-2)+','+(-h)+'H'+(l+2)+'Q'+zf(l*.3+6)+','+(-h/2)+' 4,0Z"/>';
+  for(let i=0;i<n;i++){const t=.5+.5*i/(n-1);s+='<ellipse class="zb" cx="'+zf(l*t+(i%2?12:-12)*(1-t*.6))+'" cy="'+zf(-h*t)+'" rx="'+(zi(18,28)-i*2)+'" ry="'+zi(6,8)+'"/>'}
+  return {w:60,s:'<g transform="translate(30,0)">'+s+'</g>'}},
+ pagoda(){const n=zi(5,7),W0=zi(58,74),th=zi(24,30),cx=W0/2+12;let y=-8,s='<path class="zb" d="M4,0V-8H'+(2*cx-4)+'V0Z"/>';
+  for(let i=0;i<n;i++){const wi=W0*(1-i*.085),bw=wi*.58,bh=th-12,L=zf(cx-wi/2),R=zf(cx+wi/2);
+   s+='<path class="zb" d="M'+zf(cx-bw/2)+','+y+'V'+(y-bh)+'H'+zf(cx+bw/2)+'V'+y+'Z"/><rect class="zg zlo" x="'+(cx-2.5)+'" y="'+(y-bh+3)+'" width="5" height="'+(bh-4)+'" rx="2.5"/>';
+   y-=bh;
+   s+='<path class="zb" d="M'+zf(L-9)+','+(y-8)+'Q'+L+','+y+' '+zf(L+12)+','+y+'H'+zf(R-12)+'Q'+R+','+y+' '+zf(R+9)+','+(y-8)+'L'+zf(R-8)+','+(y-10)+'H'+zf(L+8)+'Z"/><circle class="zlan" cx="'+zf(L-7)+'" cy="'+(y-1)+'" r="2.6"/><circle class="zlan" cx="'+zf(R+7)+'" cy="'+(y-1)+'" r="2.6"/>';
+   y-=10}
+  s+='<path class="zd" d="M'+cx+','+y+'V'+(y-34)+'M'+(cx-5)+','+(y-8)+'H'+(cx+5)+'M'+(cx-4)+','+(y-14)+'H'+(cx+4)+'M'+(cx-3)+','+(y-20)+'H'+(cx+3)+'M'+(cx-2)+','+(y-26)+'H'+(cx+2)+'"/><circle class="zw" cx="'+cx+'" cy="'+(y-37)+'" r="3"/>';
+  return {w:2*cx,s}},
+ hall(){const W=zi(140,200),H=zi(36,46),rh=zi(26,34),y=-12-H,nc=zi(4,6);let s='<path class="zb" d="M-4,0V-12H'+(W+4)+'V0Z"/><path class="zb" d="M10,-12V'+y+'H'+(W-10)+'V-12Z"/>',d='';
+  for(let i=0;i<nc;i++)d+='M'+zf(14+(W-28)*i/(nc-1))+',-12V'+y;
+  for(let i=0;i<nc-1;i++){const x=zf(14+(W-28)*(i+.5)/(nc-1));s+='<rect class="zg zlo" x="'+zf(x-7)+'" y="'+(y+10)+'" width="14" height="'+(H-16)+'"/>'}
+  s+='<path class="zd" d="'+d+'"/>'+zRoof(0,W,y,rh)+'<path class="zd" d="M30,'+(y-rh)+'q-7,-1 -5,-10M'+(W-30)+','+(y-rh)+'q7,-1 5,-10"/>';
+  [W*.22,W*.78].forEach(x=>{s+='<path class="zd" d="M'+zf(x)+','+y+'v6"/><ellipse class="zlan" cx="'+zf(x)+'" cy="'+(y+11)+'" rx="4.5" ry="5.5"/>'});
+  return {w:W,s}},
+ pav(){const W=zi(56,72),H=zi(30,38),rh=zi(26,32),y=-8-H;
+  return {w:W,s:'<path class="zb" d="M-4,0V-8H'+(W+4)+'V0Z"/><path class="zl" d="M6,-8V'+y+'M'+(W-6)+',-8V'+y+'"/><path class="zd" d="M6,'+(y+8)+'H'+(W-6)+'"/><path class="zb" d="M-12,'+(y-2)+'Q'+zf(W*.28)+','+(y-6)+' '+(W/2)+','+(y-rh)+'Q'+zf(W*.72)+','+(y-6)+' '+(W+12)+','+(y-2)+'L'+W+','+(y+3)+'H0Z"/><path class="zd" d="M'+(W/2)+','+(y-rh)+'v-10"/><circle class="zw" cx="'+(W/2)+'" cy="'+(y-rh-12)+'" r="2.5"/>'}},
+ bridge(){const W=zi(130,170),a=zf((W-28)/2);let d='';
+  for(let i=1;i<10;i++){const t=i/10,x=zf(W*t),y=zf(-160*t*(1-t));d+='M'+x+','+y+'V'+zf(y-8)}
+  return {w:W,s:'<path class="zb" d="M0,0Q'+(W/2)+',-80 '+W+',0H'+(W-14)+'A'+a+',26 0 0 0 14,0Z"/><path class="zd" d="'+d+'M0,-8Q'+(W/2)+',-88 '+W+',-8"/>'}},
+ wall(){const W=zi(260,340),h=zi(44,54),cx=Math.round(W/2),tw=110,ty=-h-8,th=28;let d='M0,0V'+(-h);for(let x=0;x+14<=W;x+=14)d+='H'+(x+3)+'V'+(-h-8)+'H'+(x+11)+'V'+(-h);d+='H'+W+'V0Z';
+  let s='<path class="zb" d="'+d+'"/><path class="zgate" d="M'+(cx-16)+',0V-16A16,16 0 0 1 '+(cx+16)+',-16V0Z"/><path class="zb" d="M'+(cx-tw/2+8)+','+ty+'V'+(ty-th)+'H'+(cx+tw/2-8)+'V'+ty+'Z"/>';
+  for(let i=0;i<4;i++)s+='<rect class="zg zlo" x="'+(cx-tw/2+17+i*20)+'" y="'+(ty-th+7)+'" width="11" height="'+(th-11)+'"/>';
+  return {w:W,s:s+zRoof(cx-tw/2,tw,ty-th,24)}},
+ /* 近代 */
+ factory(){const W=zi(150,220),H=zi(50,66),n=Math.max(3,Math.round(W/34)),tw=W/n;let d='M0,0V'+(-H);for(let i=0;i<n;i++)d+='V'+(-H-18)+'L'+zf((i+1)*tw)+','+(-H);d+='V0Z';
+  let s='<path class="zb" d="'+d+'"/>';for(let x=8;x<W-12;x+=18)s+='<rect class="zg'+(zn()<.35?' zlo':'')+'" x="'+x+'" y="'+(-H+12)+'" width="10" height="14"/>';
+  const k=zi(1,3);for(let j=0;j<k;j++){const x=zi(10,W-24),top=-H-zi(60,110);
+   s+='<path class="zb" d="M'+x+','+(-H)+'V'+top+'H'+(x+12)+'V'+(-H)+'Z"/><path class="zd" d="M'+(x-2)+','+top+'H'+(x+14)+'M'+x+','+(top+12)+'H'+(x+12)+'M'+x+','+(top+24)+'H'+(x+12)+'"/>';
+   for(let i=0;i<5;i++)s+='<circle class="zsm" cx="'+(x+6+i*12+zi(-3,3))+'" cy="'+(top-10-i*15)+'" r="'+(6+i*4)+'"/>'}
+  return {w:W,s}},
+ clock(){const w=zi(34,42),H=zi(150,190),cx=w/2,b=-H+46,t=-H+6;
+  let s='<path class="zb" d="M0,0V'+b+'H-5V'+t+'H'+(w+5)+'V'+b+'H'+w+'V0Z"/><path class="zb" d="M-7,'+t+'L'+cx+','+(t-48)+'L'+(w+7)+','+t+'Z"/><path class="zd" d="M'+cx+','+(t-48)+'V'+(t-62)+'M-5,'+b+'H'+(w+5)+'"/>';
+  for(let y=-24;y>b+20;y-=30)s+='<rect class="zg zlo" x="'+(cx-3)+'" y="'+(y-14)+'" width="6" height="14" rx="3"/>';
+  const fy=zf((b+t)/2),fr=Math.min(cx+1,18);
+  s+='<circle class="zface" cx="'+cx+'" cy="'+fy+'" r="'+fr+'"/><path class="zhand" d="M'+cx+','+fy+'V'+zf(fy-fr*.7)+'M'+cx+','+fy+'L'+zf(cx+fr*.5)+','+zf(fy+fr*.25)+'"/>';
+  return {w:w+14,s:'<g transform="translate(7,0)">'+s+'</g>'}},
+ wtower(){const W=zi(46,56),L=zi(70,90),T=-L-36;
+  return {w:W,s:'<path class="zl" d="M5,0L11,'+(-L)+'M'+(W-5)+',0L'+(W-11)+','+(-L)+'"/><path class="zd" d="M8,'+zf(-L*.33)+'L'+(W-9)+','+zf(-L*.7)+'M'+(W-8)+','+zf(-L*.33)+'L9,'+zf(-L*.7)+'M7,'+zf(-L*.33)+'H'+(W-7)+'"/><path class="zb" d="M2,'+(-L)+'V'+T+'H'+(W-2)+'V'+(-L)+'Z"/><path class="zb" d="M-2,'+T+'L'+(W/2)+','+(T-16)+'L'+(W+2)+','+T+'Z"/><path class="zd" d="M2,'+(-L-12)+'H'+(W-2)+'M2,'+(-L-24)+'H'+(W-2)+'"/>'}},
+ truss(){const W=zi(220,300),dk=-30,h=38,n=Math.max(4,Math.round(W/36)),sw=W/n;let z='M0,'+dk;for(let i=0;i<n;i++)z+='L'+zf((i+.5)*sw)+','+(dk-h)+'L'+zf((i+1)*sw)+','+dk;
+  return {w:W,s:'<path class="zb" d="M0,'+dk+'H'+W+'V'+(dk+6)+'H0Z"/><path class="zb" d="M0,'+(dk+6)+'H14V0H0ZM'+(W-14)+','+(dk+6)+'H'+W+'V0H'+(W-14)+'Z"/><path class="zl" d="'+z+'M'+zf(sw/2)+','+(dk-h)+'H'+zf(W-sw/2)+'"/>'}},
+ row(){const n=zi(3,5);let x=0,s='';
+  for(let i=0;i<n;i++){const w=zi(32,44),h=zi(46,70),g=zn()<.6,cx=Math.round(x+w*.62);
+   if(zn()<.5)s+='<path class="zb" d="M'+cx+','+(-h)+'V'+(-h-(g?22:14))+'H'+(cx+7)+'V'+(-h)+'Z"/>';
+   s+='<path class="zb" d="M'+x+',0V'+(-h)+(g?'L'+(x+w/2)+','+(-h-16)+'L'+(x+w)+','+(-h):'H'+(x+w))+'V0Z"/>';
+   for(let fy=-h+10;fy<-12;fy+=16)for(const fx of [x+8,x+w-14])if(zn()<.55)s+='<rect class="zg'+(zn()<.5?' zlo':'')+'" x="'+fx+'" y="'+fy+'" width="6" height="9"/>';
+   x+=w}
+  return {w:x,s}},
+ lamp(){return {w:34,s:'<circle class="zglow" cx="17" cy="-64" r="16"/><path class="zl" d="M17,0V-56M11,0H23"/><path class="zb" d="M12,-56H22L24,-70H10Z"/><path class="zd" d="M10,-70L17,-76L24,-70"/><circle class="zg" cx="17" cy="-63" r="3.5"/>'}},
+ tele(){const W=zi(110,150),h=zi(70,86);
+  return {w:W,s:'<path class="zl" d="M6,0V'+(-h)+'M'+(W-6)+',0V'+(-h)+'"/><path class="zd" d="M-3,'+(-h+6)+'H15M'+(W-15)+','+(-h+6)+'H'+(W+3)+'M-1,'+(-h+14)+'H13M'+(W-13)+','+(-h+14)+'H'+(W+1)+'"/><path class="zwire" d="M0,'+(-h+6)+'Q'+(W/2)+','+(-h+22)+' '+W+','+(-h+6)+'M2,'+(-h+14)+'Q'+(W/2)+','+(-h+30)+' '+(W-2)+','+(-h+14)+'"/>'}},
+ eiffel(){const W=zi(96,112),H=zi(230,260),X=v=>zf(W*v),Y=v=>zf(-H*v);
+  return {w:W,s:'<path class="zb" d="M0,0Q'+X(.3)+','+Y(.33)+' '+X(.43)+','+Y(.82)+'L'+X(.48)+','+(-H)+'H'+X(.52)+'L'+X(.57)+','+Y(.82)+'Q'+X(.7)+','+Y(.33)+' '+W+',0H'+X(.8)+'Q'+X(.5)+','+Y(.2)+' '+X(.2)+',0Z"/>'
+   +'<path class="zd" d="M'+X(.18)+','+Y(.3)+'H'+X(.82)+'M'+X(.35)+','+Y(.6)+'H'+X(.65)+'M'+X(.24)+','+Y(.3)+'L'+X(.62)+','+Y(.6)+'M'+X(.76)+','+Y(.3)+'L'+X(.38)+','+Y(.6)+'M'+X(.38)+','+Y(.6)+'L'+X(.53)+','+Y(.85)+'M'+X(.62)+','+Y(.6)+'L'+X(.47)+','+Y(.85)+'M'+(W/2)+','+(-H)+'V'+(-H-18)+'"/><circle class="zw" cx="'+(W/2)+'" cy="'+(-H-20)+'" r="2.6"/>'}},
+ train(){const nc=zi(2,3);let s='<path class="zd" d="M-10,-1H'+(nc*62+92)+'"/>',x=0,wh='';
+  for(let i=0;i<nc;i++){s+='<path class="zb" d="M'+x+',-8V-34Q'+x+',-38 '+(x+4)+',-38H'+(x+52)+'Q'+(x+56)+',-38 '+(x+56)+',-34V-8Z"/><path class="zd" d="M'+(x+56)+',-14h6"/>';
+   for(let k=0;k<4;k++)s+='<rect class="zg'+(zn()<.3?' zlo':'')+'" x="'+(x+6+k*12)+'" y="-31" width="7" height="9"/>';
+   wh+='M'+(x+12)+',-5h0M'+(x+44)+',-5h0';x+=62}
+  s+='<path class="zb" d="M'+x+',-8V-44H'+(x+24)+'V-30H'+(x+70)+'Q'+(x+78)+',-30 '+(x+78)+',-20V-8Z"/><path class="zb" d="M'+(x+58)+',-30V-44H'+(x+66)+'V-30Z"/><path class="zd" d="M'+(x+78)+',-10L'+(x+86)+',-3"/><rect class="zg" x="'+(x+6)+'" y="-40" width="12" height="9"/>';
+  for(let i=0;i<5;i++)s+='<circle class="zsm" cx="'+(x+62-i*16)+'" cy="'+(-52-i*7)+'" r="'+(6+i*3)+'"/>';
+  wh+='M'+(x+14)+',-5h0M'+(x+36)+',-5h0M'+(x+52)+',-5h0M'+(x+68)+',-5h0';
+  return {w:x+92,s:s+'<path class="zwo" d="'+wh+'"/><path class="zwh" d="'+wh+'"/>'}},
+ /* 现代 */
+ tower(){const W=zi(40,78),H=zi(140,280),t=zn(),d=t<.2?'M0,0V'+(-H+24)+'L'+W+','+(-H)+'V0Z':'M0,0V'+(-H)+'H'+W+'V0Z';
+  let s='<path class="zb" d="'+d+'"/><path class="zp" fill="url(#zwm'+zi(0,2)+')" d="'+d+'"/>';
+  if(t>=.2&&t<.45){const a=zi(24,46);s+='<path class="zd" d="M'+zf(W/2)+','+(-H)+'V'+(-H-a)+'"/><circle class="zrl" cx="'+zf(W/2)+'" cy="'+(-H-a)+'" r="2.5"/>'}
+  else if(t>=.45&&t<.7)s+='<path class="zb" d="M'+zf(W*.14)+','+(-H)+'V'+(-H-12)+'H'+zf(W*.86)+'V'+(-H)+'ZM'+zf(W*.3)+','+(-H-12)+'V'+(-H-24)+'H'+zf(W*.7)+'V'+(-H-12)+'Z"/><circle class="zrl" cx="'+zf(W/2)+'" cy="'+(-H-27)+'" r="2"/>';
+  else if(t>=.7)s+='<path class="zb" d="M'+zf(W*.2)+','+(-H)+'V'+(-H-10)+'H'+zf(W*.5)+'V'+(-H)+'Z"/>';
+  return {w:W,s}},
+ apt(){const W=zi(90,130),H=zi(80,120),d='M0,0V'+(-H)+'H'+W+'V0Z';
+  return {w:W,s:'<path class="zb" d="'+d+'"/><path class="zp" fill="url(#zwm'+zi(0,2)+')" d="'+d+'"/><path class="zb" d="M'+zf(W*.7)+','+(-H)+'V'+(-H-14)+'H'+zf(W*.7+16)+'V'+(-H)+'Z"/><path class="zd" d="M'+zf(W*.2)+','+(-H)+'V'+(-H-20)+'"/>'}},
+ tv(){const H=zi(240,280),c=26,A=zf(-H*.35),B=zf(-H*.68),C=zf(-H*.84);
+  return {w:52,s:'<path class="zd" d="M6,0L'+(c-3)+','+A+'M46,0L'+(c+3)+','+A+'"/><path class="zb" d="M'+(c-5)+',0L'+(c-2)+','+(-H)+'H'+(c+2)+'L'+(c+5)+',0Z"/><circle class="zb" cx="'+c+'" cy="'+A+'" r="16"/><circle class="zb" cx="'+c+'" cy="'+B+'" r="11"/><circle class="zb" cx="'+c+'" cy="'+C+'" r="5"/><path class="zws" d="M'+(c-13)+','+A+'H'+(c+13)+'M'+(c-8)+','+B+'H'+(c+8)+'"/><path class="zd" d="M'+c+','+(-H)+'V'+(-H-30)+'"/><circle class="zrl" cx="'+c+'" cy="'+(-H-30)+'" r="2.5"/>'}},
+ over(){const W=zi(240,320),y=-zi(34,44);let p='',cw='',cr='',l='';
+  for(let x=24;x<W-10;x+=zi(56,70))p+='M'+(x-4)+','+(y+8)+'H'+(x+4)+'V0H'+(x-4)+'Z';
+  for(let x=10;x<W;x+=zi(14,40))if(zn()<.5)cw+='M'+x+','+(y-2)+'h6';else cr+='M'+x+','+(y-2)+'h6';
+  for(let x=40;x<W;x+=80)l+='M'+x+','+y+'V'+(y-22)+'h8';
+  return {w:W,s:'<path class="zb" d="M-6,'+y+'H'+(W+6)+'V'+(y+8)+'H-6Z"/><path class="zb" d="'+p+'"/>'+(cw?'<path class="zcw" d="'+cw+'"/>':'')+(cr?'<path class="zcr" d="'+cr+'"/>':'')+'<path class="zd" d="'+l+'"/>'}},
+ turb(){const H=zi(130,170),a=zi(0,119),L=zi(46,58),bl=k=>{const t=(a+k*120)*Math.PI/180;return 'M20,'+(-H)+'L'+zf(20+Math.cos(t)*L)+','+zf(-H+Math.sin(t)*L)};
+  return {w:40,s:'<path class="zb" d="M18,0L19,'+(-H)+'H21L22,0Z"/><path class="zbl" d="'+bl(0)+bl(1)+bl(2)+'"/><circle class="zb" cx="20" cy="'+(-H)+'" r="3.5"/>'}},
+ crane(){const H=zi(170,220),J=zi(110,150),m=14,hk=zf(J*.7);let d='M0,0V'+(-H)+'M'+m+',0V'+(-H);for(let y=0;y>-H+8;y-=16)d+='M0,'+y+'L'+m+','+(y-16);
+  return {w:Math.round(J*.7),s:'<path class="zd" d="'+d+'"/><path class="zl" d="M-40,'+(-H)+'H'+J+'M'+(m/2)+','+(-H-24)+'L'+J+','+(-H)+'M'+(m/2)+','+(-H-24)+'L-40,'+(-H)+'"/><path class="zb" d="M-42,'+(-H)+'H-22V'+(-H+12)+'H-42Z"/><path class="zb" d="M-2,'+(-H)+'H'+(m+8)+'V'+(-H+14)+'H-2Z"/><path class="zd" d="M'+hk+','+(-H)+'V'+(-H+70)+'"/><path class="zb" d="M'+(hk-5)+','+(-H+70)+'H'+(hk+5)+'V'+(-H+78)+'H'+(hk-5)+'Z"/><circle class="zrl" cx="'+(m/2)+'" cy="'+(-H-26)+'" r="2.2"/>'}},
+ /* 未来 */
+ twist(){const W=zi(46,66),H=zi(200,270),d='M0,0Q-8,'+zf(-H*.55)+' '+zf(W*.32)+','+(-H)+'H'+zf(W*.68)+'Q'+(W+8)+','+zf(-H*.55)+' '+W+',0Z';
+  return {w:W,s:'<path class="zb" d="'+d+'"/><path class="zp" fill="url(#zwf'+zi(0,1)+')" d="'+d+'"/><path class="zn" d="M'+zf(W*.5)+',0Q'+zf(W*.15)+','+zf(-H*.5)+' '+zf(W*.6)+','+(-H)+'"/><circle class="ztip" cx="'+zf(W/2)+'" cy="'+(-H-6)+'" r="3"/>'}},
+ spire(){const H=zi(220,290),w=zi(16,24),c=30,n=zi(2,3);let s='<path class="zb" d="M'+(c-w/2)+',0L'+(c-3)+','+(-H)+'H'+(c+3)+'L'+(c+w/2)+',0Z"/><path class="znl" d="M'+c+','+zf(-H*.15)+'V'+zf(-H*.92)+'"/>';
+  for(let i=0;i<n;i++){const y=zf(-H*(.42+i*.2)),rx=zi(20,30)-i*4;s+='<ellipse class="zn" cx="'+c+'" cy="'+y+'" rx="'+rx+'" ry="'+zf(rx*.22)+'"/>'}
+  return {w:60,s:s+'<circle class="ztip" cx="'+c+'" cy="'+(-H-5)+'" r="4"/>'}},
+ dome(){const W=zi(100,150),R=W/2,h=zf(R*.8);let d='';
+  [R*.62,R*.26].forEach(rx=>{d+='M'+zf(R-rx)+',0A'+zf(rx)+','+h+' 0 0 1 '+zf(R+rx)+',0'});
+  [.36,.7].forEach(f=>{const y=zf(-h*f),hx=R*Math.sqrt(1-f*f);d+='M'+zf(R-hx)+','+y+'H'+zf(R+hx)});
+  return {w:W,s:'<path class="zb" d="M0,0A'+R+','+h+' 0 0 1 '+W+',0Z"/><ellipse class="zglw" cx="'+R+'" cy="'+zf(-h*.3)+'" rx="'+zf(R*.6)+'" ry="'+zf(h*.3)+'"/><path class="zd" d="'+d+'"/><path class="znl" d="M6,-2H'+(W-6)+'"/>'}},
+ arc(){const W=zi(170,230),H=zi(120,160),n=4,st=W*.11;let d='M0,0',fl='';
+  for(let i=0;i<n;i++){d+=(i?'H'+zf(st*i):'')+'V'+zf(-H*(i+1)/n)}
+  d+='H'+zf(W-st*(n-1));
+  for(let i=n-1;i>=0;i--){d+='V'+(i?zf(-H*i/n):0)+(i?'H'+zf(W-st*(i-1)):'')}
+  for(let i=1;i<n;i++)fl+='M'+zf(st*(i-1))+','+zf(-H*i/n)+'H'+zf(st*i)+'M'+zf(W-st*i)+','+zf(-H*i/n)+'H'+zf(W-st*(i-1));
+  d+='Z';return {w:W,s:'<path class="zb" d="'+d+'"/><path class="zp" fill="url(#zwf'+zi(0,1)+')" d="'+d+'"/><path class="znl" d="'+fl+'M4,-2H'+(W-4)+'"/>'}},
+ holo(){const W=zi(40,56),H=zi(150,200),bw=zi(70,96),bh=zi(40,52),bx=W-8,by=zf(-H*.62),d='M0,0V'+(-H)+'H'+W+'V0Z';
+  return {w:W+bw-10,s:'<path class="zb" d="'+d+'"/><path class="zp" fill="url(#zwf'+zi(0,1)+')" d="'+d+'"/><rect class="zhb" x="'+bx+'" y="'+by+'" width="'+bw+'" height="'+bh+'" rx="5"/><path class="zhl" d="M'+(bx+10)+','+zf(by+14)+'h'+zf(bw*.5)+'M'+(bx+10)+','+zf(by+24)+'h'+zf(bw*.7)+'M'+(bx+10)+','+zf(by+34)+'h'+zf(bw*.35)+'"/>'}},
+ mag(){const W=zi(280,360),y=-zi(90,120),Y=t=>zf(y+30-120*t*(1-t)),t=.3+zn()*.4,ang=zf(Math.atan2(-120*(1-2*t),W)*180/Math.PI),tb='M0,'+(y+30)+'Q'+(W/2)+','+(y-30)+' '+W+','+(y+30);let p='';
+  [.15,.5,.85].forEach(u=>{p+='M'+zf(W*u)+','+zf(Y(u)+4)+'V0'});
+  return {w:W,s:'<path class="zl" d="'+p+'"/><path class="ztube" d="'+tb+'"/><path class="znl" d="'+tb+'"/><rect class="zpod" x="-14" y="-5" width="28" height="10" rx="5" transform="translate('+zf(W*t)+','+Y(t)+') rotate('+ang+')"/>'}}};
+/* things in the air of a period (not on the skyline) */
+const ZS={
+ lantern(){const y=-zi(170,280);return '<circle class="zglow" cx="0" cy="'+(y-6)+'" r="13"/><path class="zlan" d="M-4,'+y+'H4L6,'+(y-12)+'H-6Z"/>'+(zn()<.5?'<path class="zd" d="M'+zi(40,90)+','+(y-zi(10,40))+'q5,-5 10,0q5,-5 10,0"/>':'')},
+ balloon(){const y=-zi(200,260);return '<path class="zb" d="M-7,'+(y-8)+'C-30,'+(y-26)+' -24,'+(y-62)+' 0,'+(y-62)+'C24,'+(y-62)+' 30,'+(y-26)+' 7,'+(y-8)+'Z"/><path class="zd" d="M0,'+(y-62)+'V'+(y-8)+'M-10,'+(y-58)+'Q-15,'+(y-30)+' -5,'+(y-9)+'M10,'+(y-58)+'Q15,'+(y-30)+' 5,'+(y-9)+'M-6,'+(y-8)+'L-4,'+(y+4)+'M6,'+(y-8)+'L4,'+(y+4)+'"/><path class="zb" d="M-5,'+(y+4)+'H5V'+(y+11)+'H-5Z"/><circle class="zg" cx="0" cy="'+(y-5)+'" r="2"/>'},
+ fly(){const y=-zi(150,290);
+  if(zn()<.22){const W=zi(90,140),t=y-40;return '<ellipse class="zglw" cx="'+(W/2)+'" cy="'+(t+58)+'" rx="'+zf(W*.3)+'" ry="5"/><path class="zb" d="M0,'+t+'H'+W+'L'+zf(W*.72)+','+(t+22)+'L'+zf(W*.52)+','+(t+46)+'L'+zf(W*.36)+','+(t+26)+'Z"/><path class="zb" d="M'+zf(W*.14)+','+t+'V'+(t-26)+'H'+zf(W*.3)+'V'+t+'Z"/><path class="zb" d="M'+zf(W*.42)+','+t+'A'+zf(W*.2)+',16 0 0 1 '+zf(W*.82)+','+t+'Z"/><path class="znl" d="M'+zf(W*.2)+','+(t-20)+'V'+(t-4)+'M4,'+t+'H'+(W-4)+'"/>'}
+  const L=zi(40,90);return '<path class="ztrail" d="M'+(-L)+','+y+'H0"/><rect class="zpod" x="0" y="'+(y-3)+'" width="16" height="6" rx="3"/>'}};
+const ZSET={
+ '2023':{f:{pine:2.4,hall:1.4,pagoda:1,pav:1,bridge:.8,wall:.7},b:{pine:2,pagoda:1,hall:1},gf:[24,120],gb:[6,60],sky:'lantern',sg:[500,1100]},
+ '2024':{f:{row:1.8,factory:1.5,lamp:1.1,tele:.8,wtower:.7,clock:.6,truss:.5,train:.35,eiffel:.25},b:{row:1.5,factory:1.2,clock:.4},gf:[8,70],gb:[0,40],sky:'balloon',sg:[1400,2600]},
+ '2025':{f:{tower:3.2,apt:1.4,over:.5,turb:.4,crane:.5,tv:.25},b:{tower:3,apt:1},gf:[4,40],gb:[0,18]},
+ '2026':{f:{twist:1.6,spire:1.2,dome:1.2,arc:.7,holo:.8,mag:.6},b:{twist:1.5,spire:1.2,dome:.8},gf:[20,90],gb:[8,50],sky:'fly',sg:[260,620]}};
+const ONCE={eiffel:1,tv:1};
+const zPick=o=>{let t=0;for(const k in o)t+=o[k];let v=zn()*t;for(const k in o){v-=o[k];if(v<=0)return k}return Object.keys(o)[0]};
+/* window grids as patterns: a few thousand lit windows for the price of five tiles */
+function zPat(id,seed,cw,ch,cols,rows,lit,p){SD=seed;let s='';
+ for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){const on=zn()<p;s+='<rect x="'+(x*cw+1.5)+'" y="'+(y*ch+2)+'" width="'+(cw-3)+'" height="'+(ch-4)+'" fill="'+(on?lit:'#fff')+'" fill-opacity="'+(on?(.3+zn()*.45).toFixed(2):'.045')+'"/>'}
+ return '<pattern id="'+id+'" width="'+cols*cw+'" height="'+rows*ch+'" patternUnits="userSpaceOnUse">'+s+'</pattern>'}
+const zDefs=()=>'<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>'+zPat('zwm0',3,7,9,6,7,'#fed7aa',.3)+zPat('zwm1',5,7,9,6,7,'#fdba74',.38)+zPat('zwm2',9,7,9,6,7,'#f8fafc',.26)+zPat('zwf0',13,6,12,7,5,'#6ee7b7',.45)+zPat('zwf1',17,6,12,7,5,'#67e8f9',.4)+'</defs></svg>';
+function scenery(s){const [x0,x1]=vspan(s),cut=[x0,P('2024.01')*s,P('2025.01')*s,P('2026.01')*s,x1],it=[[],[]];
+ Object.keys(ZSET).forEach((k,i)=>{const Z=ZSET[k],a=cut[i]+24,b=cut[i+1]-24,c=ERA[k];SD=101+i*977;
+  const row=(W0,sc,L,g)=>{const W={...W0};let x=a+zr(0,g[1]);
+   while(x<b){const n=zPick(W);if(ONCE[n])W[n]=0;const p=ZG[n](),pw=p.w*sc;if(x+pw>b)break;
+    it[L].push([x,'<g style="--c:'+c+'" transform="translate('+zf(x)+','+(SKB-(sc<1?3:0))+')'+(sc<1?' scale('+sc+')':'')+'">'+p.s+'</g>']);x+=pw+zr(g[0],g[1])}};
+  row(Z.b,.6,0,Z.gb);row(Z.f,1,1,Z.gf);
+  if(Z.sky)for(let x=a+zr(0,Z.sg[1]);x<b;x+=zr(Z.sg[0],Z.sg[1]))it[1].push([x,'<g style="--c:'+c+'" transform="translate('+zf(x)+','+SKB+')">'+ZS[Z.sky]()+'</g>'])});
+ let h='';
+ for(let cx=x0;cx<x1;cx+=CHUNK){const cw=zf(Math.min(CHUNK,x1-cx));
+  it.forEach((L,j)=>{const g=L.filter(v=>v[0]>=cx&&v[0]<cx+CHUNK);if(!g.length)return;
+   h+='<svg class="scn'+(j?'':' zbk')+'" style="left:'+zf(cx)+'px;width:'+cw+'px" viewBox="0 0 '+cw+' 340"><g transform="translate('+zf(-cx)+',0)">'+g.map(v=>v[1]).join('')+'</g></svg>'})}
+ return h}
+/* far sky of each period: a moon over clouds, an airship, an airliner, a ringed planet + station */
+function farProps(s){const at=(t,top,svg,cls)=>'<svg class="fp'+(cls?' '+cls:'')+'" style="left:'+zf(P(t)*s)+'px;top:'+top+'px" '+svg+'</svg>';
+ return at('2023.07',120,'width="260" height="200" viewBox="0 0 260 200"><defs><radialGradient id="zmg"><stop offset=".3" stop-color="#fef3c7" stop-opacity=".32"/><stop offset="1" stop-color="#fef3c7" stop-opacity="0"/></radialGradient></defs><circle cx="130" cy="100" r="100" fill="url(#zmg)"/><circle cx="130" cy="100" r="48" fill="#fef3c7" fill-opacity=".6"/><circle cx="114" cy="88" r="9" fill="#a8946a" fill-opacity=".3"/><circle cx="146" cy="116" r="6" fill="#a8946a" fill-opacity=".25"/><path d="M40 128Q70 114 104 126T176 124Q196 118 224 126" fill="none" stroke="#07090d" stroke-opacity=".85" stroke-width="9" stroke-linecap="round"/><path d="M70 146Q100 136 130 144T190 142" fill="none" stroke="#07090d" stroke-opacity=".7" stroke-width="6" stroke-linecap="round"/>')
+  +at('2024.06',250,'width="250" height="96" viewBox="0 0 250 96"><path d="M30 30L8 12H28L46 30ZM30 58L8 76H28L46 58Z" fill="#1b1830" stroke="#a78bfa" stroke-opacity=".45" stroke-width="1.5"/><path d="M18 44Q30 16 130 14Q226 16 244 44Q226 72 130 74Q30 72 18 44Z" fill="#141226" stroke="#a78bfa" stroke-opacity=".55" stroke-width="2"/><path d="M70 17V71M110 14V74M150 14V74M190 17V71M24 44H240" stroke="#a78bfa" stroke-opacity=".18" stroke-width="1.5" fill="none"/><path d="M104 74H156L150 86H110Z" fill="#141226" stroke="#a78bfa" stroke-opacity=".5" stroke-width="1.5"/><path d="M114 80h5M124 80h5M134 80h5M144 80h4" stroke="#fbbf24" stroke-opacity=".7" stroke-width="3"/>')
+  +at('2025.05',150,'width="560" height="60" viewBox="0 0 560 60"><defs><linearGradient id="zct"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity=".22"/></linearGradient></defs><path d="M0 29H440M0 35H436" stroke="url(#zct)" stroke-width="2.5"/><path d="M440 28Q446 24 470 24H530Q548 25 552 30Q548 35 530 36H470Q446 36 440 32Z" fill="#141a26" stroke="#fb923c" stroke-opacity=".55" stroke-width="1.5"/><path d="M486 31L466 52H478L512 32ZM486 29L470 12H480L506 28ZM444 28L436 12H446L458 26Z" fill="#141a26" stroke="#fb923c" stroke-opacity=".5" stroke-width="1.5"/><circle cx="470" cy="51" r="2" fill="#f87171"/><circle cx="474" cy="13" r="2" fill="#4ade80"/>')
+  +at('2026.04',100,'width="340" height="240" viewBox="0 0 340 240"><defs><radialGradient id="zpl" cx=".35" cy=".3"><stop offset="0" stop-color="#6ee7b7" stop-opacity=".55"/><stop offset=".7" stop-color="#0f3b2e" stop-opacity=".6"/><stop offset="1" stop-color="#05140f" stop-opacity=".7"/></radialGradient></defs><g transform="rotate(-16 170 120)"><path d="M40 120A130 28 0 0 1 300 120" fill="none" stroke="#34d399" stroke-opacity=".3" stroke-width="7"/><circle cx="170" cy="120" r="70" fill="url(#zpl)"/><path d="M40 120A130 28 0 0 0 300 120" fill="none" stroke="#34d399" stroke-opacity=".55" stroke-width="7"/><path d="M52 120A118 22 0 0 0 288 120" fill="none" stroke="#a7f3d0" stroke-opacity=".3" stroke-width="2"/></g><circle cx="304" cy="40" r="10" fill="#67e8f9" fill-opacity=".4"/>')
+  +at('2026.09',260,'width="120" height="120" viewBox="0 0 120 120"><circle cx="60" cy="60" r="44" fill="none" stroke="#34d399" stroke-opacity=".45" stroke-width="6"/><path d="M60 16V104M16 60H104" stroke="#34d399" stroke-opacity=".3" stroke-width="2"/><circle cx="60" cy="60" r="9" fill="#0b1f19" stroke="#6ee7b7" stroke-opacity=".6" stroke-width="2"/>','spin')}
 /* ground: the road is Cursor itself — width follows valuation on a log scale */
 function buildGround(){const x0=BL[0].left-600,x1=SMAX+2600,len=x1-x0,mA=mf('2021.06'),mN=mf(NOW),xN=Pm(mN),c0=mf('2023.03'),ht=byId('b-ht1');
  const VAL=[[c0,.05]].concat(CURSOR.filter(c=>c[3]).map(c=>[mf(c[0]),parseFloat(c[3].replace(/[^0-9.]/g,''))]));VAL.push([mN,VAL[VAL.length-1][1]]);
@@ -702,7 +919,7 @@ function buildCast(){const LN=$('#LN');let h='';const list=[];
  BL.forEach((b,i)=>{if(b.npcX===null||!b.head)return;const vc=b.kind==='act'?b.el.style.getPropertyValue('--vc'):(ERA[b.t?eraOf(mf(b.t)):b.era]||ERA.all);
   list.push(b.npcX);
   h+='<div class="npc'+(b.red?' red':'')+'" style="left:'+b.npcX.toFixed(1)+'px;--vc:'+vc+';--dl:-'+(rr(i,31)*2.6).toFixed(2)+'s"><i class="nsh"></i><div class="nb"><i class="nleg l"></i><i class="nleg r"></i><i class="ntor"></i><i class="narm l"></i><i class="narm r"></i>'+headHTML(b.head)+'</div><i class="nring"></i><b class="nfx">啪!</b><i class="nck">✓</i></div>'});
- PUS.forEach(p=>{h+='<div class="pu" style="left:'+p.x.toFixed(1)+'px;--c:'+ERA[p.yr]+'"><div class="pub">'+vehSVG(p.v)+'</div><b>'+p.name+' · '+p.yr+'</b></div>'});
+ PUS.forEach(p=>{h+='<div class="pu" style="left:'+p.x.toFixed(1)+'px;--c:'+ERA[p.yr]+'"><div class="pub">'+vehSVG(p.v)+'</div><b>'+p.name+' · '+STY[p.yr]+'</b></div>'});
  LN.innerHTML=h;fillLogos(LN);
  NPCS=[...LN.querySelectorAll('.npc')].map((el,i)=>({el,x:list[i],done:null,on:null}));
  [...LN.querySelectorAll('.pu')].forEach((el,i)=>{PUS[i].el=el;PUS[i].got=null})}
@@ -753,8 +970,7 @@ let ticking=false,lastS=-1e9,runT=0,booted=false,curB=null;
 const LAST={};
 const put=(k,el,v,prop)=>{if(LAST[k]===v)return false;LAST[k]=v;if(el){if(prop)el.style[prop]=v;else el.textContent=v}return true};
 const bump=el=>{if(el.animate)el.animate([{transform:'scale(1.3)',color:'#fde68a'},{transform:'none'}],{duration:320})};
-function toast(w){UI.toast.querySelector('small').textContent=w.k;UI.toast.querySelector('b').textContent=w.n;UI.toast.classList.remove('show');void UI.toast.offsetWidth;UI.toast.classList.add('show')}
-function jump(){hero.classList.remove('jump');void hero.offsetWidth;hero.classList.add('jump')}
+function toast(w){UI.toast.querySelector('small').textContent=w.k+(STY[w.era]?' · '+STY[w.era]:'');UI.toast.querySelector('b').textContent=w.n;UI.toast.classList.remove('show');void UI.toast.offsetWidth;UI.toast.classList.add('show')}
 let h5T=0;
 function hi5(n){const el=n.el;el.classList.remove('hi5');void el.offsetWidth;el.classList.add('hi5');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('hi5'),900);
  hero.classList.add('hi5');clearTimeout(h5T);h5T=setTimeout(()=>hero.classList.remove('hi5'),420)}
@@ -769,8 +985,7 @@ function update(force){ticking=false;const S=curS();if(S===lastS&&!force)return;
   if(!vis)continue;if(!b.items)parseItems(b);
   const p=seg(1700-X,0,b.span);
   for(const it of b.items){if(it.at!==null){const ix=X+it.at*b.sc;apply(it,clamp((1520-ix)/420));const hit=ix<=F+24;if(hit!==it.hit){it.hit=hit;it.el.classList.toggle('hit',hit)}}else apply(it,p)}
-  for(const c of b.clips){const v=Math.max(0,c.w-(F+40-(X+c.x0*b.sc))/b.sc).toFixed(1);if(v!==c.last){c.last=v;c.el.style.clipPath='inset(0 '+v+'px 0 0)'}}
-  if(booted&&smooth&&b.full&&dS>0&&S-dS<b.left&&S>=b.left)jump()}
+  for(const c of b.clips){const v=Math.max(0,c.w-(F+40-(X+c.x0*b.sc))/b.sc).toFixed(1);if(v!==c.last){c.last=v;c.el.style.clipPath='inset(0 '+v+'px 0 0)'}}}
  /* hero */
  if(!force&&Math.abs(dS)>.4){if(smooth){hero.classList.add('run');hero.classList.toggle('back',dS<0)}else hero.classList.remove('back');clearTimeout(runT);runT=setTimeout(()=>hero.classList.remove('run'),150)}
  /* a jump or a step back: whatever was flying in the sky no longer belongs here */
@@ -806,7 +1021,7 @@ function update(force){ticking=false;const S=curS();if(S===lastS&&!force)return;
  if(put('S',UI.S,swe===null?'—':(swe%1?swe.toFixed(1):String(swe))+'%')&&booted)bump(UI.S);put('Sb',UI.Sb,(swe||0)+'%','width');
  let wi=-1;for(let i=0;i<WORLDS.length;i++)if(S+520>=WORLDS[i].b.left)wi=i;
  if(put('wi',null,wi)){const w=WORLDS[wi];UI.W.textContent=w?w.k:'START';UI.Wn.textContent=w?w.n:'Vibe Coding 简史';
-  if(w&&booted&&smooth){toast(w);jump()}
+  if(w&&booted&&smooth)toast(w);
   UI.mm.querySelectorAll('.ml button').forEach(x=>x.classList.toggle('on',!!w&&x.dataset.b===w.b.id))}
  let ri=-1;ROLES.forEach((r,i)=>{if(mf(r[0])<=me+.01)ri=i});
  if(put('ri',null,ri))document.querySelectorAll('#L1 .hrole').forEach(e=>e.classList.toggle('on',+e.dataset.r===ri));
