@@ -120,10 +120,10 @@ html,body{overscroll-behavior:none}
 .fp{position:absolute;overflow:visible;pointer-events:none}
 .fp.spin{animation:wSpin 90s linear infinite}
 /* ---------- 回望: indoors — a bright, lit office in the mid layer (hides the night sky behind it) ----------
-   The room is night-time: plain white walls lit by long ceiling strips (one
-   per page, so the wall alternates bright and shaded), office desks + chairs,
-   roller blinds at mixed heights on windows whose glass stays black, and
-   semi-transparent light wedges at the door pointing down onto the ground. */
+   The room is night-time and deliberately empty: a textured white wall with
+   only long ceiling strips (one per page, with a shaded seam between pages)
+   and semi-transparent light wedges at the door falling from the top onto
+   the ground outside. */
 .inr{position:absolute;top:0;height:905px;overflow:visible;pointer-events:none}
 .inr .ow{fill:url(#zow)}
 .inr .ow.ht{fill:url(#zowh)}
@@ -133,33 +133,15 @@ html,body{overscroll-behavior:none}
 .inr .osk{fill:#d3d9e2}
 .inr .olp{fill:#fff;stroke:#e2e8f0;stroke-width:1}
 .inr .olg{fill:url(#zolg)}
-/* one long ceiling strip per page: a lit wash, a shaded seam, and the strip itself */
+/* white-wall texture, and one long ceiling strip per page with a shaded seam */
+.inr .owt{fill:url(#zwtx)}
 .inr .owg{fill:url(#zowg)}
+.inr .owv{fill:url(#zowv)}
 .inr .ows{fill:url(#zows)}
 .inr .olc{fill:#c3cfdd;opacity:.85}
 .inr .olh{fill:#dbe9ff;opacity:.75}
 .inr .ols{fill:#c3cede;opacity:.6}
 .inr .olb{fill:#fff;stroke:#c9d5e3;stroke-width:1.2}
-.inr .ogl{fill:url(#zogl)}
-.inr .ost{fill:#fff;opacity:.3}
-.inr .ore{fill:#fff;opacity:.035}
-/* roller blinds: vertical lift, each pane stopped at a different height */
-.inr .obl{fill:#d5dfe9;fill-opacity:.8;stroke:#aebbcb;stroke-width:1}
-.inr .obp{fill:none;stroke:#8b9db2;stroke-opacity:.7;stroke-width:1}
-.inr .oblh{fill:#a4b3c5}
-.inr .obc{fill:none;stroke:#f1f5f9;stroke-opacity:.65;stroke-width:1.5}
-.inr .obk{fill:#e2e8f0}
-.inr .omu{fill:none;stroke:#c9d2de;stroke-width:4}
-.inr .of{fill:#cdd8e3;stroke:#b0bdcb;stroke-width:1.5}
-.inr .ofd{fill:none;stroke:#b6c2d0;stroke-width:1.5;stroke-linecap:round}
-.inr .olf{fill:#b9cfc2}
-.inr .opt{fill:#cfd7e1}
-.inr .oms{fill:#0d1522;stroke:#a8b6c6;stroke-width:1.5}
-.inr .okb{fill:#bcc8d6}
-.inr .omg{fill:#f1f5f9;stroke:#b6c2d0;stroke-width:1}
-.inr .och{fill:#a9b8ca;stroke:#8fa1b5;stroke-width:1.5}
-.inr .ocm{fill:none;stroke:#8b9db2;stroke-width:3;stroke-linecap:round}
-.inr .ocw{fill:#8497ad}
 .inr .odr{fill:#e9edf2;stroke:#c3ccd8;stroke-width:2}
 .inr .osn{font:800 20px var(--sans);letter-spacing:.32em;fill:#334155}
 .inr .osn2{font:600 11px var(--mono);letter-spacing:.24em;fill:#64748b}
@@ -334,8 +316,8 @@ html,body{overscroll-behavior:none}
 .blk.gate[data-sty=d] .gpost::after{left:-9px;background:color-mix(in srgb,var(--gc) 40%,#0b0f16)}
 
 /* ---------- 热议 弹幕: flies across the sky when the hero reaches its week ---------- */
-#sky{position:absolute;left:0;top:72px;width:1920px;height:80px;overflow:hidden;pointer-events:none}
-.skd{position:absolute;left:0;top:0;display:flex;align-items:center;gap:9px;padding:5px 15px;border-radius:999px;background:rgba(48,14,36,.8);border:1px solid rgba(244,114,182,.5);font:700 18px var(--sans);color:#fde7f3;white-space:nowrap;will-change:transform;box-shadow:0 6px 18px rgba(0,0,0,.45)}
+#sky{position:absolute;left:0;top:72px;width:1920px;height:100px;overflow:hidden;pointer-events:none}
+.skd{position:absolute;left:0;top:0;display:flex;align-items:center;gap:9px;padding:var(--py,5px) 15px;border-radius:999px;background:rgba(48,14,36,.8);border:1px solid rgba(244,114,182,.5);font-family:var(--sans);font-size:var(--fs,18px);font-weight:700;color:#fde7f3;white-space:nowrap;will-change:transform;box-shadow:0 6px 18px rgba(0,0,0,.45)}
 .skd:not(.fly){display:none}
 .skd i{font:800 11px var(--mono);font-style:normal;letter-spacing:.14em;color:#f472b6}
 .skd em{font:600 12px var(--mono);font-style:normal;color:#f9a8d4;opacity:.8}
@@ -344,7 +326,7 @@ html,body{overscroll-behavior:none}
 
 /* ---------- concept 弹幕 (replaces the word cloud) ---------- */
 /* flies over the whole stage, between the chapter title and the road */
-#cdm{position:absolute;left:0;top:268px;width:1920px;height:332px;overflow:hidden;pointer-events:none;opacity:0;visibility:hidden}
+#cdm{position:absolute;left:0;top:268px;width:1920px;height:460px;overflow:hidden;pointer-events:none;opacity:0;visibility:hidden}
 #cdm .dmw{pointer-events:auto}
 .cdtip{position:absolute;left:0;top:0;z-index:4;max-width:560px;padding:12px 16px 13px;border-radius:14px;background:rgba(7,9,13,.94);border:1px solid color-mix(in srgb,var(--cc,#22d3ee) 60%,transparent);box-shadow:0 0 30px color-mix(in srgb,var(--cc,#22d3ee) 25%,transparent),0 14px 30px rgba(0,0,0,.5);pointer-events:none;opacity:0;transition:opacity .15s}
 .cdtip.on{opacity:1}
@@ -658,56 +640,75 @@ function npcHeadOf(el){const av=el.querySelector('[data-av]');if(av)return {av:a
  const h=window.brandOf&&brandOf(qt(el,'.kk')+' '+qt(el,'h2')+' '+qt(el,'h3'));if(h&&BRANDS[h][0])return {l:BRANDS[h][0],c:BRANDS[h][1]};
  const any=[...el.querySelectorAll('[data-l]')].find(x=>!x.closest('.vz'));return any?headOf(any):null}
 
-/* ---------- 弹幕 engine: rows of text flying right → left ----------
-   Used twice: the 热议 sky (fed when the hero reaches a week) and the concept
-   wall that replaces the word cloud (fed forever while it is on screen). */
+/* ---------- 弹幕 engine: every item is pinned to a spot on the timeline ----------
+   x = W - v·(S - t0).  Positions come from the scroll position in update(),
+   not from a rAF clock: dragging the scrubber moves — and rewinds — every
+   danmaku at once. t0 is the timeline coordinate where an item enters at the
+   right edge; every item owns its own v (screen px per timeline unit), so
+   they drift at different speeds instead of marching in lockstep.
+   Used twice: the 热议 sky (t0 = its week) and the concept wall (t0 = a fixed
+   offset from the chapter start, so the whole list plays through once). */
+/* stable 0..1 per string: the same word always gets the same size and speed */
+const dmHash=s=>{let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return (h>>>0)/4294967296};
 function makeDm(box,o){
- const R=[...Array(o.rows)].map((_,i)=>({y:o.y(i),v:o.v(i),it:[],pause:false}));
- const D={R,act:[],running:false,last:0};
- const W=o.W;
- D.free=r=>{const t=r.it[r.it.length-1];return !t||t._x+t._w+t._gap<W};
- D.spawn=(el,r)=>{el.classList.add('fly');if(!el._w)el._w=el.offsetWidth;el._x=W;el._gap=o.gap();el._r=r;el.style.top=r.y+'px';r.it.push(el);D.act.push(el)};
- D.step=dt=>{
-  for(const r of R){if(r.pause)continue;for(const el of r.it)el._x-=r.v*dt;
-   while(r.it.length&&r.it[0]._x+r.it[0]._w<0){const e=r.it.shift();D.act.splice(D.act.indexOf(e),1);e.classList.remove('fly');e.style.transform=''}}
-  const order=R.slice().sort(()=>Math.random()-.5);
-  for(const r of order){if(r.pause||!D.free(r))continue;const el=o.feed(r);if(!el)break;D.spawn(el,r)}};
- D.render=()=>{for(const el of D.act)el.style.transform='translate3d('+el._x.toFixed(1)+'px,0,0)'};
- D.tick=t=>{if(!D.running)return;const dt=Math.min(.05,(t-D.last)/1000);D.last=t;D.step(dt);D.render();
-  if(D.act.length||o.keep)requestAnimationFrame(D.tick);else D.running=false};
- D.start=()=>{if(D.running)return;D.running=true;D.last=performance.now();requestAnimationFrame(D.tick)};
- D.stop=()=>{D.running=false};
- D.clear=()=>{if(D.q)D.q.length=0;for(const el of D.act){el.classList.remove('fly');el.style.transform=''}D.act.length=0;R.forEach(r=>r.it.length=0)};
- D.prefill=sec=>{for(let i=0;i<sec*30;i++)D.step(1/30);D.render()};
+ const W=o.W,R=[...Array(o.rows)].map((_,i)=>({y:o.y(i),v:o.v(i),pause:false,freezeS:null}));
+ const D={R,act:[],items:[]};
+ D.add=(el,row,t0,v)=>{const r=R[row];
+  el.classList.add('fly');el.style.top=r.y+'px';el.style.transform='translate3d('+W+'px,0,0)';
+  el._r=r;el._x=W;D.items.push({el,r,t0,v:v||r.v,w:0});return el};
+ D.reset=()=>{D.items.length=0;D.act.length=0};
+ D.layout=(S,base,remeasure)=>{const s=S-base;D.act.length=0;
+  for(const it of D.items){const {el,r,t0,v}=it;
+   if(remeasure||!it.w)it.w=el.offsetWidth;
+   const rs=(r.pause&&r.freezeS!==null)?r.freezeS-base:s;
+   const x=W-v*(rs-t0),vis=x>-it.w&&x<W;
+   /* only visible items (and the ones just leaving) need a transform write */
+   if(vis||el._dmVis){el._x=x;el.style.transform='translate3d('+x.toFixed(1)+'px,0,0)';el._dmVis=vis}
+   if(vis)D.act.push(el)}};
  return D}
 
-/* concept 弹幕: font size = mentions, colour = year it appeared.
-   Like the 热议 sky it flies across the stage itself (#cdm), not inside a box;
-   the chapter block only keeps its title and legend. */
+/* concept 弹幕: size ≈ mentions (plus a stable per-word variation), speed is
+   a stable per-word hash too, colour = year it appeared. Like the 热议 sky it
+   flies across the stage itself (#cdm), not inside a box; the chapter block
+   only keeps its title and legend. Each word owns a fixed timeline coordinate
+   and its own speed, so scrubbing the timeline rewinds or replays it. */
 let CDM=null;
 (function conceptWall(){const blk=$('#b-cloud'),old=$('#cloud'),f=$('#cdm');if(!blk||!old||!f)return;window.__cloudLayout=null;
  /* it flies in the bright office: year colours a shade deeper */
  const col={'2023':'#0369a1','2024':'#6d28d9','2025':'#c2410c','2026':'#047857'};
  const words=[];Object.keys(CONCEPTS).forEach(y=>CONCEPTS[y].forEach(x=>words.push({y,name:x[0],go:x[1],def:x[2],n:Math.max(1,CONCEPT_N[x[0]]||1)})));
- words.sort((a,b)=>b.n-a.n);const mx=words[0].n,FW=1920,FH=332,ROWS=6,RH=54;
- const k=blk.querySelector('.kk');if(k)k.textContent='回望 · 概念弹幕 · 字号 = 被提及次数 · 悬停暂停看释义 · 点击跳回';
+ words.sort((a,b)=>b.n-a.n);const mx=words[0].n,FW=1920,FH=460,ROWS=8,RH=54;
+ const k=blk.querySelector('.kk');if(k)k.textContent='回望 · 概念弹幕 · 字号 ≈ 被提及次数 · 大小速度各异 · 悬停暂停看释义 · 点击跳回';
  const yl=document.createElement('div');yl.className='cdl';
  yl.innerHTML=Object.keys(col).map(y=>'<span style="color:'+col[y]+'"><i></i>'+y+'</span>').join('');
  old.replaceWith(yl);blk.style.width='2100px';blk.style.height=ZH+'px';
  const tip=document.createElement('div');tip.className='cdtip';f.appendChild(tip);
- words.forEach((w,i)=>{const r=Math.sqrt((w.n-1)/Math.max(1,mx-1)),fs=Math.round(18+24*r),el=document.createElement('span');
+ /* one pass over SPAN timeline units: batch k enters at t0 = k·dS − PRE, so the
+    wall is already populated when the chapter scrolls into view. Rows keep
+    different base speeds; within a row each later word is a little slower and
+    starts behind the previous word's width, so nothing catches up and overlaps. */
+ const SPAN=2000,PRE=620,dS=SPAN/Math.ceil(words.length/ROWS),GAP=64;
+ /* spread the row speeds across 1.75–3.25 with a fixed permutation, so the
+    eight rows visibly move at different rates instead of clustering. */
+ const rowV=[...Array(ROWS)].map((_,r)=>1.75+1.5*((r*5+2)%ROWS)/(ROWS-1));
+ const rowSt=[...Array(ROWS)].map(()=>({t:-PRE,w:0,v:0}));
+ CDM=makeDm(f,{rows:ROWS,W:FW,y:i=>4+i*RH,v:()=>2.4});
+ /* log mentions + a stable jitter: most words used to sit at 18px, which made
+    the whole wall look uniform; now sizes span 13–44px within one screen. */
+ words.forEach((w,i)=>{const h=dmHash(w.name),row=i%ROWS,k=Math.floor(i/ROWS),st=rowSt[row],
+  v=rowV[row]*(1-.004*k),
+  q=Math.log(1+w.n)/Math.log(1+mx),base=Math.round(clamp(12+32*Math.pow(q,.8)+(h-.5)*14,13,44)),
+  fs=i<6?Math.max(base,40):base,el=document.createElement('span');
   el.className='dmw'+(i<6?' hot':'');el.textContent=w.name;el.dataset.jump=w.go;
   el.style.cssText='font-size:'+fs+'px;--cc:'+col[w.y]+';--fw:'+(fs>34?850:fs>26?750:650);
-  el.addEventListener('mouseenter',()=>{if(el._r)el._r.pause=true;tip.style.setProperty('--cc',col[w.y]);
+  el.addEventListener('mouseenter',()=>{if(el._r){el._r.pause=true;el._r.freezeS=curS()}tip.style.setProperty('--cc',col[w.y]);
    tip.innerHTML='<b>'+esc(w.name)+'</b><span>'+esc(w.def)+'</span><em>'+w.y+' · 被提及 '+w.n+' 次 · 点击跳回</em>';
    const y=(el._r?el._r.y:0)+el.offsetHeight+10,below=y+tip.offsetHeight<=FH;
    tip.style.left=clamp(el._x||0,16,FW-tip.offsetWidth-16).toFixed(0)+'px';tip.style.top=(below?y:(el._r?el._r.y:0)-tip.offsetHeight-10).toFixed(0)+'px';tip.classList.add('on')});
-  el.addEventListener('mouseleave',()=>{if(el._r)el._r.pause=false;tip.classList.remove('on')});
-  f.appendChild(el);w.el=el});
- let qi=0;
- CDM=makeDm(f,{rows:ROWS,W:FW,keep:true,y:i=>4+i*RH,v:i=>330+((i*37)%5)*30,gap:()=>24+Math.random()*90,
-  feed:()=>{for(let n=0;n<words.length;n++){const w=words[qi];qi=(qi+1)%words.length;if(!w.el.classList.contains('fly'))return w.el}return null}});
- CDM.filled=false})();
+  el.addEventListener('mouseleave',()=>{if(el._r){el._r.pause=false;el._r.freezeS=null}tip.classList.remove('on')});
+  const t0=st.w?Math.max(k*dS-PRE,st.t+(st.w+GAP)/st.v):-PRE;
+  f.appendChild(el);CDM.add(el,row,t0,v);st.t=t0;st.w=el.offsetWidth;st.v=v});
+})();
 
 /* ---------- layout: one continuous level ---------- */
 let BL=[],A=[],SMAX=1,K=1,WORLDS=[],FLAGS=[],NAV=[],NPCS=[],PUS=[],BZ=[];
@@ -926,15 +927,16 @@ function zPat(id,seed,cw,ch,cols,rows,lit,p){SD=seed;let s='';
  for(let y=0;y<rows;y++)for(let x=0;x<cols;x++){const on=zn()<p;s+='<rect x="'+(x*cw+1.5)+'" y="'+(y*ch+2)+'" width="'+(cw-3)+'" height="'+(ch-4)+'" fill="'+(on?lit:'#fff')+'" fill-opacity="'+(on?(.3+zn()*.45).toFixed(2):'.045')+'"/>'}
  return '<pattern id="'+id+'" width="'+cols*cw+'" height="'+rows*ch+'" patternUnits="userSpaceOnUse">'+s+'</pattern>'}
 const zDefs=()=>'<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>'+zPat('zwm0',3,7,9,6,7,'#fed7aa',.3)+zPat('zwm1',5,7,9,6,7,'#fdba74',.38)+zPat('zwm2',9,7,9,6,7,'#f8fafc',.26)+zPat('zwf0',13,6,12,7,5,'#6ee7b7',.45)+zPat('zwf1',17,6,12,7,5,'#67e8f9',.4)
- /* indoors: a plain white wall, floor, ceiling-strip light, black night glass */
- +'<linearGradient id="zow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0f3f7"/><stop offset="1" stop-color="#e4eaf1"/></linearGradient>'
- +'<linearGradient id="zowh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f5f6"/><stop offset="1" stop-color="#e6eaf0"/></linearGradient>'
+ /* indoors: white wall, fine wall texture, floor, ceiling-strip light */
+ +'<linearGradient id="zow" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f2f6fa"/><stop offset="1" stop-color="#dfe7ef"/></linearGradient>'
+ +'<linearGradient id="zowh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f6f8"/><stop offset="1" stop-color="#e1e8ef"/></linearGradient>'
  +'<linearGradient id="zofl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#dfe4eb"/><stop offset="1" stop-color="#cbd2dc"/></linearGradient>'
  +'<linearGradient id="zolg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>'
- +'<linearGradient id="zowg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".5" stop-color="#fff" stop-opacity=".34"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>'
- +'<linearGradient id="zows" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8d9db2" stop-opacity="0"/><stop offset=".5" stop-color="#8d9db2" stop-opacity=".14"/><stop offset="1" stop-color="#8d9db2" stop-opacity="0"/></linearGradient>'
- +'<linearGradient id="zogl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05070c"/><stop offset=".7" stop-color="#080d15"/><stop offset="1" stop-color="#0c1420"/></linearGradient>'
- /* door light: a shaft fading from the doorway down to the ground, plus a level pool */
+ +'<linearGradient id="zowg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".98"/><stop offset=".5" stop-color="#fff" stop-opacity=".42"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>'
+ +'<linearGradient id="zowv" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#8d9db2" stop-opacity=".18"/><stop offset=".22" stop-color="#8d9db2" stop-opacity="0"/><stop offset=".78" stop-color="#8d9db2" stop-opacity="0"/><stop offset="1" stop-color="#8d9db2" stop-opacity=".18"/></linearGradient>'
+ +'<linearGradient id="zows" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7f90a8" stop-opacity="0"/><stop offset=".5" stop-color="#7f90a8" stop-opacity=".26"/><stop offset="1" stop-color="#7f90a8" stop-opacity="0"/></linearGradient>'
+ +'<pattern id="zwtx" width="240" height="160" patternUnits="userSpaceOnUse"><path d="M0,0H240M0,80H240" fill="none" stroke="#7e91aa" stroke-opacity=".13" stroke-width="1"/><path d="M0,1H240M0,81H240" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="1"/><path d="M0,0V160" fill="none" stroke="#7e91aa" stroke-opacity=".18" stroke-width="1"/><path d="M120,0V160" fill="none" stroke="#7e91aa" stroke-opacity=".07" stroke-width="1"/><circle cx="38" cy="34" r="1.2" fill="#7e91aa" fill-opacity=".11"/><circle cx="166" cy="112" r="1" fill="#7e91aa" fill-opacity=".1"/><circle cx="92" cy="130" r=".8" fill="#7e91aa" fill-opacity=".1"/></pattern>'
+ /* door light: a shaft fading from the top of the doorway down to the ground, plus a level pool */
  +'<linearGradient id="zosd" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9b5" stop-opacity=".52"/><stop offset=".45" stop-color="#ffe9b5" stop-opacity=".2"/><stop offset="1" stop-color="#ffe9b5" stop-opacity=".02"/></linearGradient>'
  +'<linearGradient id="zosp" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffe9b5" stop-opacity=".62"/><stop offset=".3" stop-color="#ffe9b5" stop-opacity=".23"/><stop offset="1" stop-color="#ffe9b5" stop-opacity="0"/></linearGradient>'
  +'</defs></svg>';
@@ -951,51 +953,11 @@ function scenery(s){const [x0,x1]=vspan(s),door=DOOR(),cut=[x0,P('2024.01')*s,P(
    h+='<svg class="scn'+(j?'':' zbk')+'" style="left:'+zf(cx)+'px;width:'+cw+'px" viewBox="0 0 '+cw+' 340"><g transform="translate('+zf(-cx)+',0)">'+g.map(v=>v[1]).join('')+'</g></svg>'})}
  return h}
 /* ---------- 回望 indoors ----------
-   From the BONUS world on, the hero walks into a bright office: an opaque room in
-   the mid layer hides sky and hills. Plain white walls washed by one long
-   ceiling strip per content page, office desks and chairs, black window glass
-   with roller blinds at mixed heights (it is night outside), and semi-transparent
-   light wedges at the door angled down onto the ground outside. */
+   From the BONUS world on, the hero walks into an empty, brightly lit room:
+   an opaque wall in the mid layer hides sky and hills. Only a fine wall texture,
+   one long ceiling strip per content page with a shaded seam between pages,
+   and light wedges at the door falling from the top onto the ground outside. */
 const DOOR=()=>{const b=byId('b-life');return b?b.left-160:null};
-const OFW={
- win(){const n=zi(3,5),pw=112,T=150,B=790,W=n*pw;
-  let s='<rect class="of" x="-8" y="'+(T-8)+'" width="'+(W+16)+'" height="'+(B-T+16)+'"/><rect class="ogl" x="0" y="'+T+'" width="'+W+'" height="'+(B-T)+'"/>';
-  /* outside stays black at night: just a handful of faint stars and a glass sheen */
-  for(let i=0;i<n;i++)for(let j=0;j<5;j++)s+='<circle class="ost" cx="'+(i*pw+14+(j*47+i*29)%(pw-28))+'" cy="'+(T+26+(j*83+i*61)%(B-T-52))+'" r="'+(j%3?0.9:1.4)+'"/>';
-  s+='<path class="ore" d="M'+zf(pw*.62)+','+T+'H'+zf(pw*.86)+'L'+zf(pw*.86-56)+','+B+'H'+zf(pw*.62-56)+'Z"/>';
-  /* roller blinds: one per pane, each stopped at a different height (a few left fully up) */
-  for(let i=0;i<n;i++){
-   const drop=Math.round((B-T)*zr(0,.72));if(drop<70)continue;
-   const x=i*pw+5,w=pw-10,y2=T+drop;
-   s+='<rect class="obl" x="'+x+'" y="'+T+'" width="'+w+'" height="'+drop+'" rx="2"/>';
-   for(let y=T+16;y<y2-7;y+=15)s+='<path class="obp" d="M'+x+','+y+'H'+(x+w)+'"/>';
-   s+='<rect class="oblh" x="'+x+'" y="'+(y2-5)+'" width="'+w+'" height="6" rx="3"/>'
-    +'<path class="obc" d="M'+(x+w-11)+','+T+'V'+(y2-16)+'"/><circle class="obk" cx="'+(x+w-11)+'" cy="'+(y2-16)+'" r="3"/>';
-  }
-  let d='M0,'+zf(T+(B-T)*.62)+'H'+W;for(let i=1;i<n;i++)d+='M'+i*pw+','+T+'V'+B;
-  return {w:W,s:s+'<path class="omu" d="'+d+'"/>'}}};
-/* one office chair, reusable at any scale: back, seat, gas lift, five-star base */
-const oChair=(cx,sc)=>'<g transform="translate('+zf(cx)+',0) scale('+sc+')">'
- +'<rect class="och" x="-21" y="-94" width="42" height="56" rx="10"/>'
- +'<rect class="och" x="-25" y="-34" width="50" height="10" rx="5"/>'
- +'<path class="ocm" d="M0,-24V-9M-19,-7H19M0,-9L-15,-4M0,-9L15,-4"/>'
- +'<circle class="ocw" cx="-16" cy="-2" r="4"/><circle class="ocw" cx="16" cy="-2" r="4"/>'
- +'</g>';
-const OFF={
- plant(){const H=zi(90,140),k=zi(5,7);let s='';
-  for(let i=0;i<k;i++){const a=zr(-50,50),l=zr(.55,1)*H*.42;s+='<ellipse class="olf" cx="26" cy="'+zf(-40-l)+'" rx="'+zf(l*.3)+'" ry="'+zf(l)+'" transform="rotate('+zf(a)+' 26 -40)"/>'}
-  return {w:52,s:s+'<path class="opt" d="M8,-40H44L39,0H13Z"/>'}},
- cab(){const W=zi(160,220);return {w:W,s:'<rect class="of" x="0" y="-58" width="'+W+'" height="58" rx="3"/><path class="ofd" d="M'+zf(W/3)+',-52V-6M'+zf(W*2/3)+',-52V-6M'+zf(W/3-12)+',-30h6M'+zf(W*2/3+6)+',-30h6"/>'}},
- chair(){return {w:100,s:oChair(50,1)}},
- desk(){const W=zi(240,300),n=Math.max(2,Math.round(W/120));
-  let s='<rect class="of" x="0" y="-76" width="'+W+'" height="8" rx="3"/><path class="ocm" d="M10,-68V0M'+(W-10)+',-68V0"/>';
-  for(let i=0;i<n;i++){const cx=zf(W*(i+.5)/n);
-   s+='<rect class="oms" x="'+zf(cx-38)+'" y="-132" width="76" height="46" rx="3"/>'
-    +'<path class="ofd" d="M'+cx+',-86V-76M'+zf(cx-15)+',-77H'+zf(cx+15)+'" style="stroke-width:3"/>'
-    +'<rect class="okb" x="'+zf(cx-26)+'" y="-74" width="52" height="3" rx="1"/>'
-    +'<rect class="omg" x="'+zf(cx+28)+'" y="-84" width="10" height="9" rx="2"/>'
-    +oChair(cx,.6)}
-  return {w:W,s}}};
 function indoor(s){const door=DOOR();if(door===null)return '';
  const x1=vspan(s)[1],xi=door*s,ht=byId('b-ht1'),xh=ht?(ht.left-300)*s:1e12;
  const chunks=L=>{let o='';for(let cx=xi-60;cx<x1;cx+=CHUNK){const cw=zf(Math.min(CHUNK,x1-cx)),g=L.filter(v=>v[0]>=cx-CHUNK*.02&&v[0]<cx+CHUNK);if(!g.length)continue;
@@ -1003,19 +965,10 @@ function indoor(s){const door=DOOR();if(door===null)return '';
  const bg=[];for(let cx=xi-60;cx<x1;cx+=CHUNK){const a=Math.max(cx,xi),cw=Math.min(cx+CHUNK,x1)-a,R=(y,h,c,x=a,w=cw)=>'<rect class="'+c+'" x="'+zf(x)+'" y="'+y+'" width="'+zf(w)+'" height="'+h+'"/>';
   let o=R(0,92,'oc')+R(92,4,'ocl')+R(96,716,'ow')+R(812,8,'osk')+R(820,40,'ofl');
   const hx=Math.max(a,xh);if(hx<a+cw)o+=R(96,716,'ow ht',hx,a+cw-hx);
+  o+=R(96,716,'owt');
   bg.push([cx,o])}
- SD=777;const wall=[],floor=[],light=[],mid=[];
- for(let x=xi+260+zr(0,300);x<x1-600;){const p=OFW.win();wall.push([x,'<g transform="translate('+zf(x)+',0)">'+p.s+'</g>']);x+=p.w+zr(900,1600)}
- for(let x=xi+200+zr(0,200);x<x1-300;){
-  const k=zPick({plant:.8,cab:.55,desk:2.4}),p=OFF[k]();
-  floor.push([x,'<g transform="translate('+zf(x)+',840)">'+p.s+'</g>']);
-  let gap=zr(180,460);
-  if(k==='desk'){const c=OFF.chair(),cx=x+p.w+zr(18,54);
-   floor.push([cx,'<g transform="translate('+zf(cx)+',840)">'+c.s+'</g>']);gap=c.w+zr(70,220)}
-  x+=p.w+gap}
- /* a quieter row of desks further back, so the room reads as a busy office */
- for(let x=xi+420;x<x1-400;x+=zr(560,820)){const p=OFF.desk();mid.push([x,'<g opacity=".4" transform="translate('+zf(x)+',806) scale(.7)">'+p.s+'</g>'])}
- /* each content page gets one long ceiling strip: lit wall, then a shaded gap */
+ /* only lights now: each content page gets one long ceiling strip, then a shaded gap */
+ const light=[];
  const i0=BL.findIndex(b=>b.id==='b-life'),pages=[];
  if(i0>=0)BL.slice(i0).forEach(b=>{const a=Math.max(xi,b.left*s+30),e=Math.min(x1,(b.left+b.w)*s-40);
   if(e-a>=260)pages.push([a,e])});
@@ -1029,24 +982,25 @@ function indoor(s){const door=DOOR();if(door===null)return '';
  for(let i=0;i<segs.length;i++){
   const [x,e]=segs[i],A=zf(x),W=zf(e-x);
   light.push([x,'<rect class="owg" x="'+A+'" y="96" width="'+W+'" height="430" rx="28"/>'
-   +'<path class="olg" d="M'+zf(x+16)+',96H'+zf(e-16)+'L'+zf(e+110)+',660H'+zf(x-110)+'Z" opacity=".35"/>'
+   +'<path class="olg" d="M'+zf(x+16)+',96H'+zf(e-16)+'L'+zf(e+110)+',660H'+zf(x-110)+'Z" opacity=".45"/>'
+   +'<rect class="owv" x="'+A+'" y="96" width="'+W+'" height="716"/>'
    +'<rect class="olh" x="'+zf(x-8)+'" y="74" width="'+zf(e-x+16)+'" height="30" rx="15"/>'
    +'<rect class="olc" x="'+A+'" y="79" width="'+W+'" height="4" rx="2"/>'
    +'<rect class="ols" x="'+A+'" y="93" width="'+W+'" height="3" rx="1.5"/>'
    +'<rect class="olb" x="'+A+'" y="84" width="'+W+'" height="9" rx="4.5"/>']);
   const nx=segs[i+1]?segs[i+1][0]:Math.min(x1,e+220);
   if(nx-e>70)light.push([e,'<rect class="ows" x="'+zf(e)+'" y="96" width="'+zf(nx-e)+'" height="716"/>'])}
- /* the doorway: semi-transparent triangles angled down, landing on the ground outside */
+ /* the doorway: the light starts at the very top of the door and lands on the ground */
  const SP=640,beam='<svg class="inr" style="left:'+zf(xi-SP)+'px;width:'+SP+'px" viewBox="0 0 '+SP+' 905">'
-  +'<path class="osb" d="M'+SP+',400V860H'+zf(SP*.28)+'Z"/>'
-  +'<path class="osb2" d="M'+SP+',560V860H'+zf(SP*.55)+'Z"/>'
+  +'<path class="osb" d="M'+SP+',0V860H'+zf(SP*.28)+'Z"/>'
+  +'<path class="osb2" d="M'+SP+',120V860H'+zf(SP*.55)+'Z"/>'
   +'<path class="osf" d="M'+SP+',770V860H'+zf(SP*.05)+'Z"/>'
   +'</svg>';
  /* the door: a light frame where outside ends, the room's name hung on it */
- const dr='<rect class="ose" x="'+zf(xi-36)+'" y="400" width="5" height="412" rx="2"/>'
+ const dr='<rect class="ose" x="'+zf(xi-36)+'" y="0" width="5" height="812" rx="2"/>'
   +'<rect class="odr" x="'+zf(xi-30)+'" y="0" width="50" height="860"/><rect class="olp" x="'+zf(xi-24)+'" y="300" width="38" height="140" rx="6"/>'
   +['回','望','馆'].map((c,i)=>'<text class="osn" x="'+zf(xi-5)+'" y="'+(336+i*36)+'" text-anchor="middle" style="letter-spacing:0">'+c+'</text>').join('');
- return beam+chunks(bg)+chunks(light)+chunks(wall)+chunks(mid)+chunks(floor)+chunks([[xi,dr]])}
+ return beam+chunks(bg)+chunks(light)+chunks([[xi,dr]])}
 /* the foreground was drawn for a night sky: from 回望 on, flip it for a bright room.
    Generic on purpose (the chapters are built by many generators): light text goes
    dark in its own hue, faint white hairlines go faint dark; dark panels (lanes,
@@ -1132,13 +1086,20 @@ function buildCast(){const LN=$('#LN');let h='';const list=[];
  LN.innerHTML=h;fillLogos(LN);
  NPCS=[...LN.querySelectorAll('.npc')].map((el,i)=>({el,x:list[i],done:null,on:null}));
  [...LN.querySelectorAll('.pu')].forEach((el,i)=>{PUS[i].el=el;PUS[i].got=null})}
-/* 热议 become 弹幕 in the sky, launched when the hero reaches their week */
+/* 热议 弹幕: each buzz is pinned to its week's x on the timeline, with its
+   own stable size and speed so the sky never looks like a uniform strip. */
 let SKY=null;
 function buildSky(){const sky=$('#sky');
- if(!SKY){SKY=makeDm(sky,{rows:2,W:1920,y:i=>4+i*38,v:()=>300,gap:()=>90,feed:()=>SKY.q.shift()||null});SKY.q=[]}
- BZ=BUZZ.map(b=>({x:P(b[1]),b,el:null,sent:null})).sort((a,b)=>a.x-b.x)}
-function launchBuzz(z){if(!z.el){const d=document.createElement('div');d.className='skd'+(z.b[2]?' '+z.b[2]:'');d.innerHTML='<i>热议</i>'+esc(z.b[0])+'<em>'+esc(z.b[1])+'</em>';$('#sky').appendChild(d);z.el=d}
- if(z.el.classList.contains('fly')||SKY.q.includes(z.el))return;SKY.q.push(z.el);if(SKY.q.length>5)SKY.q.shift();SKY.start()}
+ if(!SKY)SKY=makeDm(sky,{rows:2,W:1920,y:i=>2+i*48,v:()=>2.4});
+ sky.querySelectorAll('.skd').forEach(e=>e.remove());
+ BZ=BUZZ.map(b=>({x:P(b[1]),b})).sort((a,b)=>a.x-b.x);
+ SKY.reset();
+ const rowV=[1.8,3.2];
+ BZ.forEach((z,i)=>{const d=document.createElement('div');d.className='skd'+(z.b[2]?' '+z.b[2]:'');
+  d.innerHTML='<i>热议</i>'+esc(z.b[0])+'<em>'+esc(z.b[1])+'</em>';sky.appendChild(d);z.el=d;
+  const h=dmHash(z.b[0]+'@s'),fs=Math.round(13+9*h-Math.max(0,z.b[0].length-24)*.15);
+  d.style.setProperty('--fs',fs+'px');d.style.setProperty('--py',(3+Math.round(5*h))+'px');
+  SKY.add(d,i%2,z.x,rowV[i%2]*(1-.002*i))})}
 function buildMini(){const mm=$('#mm'),st=[];
  BL.forEach(b=>{const c=b.t?ERA[eraOf(mf(b.t))]:ERA[b.era]||ERA.all;st.push(c+' '+(clamp(b.left/SMAX)*100).toFixed(2)+'%',c+' '+(clamp((b.left+b.w)/SMAX)*100).toFixed(2)+'%')});
  const g='linear-gradient(90deg,'+st.join(',')+')';mm.querySelector('.mt').style.background=g;mm.querySelector('.mf').style.background=g;
@@ -1197,8 +1158,6 @@ function update(force){ticking=false;const S=curS();if(S===lastS&&!force)return;
   for(const c of b.clips){const v=Math.max(0,c.w-(F+40-(X+c.x0*b.sc))/b.sc).toFixed(1);if(v!==c.last){c.last=v;c.el.style.clipPath='inset(0 '+v+'px 0 0)'}}}
  /* hero */
  if(!force&&Math.abs(dS)>.4){if(smooth){hero.classList.add('run');hero.classList.toggle('back',dS<0)}else hero.classList.remove('back');clearTimeout(runT);runT=setTimeout(()=>hero.classList.remove('run'),150)}
- /* a jump or a step back: whatever was flying in the sky no longer belongs here */
- if(SKY&&!force&&(!smooth||dS<0)&&(SKY.act.length||SKY.q.length))SKY.clear();
  if(!smooth&&!force)UI.toast.classList.remove('show');
  if(put('hint',null,S>60))UI.hint.classList.toggle('off',S>60);
  /* the cast: idle only when on screen; high-five as the hero reaches them */
@@ -1210,13 +1169,13 @@ function update(force){ticking=false;const S=curS();if(S===lastS&&!force)return;
  let veh='walk',vn='';for(const p of PUS){const g=S>=p.x;if(g){veh=p.v;vn=p.name}if(g!==p.got){const was=p.got;p.got=g;p.el.classList.toggle('got',g);if(g&&was===false&&live)powerUp(vn)}}
  if(hero.dataset.v!==veh)hero.dataset.v=veh;
  const htB=byId('b-ht1'),gone=!!htB&&S>=htB.left-360;if(put('gone',null,gone))hero.classList.toggle('gone',gone);
- /* 热议 弹幕 */
- for(const z of BZ){const g=S>=z.x;if(g)bc++;if(g!==z.sent){const was=z.sent;z.sent=g;if(g&&was===false&&live)launchBuzz(z)}}
- /* concept wall runs only while it is on screen */
- /* concept 弹幕 fades in / out with its chapter and runs only while it shows */
+ /* 弹幕: positions are pure functions of the timeline position S */
+ for(const z of BZ)if(S>=z.x)bc++;
+ if(SKY)SKY.layout(S,0,force);
+ /* concept 弹幕 fades in / out with its chapter */
  const cw=byId('b-cloud');if(CDM&&cw){const nx=BL[BL.indexOf(cw)+1],X=cw.left-S+F,NX=nx?nx.left-S+F:X+cw.w,op=clamp((1800-X)/200)*clamp((NX-1680)/200);
   if(put('cdo',null,op.toFixed(3))){UI.cdm.style.opacity=op.toFixed(3);UI.cdm.style.visibility=op>0?'visible':'hidden'}
-  if(op>0){if(!CDM.filled){CDM.filled=true;CDM.prefill(5)}CDM.start()}else CDM.stop()}
+  CDM.layout(S,cw.left-960,force)}
  for(const f of FLAGS){const u=S>=f.x;if(u!==f.up){const was=f.up;f.up=u;f.el.classList.toggle('up',u);if(u&&was===false&&f.k==='GOAL')toast({k:'STAGE CLEAR',n:'下一个三年 · 写闭环'})}}
  if(put('E',UI.E,String(ec))&&booted)bump(UI.E);if(put('B',UI.B,String(bc))&&booted)bump(UI.B);
  /* HUD: world, time, role, valuation, best SWE score */
