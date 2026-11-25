@@ -1117,7 +1117,9 @@ html,body{overscroll-behavior:none}
 
 /* ---------- period scenery: OS / console display eras ----------
    2023 古代·黑白液晶 · 2024 近代·FC电视 · 2025 现代·CRT/LCD · 2026 未来·iPad */
-.scn{position:absolute;top:560px;height:340px;overflow:visible;pointer-events:none}
+/* clip just under the road surface so props can't bleed into the soil;
+   negative inset on top/sides keeps flying drones / coins visible above */
+.scn{position:absolute;top:560px;height:340px;overflow:visible;pointer-events:none;clip-path:inset(-400px -80px 18px -80px)}
 .scn.zbk{opacity:.4}
 .scn .zb{fill:#0a0e15;stroke:var(--c);stroke-opacity:.42;stroke-width:1.6;stroke-linejoin:round}
 .scn .zp{stroke:none}
@@ -1378,7 +1380,7 @@ html,body{overscroll-behavior:none}
 .blk.gate.lbl h3{font-size:54px}
 .gpost{position:absolute;top:100%;width:12px;height:var(--post,300px);border-radius:3px;background:linear-gradient(90deg,#1b222d,#6b7a90 45%,#1b222d);box-shadow:0 0 0 1px rgba(0,0,0,.4)}
 .gpost.l{left:70px}.gpost.r{right:70px}
-.gpost::after{content:"";position:absolute;left:-6px;bottom:-4px;width:24px;height:8px;border-radius:3px;background:#2a3342}
+.gpost::after{content:"";position:absolute;left:-6px;bottom:0;width:24px;height:8px;border-radius:3px;background:#2a3342}
 /* posts / gates / screens follow OS chrome: Win98 · XP · Vista · Win10 */
 .blk.gate[data-sty=a] .gpost{width:10px;border-radius:0;background:linear-gradient(90deg,#808080,#c0c0c0 40%,#dfdfdf 50%,#808080);box-shadow:1px 0 0 #fff,-1px 0 0 #404040}
 .blk.gate[data-sty=a] .gpost::after{border-radius:0;background:#c0c0c0;border:1px solid #fff;border-right-color:#404040;border-bottom-color:#404040;left:-7px;width:24px}
@@ -1389,7 +1391,7 @@ html,body{overscroll-behavior:none}
 .blk.gate[data-sty=b] .mo.head,.blk.gate[data-sty=b].lbl{border-radius:8px 8px 0 0!important;border:3px solid #0058e6!important;background:#ece9d8!important;box-shadow:0 8px 0 #0831d9,0 16px 40px rgba(0,0,0,.35)!important;color:#000!important}
 .blk.gate[data-sty=b] .mo.head,.blk.gate[data-sty=b].lbl h3,.blk.gate[data-sty=b] .kk{color:#003399!important;font-family:Tahoma,var(--sans)!important;letter-spacing:0}
 .blk.gate[data-sty=c] .gpost{width:8px;border-radius:4px;background:linear-gradient(180deg,rgba(180,220,255,.7),rgba(80,120,180,.35));box-shadow:0 0 16px rgba(120,180,255,.45)}
-.blk.gate[data-sty=c] .gpost::after{border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#7eb6ff 55%,#3a6ea5);width:18px;height:18px;left:-4px;bottom:-6px;box-shadow:0 0 12px rgba(126,182,255,.8)}
+.blk.gate[data-sty=c] .gpost::after{border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#7eb6ff 55%,#3a6ea5);width:18px;height:18px;left:-4px;bottom:0;box-shadow:0 0 12px rgba(126,182,255,.8)}
 .blk.gate[data-sty=c] .mo.head,.blk.gate[data-sty=c].lbl{border-radius:8px!important;border:1px solid rgba(255,255,255,.55)!important;background:linear-gradient(180deg,rgba(200,230,255,.28),rgba(40,60,100,.45))!important;-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);box-shadow:0 0 0 1px rgba(100,160,255,.35),0 20px 50px rgba(0,40,80,.4),inset 0 1px 0 rgba(255,255,255,.55)!important}
 .blk.gate[data-sty=c] .mo.head::before,.blk.gate[data-sty=c].lbl::before{content:"";position:absolute;inset:0;border-radius:8px;pointer-events:none;background:linear-gradient(135deg,rgba(255,255,255,.25),transparent 40%,rgba(120,180,255,.08));opacity:1}
 .blk.gate[data-sty=d] .gpost{width:4px;margin-left:4px;border-radius:0;background:#0078d4;box-shadow:0 0 10px rgba(0,120,212,.5)}
@@ -1546,7 +1548,8 @@ html,body{overscroll-behavior:none}
 @keyframes lcdBlink{0%,92%,100%{opacity:1}94%{opacity:.55}96%{opacity:1}}
 @keyframes pixJitter{0%,100%{transform:translate(0,0)}50%{transform:translate(0,-1px)}}
 @keyframes clearBreath{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
-@keyframes holoSpin{0%{transform:perspective(220px) rotateY(-14deg) translateZ(0)}50%{transform:perspective(220px) rotateY(-6deg) translateZ(6px)}100%{transform:perspective(220px) rotateY(-14deg) translateZ(0)}}
+/* head-only tilt — never transform the body/feet or they sink through the road */
+@keyframes holoTilt{0%,100%{transform:perspective(160px) rotateY(-10deg)}50%{transform:perspective(160px) rotateY(8deg)}}
 
 /* —— a · 黑白液晶 —— */
 #stage[data-sty=a] #hero,#stage[data-sty=a] .npc{image-rendering:pixelated;image-rendering:crisp-edges}
@@ -1613,24 +1616,22 @@ html,body{overscroll-behavior:none}
   background:linear-gradient(180deg,color-mix(in srgb,var(--vc) 85%,#fff),color-mix(in srgb,var(--vc) 45%,#0b0f16))!important;
   box-shadow:0 4px 10px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.25)}
 
-/* —— d · 3D + 全息 —— */
+/* —— d · 3D + 全息（只动头，脚钉在路面上） —— */
 #stage[data-sty=d] #hero,#stage[data-sty=d] .npc{image-rendering:auto;-webkit-font-smoothing:antialiased}
-#stage[data-sty=d] #hero .hf{transform-style:preserve-3d}
-#stage[data-sty=d] #hero:not(.back) .hf{animation:holoSpin 5.5s ease-in-out infinite}
-#stage[data-sty=d] .npc .nb{transform-style:preserve-3d;transform:perspective(220px) rotateY(-12deg);transform-origin:50% 80%}
-#stage[data-sty=d] .npc.on .nb{animation:holoSpin 5.5s ease-in-out infinite}
-#stage[data-sty=d] .npc.hi5 .nb{animation:nJump .7s cubic-bezier(.3,.8,.4,1)!important}
 #stage[data-sty=d] #hero .hb,#stage[data-sty=d] .npc .nhd{
   border-radius:4px!important;border:1px solid rgba(120,255,255,.75)!important;
   background:linear-gradient(160deg,rgba(0,40,60,.55),rgba(0,12,24,.75))!important;
-  box-shadow:0 0 22px rgba(0,255,255,.45),0 10px 0 rgba(0,0,0,.25),
+  box-shadow:0 0 22px rgba(0,255,255,.45),
     -2px 0 0 rgba(255,0,255,.45),2px 0 0 rgba(0,255,255,.55)!important;
-  filter:none!important;animation:holoFlicker 2.6s ease-in-out infinite;
+  filter:none!important;
+  transform-origin:50% 100%;
+  animation:holoFlicker 2.6s ease-in-out infinite,holoTilt 5.5s ease-in-out infinite;
   -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+#stage[data-sty=d] #hero.run .hb{animation:holoFlicker 2.6s ease-in-out infinite,hBob .3s ease-in-out infinite}
 #stage[data-sty=d] .npc .nhd.avimg{border-radius:6px!important}
 #stage[data-sty=d] #hero .hb::before,#stage[data-sty=d] .npc .nhd::before{
-  opacity:.7;inset:-6px;border:1px solid rgba(0,255,255,.28);
-  box-shadow:0 0 12px rgba(0,255,255,.2);transform:translateZ(-10px);border-radius:6px}
+  opacity:.65;inset:-5px -5px -2px -5px;border:1px solid rgba(0,255,255,.28);
+  box-shadow:0 0 12px rgba(0,255,255,.2);border-radius:6px}
 #stage[data-sty=d] #hero .hb::after,#stage[data-sty=d] .npc .nhd::after{
   opacity:.85;background:linear-gradient(180deg,transparent 0%,rgba(0,255,255,.35) 48%,transparent 52%);
   background-size:100% 220%;animation:holoScan 2.1s linear infinite;mix-blend-mode:screen}
@@ -1645,9 +1646,7 @@ html,body{overscroll-behavior:none}
   background:linear-gradient(180deg,rgba(0,220,255,.4),rgba(0,40,80,.2))!important;
   border:1px solid rgba(120,255,255,.45);box-shadow:0 0 18px rgba(0,255,255,.3),inset 0 1px 0 rgba(255,255,255,.25)}
 #stage[data-sty=d] .npc .nsh,#stage[data-sty=d] #hero .sh{
-  background:radial-gradient(rgba(0,255,255,.35),transparent 70%);filter:blur(1px)}
-/* hologram fringe ghosts beside the head */
-#stage[data-sty=d] .npc .nhd{position:absolute}
+  background:radial-gradient(rgba(0,255,255,.35),transparent 70%)}
 #stage[data-sty=d] .npc .nfx{text-shadow:0 0 10px #0ff,-2px 0 #f0f,2px 0 #0ff;color:#a5f3fc}
 
 /* shared content targets inside dated blocks */
@@ -3222,6 +3221,14 @@ const BUZZ=[['「复制粘贴工程师」','2023.02'],['Prompt Engineering 当�
 
 
 
+/* .src is a build template — logos / story script are injected by node build.js.
+   Opening this file raw has no fillLogos / MONTHS / $; bounce to the built page. */
+if(typeof fillLogos!=='function'){
+  const to=location.href.replace(/hscroll\.src\.html/i,'hscroll.html');
+  if(to!==location.href){location.replace(to)}
+  else{document.body.innerHTML='<p style="font:18px/1.5 system-ui;padding:40px">Run <code>node build.js</code> then open <a href="hscroll.html">hscroll.html</a>.</p>'}
+  throw new Error('hscroll.src.html is the source template — open hscroll.html (node build.js)')}
+
 /* =====================================================================
    horizontal engine
    World x of the hero == S (scroll position in stage px). Every layer is
@@ -3239,6 +3246,8 @@ const VEH={'2023':['horse','像素马'],'2024':['bike','8-bit 单车'],'2025':['
 const STY={'2023':'古代 · 黑白液晶','2024':'近代 · 像素风格','2025':'现代 · 逐步清晰','2026':'未来 · 3D 全息'};
 const STK={'2023':'a','2024':'b','2025':'c','2026':'d'};
 const STYTAG={'2023':'LCD 黑白','2024':'PIXEL','2025':'CLEAR','2026':'3D · HOLO'};
+/* story script defines const $; .src preview has only this placeholder — keep a global fallback */
+window.$=window.$||(s=>document.querySelector(s));
 const stage=$('#stage'),space=$('#space'),L2=$('#L2'),hero=$('#hero');
 const LY=[...document.querySelectorAll('#stage>.layer')].map(el=>({el,s:+el.dataset.s}));
 const LS={};LY.forEach(l=>LS[l.el.id]=l.s);
@@ -3465,7 +3474,9 @@ function layout(){
   if(b.kind==='act'){
    const nx=Math.max(fullEnd+AW/2,lastNpc+ASP);tier=nx-lastNpc<AW+40?1-tier:0;
    el.style.setProperty('--lift',((tier?LIFT:0)+b.pad)+'px');w=el.offsetWidth;h=el.offsetHeight;
-   left=nx-AW/2;top=BUB_B-h;lastNpc=nx;actRight=Math.max(actRight,left+w);b.npcX=nx}
+   /* pin bubble bottom to BUB_B — remeasure once so --lift height is final */
+   left=nx-AW/2;top=BUB_B-h;el.style.left=left.toFixed(1)+'px';el.style.top=top.toFixed(1)+'px';
+   h=el.offsetHeight;top=BUB_B-h;lastNpc=nx;actRight=Math.max(actRight,left+w);b.npcX=nx}
   else{w=el.offsetWidth;h=el.offsetHeight;
    left=Math.max(fullEnd,actRight+80,lastNpc+170)+(fullEnd>100-F?40:0);
    if(b.kind==='gate'){top=ZT+34;el.style.setProperty('--post',(GROUND-top-h)+'px');fullEnd=left+w+90}
@@ -3527,7 +3538,8 @@ function buildMid(){const s=LS.L1;
      2026 未来·iPad      tablets, phones, glass panels, soft towers, portals
    Everything is static SVG (one animated element would repaint a whole 6000px chunk). */
 let SD=1;const zn=()=>(SD=SD*16807%2147483647)/2147483647,zr=(a,b)=>a+(b-a)*zn(),zi=(a,b)=>Math.round(zr(a,b)),zf=v=>Math.round(v*10)/10;
-const SKB=320;
+/* feet sit on the road crown (stage y ≈ 858 → 560+298) */
+const SKB=298;
 const ZG={
  /* 古代 · 黑白液晶 */
  gbtree(){const h=zi(70,110);let s='<path class="zb" d="M14,0V'+(-h*.4)+'H22V0Z"/>';
