@@ -651,7 +651,7 @@ html,body{overscroll-behavior:none}
 .blk[data-sty=a] .abub{image-rendering:pixelated}
 .blk[data-sty=a]:not(.lite)::after{content:"";pointer-events:none;position:absolute;inset:0;z-index:5;opacity:.12;mix-blend-mode:multiply;
   background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(0,0,0,.35) 3px 4px),repeating-linear-gradient(90deg,transparent 0 3px,rgba(0,0,0,.2) 3px 4px)}
-.blk[data-sty=a]{position:relative}
+/* keep .blk as position:absolute — relative here shoved early-era cards into document flow and under the road */
 
 /* —— b · XP：半像素 + Luna 奶油面 —— */
 .blk[data-sty=b]{font-family:Tahoma,var(--sans);-webkit-font-smoothing:auto}
